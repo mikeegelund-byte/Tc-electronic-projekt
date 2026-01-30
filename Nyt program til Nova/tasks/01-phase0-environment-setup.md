@@ -127,31 +127,31 @@ ls *.sln  # Should show NovaApp.sln
 ### Steps
 
 #### Domain Project (Core business logic)
-- [ ] `dotnet new classlib -n NovaApp.Domain -f net8.0`
+- [ ] `dotnet new classlib -n Nova.Domain -f net8.0`
 
 #### Application Project (Use cases)
-- [ ] `dotnet new classlib -n NovaApp.Application -f net8.0`
+- [ ] `dotnet new classlib -n Nova.Application -f net8.0`
 
 #### Infrastructure Project (File I/O, config)
-- [ ] `dotnet new classlib -n NovaApp.Infrastructure -f net8.0`
+- [ ] `dotnet new classlib -n Nova.Infrastructure -f net8.0`
 
 #### MIDI Project (Hardware abstraction)
-- [ ] `dotnet new classlib -n NovaApp.Midi -f net8.0`
+- [ ] `dotnet new classlib -n Nova.Midi -f net8.0`
 
 #### UI Project (Avalonia)
-- [ ] `dotnet new avalonia.mvvm -n NovaApp.UI -f net8.0`
+- [ ] `dotnet new avalonia.mvvm -n Nova.Presentation -f net8.0`
 
 #### Test Project (xUnit)
-- [ ] `dotnet new xunit -n NovaApp.Tests -f net8.0`
+- [ ] `dotnet new xunit -n Nova.Tests -f net8.0`
 
 ### Commands
 ```powershell
-dotnet new classlib -n NovaApp.Domain -f net8.0
-dotnet new classlib -n NovaApp.Application -f net8.0
-dotnet new classlib -n NovaApp.Infrastructure -f net8.0
-dotnet new classlib -n NovaApp.Midi -f net8.0
-dotnet new avalonia.mvvm -n NovaApp.UI -f net8.0
-dotnet new xunit -n NovaApp.Tests -f net8.0
+dotnet new classlib -n Nova.Domain -f net8.0
+dotnet new classlib -n Nova.Application -f net8.0
+dotnet new classlib -n Nova.Infrastructure -f net8.0
+dotnet new classlib -n Nova.Midi -f net8.0
+dotnet new avalonia.mvvm -n Nova.Presentation -f net8.0
+dotnet new xunit -n Nova.Tests -f net8.0
 ```
 
 ### Verification
@@ -167,12 +167,12 @@ ls  # Should show 6 folders
 **Estimated**: 2 min
 
 ### Steps
-- [ ] `dotnet sln add NovaApp.Domain`
-- [ ] `dotnet sln add NovaApp.Application`
-- [ ] `dotnet sln add NovaApp.Infrastructure`
-- [ ] `dotnet sln add NovaApp.Midi`
-- [ ] `dotnet sln add NovaApp.UI`
-- [ ] `dotnet sln add NovaApp.Tests`
+- [ ] `dotnet sln add Nova.Domain`
+- [ ] `dotnet sln add Nova.Application`
+- [ ] `dotnet sln add Nova.Infrastructure`
+- [ ] `dotnet sln add Nova.Midi`
+- [ ] `dotnet sln add Nova.Presentation`
+- [ ] `dotnet sln add Nova.Tests`
 
 ### Verification
 ```powershell
@@ -190,32 +190,32 @@ dotnet sln list  # Should show all 6 projects
 
 #### Application → Domain
 ```powershell
-cd NovaApp.Application
-dotnet add reference ../NovaApp.Domain
+cd Nova.Application
+dotnet add reference ../Nova.Domain
 ```
 
 #### MIDI → Domain
 ```powershell
-cd ../NovaApp.Midi
-dotnet add reference ../NovaApp.Domain
+cd ../Nova.Midi
+dotnet add reference ../Nova.Domain
 ```
 
 #### Infrastructure → Domain + Application
 ```powershell
-cd ../NovaApp.Infrastructure
-dotnet add reference ../NovaApp.Domain ../NovaApp.Application
+cd ../Nova.Infrastructure
+dotnet add reference ../Nova.Domain ../Nova.Application
 ```
 
 #### UI → All layers
 ```powershell
-cd ../NovaApp.UI
-dotnet add reference ../NovaApp.Domain ../NovaApp.Application ../NovaApp.Infrastructure ../NovaApp.Midi
+cd ../Nova.Presentation
+dotnet add reference ../Nova.Domain ../Nova.Application ../Nova.Infrastructure ../Nova.Midi
 ```
 
 #### Tests → All layers
 ```powershell
-cd ../NovaApp.Tests
-dotnet add reference ../NovaApp.Domain ../NovaApp.Application ../NovaApp.Infrastructure ../NovaApp.Midi ../NovaApp.UI
+cd ../Nova.Tests
+dotnet add reference ../Nova.Domain ../Nova.Application ../Nova.Infrastructure ../Nova.Midi ../Nova.Presentation
 ```
 
 ---
@@ -227,34 +227,34 @@ dotnet add reference ../NovaApp.Domain ../NovaApp.Application ../NovaApp.Infrast
 
 ### Domain Project
 ```powershell
-cd NovaApp.Domain
+cd Nova.Domain
 dotnet add package FluentResults
 ```
 
 ### Application Project
 ```powershell
-cd ../NovaApp.Application
+cd ../Nova.Application
 dotnet add package FluentResults
 dotnet add package Microsoft.Extensions.DependencyInjection.Abstractions
 ```
 
 ### MIDI Project
 ```powershell
-cd ../NovaApp.Midi
+cd ../Nova.Midi
 dotnet add package DryWetMidi --version 7.0.0
 dotnet add package FluentResults
 ```
 
 ### Infrastructure Project
 ```powershell
-cd ../NovaApp.Infrastructure
+cd ../Nova.Infrastructure
 dotnet add package Microsoft.Extensions.Configuration
 dotnet add package Microsoft.Extensions.Configuration.Json
 ```
 
 ### UI Project
 ```powershell
-cd ../NovaApp.UI
+cd ../Nova.Presentation
 dotnet add package Avalonia
 dotnet add package Avalonia.Desktop
 dotnet add package Avalonia.Themes.Fluent
@@ -264,7 +264,7 @@ dotnet add package DependencyInjection.Factory
 
 ### Test Project
 ```powershell
-cd ../NovaApp.Tests
+cd ../Nova.Tests
 dotnet add package xunit --version 2.6.0
 dotnet add package xunit.runner.visualstudio
 dotnet add package Microsoft.NET.Test.Sdk
@@ -403,17 +403,17 @@ Status: **In Development (Modul 0: Environment setup)**
 ```bash
 dotnet build
 dotnet test
-dotnet run --project NovaApp.UI
+dotnet run --project Nova.Presentation
 ```
 
 ## Project Structure
 
-- `NovaApp.Domain/` — Business logic
-- `NovaApp.Application/` — Use cases
-- `NovaApp.Infrastructure/` — File I/O
-- `NovaApp.Midi/` — MIDI I/O abstraction
-- `NovaApp.UI/` — Avalonia UI
-- `NovaApp.Tests/` — Unit + integration tests
+- `Nova.Domain/` — Business logic
+- `Nova.Application/` — Use cases
+- `Nova.Infrastructure/` — File I/O
+- `Nova.Midi/` — MIDI I/O abstraction
+- `Nova.Presentation/` — Avalonia UI
+- `Nova.Tests/` — Unit + integration tests
 
 ## Documentation
 
@@ -476,14 +476,14 @@ See `../llm-build-system/LLM_BUILD_INSTRUCTIONS.md` for full rules.
 **Estimated**: 2 min
 
 ### Steps
-- [ ] Create file: `NovaApp.Tests/DummyTest.cs`
+- [ ] Create file: `Nova.Tests/DummyTest.cs`
 - [ ] Add test (see below)
 - [ ] Run: `dotnet test`
 - [ ] Verify: 1 test passes
 
 ### Code
 ```csharp
-namespace NovaApp.Tests;
+namespace Nova.Tests;
 
 public class DummyTest
 {

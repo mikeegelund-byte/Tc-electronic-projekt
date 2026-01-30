@@ -100,7 +100,7 @@ public async Task DownloadBankUseCase_RequestAndReceive_UpdatesViewModel()
 
 ## Test fixtures
 ```
-NovaApp.Tests/
+Nova.Tests/
 ├── Fixtures/
 │   ├── user-bank-dump-valid.syx
 │   ├── user-bank-dump-bad-checksum.syx
@@ -132,7 +132,7 @@ NovaApp.Tests/
 dotnet test
 
 # Specific file
-dotnet test NovaApp.Tests/Unit/SysExParsingTests.cs
+dotnet test Nova.Tests/Unit/SysExParsingTests.cs
 
 # With coverage (later)
 dotnet test /p:CollectCoverage=true
