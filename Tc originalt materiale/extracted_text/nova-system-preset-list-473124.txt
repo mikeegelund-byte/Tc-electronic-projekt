@@ -1,0 +1,41 @@
+Nova System Factory Presets
+Bank Name Effects used
+F0-1 Stevie's Blues (Plate Reverb, Overdrive)
+F0-2 Subtle Detune (Detune, Dual Delay)
+F0-3 Gary's Lead (Distortion, Clean Delay, Room)
+F1-1 Big Lead (Distortion, Compressor, Phaser, Detune)
+F1-2 Blues Room (Overdrive, Room)
+F1-3 Wet Delay (Chorus, Detune, Dual Delay, Hall)
+F2-1 Straight Up Lead (Distortion, Compressor, Detune, Hall)
+F2-2 Tape Delay Lead (Overdrive, Tape Delay, Room)
+F2-3 Unchanged (Distortion, Flanger, Room)
+F3-1 Squashed Comp (Compressor)
+F3-2 Start Me Up (Distortion, Plate Reverb)
+F3-3 Sustaining Lead (Overdrive, Compressor, Dynamic Delay)
+F4-1 Soft Trem'n' Verb (Tremolo, Spring Reverb)
+F4-2 Allan's Fatigue (Distortion, Reverb, Shifter)
+F4-3 Metal Octave (Distortion, Octaver)
+F5-1 A Musical Road (Compressor, Chorus, Tape Delay, Hall)
+F5-2 Animal (Distortion, Pitch Shifter)
+F5-3 Trash Rhythm (Distortion, Eq, Gate, Detune)
+F6-1 Fazer Lead (Distortion, Phaser, Hall)
+F6-2 VibraVerb (Vibrato, Spring Reverb)
+F6-3 On the Edge (Compressor, Chorus, Detune, Delay, Hall)
+F7-1 Jet Flanger (Distortion, Flanger, Analog Delay)
+F7-2 3 Guitars in C (Overdrive, Intelligent Pitch Shifter, Room)
+F7-3 Faux Vibe (Overdrive, Chorus)
+F8-1 Slap & Comp (Compressor, Analog Delay, Plate Reverb)
+F8-2 OctaFuzz (Distortion, Octaver)
+F8-3 Tap Tremolo (Tremolo, Spring Reverb)
+F9-1 Ambient Crunch (Distortion, Compressor)
+F9-2 Woman Tone (Overdrive, Plate Reverb)
+F9-3 All Bypassed (No FX)
+
+User banks 00-19 have 3 memory locations each which can be used to store your own presets.
+Furthermore you can store up to 4 instant effects variation settings for each FX block, so you can easily
+exchange single effects and try out different combinations on the fly.
+This becomes very handy when creating your own presets. Once you have found a particular effects setting
+you like, store it as a variation (press and hold one of the Variation buttons).
+Next time you wish for this setting to be added to any other preset, just press the selected FX button and the
+variation button will load and replace the current FX setting of your selected FX block.
+For more information please refer to the Nova System User Manual.

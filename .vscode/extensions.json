@@ -1,0 +1,14 @@
+{
+    "recommendations": [
+        "christian-kohler.npm-intellisense",
+        "techer.open-in-browser",
+        "ms-vscode.powershell",
+        "mistx.pretty-markdown",
+        "vscjava.vscode-java-dependency",
+        "ms-python.vscode-pylance",
+        "the0807.uv-toolkit",
+        "tomoki1207.pdf",
+        "github.copilot",
+        "redhat.vscode-yaml"
+    ]
+}

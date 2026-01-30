@@ -1,0 +1,160 @@
+# Git Ignore for Nova System project
+# C# / .NET / Visual Studio specific patterns
+
+# ============================================================================
+# Build & Compilation Output
+# ============================================================================
+
+bin/
+obj/
+.vs/
+.vscode/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# ============================================================================
+# NuGet / Package Management
+# ============================================================================
+
+*.nupkg
+*.snupkg
+.nuget/
+packages/
+.packages/
+
+# ============================================================================
+# IDE & Editor Files
+# ============================================================================
+
+*.swp
+*.swo
+*.swn
+*~
+*.idea/
+.vscode/
+.vs/
+*.DS_Store
+
+# ============================================================================
+# Test & Coverage Output
+# ============================================================================
+
+TestResults/
+coverage/
+*.trx
+OpenCover/
+coverage.xml
+
+# ============================================================================
+# Publishing & Deployment
+# ============================================================================
+
+PublishProfiles/
+*.PublishSettings
+*.pubxml
+packages/
+artifacts/
+releases/
+publish/
+
+# ============================================================================
+# Runtime Output
+# ============================================================================
+
+*.log
+*.exe
+*.dll
+*.pdb
+*.DebugInfo
+crash dumps/
+
+# ============================================================================
+# Local Development Artifacts
+# ============================================================================
+
+local.settings.json
+appsettings.Development.json
+.local/
+.env
+.env.local
+.env.*.local
+
+# ============================================================================
+# OS Specific
+# ============================================================================
+
+Thumbs.db
+.DS_Store
+.AppleDouble
+.LSOverride
+.Spotlight-V100
+.Trashes
+
+# ============================================================================
+# User-Specific (But Keep These In Repo)
+# ============================================================================
+
+# Don't ignore:
+# - .github/
+# - .gitignore (obviously)
+# - .editorconfig
+# - Directory.Build.props
+# - global.json
+# - *.md documentation files
+
+# ============================================================================
+# MIDI & Hardware Specific
+# ============================================================================
+
+# Temporary MIDI test files
+*.mid
+*.midi
+*.syx.bak
+*.tmp
+
+# ============================================================================
+# Nova System Specific
+# ============================================================================
+
+# Backup presets (keep originals, ignore backups)
+*.syx.bak
+presets-backup/
+temp-presets/
+
+# Session memory backups (but keep current)
+memory-backup/
+
+# ============================================================================
+# Git Hooks & Local Scripts
+# ============================================================================
+
+# User-created test scripts (but keep documented ones)
+test-*.ps1
+debug-*.ps1
+
+# ============================================================================
+# SPECIAL RULES
+# ============================================================================
+
+# Everything is ignored EXCEPT:
+!.github/
+!.gitignore
+!.editorconfig
+!.gitattributes
+!docs/
+!reference/
+!src/
+!tests/
+!tasks/
+!llm-build-system/
+!*.md
+!*.json
+!*.xml
+!*.sln
+!*.csproj
+!setup.ps1
+!APPLICATION_MANIFEST.md
+!FOLDER_STRUCTURE.md
+!SETUP_AUTOMATION.md

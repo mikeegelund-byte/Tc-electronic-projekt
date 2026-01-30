@@ -1,0 +1,56 @@
+Dear Nova System user,
+this is a service update recommended for all users of Nova System.
+Version 1.2 contains several bug fixes and improvements as listed below.
+List of changes (from version 1.13)
+bugfixes:
+‐TT604 Midi tempo sync of delaytimes and Mod speeds didn’t work correctly ‐ fixed
+‐TT715 to exit Tuner mode two pushes of a switch were needed ‐ fixed
+‐TT471 saved system and user bank dumps couldn’t be restored ‐ fixed
+‐TT855 changing scale of the intelligent pitch shifter had no immedate effect ‐ fixed
+‐TT845 factory default feature didn’t work correctly for some subtypes ‐ fixed
+‐TT484 output level difference between L + R channel of dynamic delay ‐ fixed
+‐TT465 pedal position wasn’t read out at preset change in "master :pedal" mode – fixed
+‐TT608 Typo in the midi dump received test ‐ fixed
+changes:
+‐added Midi sysEX documentation
+‐added confirmation message when midi dumps are received
+‐VeriSign applied to the MS Windows updater
+‐optimised Midi receive buffer
+‐SysEx ID is ignored when receiving a System Dumps
+‐optimised flash usage
+‐ display of tempo dependent parameters is updated if the tempo is changed via MIDI
+‐tap tempo feature is disable when unit is synced to Midi clock (info text for user)
+Installation Guide:
+1. Download the latest Nova System 1.2 software installer from the Nova System product page
+2. Connect the Nova System MIDI Input to the Midi output of your MIDI device.
+3. Double click the installer software; choose your MIDI device in the drop down menu.
+4. Click the “Update” button.
+Important
+•Nova System will not reboot automatically. Power off Nova System once the installation progress bar reads 100%.
+
+Reconnect Nova System and wait until Nova System is fully up and running again. (You can check the version number
+after rebooting by pressing and holding the “levels” button) ‐ > it should display “Nova System v. 1.2 SVN rev. 675”
+DO NOT disconnect Nova System before the installation progress bar reads "100%".
+• Your existing user presets shouldn’t be affected in any way, however we suggest that you make a safety backup of
+your user presets prior to updating your unit as described in the manual.
+For backing up your user bank presets and system settings you can use the freely available Midi OX (on PC) or SysEX
+Librarian (on Mac). Other than this you can also record your Nova system Midi dumps in your Sequencer/DAW.
+To restore a saved user bank dump, just playback the recorded Midi file while Nova system’s Midi in is connected to
+Midi out of your computer’s Midi interface. The display of the Nova system will now indicate that your units receives
+Midi sysEX data.
+Midi Ox: http://www.midiox.com/
+SysExLibrarian: http://www.snoize.com/SysExLibrarian/
+List of tested applications for recording Nova system Midi dumps:
+‐Cubase (PC)
+‐Pro Tools (PC)
+‐Logic (Mac)
+‐Midi OX ( PC)
+‐SysExLibrarian (Mac)
+‐Midi Memo (Line6) in combination with Midi Mobilizer Interface (iPhone/iPad + iPod touch)
+With best regards,
+Mike Nickel
+SQA Guitar BA
+TC Electronic A/S
+Sindalsvej 34
+DK-8240 Risskov
+Denmark

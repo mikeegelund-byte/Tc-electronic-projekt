@@ -1,0 +1,1736 @@
+NOVA System
+User’s Manual
+
+IMPORTANT SAFETY INSTRUCTIONS
+The lightning flash with an arrowhead symbol within The exclamation point within an equilateral triangle is
+an equilateral triangle is intended to alert the user to intended to alert the user to the presence of important
+the presence of uninsulated “dangerous voltage” operating and maintenance (servicing) instructions in
+within the product's enclosure that may be of sufficient the literature accompanying the product.
+magnitude to constitute a risk of electric shock to persons.
+1 Read these instructions. Warning!
+2 Keep these instructions.
+• To reduce the risk of fire or electric shock, do not expose
+3 Heed all warnings.
+this apparatus to rain or moisture and objects filled with
+4 Follow all instructions.
+liquids, such as vases, should not be placed on this
+5 Do not use this apparatus near water.
+apparatus.
+6 Clean only with dry cloth.
+• This apparatus must be earthed.
+7 Do not block any ventilation openings. Install in accordance
+• Use a three wire grounding type line cord like the one
+with the manufacturer's instructions.
+supplied with the product.
+8 Do not install near any heat sources such as radiators, heat
+• Be advised that different operating voltages require the use
+registers, stoves, or other apparatus (including amplifiers)
+of different types of line cord and attachment plugs.
+that produce heat.
+• Check the voltage in your area and use the correct type.
+9 Do not defeat the safety purpose of the polarized or
+See table below:
+grounding-type plug. A polarized plug has two blades with
+one wider than the other. A grounding type plug has two
+Voltage Line plug according to standard
+blades and a third grounding prong. The wide blade or the
+110-125V UL817 and CSA C22.2 no 42.
+third prong are provided for your safety. If the provided plug
+does not fit into your outlet, consult an electrician for 220-230V CEE 7 page VII, SR section
+replacement of the obsolete outlet. 107-2-D1/IEC 83 page C4.
+10 Protect the power cord from being walked on or pinched 240V BS 1363 of 1984.
+particularly at plugs, convenience receptacles, and the point Specification for 13A fused
+where they exit from the apparatus. plugs and switched and
+11 Only use attachments/accessories specified by the unswitched socket outlets.
+manufacturer.
+• This equipment should be installed near the socket
+12 Use only with the cart, stand, tripod, bracket, or
+outlet and disconnection of the device should be easily
+table specified by the manufacturer, or sold with the
+accessible.
+apparatus. When a cart is used, use caution when
+• To completely disconnect from AC mains, disconnect the
+moving the cart/apparatus combination to avoid
+power supply cord from the AC receptacle.
+injury from tip-over.
+• The mains plug of the power supply shall remain readily
+13 Unplug this apparatus during lightning storms or when
+operable.
+unused for long periods of time.
+• Do not install in a confined space.
+14 Refer all servicing to qualified service personnel. Servicing
+• Do not open the unit – risk of electric shock inside.
+is required when the apparatus has been damaged in any
+way, such as power-supply cord or plug is damaged, liquid
+Caution:
+has been spilled or objects have fallen into the apparatus,
+You are cautioned that any change or modifications not
+the apparatus has been exposed to rain or moisture, does
+expressly approved in this manual could void your authority to
+not operate normally, or has been dropped.
+operate this equipment.
+Service
+• There are no user-serviceable parts inside.
+• All service must be performed by qualified personnel.
+a
+
+EMC / EMI & CERTIFICATE OF CONFORMITY
+EMC/EMI
+This equipment has been tested and found to comply
+with the limits for a Class B Digital device, pursuant to
+part 15 of the FCC rules.
+Certificate of Conformity
+These limits are designed to provide reasonable
+TC Electronic A/S, Sindalsvej 34, 8240
+protection against harmful interference in residential
+Risskov, Denmark, hereby declares on own
+installations. This equipment generates, uses and can
+responsibility that the following product:
+radiate radio frequency energy and, if not installed and
+used in accordance with the instructions, may cause
+NOVA System
+harmful interference to radio communications. However,
+- Effects Processor for electric guitars
+there is no guarantee that interference will not occur in a
+particular installation. If this equipment does cause that is covered by this certificate and
+harmful interference to radio or television reception, marked with CE-label conforms with
+which can be determined by turning the equipment off following standards:
+and on. The user is encouraged to try to correct the
+interference by one or more of the following measures: EN 60065 Safety requirements for mains
+(IEC 60065) operated electronic and
+related apparatus for household
+• Reorient or relocate the receiving antenna.
+and similar general use
+• Increase the separation between the equipment and
+EN 55103-1 Product family standard for
+receiver. audio,video, audio-visual and
+• Connect the equipment into an outlet on a circuit entertainment lighting control
+different from that to which the receiver is connected. apparatus for professional
+• Consult the dealer or an experienced radio/TV use. Part 1: Emission.
+technician for help. EN 55103-2 Product family standard for
+audio, video, audio-visual and
+entertainment lighting control
+For Customers in Canada: apparatus for professional
+This Class B digital apparatus complies with Canadian use. Part 2: Immunity.
+ICES-003.
+With reference to regulations in following
+Cet appareil numérique de la classe B est conforme à la
+directives:
+norme NMB-003 du Canada.
+73/23/EEC, 89/336/EEC
+Issued in Risskov, January 2008
+Mads Peter Lübeck
+Chief Executive Officer
+b
+
+TABLE OF CONTENTS
+INTRODUCTION
+EQ and Noise Gate
+Safety Instructions . . . . . . . . . . . . . . . . . . . . . .a EQ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .29
+EMC/EMI & Certificate of Conformity . . . . . . . .b Noise Gate . . . . . . . . . . . . . . . . . . . . . . . . . . .29
+Table of contents . . . . . . . . . . . . . . . . . . . . . . .3
+Introduction . . . . . . . . . . . . . . . . . . . . . . . . . . . .5 Modulation - Mod
+Phaser . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .31
+OPERATION
+Tremolo . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .32
+NOVA System – Front panel . . . . . . . . . . . . . .6 Panner . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .33
+Operation . . . . . . . . . . . . . . . . . . . . . . . . . . . . .7 Chorus . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .34
+NOVA System – Rear panel . . . . . . . . . . . . . . .9 Flanger . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .35
+Vibrato . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .36
+SETUPS
+Modulation - Pitch
+Basic Setup . . . . . . . . . . . . . . . . . . . . . . . . . .10
+NOVA System in a an effects loop . . . . . . . . .11 Detune . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .37
+Whammy . . . . . . . . . . . . . . . . . . . . . . . . . . . .37
+MENUS Octaver . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .38
+Pitch Shifter . . . . . . . . . . . . . . . . . . . . . . . . . .39
+Routing . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .12 Intelligent Pitch Shifter . . . . . . . . . . . . . . . . . .40
+Levels . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .14
+Boost Function . . . . . . . . . . . . . . . . . . . . . . . .15
+Delay Types
+Pedals . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .16
+Common Delay Parameters . . . . . . . . . . . . . .41
+Utility . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .18
+Clean . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .42
+The Tuner . . . . . . . . . . . . . . . . . . . . . . . . . . . .20
+Analog . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .42
+MIDI . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .21
+Tape . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .42
+Recall . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .24
+Dynamic . . . . . . . . . . . . . . . . . . . . . . . . . . . . .42
+Edit . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .24
+PingPong . . . . . . . . . . . . . . . . . . . . . . . . . . . .42
+Store . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .25
+Dual . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .43
+Delete . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .25
+Spillover . . . . . . . . . . . . . . . . . . . . . . . . . . . . .43
+EFFECTS
+Reverb Types
+Drive
+Common Reverb Parameters . . . . . . . . . . . . .44
+Overdrive . . . . . . . . . . . . . . . . . . . . . . . . . . . .26
+Spring . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .44
+Distortion . . . . . . . . . . . . . . . . . . . . . . . . . . . .26
+Hall . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .44
+Room . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .44
+Compression Plate . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .44
+Sustaining . . . . . . . . . . . . . . . . . . . . . . . . . . . .27
+Percussive . . . . . . . . . . . . . . . . . . . . . . . . . . .28 APPENDIX
+Advanced . . . . . . . . . . . . . . . . . . . . . . . . . . . .28
+Technical Specifications . . . . . . . . . . . . . . . . .46
+TC Electronic, Sindalsvej 34, DK-8240 Risskov – info@tcelectronic.com English Version Manual revision 1.2 – SW – V 1.10 3
+Prod. No: E60508712
+
+INTRODUCTION
+NOVA System - All-in-One Extravaganza
+The Audible Choice
+NOVA System is the complete, floor-based effects solution for the dedicated guitar player who knows quality when he
+sees it. Its unique inclusion of an all-analog distortion/overdrive section under preset and expression control makes it the
+perfect choice whether you want to trim down your rack setup, step up from your pedal patchwork or simply just want the
+ultimate combination of operational simplicity and audio superiority.
+Add to this an array of effects taken straight from the king of floor-based processors; G-System and you have top-notch
+compression, EQ, noise gate, modulation, pitch, delay and reverb right at your feet. All you need is a guitar and an amp
+and you’re good to go – first class.
+Genuine, Analog Drive Circuit
+What makes NOVA System so remarkably different is the NDT™ - NOVA Drive Technology - a unique, new drive and
+distortion circuit that gets you the best of both worlds: World-class analog distortion and overdrive with digital control. This
+is the real deal – no modeling. While the NDT™ is 100% analog and physically separated from the digital effects, its
+control potmeters are digital. This way you can tweak, store and recall as many drive settings as you want - you can even
+hook up an expression pedal and control the amount of distortion in real-time. Its wide gain range covers your every need
+from light breakup to heavy distortion.
+Top-notch Effects
+Features
+Equipped with TC branded quality effects from delays
+• All-analog overdrive and distortion under preset and
+and reverbs to compressor, EQ and modulation, NOVA
+expression control.
+System is the obvious all-in-one solution for any guitarist
+• 6 effect blocks taken straight from G-System:
+who wants setup simplicity without sacrificing tonal
+- Compression
+fidelity. All neatly programmable and storable in 60 user
+- EQ + Noise Gate
+presets. Its 30 factory presets give you a demonstration
+- Modulation
+of just what this unit provides; great sound quality and an
+- Pitch
+immense versatility of effects combinations – all
+- Delay
+designed to get you started right out of the box.
+- Reverb
+• 30 factory and 60 user presets
+• Two footswitch layouts: preset and pedal
+• Hi-Z and balanced input + balanced stereo outputs
+• Optional G-Switch for added control
+The current manual revision number is found at the bottom of page 3.
+Latest manual revision can always be downloaded via www.tcelectronic.com.
+To seek additional information and support please visit TC Support interactive
+that also can be accessed via www.tcelectronic.com
+5
+
+OVERVIEW
+6
+
+OPERATION
+1 - Effects edit / Select buttons combination of compression, EQ, mod and maybe delay
+Press once to enter edit mode for the current effect. settings. However, you feel that you have edited the
+Press again to toggle between the different effect types. reverb parameters to a point where you find yourself a bit
+Press and hold to exit the effects edit mode without lost. - What would TC Electronic suggest?
+saving.
+- We assume that you are in reverb edit, thus the
+REVERB EDIT LED is lit.
+2 - Variations
+- Press FACTORY DEFAULT.
+For each selected effect type, 4 instant variations can be
+stored. When creating new presets this function makes is
+Note that there is a factory default setting for each
+very easy to combine your favorite reverbs with your
+effect sub-type.
+favorite compression settings etc.
+Example: 4 - Edit A to D
+- Press COMP edit to enter the compression block. EDIT encoders A to D is used to adjust parameters.
+- Edit the compression settings using encoders A-D.
+- Now press and hold VARIATION key #1 to save this
+5 - Tuner Indications
+compression setting as one of your favorites. Note
+that the preset is not stored at this point, you have In Tuner mode this section of the display indicates
+simply set up a favorite compression setting. whether the input note is above or below correct pitch.
+- Recall a different preset using the preset keys where
+you would like to apply this compression. 6 - Store
+- Press COMP followed by VARIATION key #1. Storing a preset can be done in two ways. We call them
+- Your favorite compression setting #1 is now recalled “Quick store” and “Normal store”. “Quick store” is
+into the current preset. typically used when you have made changes to a preset
+and want to store the preset with the same name at the
+The VARIATION key LEDs: same location. “Normal store” is used if you want to
+When a VARIATION key LED is lit you have previously change preset location and maybe the name as well.
+stored a variation with that key.
+Quick store- press and hold STORE for 2 seconds. The
+To delete a variation: preset is now stored at the current location.
+Press and hold “FACTORY DEFAULT” while pressing
+one of the VARIATION keys 1-4. This will delete the
+If you are trying to store a factory preset using
+variation stored with that key.
+“Quick store”, you will automatically be directed to
+“Normal store” mode.
+3 - Factory Default
+TC Electronic has predefined factory default settings for
+Normal Store- press STORE once:
+each algorithm. Press FACTORY DEFAULT to recall the
+default settings for the currently selected algorithm.
+Now the following controls are available:
+Example: - Encoder A selects preset location
+Assume that you have a very nice preset with a nice - Encoder B selects preset name characters
+7
+
+OPERATION
+- Encoder C changes characters 13 - TAP (Tempo) & Hold for TUNING
+- Encoder D selects recall, delete or store mode This switch has two functions.
+When selections are made press STORE to confirm.
+Tap Tempo:
+7 - Levels By tapping the switch you enter the global tempo for
+Output levels can be set for each preset. All other NOVA System. This tempo can be used for delay and
+parameters in the levels menu are “global” parameters modulation effects.
+and do not change with presets.
+Tuning:
+All preset parameters are marked with a “P” in the
+Press and hold to enter Tuner mode. Per default the
+right side of the display.
+outputs are muted when in Tuner mode, but via the
+Tuner menu chose between setting the “Tuner Out” to
+mute or on. The Tuner parameters are automatically
+8 - MENU button
+accessible when Tuner mode is accessed.
+Press to enter the following menus:
+- Routing
+14 - PITCH
+- Pedal
+On/off switch for the Pitch block.
+- Modifiers
+- MIDI
+Secondary function:
+- Utility
+Press and hold to decrease preset.
+The menus are described in later chapters of this
+15 - REVERB or PRESET 1
+manual.
+In Pedal mode this switch acts as an on/off switch for the
+9 - Effect status LEDs Reverb.
+The LEDs indicate which effect is selected in each block.
+In Preset mode you may press this switch to recall preset
+#1 in the current bank.
+10 - MOD
+On/off switch for the modulation block.
+16 - COMP or PRESET 2
+In Pedal mode this switch acts as an on/off switch for the
+Secondary function:
+Compressor.
+Press and hold to increase preset bank.
+In Preset mode you may press this switch to recall preset
+11 - DELAY
+#2 in the current bank.
+On/off switch for the Delay block.
+17 - DRIVE or PRESET 3
+12 - BOOST
+In Pedal mode this switch act as an on/off switch for the
+On/off switch for the Boost function. different boost levels
+Drive section. In Preset mode you may press this switch
+can be set for individual presets from 0 to 10 dB.
+to recall preset #3 in the current bank.
+8
+
+REAR PANEL VIEW
+1 - Drive Input 8 - Pedal In
+Input for guitar. Use this input to utilize the programmable Several types of external pedals can be connected and
+analog drive section of NOVA System. used to control parameters.
+Connection type: 1/4” jack.
+- Connect a G-Switch for preset change and thereby
+2 - Line Input utilize all 8 switches on NOVA System as effects
+In case you want to use the NOVA System in an effects bypass switches.
+loop of an amp, the “Effects Loop Send” should be - Connect an expression control e.g. volume.
+connected to the NOVA System Line In. Then the NOVA For perfect response when using an expression
+System pre-amp section is bypassed and you use the pedal, the pedal must be calibrated. This is done via
+preamp section of your amp for drive. the pedal menu.
+- Via the pedal menu you can set up which parameter
+the expression pedal should control.
+3/4 - Balanced Outputs
+Balanced outputs on 1/4” TRS jack. Use the left output if
+9 - Power In
+you do not play in stereo and connect to a single amp.
+The switchmode power-supply accepts from 100 to 240
+VAC.
+5 / 6 / 7 - MIDI In / Thru / Out
+Standard MIDI interface.
+9
+
+TYPICAL SETUPS
+Basic setup
+This is a typical basic setup combining NOVA System Basic settings
+with one combo amp (or two for stereo) running a clean • Set input sensitivity via the Levels menu
+channel. All effects and overdrive/distortion are
+generated by NOVA System. A G-Switch (optional) is With a G-Switch connected:
+connected and the NOVA System is then automatically in • Activate/deactivate effect blocks pressing the effects
+stomp mode. Presets are then recalled using the G- switches
+Switch. • Change presets using G-Switch
+Connections With no G-Switch connected:
+• Connect your guitar to the NOVA System’s Drive • Select the Footswitch parameter in the Utility menu
+input and select Pedal (stomp) or Preset mode
+• Connect Left output to a guitar amp running a clean • Select preset - if in preset mode
+channel • Activate/deactivate effect blocks pressing the effects
+• Connect the right output to a second guitar amp for switches
+stereo (optional)
+• Connect G-Switch (optional) to the pedal input
+pedal input
+10
+
+TYPICAL SETUPS
+NOVA System in an effects loop
+In this setup we use the preamp section of your combo Basic settings
+amp to generate the drive. We use the Line input on the • Set input sensitivity via the Levels menu according to
+NOVA System and thereby bypass the NOVA Systems the highest pedal level
+drive section. An expression pedal is connected to pedal • Select the Footswitch parameter in the Utility menu
+in for real-time control of e.g. volume. and select Pedal (stomp) or Preset mode
+• Select preset (if in preset mode)
+Connections • Activate/deactivate effect blocks pressing the effects
+• Connect guitar to the input of the combo amp. switches.
+• Connect the effects loop “send” of the amp to NOVA • Calibrate the expression pedal via the pedals menu
+Systems Line input. • Assign parameters to the expression pedal via the
+• Connect left output to the effects loop return (=power Pedal menu
+amp in) of your amp. For a stereo setup connect the
+NOVA System right output to the effects loop return
+(power amp in) of the other amp.
+• Connect an expression pedal to the NOVA System
+Pedal in.
+11
+
+MENU - ROUTING
+Routing
+NOVA System has three ways of routing the chain of effects: Serial, Semi Parallel and Parallel.
+Basics
+• Press MENU
+• Select Routing using encoder D
+• Press MENU to confirm
+• Set values using encoders A, B and C
+• Change pages using encoder D
+• Confirm by pressing MENU
+• Exit by pressing MENU again
+Serial
+The Serial routing connects all effect blocks “in a straight line”. This means that each effect block affects the following
+effect(s).
+If a delay with a long delay time is used in combination with a reverb, you may find the added reverb on the delay
+repeats disturbing. In that case, use either the Semi Parallel or Parallel routing.
+12
+
+MENU - ROUTING
+Semi Parallel
+The Semi Parallel routing connects most effect blocks serially, but the reverb and delay blocks are now connected in
+parallel. Consequently, the delay and reverb effects do not affect each other. This means that no reverb is added to the
+delay repeats.
+Parallel
+In the Parallel routing, the same signal is fed to the input of the modulation, delay and reverb sections, and therefore
+these effects will not affect each other.
+13
+
+MENU - LEVELS
+Levels menu
+Clipping indication
+If you change the input gain considerably, e.g. by
+Basics switching to a different guitar or changing levels on a
+• Press LEVELS to access pedal placed before the NOVA System, the input of the
+• Set values using encoders A, B and C NOVA System may be clipping. This is indicated by the
+• Change pages using encoder D small dot in the far rightmost side of the numeric display:
+Where nothing else is stated the range of the level
+parameters is -100 dB to 0 dB.
+Volume
+Range: -100 dB to 0 dB
+Level control that can be positioned either pre or post
+Left Output & Right Output
+effects processing. The position of the volume control is
+set by the Position parameter (see also routing Range: -100 dB to 0 dB
+schematic). Individual level control for left and right outputs. These
+levels can be set per preset.
+Input Gain
+Input
+Range: 0 dB to 24 dB
+Guitars have different output levels. So has pedals you Range: Drive or Line
+may have placed before the NOVA System. This is how Selects the input. Select “Drive” if you have connected
+you set the correct gain. your guitar to the Drive input and want to utilize the
+NOVA Systems Drive effect block.
+• Switch on any pedal in your signal chain that is Select “Line” if you have connected your guitar to the
+placed prior to NOVA System and may boost the Line input. (see also routing schematic).
+signal
+• Strum your guitar as hard as you do when you play Volume Position
+• Adjust the line gain until the “0” appears: The Volume parameter is typically controlled by an
+expression pedal. If you connect an expression pedal to
+the pedal input the pedal will control this parameter per
+default.
+The Volume Position parameter defines where the
+volume is controlled. The options are:
+• Then back off a few dB:
+Pre:The volume is controlled right afterthe Drive section
+and beforethe effects. This allows for effects such as
+Delay and Reverb to “hang”, even if you lower the level
+using an expression pedal.
+• The correct gain is now set and you have unity gain
+Post:The volume is controlled afterthe effects. This
+through NOVA System.
+means that the volume of the entire signal, including
+effects, is controlled.
+14
+
+MENU - LEVELS BOOST FUNCTION
+Advanced Boost
+Range: On or Off Wouldn’t it be nice if you could just hit a single switch
+Select “on” to gain access to the following “advanced” and boost the entire signal for a few important phrases?
+level parameters. Once you are in advanced mode you With the NOVA System boost function it is easy. Via the
+no longer benefit from automatic “unity gain” calculations Levels Advanced menu a max boost level between 0 and
+described on the previous page under the Input Gain 10 dB is set. Within the Boost max level you can set up a
+section. On the other hand you will have full control of boost level for individual presets.
+the level parameters.
+- press LEVELS to access the levels menu
+Boost Max - select “Advanced” and set this parameter to “on”
+Range: 0 to 10 dB - scroll to BoostMax and set your boost max level
+This setting determines the max range of the boost
+function. As 0 dBFS is the max level in the digital domain
+digital “boost” is done by attenuating the general level
+and releasing this attenuation when boost is required.
+If you use the Advanced mode andthe boost function,
+- then exit the menu and select the preset you want to
+the Output Range parameter can be adjusted to ensure
+set up a boost level on.
+unity gain through the unit.
+- press DRIVE and set the boost level within the Boost
+Max range.
+If you select advanced mode but never use the Boost
+function at all, set the Boost Max parameter to 0 dB.
+Additional parameters for the Boost function:
+Output Range Boost Lock:
+Options: 2 dBu, 8 dBu, 14 dBu or 20 dBu Range: On or Off
+Which output setting to select depends on the set InGain. When Boost Lock is set to “on”, you are able to boost the
+The higher the InGain is set, the lower the Output Range amount of dB specified by the Boost Max. parameter on
+parameter should be set. ALL presets. The Boost Lock parameter is found in the
+Utility menu.
+Boost Level:
+The boost level can be set for each preset within the
+range of the Max Boost parameter. This range is set in
+the Levels menu.
+15
+
+MENU - PEDAL
+Pedals menu
+Connecting Expression pedals
+Depending on the type of expression pedal used, the
+Basics
+pedal should be connected using either a regular mono
+• Press MENU to access
+1/4" TS-TS cable or a stereo 1/4" TRS to TRS cable.
+• Select Pedal using encoder D
+• Press MENU to confirm
+• Set values using encoders A, B and C Mono
+• Change pages using encoder D
+• Confirm selection by pressing MENU if <menu>
+flashes in the right side of the display Stereo
+• Exit by pressing MENU again
+For external control of certain parameters you can
+connect an expression pedal. If you are not sure which type to use, you may have to
+try both types. NOVA System measures the signal on
+In this menu you assign which parameters to assign, your expression pedals output connector. Therefore only
+calibrate NOVA System to the connected expression one cable should be used per expression pedal.
+pedal and also dial in a response curve using the min,
+mid and max parameters.
+Map Parameter
+Assigning parameters to the pedal connected to the
+Parameters marked with “P”
+“Pedal Input”
+Some of the parameters in this menu are global
+parameters and some are saved at preset level. • Go to Pedal menu pressing MENU several times
+Parameters saved with each preset are marked with “p”
+in the right side of the display.
+Example:
+• Select a parameter to control from the list
+• Press MENU to confirm
+• Set Min Mid Max
+Min - Mid - Max
+Range: 0-100%
+These settings determine the parameter response
+according to an expression pedal connected to the Pedal
+input. Values can be set for both the minimum, mid and
+maximum position of the pedal.
+16
+
+MENU - PEDAL
+Master
+If an expression pedal is connected to the pedal input
+and a preset is recalled, NOVA System can be set up to
+respond to either the current position of an expression
+pedal or to the value stored with the preset.
+• Place your pedal in minimum position (“Heel down”)
+Preset:The parameter value stored as part of the preset and press MENU
+applies – regardless of the current position of the
+expression pedal.
+Pedal:The position of the expression pedal is identified • The LCD now reads
+at the moment of preset change, and the value stored as
+part of the preset is discarded.
+Type
+Select between either Expression or G-Switch depending
+in the type of switch you have connected to the Pedal • Place your pedal in maximum position (Toe down)
+input. Expression pedals must be calibrated (see below). and press MENU
+When a G-Switch is connected and selected as pedal
+type the G-Switch is used to change presets and all 8
+switches on the NOVA System are used as “stomp
+on/off” switches. • The LCD reads: “CALIBRATION DONE”
+Calibrating to an expression pedal
+In order to secure the best performance of your
+expression pedal, NOVA System must be calibrated to
+this pedal. Follow this step by step guide.
+• Make sure that you have connected your pedal to the
+pedal connector on the rear panel
+• Select “Calibrate from the Pedal Menu
+• Press MENU
+• The LCD now reads
+17
+
+MENU - UTILITY
+Utility
+Global:
+With Tap Master in Global mode the current tapped
+Basics global tempo and the set sub-division applies instantly at
+• Press MENU to access preset change.
+• Select Utility using encoder D
+• Press MENU to confirm Boost Lock
+• Set values using encoders A, B and C Range: On or Off
+• Change pages using encoder D When Boost Lock is set to “on” you will be able to boost
+the amount of dB specified by the Boost Max. parameter
+FX Mute on ALL presets.
+The FX Mute parameter determines how the Reverb and
+EQ Lock
+Delay effects should behave when changing between
+Range: On/off
+presets and when bypassing one of these effects.
+When EQ is locked the current EQ will be used on ALL
+presets.
+Soft:
+Delay and Reverbs will “ring out”
+Routing Lock
+Range: On/off
+Delays have true spillover, meaning that if you e.g. have
+If you always use the same routing you may prefer to
+a long delay time and the FX Mute parameter is set to
+lock the current routing.
+“Soft” the delays will continue even if you change to a
+preset that holds completely different delay settings.
+FactoryLck (Factory Bank Lock)
+Range: On/off
+Reverbs can also spill over at preset change but will use
+NOVA System comes with a selection of factory presets
+the settings in the new preset.
+to show the many different sounds and effects you can
+create with NOVA System. However, as you begin you
+Hard:
+create you own bank of presets you may prefer not to be
+Delay and Reverbs will mute.
+able to select factory sounds in a live situation. In that
+case set Factory Bank Lock to “on”. You will then NOT
+scroll through factory banks when you use the bank
+Tap Master
+up/bank down functions.
+A preset holds both a subdivision parameter that relates
+to the global tapped tempo and also a fixed delay time.
+SpeakerSim (Speaker Simulator Filter)
+The tap tempo master parameter defines how NOVA
+Range: On/Off
+System responds to the global tapped tempo at preset
+With the NOVA System speaker simulator you are able to
+change.
+emulate the attenuation of high-end frequencies that
+naturally occurs when playing through guitar-speaker
+Preset:
+cabinets.
+With Tap Master in Preset mode the delay repeats will
+Use the speaker simulators ”on” option when you
+play according to the delay time stored with the preset.
+connect the NOVA System outputs directly to recording
+As soon as you tap, maybe to make a slight correction,
+inputs of an audio interface (e.g. TC Konnekt), or when
+the tapped tempo plays according to the set subdivision.
+plugging directly into a mixer.
+18
+
+MENU - UTILITY
+The NOVA System EQ section is not available
+We think this is the “best of both worlds”.
+when SpeakerSim is invoked.
+The G-Switch must be selected as pedal type in the
+pedals menu.
+Always set the SpeakerSim parameter to “off” when
+plugging the NOVA System outputs into a regular
+guitar amplifier. Otherwise you will have both a
+speaker and a filter emulating a speaker at the
+same time. With this combination you will most
+likely find your gear sounding dull.
+Footswitch View Angle
+Range: Pedal or Preset Adjust to get the best display viewing angle.
+Pedal mode: Clear System
+In pedal mode all footswitches act as effects on/off
+Clear system will set NOVA System back to factory
+switches (+Tap tempo). Pretty much as a you would use
+default settings. - Press MENU to execute and confirm.
+eight regular stomp box pedals. However, it is still
+possible to change both preset banks and presets when
+in this mode.
+Changing presets:
+- press and holdone of the three preset switches.
+Changing banks:
+- press and hold one of the two left-most buttons (MOD
+or PITCH). The three preset buttons and the MOD
+and PITCH switches will blink indicating that you are
+in bank select mode.
+- Now either tap MOD or PITCH to step through preset
+banks one at a time or hold on of the switched to
+scroll up/down.
+Preset mode (default setting):
+In preset mode you recall presets by pressing one of the
+three preset switches. Preset banks are selected as
+described in the paragraph “changing banks”.
+Pedal mode - with G-Switch connected:
+With a G-Switch connected to Pedal In on the rear panel,
+this switch can be used to recall presets. This way you
+can use all seven effects on/off switches for effects
+bypass and use the G-Switch for instant preset recall.
+19
+
+THE TUNER
+Basics Too high
+• To activate the Tuner, press and hold the TAP
+TEMPO switch
+• Set values using encoders A, B and C
+• Change pages using encoder D
+• Press any footswitch to exit.
+In Tuner mode the following parameters can be set.
+Tuner Out
+Mute:
+Output is muted when in tuner mode.
+Too low
+On:
+Output is not muted when in tuner mode.
+Tuner Ref
+Range: 420 to 460 Hz
+This parameter sets the general tuner reference. Default
+setting is 440 Hz.
+Example - tuning a guitar:
+• Press and hold the footswitch in the lower right corner
+until Tuner mode is accessed.
+In tune
+• Play e.g. the A string. Let ring.
+If the note is within +/- 100 cent around “A” the tuner will
+recognize the note A and indicate whether the pitch of
+the note is too low, too high or in tune.
+20
+
+MIDI
+MIDI Setup menu
+PrgMap - Program Map
+The Program Map function allows you to map an
+Navigation
+incoming MIDI program change from an external MIDI
+• Press MENU to enter menu device to recall any preset.
+• Select MIDI Setup menu using Encoder D In the following example incoming MIDI program change
+• Press MENU to enter #1 will recall preset #2 in Factory bank #0.
+• Change page using encoder D
+• Change parameters using encoder C
+Factory presets are labeled “F” and User presets are
+labeled 00-1 to 20-3.
+MIDI Channel
+Range: Off, 1 to 16 or Omni The PrgMap settings also apply on MIDI out. So if we
+When Omni is selected, the NOVA System receives MIDI look at the example above. Recalling preset number #2
+information on all channels. When set to “Off”, the NOVA in factory bank #0 will send program change #1 on MIDI
+System does not respond to any incoming MIDI data. out.
+Program Change In Prg. Map Reset
+Range: On/Off Press MENU to reset the Program Map.
+Determines whether the NOVA System should respond
+to incoming MIDI program changes or not. SysEx ID
+Range: 0 to 126 - ALL
+Program Change Out Sets the NOVA System’s SysEx ID for identification in
+Range: Off/On larger MIDI setups.
+This parameter and the Prg. Map parameter concern the
+MIDI program change information sent on MIDI out when Dump System*
+a preset is recalled on NOVA System. For a complete system backup, press MENU. All the
+NOVA System’s global settings sent via MIDI as a MIDI
+Off: No program changes are sent on MIDI out. Data Dump. Presets are NOT included - see below.
+On: Program changes are sent on MIDI out when presets Dump Bank*
+are recalled. The entire User bank is sent via MIDI as a MIDI Data
+Dump when “Execute Dump” is performed.
+How to Dump via MIDI – Step by Step:
+• Connect the NOVA System’s MIDI Out to the MIDI In
+of a MIDI sequencing device.
+21
+
+MIDI
+• Set your sequencer to record on all MIDI channels
+(“Omni”) and start recording.
+• Set the NOVA System to dump either all data
+(System) or User Bank (see above) and press
+ENTER.
+*A computer with a standard MPU 401 MIDI interface is
+recommended and tested for best results.
+MIDI Clock
+With this function enabled you can receive a MIDI clock
+from an external MIDI unit and thereby enter the global
+tempo this way instead of tapping the tempo.
+22
+
+MIDI
+MIDI CC menu
+This menu allows for external MIDI control of effects
+on/off, tap tempo function and real-time control of the
+parameter assigned to the expression pedal.
+Basics
+• Press MENU
+• Select MIDI CC and press MENU
+• Select parameters using encoder D
+• Set MIDI CC values using encoder A, B or C
+MIDI CCs
+For each function you can set a MIDI Cc (control
+change) number. This is the number the external device
+must address followed by a value to control the
+parameter.
+Controllable parameters:
+Parameter Menu Name Values
+Tap Tempo Tap Tempo : Off, MIDI CC 0 to 127
+Drive DRV Off/On : Off, MIDI CC 0 to 127
+Compressor CMP Off/On : Off, MIDI CC 0 to 127
+Noise Gate NG Off/On : Off, MIDI CC 0 to 127
+EQ EQ Off/On : Off, MIDI CC 0 to 127
+Boost BST Off/On : Off, MIDI CC 0 to 127
+Modulation MOD Off/On : Off, MIDI CC 0 to 127
+Pitch PIT Off/On : Off, MIDI CC 0 to 127
+Delay DLY Off/On : Off, MIDI CC 0 to 127
+Reverb REV Off/On : Off, MIDI CC 0 to 127
+Expr. pedal Exp Pedal : Off, MIDI CC 0 to 127
+23
+
+RECALL - EDIT
+Recall Edit
+Recalling presets are done in slightly different ways As soon as one of the seven EFFECTS EDIT switches are
+depending on whether you are in Preset or Pedal mode. pressed NOVA System is in edit mode.
+In Edit mode you have several options:
+In Preset mode
+Presets are recalled pressing the switches marked 1, 2, Selecting effects: Press one of the EFFECTS EDIT buttons
+or 3. to enter edit mode.
+Example: Drive selected
+To increase the preset bank number, press and hold the
+Press several times to select the desired effects algorithm.
+switch in the upper left corner:
+Enable/Disable effect: Though you may be editing an
+effect, the effect block may not be active. Effects are
+enabled/disabled by pressing the corresponding EFFECT
+switch.
+To decrease the preset bank number; press and hold the
+switch in the lower left corner:
+In Pedal mode
+Exit edit mode without storing changes: If you want exit edit
+Presets are still recalled using switches marked 1, 2 or 3. mode without storing your changes this can be done in two
+However in this mode you must press and hold the ways. Either press MENU, or press and hold the EFFECTS
+switches for about 0.5 second. EDIT button of the effect you are currently editing.
+Preset banks are still selected as described above.
+A dot in the numeric display (see illustration below),
+indicates that the current preset has been edited.
+24
+
+STORE - DELETE
+Store Delete
+A preset can be stored in two ways. We call them “Quick Presets in the User bank can also be deleted for
+store” and “Normal store”. “Quick store” is typically used “cleaning up”.
+when you have made changes to a preset and want to
+store the preset with the same name at the same - Press STORE once
+location. “Normal store” is used if you want to change - Select DELETE using Encoder D
+preset location and maybe the name as well. - Press STORE to confirm
+Quick store- press and hold STORE for 2 seconds. The That’s it!
+preset is now stored at the current location with the same
+name.
+If you are trying to store a factorypreset using
+“Quick store”, you will automatically be directed to
+“Normal store” mode.
+Normal Store- press STORE once:
+Now the following controls are available:
+- Encoder A selects preset location
+- Encoder B selects preset name characters
+- Encoder C changes characters
+- Encoder D selects recall, delete or store mode
+When selections are made press STORE to confirm.
+25
+
+EFFECTS - DRIVE
+NOVA Drive Technology - a unique, new drive and distortion circuit that gets you the best of both worlds: World-class
+analog distortion and overdrive with digital control. This is the real deal – no modeling. While the NDT™ is 100% analog
+and physically separated from the digital effects, its control potmeters are digital. This way you can tweak, store and recall
+as many drive settings as you want - you can even hook up an expression pedal and control the amount of distortion in
+real-time. Its wide gain range covers your every need from light breakup to heavy distortion.
+Overdrive Distortion
+The NOVA System overdrive emulates the classic The nature of distortion compared to overdrive is
+overdrive originally only in found tube amps. The more fat and aggressive with slightly less tone
+range goes from slightly warm and subtle overdrive definition and dynamics. It allows for full and
+to high gain for screaming leads. massive chords and fluent compressed leads.
+Gain Gain
+Gain sets the amount of overdrive. Lower settings give a Gain sets the amount of distortion. From the fat and
+slightly fatter yet still “clean” sound. Medium settings beefy to the screaming more compressed.
+provides nice crunch and higher gain settings provides
+singing overdrive as known from cranked up tube amps. Tone
+Sets the amount of high-end frequencies.
+Tone
+Sets the amount of high-end frequencies. Level
+General level for the distortion effect.
+Level
+General level for the drive effect. Boost Level
+Range: 0 to 10 dB
+Boost Level Sets the amount of boost for the effect. This level is
+Range: 0 to 10 dB limited by level set by the Boost Max parameter found in
+Sets the amount of boost for the effect. This level is the levels menu.
+limited by level set by the Boost Max parameter found in
+the levels menu.
+26
+
+EFFECTS - COMPRESSOR
+Compressor NOVA System compressors
+Editing compressor parameters:
+Introduction
+• Press COMP
+A compressor is used to control the dynamic content of a
+• Change pages using encoder D
+signal. It can be used both for leveling out the signal’s
+• Adjust parameters using encoders A-C
+dynamics (thereby letting your guitar sound stand out
+clearer) and also for more radical, very recognizable Advanced Type
+effects.
+This type offers full control over all compression
+NOVA System offers three types of compression.
+parameters.
+Advanced for full access to all compression parameters
+and sustaining
+Threshold
+Range: -30 dB to 0 dB
+Illustration – Basic Compression When the signal exceeds the set threshold point, the
+compressor is activated. The signal’s level above this
+threshold point is processed according to the settings of
+the Ratio, Attack and Release parameters (see below).
+Ratio
+Range: Off, 1.12:1 to Infinite:1
+This parameter determines how hard the signal is
+compressed.
+Example:With a Ratio setting of 2:1, an input signal with
+4 dB above threshold is reduced to only 2 dB on the
+output. The “infinite” setting gives you a limiter function.
+Attack
+Range: 0.3 ms to 140 ms
+As this illustration shows, the output signal is attenuated
+The attack time is the response time of the compressor.
+relative to the set ratio when the input signal exceeds the
+The shorter the Attack time, the sooner the compressor
+threshold point. The attack parameter specifies how fast
+will reach the specified ratio after the signal rises above
+the attenuation is achieved. The Level parameter allows
+the threshold point.
+you to manually compensate for the perceived level
+difference resulting from compression.
+Release
+Range: 50 to 2000 ms
+The release time is the time it takes for the compressor
+to release the gain reduction of the signal after the Input
+signal drops below the threshold point again.
+27
+
+EFFECTS - COMPRESSOR
+Sustaining and Percussive Types
+Level
+Range: - dB to +12 dB
+Depending on you compression settings you may prefer The Sustaining and Percussive Types hold fewer handles
+to lower the output level of the compression block by a than the Advanced mode. Individually tuned these types
+few dB. Use the compressor Level parameter to do so. allow you two easily setup commonly used compression
+styles.
+Use the Sustaining typeto achieve the subtle
+compression settings that will give you plenty of sustain
+without “smashing” the sound too hard.
+Use the Percussive typeto obtain the hard, obvious and
+easy recognizable compression often achieved with
+classic stomp box compressors
+Though tuned differently the two types hold common
+parameters.
+Drive
+Range: 1 to 20
+A combination of Threshold and Ratio parameters that
+sets the compression amount. Though auto make-up
+gain is applied you may need to adjust the level slightly
+using the Gain parameter when extreme settings are
+used.
+Response
+Range: 1 to 10
+Sets the time it takes for the Compressor to release the
+compression. The lower setting the more you will hear
+the compression.
+Level
+Range: -12 to +12 dB
+Depending on the settings of Drive and Response
+parameters you may need to adjust the Level.
+28
+
+EFFECTS - EQ & NOISE GATE
+EQ Noise Gate
+NOVA System features a 3 band EQ that can be set A Noise Gate is generally used to attenuate the signal
+either for individual presets or as an overall EQ for the when no signal is present and thus attenuate the hiss,
+entire unit. hum and other noise you might have on your system. Of
+course a Noise Gate is not the solution to any noise
+Editing EQ and Noise Gate parameters: problem. You should try to avoid the noise in the first
+• Press EQ to enter EQ/Gate edit mode place. Problems with noise can be introduced by a
+• Change pages using encoder D number of different things. In a guitar signal chain the
+• Adjust parameters using encoders A-C typical problems are; poor cables, poorly shielded
+• Noise Gate parameters are located after EQ pickups, power supplies placed close to signal cables
+parameters and other pedals.
+There will, however, always be a certain amount of noise
+For each of the three bands, the following parameters in any setup. The Noise Gate can help you attenuate the
+are available: noise when you are not playing. Be careful when setting
+Threshold and Release parameters. A too high Threshold
+setting will result in e.g. not “opening” the Gate. A too
+Freq
+slow Release time will result in cutting your attack.
+Range: 41 Hz to 20 kHz
+This parameter sets the center frequency of the
+The Noise Gate parameters are placed in the EQ block
+frequency range that you want to attenuate or boost.
+after the EQ parameters.
+• Press and hold the EQ button to select between Line
+Gain
+and Drive inputs.
+Range: -12 dB to +12 dB
+• Be sure that “Gate” is set to “on”
+Use this parameter to attenuate or boost the frequency
+range selected with the Freq(uency) parameter.
+Width
+Range: 0.3 to 1.6 octaves
+This parameter sets the width of the frequency range • Scroll past the EQ pages until the following two
+around the frequency specified by the freq(uency) screens with Noise Gate parameters appear.
+parameter.
+29
+
+EFFECTS - EQ & NOISE GATE
+Mode
+Range. Hard or Soft
+General overall mode that determines how fast the Noise
+Gate should attenuate/dampen the signal when below
+Threshold.
+Threshold
+Range: -60 dB to 0 dB
+The threshold point determines at what point the Noise
+Gate should start attenuating the signal.
+To set this parameter; set the Damp parameter to e.g. 50
+dB. Then start turning up the Threshold value from -60
+dB to the point where desired dampening is actually
+achieved. This little experiment will of course require that
+the Damp parameter is set different from 0 dB - as 0 dB
+means: no damping.
+Damp
+Range: 0 dB to 90 dB
+This parameter determines how hard the signal should
+be attenuated when below the set Threshold. You could
+argue that a max dampening would be appropriate
+always, but you would also like to have a smooth
+transition between the “gated/attenuated” stage and the
+“open” stage. The more dB that must be released the
+more obvious the Noise Gate might seam.
+Release
+Range: 0 dB/sec to 200 dB/sec
+The Release parameter determines how fast the signal is
+released when the Input signal rises above the Threshold
+point. As a rule of thumb this setting should be set fairly
+high.
+30
+
+EFFECTS - PHASER
+Phaser
+Fb – FeedBack
+Range: -100 to +100%
+The electronic phasing effect is created by splitting an
+This parameter controls the amount of feed back in the
+audio signal into two paths. One path treats the signal
+Phaser. Negative values inverse the phase of the signal
+with an all-pass filter, which preserves the amplitude of
+that is fed back to the algorithm’s Input.
+the original signal and alters the phase. The amount of
+change in phase depends on the frequency. When
+Mix
+signals from the two paths are mixed, the frequencies
+Range: 0 to 100%
+that are out of phase will cancel each other out, creating
+This parameter sets the relationship between the dry
+the phaser’s characteristic notches.
+signal and the level of the effect in this Effect Block.
+Speed
+Range: 0.050 Hz to 20 Hz
+Sets the speed of the effect.
+Tempo
+Range: Disable, 1 to 1/32T (T=Triplet & D=Dotted)
+When set to any value between 1 and 1/32T, the NOVA
+System’s Global Tempo is subdivided according to this
+setting. When set to “Ignore”, the speed set by the Speed
+parameter is used instead.
+The Tap Master parameter – located in the Utility
+menu – specifies whether the Globaltempo or the
+tempo set by the Speed parameter in each preset
+should be used at preset change.
+Depth
+Range: 0 to 100%
+The Depth parameter specifies the intensity of the effect.
+The value represents the amplitude of the modulating
+waveform.
+Range
+Range: Low or High
+The Range parameter determines whether the phasing is
+focused on the low- or the high-end frequencies.
+31
+
+EFFECTS - TREMOLO
+Tremolo
+Width (cid:13)
+Pulsewidth
+A tremolo is basically a change of the signal level
+controlled by an LFO. The NOVA System offers
+variations of this effect; ranging from soft and smooth to
+hard and aggressive.
+Range: 0 to 100%
+If you set this parameter e.g. to 20% with a Type setting
+Speed
+of Hard, the waveform will be on for 80% of one period.
+Range: 0.050 Hz to 20 Hz
+With a Type setting of Soft, a 50% setting would yield a
+This parameter sets the speed of the effect.
+full sine wave, whilst 0% and 100% would yield a crest-
+to-peak and peak-to crest curve, respectively.
+Tempo
+Range: Disable, 1 to 1/32T (T=Triplet & D=Dotted). When Hi-Cut
+set to any value between 1 and 1/32T, the NOVA
+Range: 20 Hz to 20 kHz
+System’s Global Tempo is subdivided according to this
+This parameter attenuates the high frequencies of the
+setting. When set to “Ignore”, the speed set by the Speed
+Tremolo effect. Use the hi-cut filter to create a less
+parameter is used instead.
+dominant tremolo effect without changing the effect’s
+depth.
+Depth
+Range: 0 to 100%
+The Depth parameter specifies the intensity of the effect.
+The value represents the amplitude of the modulating
+waveform.
+Type
+Range: Soft or Hard (Sine or Square)
+Two waveforms are available as modulation sources for
+the tremolo effect. Setting this parameter to hard results
+in a steeper effect. Listen and choose the appropriate
+option.
+Soft
+Hard
+(cid:13)
+32
+(cid:13)
+
+EFFECTS - PANNER
+Panner
+Introduction
+The Panner simply pans the signal between the left and
+the right channel. Use this for extreme stereo perspective
+effects.
+Speed
+Range: 0.050 Hz to 20 Hz
+Sets the speed of the effect.
+Tempo
+Range: Ignore, 2 to 1/32T (T=Triplet & D=Dotted)
+When set to any value between 2 and 1/32T, the NOVA
+System’s Global Tempo is subdivided according to this
+setting. When set to “Ignore”, the speed set by the Speed
+parameter is used instead.
+The Tap Master parameter – located in the Utility
+menu – specifies whether the Globaltempo or the
+tempo set by the Speed parameter in each preset
+should be used at preset change.
+Depth
+Range: 0 to 100%
+When you set this parameter to 100%, the signal will
+sweep fully from the left to right. You will find, however,
+that for most applications, a more subtle setting is more
+appropriate, as it blends more elegantly with the overall
+sound.
+33
+
+EFFECTS - CHORUS
+Chorus
+Cho Dl – Chorus Delay
+Range: 0 to 50 ms
+The NOVA System Chorus offers a full range of
+As described earlier, a Chorus/Flanger is basically a
+parameters allowing you to create from simple classic
+Delay being modulated by an LFO. This parameter
+chorus sounds to the more exotic types.
+allows you to change the length of that Delay.
+The basic idea of a chorus effect is to split the signal and
+A typical Chorus uses Delays at approximately 10 ms,
+pitch modulate one of the signals slightly, then mix the
+while a Flanger uses Delays at around 0.8 ms.
+two signals again.
+Mix
+Speed
+Range: 0 to 100%
+Range: 0.050 Hz to 20 Hz
+This parameter sets the relationship between the dry
+This parameter sets the speed of the effect.
+signal and the level of the effect in this Effect Block.
+Tempo
+Range: Disable, 1 to 1/32T (T=Triplet & D=Dotted)
+When set to any value between 2 and 1/32T, the NOVA
+System’s Global Tempo is subdivided according to this
+setting. When set to “Ignore”, the speed set by the Speed
+parameter is used instead.
+The Tap Master parameter – located in the Utility
+menu – specifies whether the Globaltempo or the
+tempo set by the Speed parameter in each preset
+should be used at preset change.
+Depth
+Range: 0 to 100%
+The Depth parameter specifies the intensity of the effect.
+The value represents the amplitude of the modulating
+waveform.
+Hi-Cut
+Range: 20 Hz to 20 kHz
+This parameter reduces the high-end frequencies in the
+Chorus effect. Try using this parameter if you feel the
+Chorus effect is too dominant in your sound and turning
+down the Mix or Out level doesn’t give you the
+dampening of the Chorus effect you are looking for.
+34
+
+EFFECTS - FLANGER
+Flanger – Introduction
+FeedB – Feedback
+Range: -100 to 100
+The Flanger belongs to the same “family” of modulation
+This parameter controls the amount of Feedback
+effects as the Chorus effect. The signal is split, and one
+(Resonance) of the short modulated delay that causes
+of the signals is pitch modulated.
+the Flanging effect. When the Feedback is set too high
+The characteristic “flanging” sound occurs when part of
+(above approximately 90% to 95%), this might introduce
+the signal is slightly delayed and fed back to the input of
+internal Feedback, resulting in a squealing noise that in
+the effect algorithm. Experiment with the Feedback
+most cases is unwanted in flanging effects. Be aware of
+parameter to get a feeling for the achievable effects.
+this side-effect when experimenting at high volumes.
+Negative values inverse the phase of the signal that is
+Speed
+fed back to the algorithm’s Input.
+Range: 0.050 Hz to 20 Hz
+This parameter sets the speed of the effect. FB Cut – Feedback hi-cut
+Range: 20Hz to 20kHz
+Tempo
+A parameter that can attenuate the high-end frequencies
+Range: Disable, 1 to 1/32T (T= Triplet & D= Dotted) of the resonance created with the Feedback parameter.
+When set to any value between 2 and 1/32T, the NOVA
+System’s Global Tempo is subdivided according to this Fla Dl – Flanger Delay
+setting. When set to “Ignore”, the speed set by the Speed
+Range: 0 to 50 ms
+parameter is used instead.
+Typically, Delay values around 0.8 ms are used for
+Flanging effects, whereas Chorus effects occur with
+The Tap Master parameter – located in the Utility
+Delay times around 10ms. You are free, however, to
+menu – specifies whether the Global tempo or the
+choose Delay times from 0 to 50ms.
+tempo set by the Speed parameter in each preset
+should be used at preset change.
+Mix
+Range: 0 to 100%
+Depth
+This parameter sets the relationship between the dry
+Range: 0 to 100%
+signal and the level of the effect in this Effect Block.
+The Depth parameter specifies the intensity of the effect.
+The value represents the amplitude of the modulating
+waveform.
+Hi-Cut
+Range: 20 Hz to 20 kHz
+This parameter reduces the high-end frequencies in the
+Flanger effect. Try using this parameter if you feel the
+Flanger effect is too dominant in your sound and turning
+down the Mix or Out level doesn’t give you the
+dampening of the Flanger effect you are looking for.
+35
+
+EFFECTS - VIBRATO
+Vibrato
+The vibrato effect modulates the pitch of the incoming
+signal. The result is similar to the vibrato technique used
+by vocalists. In contrast to a chorus or flanger effect, no
+direct signal is combined with the pitch-modulated signal.
+Speed
+Range: 0.050 Hz to 20 Hz
+Sets the speed of the effect.
+Tempo
+Range: Disable, 1 to 1/32T (T= Triplet & D= Dotted).
+When set to any value between 2 and 1/32T, the NOVA
+System’s global tempo is subdivided according to this
+setting. When se to “Ignore”, the speed set by the s peed (cid:13)
+parameter is used instead.
+The Tap Master parameter – located in the Utility
+menu – specifies whether the Global tempo or the
+tempo set by the speed parameter in each preset
+should be used at preset change.
+Depth
+Range: 0 to 100%
+The Depth parameter specifies the intensity of the effect.
+The value represents the amplitude of the modulating
+waveform.
+Hi-Cut
+Range: 20 Hz to 17.8 kHz / off
+This parameter reduces the high-end frequencies in the
+vibrato effect. Try using this parameter if you feel the
+effect is too dominant.
+36
+
+EFFECTS - PITCH
+Detune Whammy
+The detune effect is – to some extent – similar to a The Whammy effect allows you to control the pitch of an
+chorus: The source signal is split and a specified amount added voice with an external Expression pedal.
+of the signal is detuned by an adjustable amount of cents For Factory presets including the Whammy effect, the
+(100 Cent = 1 semitone). The main difference between Expression pedal connected to the Pedal Input
+the detune effect and the chorus effect is that the detune automatically controls the Pitch parameter, i.e. it acts as
+amount does not change: the modulating pitch is a Whammy Pedal.
+specified as an offset to the original pitch.
+The detune effect comprises two voices. If you think your Pitch
+sound is simply too direct and clean, try a setting with Range: 0 to 100%
+only a few cent off, on both voices – e.g. +2 cent on This parameter sets the amount of pitch shift relative to
+voice 1 and -3 cent on voice 2. the Range setting. A connected pedal adjusts this
+parameter.
+Voice 1
+Range: -100 to 100 Dir – Direction
+This parameter determines the pitch offset of the first Range: Up – Down
+voice in the Detune block. This parameter determines whether the attached
+Expression pedal should increase or decrease pitch
+Voice 2
+when moved in either direction.
+Range: -100 to 100
+Per default, pitch is up when the pedal is at “toe down
+This parameter determines the pitch offset of the second
+position”, i.e. this is the “Up” position.
+Voice in the Detune block.
+Range
+Delay 1
+Range: 1-Oct/2-Oct
+Range: 0 to 50 ms
+This parameter sets the range of the pitching effect.
+This parameter specifies the delay of Voice 1.
+Select 2-Oct for an extreme and 1-Oct for the more
+Delay 2 commonly used, subtle Whammy effect.
+Range: 0 to 50 ms
+This parameter specifies the delay of Voice 2.
+Mix
+Range: 0 to 100%
+This parameter sets the relationship between the dry
+signal and the level of the effect in this Effect Block.
+37
+
+EFFECTS - PITCH
+Octaver
+The Octaver gives you an additional voice with a fixed
+pitch distance of either one or two octaves above or
+below the Input note.
+Dir - Direction
+Range: Up or Down
+This parameter sets whether the added voice should be
+above or below the input note.
+Range
+Range: 1 or 2 octaves
+This parameter sets the interval of the added voice. Use
+the Direct parameter to determine whether the added
+voice should be above or below the Input signal.
+Mix
+Range: 0 to 100%
+This parameter sets the relationship between the dry
+signal and the level of the effect in this Effect Block.
+38
+
+EFFECTS - PITCH SHIFTER
+Pitch Shifter
+FB1
+Range: 0 to 100%
+The NOVA System’s Pitch Shifter gives you two voices,
+This parameter determines how often the first voice will
+each with a fixed pitch distance to the input note. The
+be repeated by the delay.
+maximum range for this effect is +/- one octave. The
+signal processing within the NOVA System is so fast that
+FB2
+you will never notice any “searching” for notes as with
+Range: 0 to 100%
+many older pitch shifting units or octaver stomp boxes.
+This parameter determines how often the second voice
+will be repeated by the delay.
+Voice 1
+Range: -1200 to 1200 Cent
+Mix
+This parameter specifies the pitch of the first voice. As
+Range: 0 to 100%
+100 Cent equal 1 semitone, you can select any interval
+This parameter sets the relationship between the dry
+between two octave below the Input pitch to two octaves
+signal and the level of the effect in this effect block.
+above it.
+OutLev
+Voice 2
+Range: -100 to 0 dB
+Range: -2400 to 2400 Cent
+This parameter sets the output level for each of the
+This parameter specifies the pitch of the second voice.
+voices.
+As 100 cent equal 1 semitone, you can select any
+interval between two octaves below the Input pitch to two
+octave above it.
+Pan 1
+Range: -50 to 50
+This parameter sets the stereo position of the first voice.
+Pan 2
+Range: -50 to 50
+This parameter sets the stereo position of the second
+voice.
+Delay 1
+Range: 0 to 350ms
+This parameter sets the delay time for the first voice.
+Delay 2
+Range: 0 to 350ms
+This parameter sets the delay time for the second voice.
+39
+
+EFFECTS - PITCH
+Intelligent Pitch Shifter
+Voice 1-2
+Range: -13 to Unison to 13
+The NOVA System Intelligent pitch-shifter is a 2 voice
+The intelligent pitch-shifter can add two voices within the
+pitch-shifter that allows you to play harmonies within a
+selected scale. The pitch-shifter automatically calculates
+variety of scales in any key. The range of the voices
+the correct interval according to the played note, selected
+range from minus 13 scale-steps below to 13 scales
+scale type and key.
+steps above which equals +/- one octave plus a diatonic
+sixth.
+Level 1-2
+Range: -100 to 0 dB
+Key
+Sets the individual levels of the two voices.
+To allow the intelligent pitch-shifter to generate the
+correct voices it is necessary to enter which key you are
+Pan Position 1-2
+playing in. Keys are listed as: C, C#, D , D#, E, F, F#, G,
+Range: -/+50
+G#, A, A#, and B.
+Controls the panning position of each of the two voices.
+0 is center position. By panning the voices you can
+Scale
+achieve a very wide spread sound.
+With the scale parameter you set the type of scale you
+intend to play. NOVA System covers the following scales-
+Delay 1-2
+types:
+Delay range: 0-50ms
+To a get at natural sounding result is it obvious to
+Label Full name Scale steps
+simulate that no two guitarist would play notes precisely
+Ionian Ionian 1,2,3,4,5,6,7
+at the same time. To simulate this you can delay the
+Dorian Dorian 1,2,b3,4,5,6,b7 harmony voices slightly. Just 10-20ms of delay will give
+Phrygi Phrygian 1,b2,b3,4,5,b6,b7 in a smooth and natural sounding result.
+Lydian Lydian 1,2,3,#4,5,6,7
+Mixoly Mixolydian 1,2,3,4,5,6,b7 Mix
+Aeolia Aeolian 1,2,b3,4,5,b6,b7 Range: 0 to 100%
+Locria Locrian 1,b2,b3,4,b5,b6,b7 Sets the overall mix between the dry and processed
+signal.
+PntMin Pentatonic minor 1,b3,4,5,b7
+PntMaj Pentatonic major 1,2,3,5,6
+OutLev – Out Level
+Blues Blues 1,b3,4,b5,5,b7
+Range: -100 to 0 dB
+DimWhl Diminished whole 1,2,b3,4,b5,b6,6,7 This parameter sets the overall output level of this effect.
+Whole Wholetone 1,2,3,#4,#5,b7
+HrmMin Harmonic minor 1,2,b3,4,5,b6,7
+40
+
+EFFECTS - DELAY
+Delay – Introduction
+Fb – Feedback
+Range: 0 to 100%
+The NOVA System offers not only standard delay types
+This parameter sets the amount of feedback from the
+but also a few new ones. We believe that the following
+output of the effect back to its input. Use the Feedback
+types should cover all your delay needs:
+parameter to set how many repeats of the signal you
+would like to have.
+• Clean
+• Analog
+Please use high settings with extreme caution.
+• Tape
+Due to the spillover feature of the NOVA System,
+• Ping Pong
+there is no way to immediately cut off the delay
+• Dynamic Delay
+when you get an internal feedback at settings above
+• Dual Delay
+100%. If you do get internal feedback, either switch to a
+different delay type or to a different preset that uses the
+All delays feature true “spillover” – meaning the repeats
+delay, two times in succession.
+of the delay can ring out when you change presets.
+The tempo of the delay can be defined in relation to a
+LoCut – Feedback LoCut
+Global tempo, which can be tied to an incoming MIDI
+Range: 20 Hz to 20 kHz
+clock.
+Use this parameter to attenuate the frequencies below a
+Common Parameters – Delay given frequency.
+As with the Feedback Hi-Cut parameter, the delays may
+The following parameters are identical for all delay types. blend in more nicely with the overall sound if you “thin
+Parameters specific to certain delays are described in out” the effect at the low end.
+the relevant sections.
+HiCut – Feedback Hi-Cut
+Delay Time Range: 20 Hz to 20 kHz
+Range: 0 to 1800 ms With digital technology, every delay can be a precise
+This parameter sets the time between the delay repeats. reproduction of the Input signal. But especially with long
+This is also known as the “length” of the delay. delay times, this is not always desirable, as these pristine
+delays may disturb the original signal and result in a
+Tempo “washed-out” sound. To compensate for this, use the hi-
+cut filter, thereby emulating analog or tape style delay
+Range: Disable, 1 to 1/32T (T= Triplet & D= Dotted)
+units. The Feedback Hi-Cut parameter attenuates the
+When set to any value between 2 and 1/32T, the NOVA
+frequencies over the set frequency, resulting in a more
+System’s global tempo is subdivided according to this
+“analog” sound that in many cases that will blend in
+setting. When set to “Ignore”, the speed set by the Speed
+better with the overall sound.
+parameter is used instead.
+The Tap Master parameter – located in the Utility Mix
+menu – specifies whether the Global tempo or the
+Range: 0 to 100%
+tempo set by the Speed parameter in each preset
+This parameter sets the relationship between the dry
+should be used at preset change.
+signal and the level of the effect in this effect block.
+41
+
+EFFECTS - DELAY
+Clean Ping Pong
+The Clean Delay effect is the most simple and basic The Ping Pong delay causes the delay to alternate
+delay type in the NOVA System. It comprises a single between the left and right channels, resulting a very nice
+delay line with all the common parameters. stereo feel. Use the Width parameter to determine how
+“stereo” you want this effect to be.
+All Common Parameters
+Please refer to the section “Delay – Introduction” for a In addition to the “common” parameters described in
+description of this Delay’s parameters. the introduction of the delay section, this delay has
+the following parameters:
+Analog
+Width
+This delay simulates analog style delays, including the
+Range: 0 to 100%
+clipping sound that occurs when the feedback parameter
+The Width parameter determines how far the left and
+is yanked past the 100% point. Try experimenting with a
+right repetitions should spread from the center.
+high feedback level combined with high and low cut
+filters. Dynamic Delay
+In addition to the “common” parameters described in
+The Dynamic Delay is a feature that was initially
+the introduction of the delay section, this delay has
+introduced in the well-recognized TC 2290. It allows the
+the following parameters:
+dynamics of the Input level to actively alter the delay
+output level, which leaves the source signal clear and
+Drive
+undisturbed while you play. The Dynamic Delay
+Range: 0 to 24 dB delicately complements your performance.
+Use this parameter to simulate the slight deterioration of Use the Sense parameter to determine when the delays
+the delay repeats due to clipping. should re-surface. Use the Offset parameter to widen the
+stereo image.
+Tape
+In addition to the “common” parameters described in
+This delay includes the “Drive” parameter that can be
+the introduction of the delay section, this delay has
+used to add the saturation to the delay repeats often
+the following parameters:
+associated with Tape delays.
+In addition to the “common” parameters described in Offset
+the introduction of the delay section, this delay has
+Range: 0 to 200
+the following parameters:
+This parameter offsets the delay repeats in the right
+channel only. For a “wide” stereo effect, the delay in the
+Drive two channels should not occur at exactly the same time.
+Range: 0 to 24 dB For a “wide” effect, a few milliseconds should do the
+The higher you set the Drive parameter, the more trick. Using more than that will give you anything from a
+distorted the repeats become. The “drive” simulated by generous slap-back effect on the repeats to more
+this effect has a very “analog” feel. extreme effects.
+42
+
+EFFECTS - DELAY
+FX Mute - Spill-over
+Sense – Sensitivity
+Range: -50 to 0 dB
+The FX Mute parameter determines how the Reverb and
+The sensitivity parameter determines how soon the delay
+Delay effects should behave when changing between
+repeats should become audible in relation to the Input
+presets and when bypassing one of these effects.
+signal level. This parameter acts a threshold between
+The FX Mute parameter is found in the utility menu.
+your guitar signal and the delay repeats.
+Soft:
+Damp
+Delay and Reverbs will “ring out”
+Range: 0 to 100 dB
+As explained in the introduction, the Dynamic Delay
+Delays have true spillover, meaning that if you e.g. have
+attenuates the delay repeats level based on the present
+a long delay time and the FX Mute parameter is set to
+Input. The Damp parameter sets the amount of
+“Soft” the delays will continue even if you change to a
+attenuation.
+preset that holds completely different delay settings.
+Rel – Release Reverbs can also spill over at preset change but will use
+Range: 20 to 1000 ms the settings in the new preset.
+Determines how fast the attenuation of the delay repeats
+is released. Hard:
+Delay and Reverbs will mute.
+Dual Delay
+This true Dual Delay lets you set two independent delay
+taps, each with its own Tempo parameter, High and Low
+cut, as well as a “Pan” parameter.
+In addition to the “common” parameters described in
+the introduction of the delay section, this delay has
+the following parameters:
+Pan1 & Pan2
+Range: 50L to 50R
+Sets the panning position of the delay repeats for delay
+lines 1 and 2.
+43
+
+EFFECTS - REVERB
+Reverb Types Common Reverb Parameters
+The NOVA System features four different reverb classics. Decay
+All types have the same editable parameters, but the Range: 0.1 to 20 seconds
+reverbs’ characteristics vary. The Decay parameter determines the length of the
+Reverb Diffuse Field. The length is defined as the time it
+Spring takes for the Diffuse Field to decay approximately by 60
+The Spring algorithm is designed to reproduce the sound dB.
+of old spring reverbs, such as the ones used in vintage
+guitar amps. PreDly – Pre Delay
+Range: 0 to 100 ms
+Hall This parameter defines a short Delay placed between the
+The Hall algorithm simulates a rather large hall and direct signal and the reverb diffuse field. Use pre delay to
+preserves the natural characteristics of the source keep the source material clear and undisturbed from the
+material. Excellent when you strive for a discrete reverb reverb diffuse field arriving shortly after.
+with medium to long decay times.
+Shape
+Room Range: Round, Square, Curved
+The Living Room type simulates a relatively small, well The shape of the simulated room is of great importance
+furnished room. In such a room, many reflections are to the reverb characteristics. Try the various shapes.
+absorbed by soft materials, and the source signal is
+reflected and sustained mainly from the walls. Size
+Range: Small, Medium or Large
+Plate Though the decay time can be altered from 0.1 to 20
+Before the digital era, either reverberating springs or seconds on all reverb types, selecting a predefined
+large metallic plates were used to create reverb effects. (room) size may get you closer to the sound you desire.
+Plate reverbs sound diffuse and bright. They can be used To achieve a natural sounding emulation of a big room
+to make the processed signal “stand out”, rather than with long decay, select “Large”. Use the medium and
+blend naturally. small settings accordingly for simulations of smaller
+rooms. Again: - building the perfect guitar sound is not
+These brief introductions should only give you a hint in always about doing the most obvious. You may find cool
+terms of choosing the right one for a given application. settings by swimming against the stream.
+Take some time to listen to the different types,
+experiment and don’t be afraid to be innovative! Hi Col & Lo Col – (High Color/Low Color)
+Hi Color range: Wool, Warm, Real, Clear, Bright, Crisp
+and Glass.
+44
+
+EFFECTS - REVERB
+Lo Color range:
+Thick, Round, Real, Light, Tight, Thin, NoBass
+These parameters give you six variations of the reverb’s
+low and high frequency ranges.
+The two Color parameters can really change the
+characteristics and style of the reverb – from “dark” and
+“ambient” to “crisp” and “bright”.
+Hi Lev & Lo Lev – (High Level/Low Level)
+Range: -25 to 25
+Use the Hi Lev and Lo Lev parameters to emphasize or
+attenuate the selected Hi and Lo Color types.
+Early
+Range: -100 to 0 dB
+This parameter sets the level of the reverb’s initial
+reflections (early reflections).
+RevLev – Reverb Level
+Range: -100 to 0 dB
+This parameter sets the level of the reverb’s diffuse field.
+Diff – Diffuse
+Range: -25 to 25
+With this parameter, you can fine-tune the density of the
+reverb’s diffuse field. It is set automatically when you
+select a decay time and allows you to reduce flutter in
+the diffuse field to an absolute minimum.
+Mix
+Range: 0 to 100%
+This parameter sets the relationship between the dry
+signal and the level of the effect in this effect block.
+45
+
+TECHNICAL SPECIFICATIONS
+Analog Inputs
+Connectors, balanced: ¼"phone jack
+Impedance - Balanced/Unbalanced Line: 21/13 kOhm
+Line Input Level @ 0 dBFS: 24 dBu to 0 dBu
+Line Sensitivity @ 12 dB headroom: 12 dBu to -12 dBu
+Drive Input Level @ 0 dBFS: 18 dBu to -6 dBu
+Drive Sensitivity @ 12 dB headroom: 6 dBu to -18 dBu
+THD: < -100 dB (0,001 %) @ 1 kHz
+Crosstalk: <-85 dB, 20 Hz to 20 kHz
+A to D Conversion: 24 bit, 128 x oversampling bitstream
+Analog Outputs
+D to A Conversion: 24 bit, 128 x oversampling bitstream
+D to A Delay: 0.63 ms @ S.R.= 48 kHz
+Connectors, balanced: ¼"phone jack
+Output Impedance: 40 Ohm
+Max. Output Level
+(Balanced/Unbalanced): 20 dBu/14 dBu, R-load = 1200 Ohm
+Output Range: 20 dBu / 14 dBu / 8 dBu / 2 dBu
+Dynamic Range: > 104 dB, 20 Hz to 20 kHz
+THD: <-98 dB (0.0013 %) @ 1 kHz
+Frequency Response: +0/-0.3 dB, 20 Hz to 20 kHz
+EMC
+Complies with: EN 55103-1 and EN 55103-2
+FCC part 15, Class B, CISPR 22, Class B
+Safety
+Certified to: IEC 65, EN 60065, UL6500 and CSA E60065
+CSA FILE #LR108093
+Environment
+Operating Temperature: 32° F to 122° F (0° C to 50° C)
+Storage Temperature: -22° F to 167° F (-30° C to 70° C)
+Humidity: Max. 90 % non-condensing
+Control Interface
+MIDI: In/Out/Thru: 5 Pin DIN
+Pedal: 1/4" phone jack
+Supplementary
+Display: 24x 2 character LCD
+Dimensions: 11.2" x 3.5" x x 10.25" (284 x89 x 267 mm)
+Weight: 4.1 lb. (1.85 kg)
+Mains Voltage: 100 to 240 VAC, 50 to 60 Hz (auto-select)
+Power Consumption: <15 W
+Warranty Parts and labor: 1 year
+Due to continuous development, these specifications
+are subject to change without notice.
+46
