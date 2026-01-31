@@ -86,32 +86,32 @@ dotnet new sln -n NovaApp
 ### Step 2.3: Create project structure
 ```powershell
 # Domain layer (core business logic)
-dotnet new classlib -n NovaApp.Domain -f net8.0
+dotnet new classlib -n Nova.Domain -f net8.0
 
 # Application layer (use cases, commands)
-dotnet new classlib -n NovaApp.Application -f net8.0
+dotnet new classlib -n Nova.Application -f net8.0
 
 # Infrastructure layer (file I/O, config)
-dotnet new classlib -n NovaApp.Infrastructure -f net8.0
+dotnet new classlib -n Nova.Infrastructure -f net8.0
 
 # MIDI layer (hardware abstraction)
-dotnet new classlib -n NovaApp.Midi -f net8.0
+dotnet new classlib -n Nova.Midi -f net8.0
 
 # UI layer (Avalonia XAML)
-dotnet new avalonia.mvvm -n NovaApp.UI -f net8.0
+dotnet new avalonia.mvvm -n Nova.Presentation -f net8.0
 
 # Test project
-dotnet new xunit -n NovaApp.Tests -f net8.0
+dotnet new xunit -n Nova.Tests -f net8.0
 ```
 
 ### Step 2.4: Add projects to solution
 ```powershell
-dotnet sln add NovaApp.Domain
-dotnet sln add NovaApp.Application
-dotnet sln add NovaApp.Infrastructure
-dotnet sln add NovaApp.Midi
-dotnet sln add NovaApp.UI
-dotnet sln add NovaApp.Tests
+dotnet sln add Nova.Domain
+dotnet sln add Nova.Application
+dotnet sln add Nova.Infrastructure
+dotnet sln add Nova.Midi
+dotnet sln add Nova.Presentation
+dotnet sln add Nova.Tests
 ```
 
 ### Step 2.5: Set up project dependencies
@@ -119,24 +119,24 @@ dotnet sln add NovaApp.Tests
 # Navigate to each project and add references
 
 # Application depends on Domain
-cd NovaApp.Application
-dotnet add reference ../NovaApp.Domain
+cd Nova.Application
+dotnet add reference ../Nova.Domain
 
 # MIDI depends on Domain
-cd ../NovaApp.Midi
-dotnet add reference ../NovaApp.Domain
+cd ../Nova.Midi
+dotnet add reference ../Nova.Domain
 
 # Infrastructure depends on Domain + Application
-cd ../NovaApp.Infrastructure
-dotnet add reference ../NovaApp.Domain ../NovaApp.Application
+cd ../Nova.Infrastructure
+dotnet add reference ../Nova.Domain ../Nova.Application
 
 # UI depends on all layers
-cd ../NovaApp.UI
-dotnet add reference ../NovaApp.Domain ../NovaApp.Application ../NovaApp.Infrastructure ../NovaApp.Midi
+cd ../Nova.Presentation
+dotnet add reference ../Nova.Domain ../Nova.Application ../Nova.Infrastructure ../Nova.Midi
 
 # Tests depend on all layers
-cd ../NovaApp.Tests
-dotnet add reference ../NovaApp.Domain ../NovaApp.Application ../NovaApp.Infrastructure ../NovaApp.Midi ../NovaApp.UI
+cd ../Nova.Tests
+dotnet add reference ../Nova.Domain ../Nova.Application ../Nova.Infrastructure ../Nova.Midi ../Nova.Presentation
 ```
 
 ---
@@ -147,34 +147,34 @@ dotnet add reference ../NovaApp.Domain ../NovaApp.Application ../NovaApp.Infrast
 
 #### Domain project (minimal dependencies)
 ```powershell
-cd NovaApp.Domain
+cd Nova.Domain
 dotnet add package FluentResults
 ```
 
 #### Application project
 ```powershell
-cd ../NovaApp.Application
+cd ../Nova.Application
 dotnet add package FluentResults
 dotnet add package Microsoft.Extensions.DependencyInjection.Abstractions
 ```
 
 #### MIDI project
 ```powershell
-cd ../NovaApp.Midi
+cd ../Nova.Midi
 dotnet add package DryWetMidi --version 7.0.0
 dotnet add package FluentResults
 ```
 
 #### Infrastructure project
 ```powersharp
-cd ../NovaApp.Infrastructure
+cd ../Nova.Infrastructure
 dotnet add package Microsoft.Extensions.Configuration
 dotnet add package Microsoft.Extensions.Configuration.Json
 ```
 
 #### UI project (Avalonia + MVVM)
 ```powershell
-cd ../NovaApp.UI
+cd ../Nova.Presentation
 dotnet add package Avalonia
 dotnet add package Avalonia.Desktop
 dotnet add package Avalonia.Themes.Fluent
@@ -184,7 +184,7 @@ dotnet add package DependencyInjection.Factory
 
 #### Test project
 ```powershell
-cd ../NovaApp.Tests
+cd ../Nova.Tests
 dotnet add package xunit --version 2.6.0
 dotnet add package xunit.runner.visualstudio
 dotnet add package Microsoft.NET.Test.Sdk
@@ -288,7 +288,7 @@ Status: **In Development (Modul 1: Connection + Bank Dump)**
 ```bash
 dotnet build
 dotnet test
-dotnet run --project NovaApp.UI
+dotnet run --project Nova.Presentation
 ```
 
 ## Architecture
@@ -343,9 +343,9 @@ Add link to new Modul 1 tech detail file:
 
 ### Step 7.1: Create dummy test
 ```powershell
-# Create file: NovaApp.Tests/DummyTest.cs
-cat > NovaApp.Tests/DummyTest.cs << 'EOF'
-namespace NovaApp.Tests;
+# Create file: Nova.Tests/DummyTest.cs
+cat > Nova.Tests/DummyTest.cs << 'EOF'
+namespace Nova.Tests;
 
 public class DummyTest
 {

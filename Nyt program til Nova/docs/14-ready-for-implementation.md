@@ -182,25 +182,25 @@ NovaApp/
 ├── README.md
 ├── CONTRIBUTING.md
 ├── .gitignore
-├── NovaApp.Domain/
-│   ├── NovaApp.Domain.csproj
+├── Nova.Domain/
+│   ├── Nova.Domain.csproj
 │   └── Preset.cs (empty template)
-├── NovaApp.Application/
-│   ├── NovaApp.Application.csproj
+├── Nova.Application/
+│   ├── Nova.Application.csproj
 │   └── ConnectUseCase.cs (empty template)
-├── NovaApp.Infrastructure/
-│   ├── NovaApp.Infrastructure.csproj
+├── Nova.Infrastructure/
+│   ├── Nova.Infrastructure.csproj
 │   └── FileService.cs (empty template)
-├── NovaApp.Midi/
-│   ├── NovaApp.Midi.csproj
+├── Nova.Midi/
+│   ├── Nova.Midi.csproj
 │   └── IMidiPort.cs (interface)
-├── NovaApp.UI/
-│   ├── NovaApp.UI.csproj
+├── Nova.Presentation/
+│   ├── Nova.Presentation.csproj
 │   ├── App.axaml
 │   ├── MainWindow.axaml
 │   └── MainWindow.axaml.cs
-└── NovaApp.Tests/
-    ├── NovaApp.Tests.csproj
+└── Nova.Tests/
+    ├── Nova.Tests.csproj
     ├── DummyTest.cs
     └── Fixtures/
         ├── BankDumps/
@@ -269,7 +269,7 @@ See `docs/12-environment-setup-checklist.md` Troubleshooting section for more.
 - [ ] `dotnet test` shows 1 passed
 - [ ] Git repo initialized with clean history
 - [ ] Visual Studio opens solution smoothly
-- [ ] Test fixtures copied to NovaApp.Tests/Fixtures/
+- [ ] Test fixtures copied to Nova.Tests/Fixtures/
 - [ ] First commit made and pushed (if using GitHub)
 
 **Status: Ready to begin Modul 1 implementation** ✨

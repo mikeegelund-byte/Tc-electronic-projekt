@@ -25,11 +25,11 @@
 
 **Status**: Not started  
 **Estimated**: 30 min  
-**File**: `NovaApp.Midi/IMidiPort.cs`
+**File**: `Nova.Midi/IMidiPort.cs`
 
 ### Test First (RED)
 ```csharp
-namespace NovaApp.Tests;
+namespace Nova.Tests;
 
 public class MidiPortContractTests
 {
@@ -62,12 +62,12 @@ public class MidiPortContractTests
 
 ### Code (GREEN)
 
-File: `NovaApp.Midi/IMidiPort.cs`
+File: `Nova.Midi/IMidiPort.cs`
 
 ```csharp
 using FluentResults;
 
-namespace NovaApp.Midi;
+namespace Nova.Midi;
 
 /// <summary>
 /// Abstraction for MIDI port I/O operations.
@@ -157,11 +157,11 @@ dotnet build
 
 **Status**: Not started  
 **Estimated**: 45 min  
-**File**: `NovaApp.Tests/Mocks/MockMidiPort.cs`
+**File**: `Nova.Tests/Mocks/MockMidiPort.cs`
 
 ### Test First (RED)
 ```csharp
-namespace NovaApp.Tests;
+namespace Nova.Tests;
 
 public class MockMidiPortTests
 {
@@ -216,13 +216,13 @@ public class MockMidiPortTests
 
 ### Code (GREEN)
 
-File: `NovaApp.Tests/Mocks/MockMidiPort.cs`
+File: `Nova.Tests/Mocks/MockMidiPort.cs`
 
 ```csharp
 using FluentResults;
-using NovaApp.Midi;
+using Nova.Midi;
 
-namespace NovaApp.Tests;
+namespace Nova.Tests;
 
 /// <summary>
 /// Mock MIDI port for unit testing. No real hardware required.
@@ -336,11 +336,11 @@ dotnet build
 
 **Status**: Not started  
 **Estimated**: 30 min  
-**File**: `NovaApp.Domain/Midi/SysExBuilder.cs`
+**File**: `Nova.Domain/Midi/SysExBuilder.cs`
 
 ### Test First (RED)
 ```csharp
-namespace NovaApp.Tests;
+namespace Nova.Tests;
 
 public class SysExBuilderTests
 {
@@ -384,10 +384,10 @@ public class SysExBuilderTests
 
 ### Code (GREEN)
 
-File: `NovaApp.Domain/Midi/SysExBuilder.cs`
+File: `Nova.Domain/Midi/SysExBuilder.cs`
 
 ```csharp
-namespace NovaApp.Domain.Midi;
+namespace Nova.Domain.Midi;
 
 /// <summary>
 /// Builds SysEx messages for Nova System communication.
@@ -456,11 +456,11 @@ dotnet build
 
 **Status**: Not started  
 **Estimated**: 45 min  
-**File**: `NovaApp.Domain/Midi/SysExValidator.cs`
+**File**: `Nova.Domain/Midi/SysExValidator.cs`
 
 ### Test First (RED)
 ```csharp
-namespace NovaApp.Tests;
+namespace Nova.Tests;
 
 public class SysExValidatorTests
 {
@@ -515,10 +515,10 @@ public class SysExValidatorTests
 
 ### Code (GREEN)
 
-File: `NovaApp.Domain/Midi/SysExValidator.cs`
+File: `Nova.Domain/Midi/SysExValidator.cs`
 
 ```csharp
-namespace NovaApp.Domain.Midi;
+namespace Nova.Domain.Midi;
 
 /// <summary>
 /// Validates SysEx messages from Nova System.
