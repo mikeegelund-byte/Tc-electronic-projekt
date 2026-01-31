@@ -502,4 +502,158 @@ public class PresetParametersTests
         result.IsSuccess.Should().BeTrue();
         result.Value.ModMix.Should().BeInRange(0, 100, "mod mix must be 0-100%");
     }
+
+    // ==================================
+    // DELAY EFFECT PARAMETERS (bytes 262-321)
+    // ==================================
+
+    [Fact]
+    public void FromSysEx_ExtractsDelayType_FromBytes262To265()
+    {
+        // Arrange - Already loaded in constructor
+        // Reference: Nova System Sysex Map.txt - bytes 262-265
+        // Range: 0-5 (clean/analog/tape/dynamic/dual/ping-pong)
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.DelayType.Should().BeInRange(0, 5, "delay type must be 0-5");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsDelayTime_FromBytes266To269()
+    {
+        // Arrange - Already loaded in constructor
+        // Reference: Nova System Sysex Map.txt - bytes 266-269
+        // Range: 0-1800ms
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.DelayTime.Should().BeInRange(0, 1800, "delay time must be 0-1800ms");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsDelayTime2_FromBytes270To273()
+    {
+        // Arrange - Already loaded in constructor
+        // Reference: Nova System Sysex Map.txt - bytes 270-273
+        // Range: 0-1800ms (for dual delay mode)
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.DelayTime2.Should().BeInRange(0, 1800, "delay time 2 must be 0-1800ms");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsDelayTempo_FromBytes274To277()
+    {
+        // Arrange - Already loaded in constructor
+        // Reference: Nova System Sysex Map.txt - bytes 274-277
+        // Range: 0-16 (ignore, 2 to 1/32T table)
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.DelayTempo.Should().BeInRange(0, 16, "delay tempo must be 0-16");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsDelayTempo2OrWidth_FromBytes278To281()
+    {
+        // Arrange - Already loaded in constructor
+        // Reference: Nova System Sysex Map.txt - bytes 278-281
+        // Multi-function: Tempo2 (dual: 0-16) or Width (ping-pong: 0-100%)
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.DelayTempo2OrWidth.Should().BeGreaterOrEqualTo(0, "delay tempo2/width raw value must be >= 0");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsDelayFeedback_FromBytes282To285()
+    {
+        // Arrange - Already loaded in constructor
+        // Reference: Nova System Sysex Map.txt - bytes 282-285
+        // Range: 0-120%
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.DelayFeedback.Should().BeInRange(0, 120, "delay feedback must be 0-120%");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsDelayClipOrFeedback2_FromBytes286To289()
+    {
+        // Arrange - Already loaded in constructor
+        // Reference: Nova System Sysex Map.txt - bytes 286-289
+        // Multi-function: Clip (analog/tape: 0-24dB) or Feedback2 (dual: 0-120%)
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.DelayClipOrFeedback2.Should().BeGreaterOrEqualTo(0, "delay clip/feedback2 raw value must be >= 0");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsDelayHiCut_FromBytes290To293()
+    {
+        // Arrange - Already loaded in constructor
+        // Reference: Nova System Sysex Map.txt - bytes 290-293
+        // Range: 20Hz-20kHz (table-based)
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.DelayHiCut.Should().BeGreaterOrEqualTo(0, "delay hi-cut raw value must be >= 0");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsDelayLoCut_FromBytes294To297()
+    {
+        // Arrange - Already loaded in constructor
+        // Reference: Nova System Sysex Map.txt - bytes 294-297
+        // Range: 20Hz-20kHz (table-based)
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.DelayLoCut.Should().BeGreaterOrEqualTo(0, "delay lo-cut raw value must be >= 0");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsDelayMix_FromBytes298To301()
+    {
+        // Arrange - Already loaded in constructor
+        // Reference: Nova System Sysex Map.txt - bytes 298-301
+        // Range: 0-100%
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.DelayMix.Should().BeInRange(0, 100, "delay mix must be 0-100%");
+    }
 }
