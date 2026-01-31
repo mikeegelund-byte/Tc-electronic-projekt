@@ -1,5 +1,7 @@
 # PITFALLS_FOUND.md — Lessons Learned
 
+Status: læst
+
 ## Format
 
 ```
@@ -48,23 +50,23 @@ Once development begins, all issues will be documented here to prevent repetitio
 ## Common LLM Mistakes (To Avoid)
 
 ### Mistake 1: "I'll refactor later"
-**Why it's bad**: You won't, tests get messy, coverage drops  
+**Why it's bad**: You won't, tests get messy, coverage drops
 **Fix**: REFACTOR IMMEDIATELY after GREEN
 
 ### Mistake 2: "This test is obvious, skip it"
-**Why it's bad**: The "obvious" part is where bugs hide  
+**Why it's bad**: The "obvious" part is where bugs hide
 **Fix**: WRITE THE TEST, make it pass
 
 ### Mistake 3: "Just this once, I'll skip the gate"
-**Why it's bad**: One skipped gate = system failure  
+**Why it's bad**: One skipped gate = system failure
 **Fix**: NEVER skip gates - document if you need an exception
 
 ### Mistake 4: "I'll commit multiple things at once"
-**Why it's bad**: Can't revert specific changes, hard to review  
+**Why it's bad**: Can't revert specific changes, hard to review
 **Fix**: ONE FEATURE PER COMMIT
 
 ### Mistake 5: "My code is too simple to test"
-**Why it's bad**: Simple code is where bugs multiply  
+**Why it's bad**: Simple code is where bugs multiply
 **Fix**: EVERY CODE CHANGE NEEDS A TEST
 
 ---
