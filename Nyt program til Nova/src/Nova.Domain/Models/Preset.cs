@@ -34,6 +34,11 @@ public class Preset
     public int CompDrive { get; private set; }      // 1-20 (bytes 94-97)
     public int CompLevel { get; private set; }      // -12 to +12dB (bytes 98-101)
 
+    // DRIVE effect parameters (bytes 102-193)
+    public int DriveType { get; private set; }      // 0-6 (overdrive/dist/fuzz/line6drive/custom/tube/metal) (bytes 102-105)
+    public int DriveGain { get; private set; }      // 0-100 (bytes 106-109)
+    public int DriveLevel { get; private set; }     // -30 to +20dB (bytes 110-113)
+
     private Preset() { }
 
 
@@ -94,6 +99,11 @@ public class Preset
         int compDrive = Decode4ByteValue(sysex, 94);
         int compLevel = Decode4ByteValue(sysex, 98);
 
+        // Extract DRIVE effect parameters (bytes 102-113)
+        int driveType = Decode4ByteValue(sysex, 102);
+        int driveGain = Decode4ByteValue(sysex, 106);
+        int driveLevel = Decode4ByteValue(sysex, 110);
+
         // Extract effect on/off switches (4-byte encoded boolean: 0x00=off, 0x01=on)
         bool compressorEnabled = Decode4ByteValue(sysex, 130) == 1;
         bool driveEnabled = Decode4ByteValue(sysex, 194) == 1;
@@ -118,6 +128,9 @@ public class Preset
             CompResponse = compResponse,
             CompDrive = compDrive,
             CompLevel = compLevel,
+            DriveType = driveType,
+            DriveGain = driveGain,
+            DriveLevel = driveLevel,
             CompressorEnabled = compressorEnabled,
             DriveEnabled = driveEnabled,
             ModulationEnabled = modulationEnabled,

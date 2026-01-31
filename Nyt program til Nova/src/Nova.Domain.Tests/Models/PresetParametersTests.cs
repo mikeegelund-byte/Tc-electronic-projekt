@@ -280,4 +280,53 @@ public class PresetParametersTests
         result.Value.CompLevel.Should().BeInRange(0, 20000000,
             "COMP Level raw value - needs offset decoding");
     }
+
+    // ==================================
+    // DRIVE EFFECT PARAMETERS (bytes 102-113)
+    // ==================================
+
+    [Fact]
+    public void FromSysEx_ExtractsDriveType_FromBytes102To105()
+    {
+        // Arrange - Already loaded in constructor
+        // Reference: Nova System Sysex Map.txt - bytes 102-105
+        // Range: 0-6 (overdrive/dist/fuzz/line6drive/custom/tube/metal)
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.DriveType.Should().BeInRange(0, 6, "drive type must be 0-6");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsDriveGain_FromBytes106To109()
+    {
+        // Arrange - Already loaded in constructor
+        // Reference: Nova System Sysex Map.txt - bytes 106-109
+        // Range: 0-100 (gain percentage)
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.DriveGain.Should().BeInRange(0, 100, "drive gain must be 0-100");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsDriveLevel_FromBytes110To113()
+    {
+        // Arrange - Already loaded in constructor
+        // Reference: Nova System Sysex Map.txt - bytes 110-113
+        // Range: -30 to +20dB (may need offset decoding like COMP params)
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.DriveLevel.Should().BeInRange(0, 20000000, "raw value - needs offset decoding for -30 to +20dB range");
+    }
 }
