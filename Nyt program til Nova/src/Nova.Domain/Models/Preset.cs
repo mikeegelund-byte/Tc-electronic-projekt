@@ -156,28 +156,28 @@ public class Preset
         // Extract parameters (Nova System uses 4-byte nibble encoding)
         int tapTempo = Decode4ByteValue(sysex, 38);
         int routing = Decode4ByteValue(sysex, 42);
-        int levelOutLeft = Decode4ByteValue(sysex, 46);
-        int levelOutRight = Decode4ByteValue(sysex, 50);
+        int levelOutLeft = DecodeSignedDbValue(sysex, 46, -100, 0);  // -100 to 0dB (simple offset)
+        int levelOutRight = DecodeSignedDbValue(sysex, 50, -100, 0); // -100 to 0dB (simple offset)
 
         // Extract COMP (Compressor) parameters (bytes 70-101)
         int compType = Decode4ByteValue(sysex, 70);
-        int compThreshold = Decode4ByteValue(sysex, 74);
+        int compThreshold = DecodeSignedDbValue(sysex, 74, -30, 0);  // -30 to 0dB (simple offset)
         int compRatio = Decode4ByteValue(sysex, 78);
         int compAttack = Decode4ByteValue(sysex, 82);
         int compRelease = Decode4ByteValue(sysex, 86);
         int compResponse = Decode4ByteValue(sysex, 90);
-        int compDrive = Decode4ByteValue(sysex, 94);
-        int compLevel = Decode4ByteValue(sysex, 98);
+        int compDrive = Decode4ByteValue(sysex, 94);  // 0-12dB (unsigned)
+        int compLevel = DecodeSignedDbValue(sysex, 98, -12, 12);  // -12 to +12dB (large offset)
 
         // Extract DRIVE effect parameters (bytes 102-113)
         int driveType = Decode4ByteValue(sysex, 102);
         int driveGain = Decode4ByteValue(sysex, 106);
-        int driveLevel = Decode4ByteValue(sysex, 110);
+        int driveLevel = DecodeSignedDbValue(sysex, 110, -30, 20);  // -30 to +20dB (simple offset)
 
         // Extract BOOST effect parameters (bytes 114-125)
         int boostType = Decode4ByteValue(sysex, 114);
         int boostGain = Decode4ByteValue(sysex, 118);
-        int boostLevel = Decode4ByteValue(sysex, 122);
+        int boostLevel = DecodeSignedDbValue(sysex, 122, -12, 12);  // -12 to +12dB (large offset)
 
         // Extract MOD (Modulation) effect parameters (bytes 198-257)
         int modType = Decode4ByteValue(sysex, 198);
@@ -185,7 +185,7 @@ public class Preset
         int modDepth = Decode4ByteValue(sysex, 206);
         int modTempo = Decode4ByteValue(sysex, 210);
         int modHiCut = Decode4ByteValue(sysex, 214);
-        int modFeedback = Decode4ByteValue(sysex, 218);
+        int modFeedback = DecodeSignedDbValue(sysex, 218, -100, 100);  // -100 to +100% (large offset)
         int modDelayOrRange = Decode4ByteValue(sysex, 222);
         int modMix = Decode4ByteValue(sysex, 250);
 
@@ -208,27 +208,27 @@ public class Preset
         int reverbShape = Decode4ByteValue(sysex, 338);
         int reverbSize = Decode4ByteValue(sysex, 342);
         int reverbHiColor = Decode4ByteValue(sysex, 346);
-        int reverbHiLevel = Decode4ByteValue(sysex, 350);
+        int reverbHiLevel = DecodeSignedDbValue(sysex, 350, -25, 25);  // -25 to +25dB (large offset)
         int reverbLoColor = Decode4ByteValue(sysex, 354);
-        int reverbLoLevel = Decode4ByteValue(sysex, 358);
-        int reverbRoomLevel = Decode4ByteValue(sysex, 362);
-        int reverbLevel = Decode4ByteValue(sysex, 366);
+        int reverbLoLevel = DecodeSignedDbValue(sysex, 358, -25, 25);  // -25 to +25dB (large offset)
+        int reverbRoomLevel = DecodeSignedDbValue(sysex, 362, -100, 0);  // -100 to 0dB (simple offset)
+        int reverbLevel = DecodeSignedDbValue(sysex, 366, -100, 0);  // -100 to 0dB (simple offset)
         int reverbDiffuse = Decode4ByteValue(sysex, 370);
         int reverbMix = Decode4ByteValue(sysex, 374);
 
         // Extract EQ/GATE parameters (bytes 390-453)
         int gateType = Decode4ByteValue(sysex, 390);
-        int gateThreshold = Decode4ByteValue(sysex, 394);
+        int gateThreshold = DecodeSignedDbValue(sysex, 394, -90, 0);  // -90 to 0dB (simple offset)
         int gateDamp = Decode4ByteValue(sysex, 398);
         int gateRelease = Decode4ByteValue(sysex, 402);
-        int eqFreq1 = Decode4ByteValue(sysex, 410);
-        int eqGain1 = Decode4ByteValue(sysex, 414);
+        int eqFreq1 = Decode4ByteValue(sysex, 406);
+        int eqGain1 = DecodeSignedDbValue(sysex, 414, -12, 12);  // -12 to +12dB (large offset) - FIXED: was 410
         int eqWidth1 = Decode4ByteValue(sysex, 418);
         int eqFreq2 = Decode4ByteValue(sysex, 422);
-        int eqGain2 = Decode4ByteValue(sysex, 426);
+        int eqGain2 = DecodeSignedDbValue(sysex, 426, -12, 12);  // -12 to +12dB (large offset) - FIXED: was 422
         int eqWidth2 = Decode4ByteValue(sysex, 430);
         int eqFreq3 = Decode4ByteValue(sysex, 434);
-        int eqGain3 = Decode4ByteValue(sysex, 438);
+        int eqGain3 = DecodeSignedDbValue(sysex, 438, -12, 12);  // -12 to +12dB (large offset) - FIXED: was 434
         int eqWidth3 = Decode4ByteValue(sysex, 442);
 
         // Extract PITCH effect parameters (bytes 454-513)
@@ -241,8 +241,8 @@ public class Preset
         int pitchDelay2 = Decode4ByteValue(sysex, 478);
         int pitchFeedback1OrKey = Decode4ByteValue(sysex, 482);
         int pitchFeedback2OrScale = Decode4ByteValue(sysex, 486);
-        int pitchLevel1 = Decode4ByteValue(sysex, 490);
-        int pitchLevel2 = Decode4ByteValue(sysex, 494);
+        int pitchLevel1 = DecodeSignedDbValue(sysex, 490, -12, 12);  // -12 to +12dB (large offset) - FIXED: was 494
+        int pitchLevel2 = DecodeSignedDbValue(sysex, 494, -12, 12);  // -12 to +12dB (large offset) - FIXED: was 498
 
         // Extract effect on/off switches (4-byte encoded boolean: 0x00=off, 0x01=on)
         bool compressorEnabled = Decode4ByteValue(sysex, 130) == 1;
@@ -371,5 +371,39 @@ public class Preset
         int value = b0 | (b1 << 7) | (b2 << 14) | (b3 << 21);
         
         return value;
+    }
+
+    /// <summary>
+    /// Decodes signed dB values that use offset encoding.
+    /// Two encoding strategies discovered from hardware:
+    /// 1. Large offset (2^24 = 16777216): For SYMMETRIC ranges (zero in middle)
+    ///    Examples: -12 to +12, -25 to +25, -100 to +100
+    /// 2. Simple offset: For ASYMMETRIC ranges (zero at end or near end)
+    ///    Examples: -100 to 0, -90 to 0, -30 to 0, -30 to +20
+    /// </summary>
+    private static int DecodeSignedDbValue(byte[] sysex, int offset, int minimumValue, int maximumValue)
+    {
+        const int LARGE_OFFSET = 16777216; // 2^24
+        
+        int rawValue = Decode4ByteValue(sysex, offset);
+        
+        // Determine encoding strategy based on range symmetry
+        // If range is symmetric or near-symmetric around zero, use large offset
+        // Threshold: abs(min) and abs(max) within 20% of each other
+        int absMin = Math.Abs(minimumValue);
+        int absMax = Math.Abs(maximumValue);
+        int maxOfTwo = Math.Max(absMin, absMax);
+        int minOfTwo = Math.Min(absMin, absMax);
+        
+        bool isSymmetric = (maxOfTwo == 0) || (minOfTwo * 1.2 >= maxOfTwo);
+        
+        if (isSymmetric && minimumValue < 0 && maximumValue > 0)
+        {
+            // Strategy 1: Large offset for symmetric ranges
+            return rawValue - LARGE_OFFSET;
+        }
+        
+        // Strategy 2: Simple offset for asymmetric ranges
+        return rawValue + minimumValue;
     }
 }
