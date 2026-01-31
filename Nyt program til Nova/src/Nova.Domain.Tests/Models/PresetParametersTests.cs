@@ -329,4 +329,53 @@ public class PresetParametersTests
         result.IsSuccess.Should().BeTrue();
         result.Value.DriveLevel.Should().BeInRange(0, 20000000, "raw value - needs offset decoding for -30 to +20dB range");
     }
+
+    // ==================================
+    // BOOST EFFECT PARAMETERS (bytes 114-193)
+    // ==================================
+
+    [Fact]
+    public void FromSysEx_ExtractsBoostType_FromBytes114To117()
+    {
+        // Arrange - Already loaded in constructor
+        // Reference: Nova System Sysex Map.txt - bytes 114-117
+        // Range: 0-2 (clean/mid/treble)
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.BoostType.Should().BeInRange(0, 2, "boost type must be 0-2");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsBoostGain_FromBytes118To121()
+    {
+        // Arrange - Already loaded in constructor
+        // Reference: Nova System Sysex Map.txt - bytes 118-121
+        // Range: 0-30dB
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.BoostGain.Should().BeInRange(0, 30, "boost gain must be 0-30dB");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsBoostLevel_FromBytes122To125()
+    {
+        // Arrange - Already loaded in constructor
+        // Reference: Nova System Sysex Map.txt - bytes 122-125
+        // Range: -30 to +20dB (may need offset decoding)
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.BoostLevel.Should().BeInRange(0, 20000000, "raw value - needs offset decoding for -30 to +20dB range");
+    }
 }

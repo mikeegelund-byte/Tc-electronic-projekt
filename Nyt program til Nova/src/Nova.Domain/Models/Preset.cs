@@ -39,6 +39,11 @@ public class Preset
     public int DriveGain { get; private set; }      // 0-100 (bytes 106-109)
     public int DriveLevel { get; private set; }     // -30 to +20dB (bytes 110-113)
 
+    // BOOST effect parameters (bytes 114-125)
+    public int BoostType { get; private set; }      // 0-2 (clean/mid/treble) (bytes 114-117)
+    public int BoostGain { get; private set; }      // 0-30dB (bytes 118-121)
+    public int BoostLevel { get; private set; }     // -30 to +20dB (bytes 122-125)
+
     private Preset() { }
 
 
@@ -104,6 +109,11 @@ public class Preset
         int driveGain = Decode4ByteValue(sysex, 106);
         int driveLevel = Decode4ByteValue(sysex, 110);
 
+        // Extract BOOST effect parameters (bytes 114-125)
+        int boostType = Decode4ByteValue(sysex, 114);
+        int boostGain = Decode4ByteValue(sysex, 118);
+        int boostLevel = Decode4ByteValue(sysex, 122);
+
         // Extract effect on/off switches (4-byte encoded boolean: 0x00=off, 0x01=on)
         bool compressorEnabled = Decode4ByteValue(sysex, 130) == 1;
         bool driveEnabled = Decode4ByteValue(sysex, 194) == 1;
@@ -131,6 +141,9 @@ public class Preset
             DriveType = driveType,
             DriveGain = driveGain,
             DriveLevel = driveLevel,
+            BoostType = boostType,
+            BoostGain = boostGain,
+            BoostLevel = boostLevel,
             CompressorEnabled = compressorEnabled,
             DriveEnabled = driveEnabled,
             ModulationEnabled = modulationEnabled,
