@@ -44,6 +44,16 @@ public class Preset
     public int BoostGain { get; private set; }      // 0-30dB (bytes 118-121)
     public int BoostLevel { get; private set; }     // -30 to +20dB (bytes 122-125)
 
+    // MOD (Modulation) effect parameters (bytes 198-257)
+    public int ModType { get; private set; }        // 0-5 (chorus/flanger/vibrato/phaser/tremolo/panner) (bytes 198-201)
+    public int ModSpeed { get; private set; }       // 0.050-20Hz table (bytes 202-205)
+    public int ModDepth { get; private set; }       // 0-100% (bytes 206-209)
+    public int ModTempo { get; private set; }       // 0-16 table (ignore, 2 to 1/32T) (bytes 210-213)
+    public int ModHiCut { get; private set; }       // 20Hz-20kHz table (bytes 214-217)
+    public int ModFeedback { get; private set; }    // -100 to +100% (bytes 218-221)
+    public int ModDelayOrRange { get; private set; } // Multi-function: Delay/Range/Type (bytes 222-225)
+    public int ModMix { get; private set; }         // 0-100% (bytes 250-253)
+
     private Preset() { }
 
 
@@ -114,6 +124,16 @@ public class Preset
         int boostGain = Decode4ByteValue(sysex, 118);
         int boostLevel = Decode4ByteValue(sysex, 122);
 
+        // Extract MOD (Modulation) effect parameters (bytes 198-257)
+        int modType = Decode4ByteValue(sysex, 198);
+        int modSpeed = Decode4ByteValue(sysex, 202);
+        int modDepth = Decode4ByteValue(sysex, 206);
+        int modTempo = Decode4ByteValue(sysex, 210);
+        int modHiCut = Decode4ByteValue(sysex, 214);
+        int modFeedback = Decode4ByteValue(sysex, 218);
+        int modDelayOrRange = Decode4ByteValue(sysex, 222);
+        int modMix = Decode4ByteValue(sysex, 250);
+
         // Extract effect on/off switches (4-byte encoded boolean: 0x00=off, 0x01=on)
         bool compressorEnabled = Decode4ByteValue(sysex, 130) == 1;
         bool driveEnabled = Decode4ByteValue(sysex, 194) == 1;
@@ -144,6 +164,14 @@ public class Preset
             BoostType = boostType,
             BoostGain = boostGain,
             BoostLevel = boostLevel,
+            ModType = modType,
+            ModSpeed = modSpeed,
+            ModDepth = modDepth,
+            ModTempo = modTempo,
+            ModHiCut = modHiCut,
+            ModFeedback = modFeedback,
+            ModDelayOrRange = modDelayOrRange,
+            ModMix = modMix,
             CompressorEnabled = compressorEnabled,
             DriveEnabled = driveEnabled,
             ModulationEnabled = modulationEnabled,

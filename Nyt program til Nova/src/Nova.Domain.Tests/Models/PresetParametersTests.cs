@@ -378,4 +378,128 @@ public class PresetParametersTests
         result.IsSuccess.Should().BeTrue();
         result.Value.BoostLevel.Should().BeInRange(0, 20000000, "raw value - needs offset decoding for -30 to +20dB range");
     }
+
+    // ==================================
+    // MOD (Modulation) EFFECT PARAMETERS (bytes 198-257)
+    // ==================================
+
+    [Fact]
+    public void FromSysEx_ExtractsModType_FromBytes198To201()
+    {
+        // Arrange - Already loaded in constructor
+        // Reference: Nova System Sysex Map.txt - bytes 198-201
+        // Range: 0-5 (chorus/flanger/vibrato/phaser/tremolo/panner)
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.ModType.Should().BeInRange(0, 5, "mod type must be 0-5");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsModSpeed_FromBytes202To205()
+    {
+        // Arrange - Already loaded in constructor
+        // Reference: Nova System Sysex Map.txt - bytes 202-205
+        // Range: 0.050-20Hz (table-based, storing raw value)
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.ModSpeed.Should().BeGreaterOrEqualTo(0, "mod speed raw value must be >= 0");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsModDepth_FromBytes206To209()
+    {
+        // Arrange - Already loaded in constructor
+        // Reference: Nova System Sysex Map.txt - bytes 206-209
+        // Range: 0-100%
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.ModDepth.Should().BeInRange(0, 100, "mod depth must be 0-100%");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsModTempo_FromBytes210To213()
+    {
+        // Arrange - Already loaded in constructor
+        // Reference: Nova System Sysex Map.txt - bytes 210-213
+        // Range: 0-16 (table: ignore, 2 to 1/32T)
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.ModTempo.Should().BeInRange(0, 16, "mod tempo must be 0-16");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsModHiCut_FromBytes214To217()
+    {
+        // Arrange - Already loaded in constructor
+        // Reference: Nova System Sysex Map.txt - bytes 214-217
+        // Range: 20Hz-20kHz (table-based, storing raw value)
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.ModHiCut.Should().BeGreaterOrEqualTo(0, "mod hi-cut raw value must be >= 0");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsModFeedback_FromBytes218To221()
+    {
+        // Arrange - Already loaded in constructor
+        // Reference: Nova System Sysex Map.txt - bytes 218-221
+        // Range: -100 to +100% (may need offset decoding)
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.ModFeedback.Should().BeInRange(0, 20000000, "raw value - needs offset decoding for -100 to +100%");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsModDelayOrRange_FromBytes222To225()
+    {
+        // Arrange - Already loaded in constructor
+        // Reference: Nova System Sysex Map.txt - bytes 222-225
+        // Multi-function: Delay (cho/fla 0-50ms), Range (pha low/high), Type (trem soft/hard)
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.ModDelayOrRange.Should().BeGreaterOrEqualTo(0, "mod delay/range raw value must be >= 0");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsModMix_FromBytes250To253()
+    {
+        // Arrange - Already loaded in constructor
+        // Reference: Nova System Sysex Map.txt - bytes 250-253
+        // Range: 0-100%
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.ModMix.Should().BeInRange(0, 100, "mod mix must be 0-100%");
+    }
 }
