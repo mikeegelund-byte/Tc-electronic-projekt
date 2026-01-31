@@ -96,6 +96,19 @@ public class Preset
     public int EqGain3 { get; private set; }        // -12 to +12dB (bytes 438-441)
     public int EqWidth3 { get; private set; }       // 0.3-1.6 oct table (bytes 442-445)
 
+    // PITCH effect parameters (bytes 454-513)
+    public int PitchType { get; private set; }      // 0-4 (shifter/octaver/whammy/detune/intelligent) (bytes 454-457)
+    public int PitchVoice1 { get; private set; }    // -100 to +100 cents OR -13 to +13 degrees (bytes 458-461)
+    public int PitchVoice2 { get; private set; }    // -100 to +100 cents OR -13 to +13 degrees (bytes 462-465)
+    public int PitchPan1 { get; private set; }      // -50 to +50 (50L to 50R) (bytes 466-469)
+    public int PitchPan2 { get; private set; }      // -50 to +50 (50L to 50R) (bytes 470-473)
+    public int PitchDelay1 { get; private set; }    // 0-50ms (bytes 474-477)
+    public int PitchDelay2 { get; private set; }    // 0-50ms (bytes 478-481)
+    public int PitchFeedback1OrKey { get; private set; }    // 0-100% OR 0-12 Key (bytes 482-485)
+    public int PitchFeedback2OrScale { get; private set; }  // 0-100% OR 0-13 Scale (bytes 486-489)
+    public int PitchLevel1 { get; private set; }    // -100 to 0dB (bytes 490-493)
+    public int PitchLevel2 { get; private set; }    // -100 to 0dB (bytes 494-497)
+
     private Preset() { }
 
 
@@ -218,6 +231,19 @@ public class Preset
         int eqGain3 = Decode4ByteValue(sysex, 438);
         int eqWidth3 = Decode4ByteValue(sysex, 442);
 
+        // Extract PITCH effect parameters (bytes 454-513)
+        int pitchType = Decode4ByteValue(sysex, 454);
+        int pitchVoice1 = Decode4ByteValue(sysex, 458);
+        int pitchVoice2 = Decode4ByteValue(sysex, 462);
+        int pitchPan1 = Decode4ByteValue(sysex, 466);
+        int pitchPan2 = Decode4ByteValue(sysex, 470);
+        int pitchDelay1 = Decode4ByteValue(sysex, 474);
+        int pitchDelay2 = Decode4ByteValue(sysex, 478);
+        int pitchFeedback1OrKey = Decode4ByteValue(sysex, 482);
+        int pitchFeedback2OrScale = Decode4ByteValue(sysex, 486);
+        int pitchLevel1 = Decode4ByteValue(sysex, 490);
+        int pitchLevel2 = Decode4ByteValue(sysex, 494);
+
         // Extract effect on/off switches (4-byte encoded boolean: 0x00=off, 0x01=on)
         bool compressorEnabled = Decode4ByteValue(sysex, 130) == 1;
         bool driveEnabled = Decode4ByteValue(sysex, 194) == 1;
@@ -292,6 +318,17 @@ public class Preset
             EqFreq3 = eqFreq3,
             EqGain3 = eqGain3,
             EqWidth3 = eqWidth3,
+            PitchType = pitchType,
+            PitchVoice1 = pitchVoice1,
+            PitchVoice2 = pitchVoice2,
+            PitchPan1 = pitchPan1,
+            PitchPan2 = pitchPan2,
+            PitchDelay1 = pitchDelay1,
+            PitchDelay2 = pitchDelay2,
+            PitchFeedback1OrKey = pitchFeedback1OrKey,
+            PitchFeedback2OrScale = pitchFeedback2OrScale,
+            PitchLevel1 = pitchLevel1,
+            PitchLevel2 = pitchLevel2,
             CompressorEnabled = compressorEnabled,
             DriveEnabled = driveEnabled,
             ModulationEnabled = modulationEnabled,
