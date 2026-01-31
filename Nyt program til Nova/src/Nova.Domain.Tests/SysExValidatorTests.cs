@@ -25,7 +25,7 @@ public class SysExValidatorTests
         Array.Fill(preset, (byte)0x00);
         preset[0] = 0xF0;
         preset[519] = 0xF7;
-        
+
         // Calculate correct checksum for bytes 8-516
         var checksumData = new byte[509];  // bytes 8-516
         Array.Copy(preset, 8, checksumData, 0, 509);
