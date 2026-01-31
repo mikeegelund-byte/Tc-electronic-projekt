@@ -1023,4 +1023,158 @@ public class PresetParametersTests
         result.IsSuccess.Should().BeTrue();
         result.Value.EqWidth3.Should().BeInRange(5, 12, "eq width3 must be 5-12");
     }
+
+    // ==================================
+    // PITCH EFFECT PARAMETERS (bytes 454-513)
+    // ==================================
+
+    [Fact]
+    public void FromSysEx_ExtractsPitchType_FromBytes454To457()
+    {
+        // Arrange - bytes 454-457
+        // Range: 0-4 (shifter/octaver/whammy/detune/intelligent)
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.PitchType.Should().BeInRange(0, 4, "pitch type must be 0-4");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsPitchVoice1_FromBytes458To461()
+    {
+        // Arrange - bytes 458-461
+        // Multi-function: -100 to +100 cents (shift/detune) OR -13 to +13 degrees (intell)
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.PitchVoice1.Should().BeInRange(0, 20000000, "raw value - needs offset decoding");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsPitchVoice2_FromBytes462To465()
+    {
+        // Arrange - bytes 462-465
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.PitchVoice2.Should().BeInRange(0, 20000000, "raw value - needs offset decoding");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsPitchPan1_FromBytes466To469()
+    {
+        // Arrange - bytes 466-469
+        // Range: -50 to +50 (50L to 50R)
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.PitchPan1.Should().BeInRange(0, 20000000, "raw value - needs offset decoding for -50 to +50");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsPitchPan2_FromBytes470To473()
+    {
+        // Arrange - bytes 470-473
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.PitchPan2.Should().BeInRange(0, 20000000, "raw value - needs offset decoding for -50 to +50");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsPitchDelay1_FromBytes474To477()
+    {
+        // Arrange - bytes 474-477
+        // Range: 0-50ms
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.PitchDelay1.Should().BeInRange(0, 50, "pitch delay1 must be 0-50ms");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsPitchDelay2_FromBytes478To481()
+    {
+        // Arrange - bytes 478-481
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.PitchDelay2.Should().BeInRange(0, 50, "pitch delay2 must be 0-50ms");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsPitchFeedback1OrKey_FromBytes482To485()
+    {
+        // Arrange - bytes 482-485
+        // Multi-function: 0-100% (shift) OR 0-12 Key (intell: C..B)
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.PitchFeedback1OrKey.Should().BeInRange(0, 100, "pitch feedback1/key must be 0-100");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsPitchFeedback2OrScale_FromBytes486To489()
+    {
+        // Arrange - bytes 486-489
+        // Multi-function: 0-100% (shift) OR 0-13 Scale (intell: Ionian/Dorian/etc)
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.PitchFeedback2OrScale.Should().BeInRange(0, 100, "pitch feedback2/scale must be 0-100");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsPitchLevel1_FromBytes490To493()
+    {
+        // Arrange - bytes 490-493
+        // Range: -100 to 0dB
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.PitchLevel1.Should().BeInRange(0, 20000000, "raw value - needs offset decoding for -100 to 0dB");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsPitchLevel2_FromBytes494To497()
+    {
+        // Arrange - bytes 494-497
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.PitchLevel2.Should().BeInRange(0, 20000000, "raw value - needs offset decoding for -100 to 0dB");
+    }
 }
