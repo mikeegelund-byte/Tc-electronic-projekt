@@ -57,12 +57,12 @@
 ## Projektstruktur (forventet)
 ```
 NovaApp/
-├── NovaApp.UI/                  # Avalonia UI, XAML, ViewModels
-├── NovaApp.Application/         # Use cases, commands
-├── NovaApp.Domain/              # Presets, params, validering
-├── NovaApp.Midi/                # DryWetMIDI wrapper, I/O
-├── NovaApp.Infrastructure/      # File I/O, config
-├── NovaApp.Tests/               # xUnit + Moq test suite
+├── Nova.Presentation/                  # Avalonia UI, XAML, ViewModels
+├── Nova.Application/         # Use cases, commands
+├── Nova.Domain/              # Presets, params, validering
+├── Nova.Midi/                # DryWetMIDI wrapper, I/O
+├── Nova.Infrastructure/      # File I/O, config
+├── Nova.Tests/               # xUnit + Moq test suite
 └── NovaApp.sln                  # Solution file
 ```
 
@@ -117,7 +117,7 @@ dotnet build
 dotnet test
 
 # Run app
-dotnet run --project NovaApp.UI
+dotnet run --project Nova.Presentation
 
 # Package for release
 dotnet publish -c Release -r win-x64 --self-contained

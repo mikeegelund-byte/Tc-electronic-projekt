@@ -64,7 +64,7 @@ dotnet publish -c Release -r win-x64 --self-contained
 ---
 
 ## Desktop shortcut
-- **Target:** `C:\Program Files\NovaApp\NovaApp.UI.exe`
+- **Target:** `C:\Program Files\NovaApp\Nova.Presentation.exe`
 - **Icon:** App icon (256x256 .ico)
 - **Working directory:** App install dir
 
