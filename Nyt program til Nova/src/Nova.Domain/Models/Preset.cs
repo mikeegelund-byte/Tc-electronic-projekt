@@ -81,6 +81,21 @@ public class Preset
     public int ReverbDiffuse { get; private set; }  // -25 to +25dB (bytes 370-373)
     public int ReverbMix { get; private set; }      // 0-100% (bytes 374-377)
 
+    // EQ/GATE parameters (bytes 390-453)
+    public int GateType { get; private set; }       // 0-1 (hard/soft) (bytes 390-393)
+    public int GateThreshold { get; private set; }  // -60 to 0dB (bytes 394-397)
+    public int GateDamp { get; private set; }       // 0-90dB (bytes 398-401)
+    public int GateRelease { get; private set; }    // 0-200 dB/s (bytes 402-405)
+    public int EqFreq1 { get; private set; }        // 41Hz-20kHz table (bytes 410-413)
+    public int EqGain1 { get; private set; }        // -12 to +12dB (bytes 414-417)
+    public int EqWidth1 { get; private set; }       // 0.3-1.6 oct table (bytes 418-421)
+    public int EqFreq2 { get; private set; }        // 41Hz-20kHz table (bytes 422-425)
+    public int EqGain2 { get; private set; }        // -12 to +12dB (bytes 426-429)
+    public int EqWidth2 { get; private set; }       // 0.3-1.6 oct table (bytes 430-433)
+    public int EqFreq3 { get; private set; }        // 41Hz-20kHz table (bytes 434-437)
+    public int EqGain3 { get; private set; }        // -12 to +12dB (bytes 438-441)
+    public int EqWidth3 { get; private set; }       // 0.3-1.6 oct table (bytes 442-445)
+
     private Preset() { }
 
 
@@ -188,6 +203,21 @@ public class Preset
         int reverbDiffuse = Decode4ByteValue(sysex, 370);
         int reverbMix = Decode4ByteValue(sysex, 374);
 
+        // Extract EQ/GATE parameters (bytes 390-453)
+        int gateType = Decode4ByteValue(sysex, 390);
+        int gateThreshold = Decode4ByteValue(sysex, 394);
+        int gateDamp = Decode4ByteValue(sysex, 398);
+        int gateRelease = Decode4ByteValue(sysex, 402);
+        int eqFreq1 = Decode4ByteValue(sysex, 410);
+        int eqGain1 = Decode4ByteValue(sysex, 414);
+        int eqWidth1 = Decode4ByteValue(sysex, 418);
+        int eqFreq2 = Decode4ByteValue(sysex, 422);
+        int eqGain2 = Decode4ByteValue(sysex, 426);
+        int eqWidth2 = Decode4ByteValue(sysex, 430);
+        int eqFreq3 = Decode4ByteValue(sysex, 434);
+        int eqGain3 = Decode4ByteValue(sysex, 438);
+        int eqWidth3 = Decode4ByteValue(sysex, 442);
+
         // Extract effect on/off switches (4-byte encoded boolean: 0x00=off, 0x01=on)
         bool compressorEnabled = Decode4ByteValue(sysex, 130) == 1;
         bool driveEnabled = Decode4ByteValue(sysex, 194) == 1;
@@ -249,6 +279,19 @@ public class Preset
             ReverbLevel = reverbLevel,
             ReverbDiffuse = reverbDiffuse,
             ReverbMix = reverbMix,
+            GateType = gateType,
+            GateThreshold = gateThreshold,
+            GateDamp = gateDamp,
+            GateRelease = gateRelease,
+            EqFreq1 = eqFreq1,
+            EqGain1 = eqGain1,
+            EqWidth1 = eqWidth1,
+            EqFreq2 = eqFreq2,
+            EqGain2 = eqGain2,
+            EqWidth2 = eqWidth2,
+            EqFreq3 = eqFreq3,
+            EqGain3 = eqGain3,
+            EqWidth3 = eqWidth3,
             CompressorEnabled = compressorEnabled,
             DriveEnabled = driveEnabled,
             ModulationEnabled = modulationEnabled,

@@ -842,4 +842,185 @@ public class PresetParametersTests
         result.IsSuccess.Should().BeTrue();
         result.Value.ReverbMix.Should().BeInRange(0, 100, "reverb mix must be 0-100%");
     }
+
+    // ==================================
+    // EQ/GATE PARAMETERS (bytes 390-453)
+    // ==================================
+
+    [Fact]
+    public void FromSysEx_ExtractsGateType_FromBytes390To393()
+    {
+        // Arrange - bytes 390-393
+        // Range: 0-1 (hard/soft)
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.GateType.Should().BeInRange(0, 1, "gate type must be 0-1");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsGateThreshold_FromBytes394To397()
+    {
+        // Arrange - bytes 394-397
+        // Range: -60 to 0dB (offset encoding)
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.GateThreshold.Should().BeInRange(0, 20000000, "raw value - needs offset decoding for -60 to 0dB");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsGateDamp_FromBytes398To401()
+    {
+        // Arrange - bytes 398-401
+        // Range: 0-90dB
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.GateDamp.Should().BeInRange(0, 90, "gate damp must be 0-90dB");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsGateRelease_FromBytes402To405()
+    {
+        // Arrange - bytes 402-405
+        // Range: 0-200 dB/s
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.GateRelease.Should().BeInRange(0, 200, "gate release must be 0-200dB/s");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsEqFreq1_FromBytes410To413()
+    {
+        // Arrange - bytes 410-413
+        // Range: 41Hz-20kHz table (raw value)
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.EqFreq1.Should().BeGreaterOrEqualTo(0, "eq freq1 raw value must be >= 0");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsEqGain1_FromBytes414To417()
+    {
+        // Arrange - bytes 414-417
+        // Range: -12 to +12dB (offset encoding)
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.EqGain1.Should().BeInRange(0, 20000000, "raw value - needs offset decoding for -12 to +12dB");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsEqWidth1_FromBytes418To421()
+    {
+        // Arrange - bytes 418-421
+        // Range: 5-12 (0.3-1.6 octaves table)
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.EqWidth1.Should().BeInRange(5, 12, "eq width1 must be 5-12");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsEqFreq2_FromBytes422To425()
+    {
+        // Arrange - bytes 422-425
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.EqFreq2.Should().BeGreaterOrEqualTo(0, "eq freq2 raw value must be >= 0");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsEqGain2_FromBytes426To429()
+    {
+        // Arrange - bytes 426-429
+        // Range: -12 to +12dB (offset encoding)
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.EqGain2.Should().BeInRange(0, 20000000, "raw value - needs offset decoding for -12 to +12dB");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsEqWidth2_FromBytes430To433()
+    {
+        // Arrange - bytes 430-433
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.EqWidth2.Should().BeInRange(5, 12, "eq width2 must be 5-12");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsEqFreq3_FromBytes434To437()
+    {
+        // Arrange - bytes 434-437
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.EqFreq3.Should().BeGreaterOrEqualTo(0, "eq freq3 raw value must be >= 0");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsEqGain3_FromBytes438To441()
+    {
+        // Arrange - bytes 438-441
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.EqGain3.Should().BeInRange(0, 20000000, "raw value - needs offset decoding for -12 to +12dB");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsEqWidth3_FromBytes442To445()
+    {
+        // Arrange - bytes 442-445
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.EqWidth3.Should().BeInRange(5, 12, "eq width3 must be 5-12");
+    }
 }
