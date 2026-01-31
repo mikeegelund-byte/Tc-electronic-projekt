@@ -53,4 +53,17 @@ public class SystemDump
             RawSysEx = sysex
         });
     }
+
+    /// <summary>
+    /// Serializes the System Dump back to a 527-byte SysEx message.
+    /// Simply returns the stored RawSysEx since we preserve original bytes.
+    /// </summary>
+    /// <returns>Result with 527-byte SysEx or error</returns>
+    public Result<byte[]> ToSysEx()
+    {
+        if (RawSysEx == null || RawSysEx.Length != 527)
+            return Result.Fail("SystemDump has no valid RawSysEx data");
+
+        return Result.Ok(RawSysEx);
+    }
 }

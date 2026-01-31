@@ -83,4 +83,55 @@ public class PresetTests
         result.IsFailed.Should().BeTrue();
         result.Errors.Should().ContainSingle(e => e.Message.Contains("0x63") || e.Message.Contains("Nova System"));
     }
+
+    [Fact]
+    public void ToSysEx_ValidPreset_ReturnsOriginalBytes()
+    {
+        // Arrange - create preset from SysEx
+        var originalSysex = CreateValidPresetSysEx(45, "Test Preset");
+        var preset = Preset.FromSysEx(originalSysex).Value;
+
+        // Act
+        var result = preset.ToSysEx();
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.Should().BeEquivalentTo(originalSysex);
+    }
+
+    [Fact]
+    public void ToSysEx_PresetRoundtrip_PreservesData()
+    {
+        // Arrange
+        var sysex1 = CreateValidPresetSysEx(50, "Original Name");
+        var preset1 = Preset.FromSysEx(sysex1).Value;
+
+        // Act - serialize back to SysEx
+        var sysex2 = preset1.ToSysEx().Value;
+        var preset2 = Preset.FromSysEx(sysex2).Value;
+
+        // Assert - data preserved
+        preset2.Number.Should().Be(50);
+        preset2.Name.Should().Be("Original Name");
+        preset2.RawSysEx.Should().BeEquivalentTo(sysex1);
+    }
+
+    private static byte[] CreateValidPresetSysEx(int number, string name)
+    {
+        var sysex = new byte[521];
+        sysex[0] = 0xF0;
+        sysex[1] = 0x00; sysex[2] = 0x20; sysex[3] = 0x1F;
+        sysex[4] = 0x00;
+        sysex[5] = 0x63;
+        sysex[6] = 0x20;
+        sysex[7] = 0x01;
+        sysex[8] = (byte)number;
+        
+        // Encode name (24 bytes, space-padded)
+        var nameBytes = System.Text.Encoding.ASCII.GetBytes(name.PadRight(24));
+        Array.Copy(nameBytes, 0, sysex, 9, 24);
+        
+        sysex[520] = 0xF7;
+        return sysex;
+    }
 }
