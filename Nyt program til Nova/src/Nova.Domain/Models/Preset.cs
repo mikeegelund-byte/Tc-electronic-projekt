@@ -54,6 +54,18 @@ public class Preset
     public int ModDelayOrRange { get; private set; } // Multi-function: Delay/Range/Type (bytes 222-225)
     public int ModMix { get; private set; }         // 0-100% (bytes 250-253)
 
+    // DELAY effect parameters (bytes 262-321)
+    public int DelayType { get; private set; }      // 0-5 (clean/analog/tape/dynamic/dual/ping-pong) (bytes 262-265)
+    public int DelayTime { get; private set; }      // 0-1800ms (bytes 266-269)
+    public int DelayTime2 { get; private set; }     // 0-1800ms (dual mode) (bytes 270-273)
+    public int DelayTempo { get; private set; }     // 0-16 table (ignore, 2 to 1/32T) (bytes 274-277)
+    public int DelayTempo2OrWidth { get; private set; } // Multi-function: Tempo2 (dual: 0-16) or Width (ping: 0-100%) (bytes 278-281)
+    public int DelayFeedback { get; private set; }  // 0-120% (bytes 282-285)
+    public int DelayClipOrFeedback2 { get; private set; } // Multi-function: Clip (analog/tape: 0-24dB) or Feedback2 (dual: 0-120%) (bytes 286-289)
+    public int DelayHiCut { get; private set; }     // 20Hz-20kHz table (bytes 290-293)
+    public int DelayLoCut { get; private set; }     // 20Hz-20kHz table (bytes 294-297)
+    public int DelayMix { get; private set; }       // 0-100% (bytes 298-301)
+
     private Preset() { }
 
 
@@ -134,6 +146,18 @@ public class Preset
         int modDelayOrRange = Decode4ByteValue(sysex, 222);
         int modMix = Decode4ByteValue(sysex, 250);
 
+        // Extract DELAY effect parameters (bytes 262-321)
+        int delayType = Decode4ByteValue(sysex, 262);
+        int delayTime = Decode4ByteValue(sysex, 266);
+        int delayTime2 = Decode4ByteValue(sysex, 270);
+        int delayTempo = Decode4ByteValue(sysex, 274);
+        int delayTempo2OrWidth = Decode4ByteValue(sysex, 278);
+        int delayFeedback = Decode4ByteValue(sysex, 282);
+        int delayClipOrFeedback2 = Decode4ByteValue(sysex, 286);
+        int delayHiCut = Decode4ByteValue(sysex, 290);
+        int delayLoCut = Decode4ByteValue(sysex, 294);
+        int delayMix = Decode4ByteValue(sysex, 298);
+
         // Extract effect on/off switches (4-byte encoded boolean: 0x00=off, 0x01=on)
         bool compressorEnabled = Decode4ByteValue(sysex, 130) == 1;
         bool driveEnabled = Decode4ByteValue(sysex, 194) == 1;
@@ -172,6 +196,16 @@ public class Preset
             ModFeedback = modFeedback,
             ModDelayOrRange = modDelayOrRange,
             ModMix = modMix,
+            DelayType = delayType,
+            DelayTime = delayTime,
+            DelayTime2 = delayTime2,
+            DelayTempo = delayTempo,
+            DelayTempo2OrWidth = delayTempo2OrWidth,
+            DelayFeedback = delayFeedback,
+            DelayClipOrFeedback2 = delayClipOrFeedback2,
+            DelayHiCut = delayHiCut,
+            DelayLoCut = delayLoCut,
+            DelayMix = delayMix,
             CompressorEnabled = compressorEnabled,
             DriveEnabled = driveEnabled,
             ModulationEnabled = modulationEnabled,
