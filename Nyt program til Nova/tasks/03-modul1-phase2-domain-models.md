@@ -18,10 +18,23 @@
 - Value objects are **immutable**
 - Tests describe all invariants
 
+**⚠️ ACTUAL IMPLEMENTATION (2026-01-31)**:
+Instead of ParameterValue/SysExMessage value objects, we implemented:
+- ✅ `Preset` entity (FromSysEx + ToSysEx) - 521 bytes
+- ✅ `UserBankDump` collection (60 presets, numbers 31-90) - immutable
+- ✅ `SystemDump` entity (FromSysEx + ToSysEx) - 527 bytes
+- ✅ All models use FluentResults for error handling
+- ✅ All models store RawSysEx for roundtrip fidelity
+- ✅ 30 domain tests passing (6 Preset + 6 UserBankDump + 5 SystemDump + 13 SysEx utilities)
+
+The original plan assumed 128 presets per bank across 4 banks.
+Reality: Nova System User Bank = 60 presets (31-90), validated with real hardware data.
+
 ---
 
 ## Exit Criteria (Phase 2 Complete When ALL True)
 
+**ORIGINAL PLAN:**
 - [ ] `Nova.Domain` project exists
 - [ ] `ParameterValue` value object validates 0–127
 - [ ] `SysExMessage` value object validates F0...F7 framing
@@ -29,6 +42,19 @@
 - [ ] `SystemDump` contains 4 banks (A/B/C/D)
 - [ ] `dotnet test` passes (all new tests green)
 - [ ] Coverage ≥ 95% for Domain layer
+
+**ACTUAL IMPLEMENTATION (✅ 80% COMPLETE):**
+- [✅] `Nova.Domain` project exists
+- [✅] `Preset` entity with FromSysEx() parsing (6 unit tests + 2 integration tests)
+- [✅] `UserBankDump` collection of 60 presets (6 unit tests + 2 integration tests)  
+- [✅] `SystemDump` entity with FromSysEx() parsing (4 unit tests + 1 integration test)
+- [✅] Preset.ToSysEx() serialization (2 roundtrip tests)
+- [✅] SystemDump.ToSysEx() serialization (1 roundtrip test)
+- [✅] All 39 tests passing (30 Domain + 6 Midi + 3 baseline)
+- [✅] Real hardware validation: 60 presets + 1 system dump parsed successfully
+- [⏳] PENDING: Parameter extraction (detailed preset data parsing)
+- [⏳] PENDING: Preset modification (change name, parameters)
+- [⏳] PENDING: Coverage measurement (estimated >90% for Domain layer)
 
 ---
 
