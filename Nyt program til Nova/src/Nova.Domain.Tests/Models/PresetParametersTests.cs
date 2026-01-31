@@ -656,4 +656,190 @@ public class PresetParametersTests
         result.IsSuccess.Should().BeTrue();
         result.Value.DelayMix.Should().BeInRange(0, 100, "delay mix must be 0-100%");
     }
+
+    // ==================================
+    // REVERB EFFECT PARAMETERS (bytes 326-385)
+    // ==================================
+
+    [Fact]
+    public void FromSysEx_ExtractsReverbType_FromBytes326To329()
+    {
+        // Arrange
+        // Range: 0-3 (spring/hall/room/plate)
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.ReverbType.Should().BeInRange(0, 3, "reverb type must be 0-3");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsReverbDecay_FromBytes330To333()
+    {
+        // Arrange
+        // Range: 1-200 (0.1s to 20s by 0.1s)
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.ReverbDecay.Should().BeInRange(1, 200, "reverb decay must be 1-200");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsReverbPreDelay_FromBytes334To337()
+    {
+        // Arrange
+        // Range: 0-100ms
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.ReverbPreDelay.Should().BeInRange(0, 100, "reverb pre-delay must be 0-100ms");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsReverbShape_FromBytes338To341()
+    {
+        // Arrange
+        // Range: 0-2 (round/curved/square)
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.ReverbShape.Should().BeInRange(0, 2, "reverb shape must be 0-2");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsReverbSize_FromBytes342To345()
+    {
+        // Arrange
+        // Range: 0-7 (box/tiny/small/medium/large/xl/grand/huge)
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.ReverbSize.Should().BeInRange(0, 7, "reverb size must be 0-7");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsReverbHiColor_FromBytes346To349()
+    {
+        // Arrange
+        // Range: 0-6 (wool/warm/real/clear/bright/crisp/glass)
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.ReverbHiColor.Should().BeInRange(0, 6, "reverb hi-color must be 0-6");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsReverbHiLevel_FromBytes350To353()
+    {
+        // Arrange
+        // Range: -25 to +25dB (needs offset decoding)
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.ReverbHiLevel.Should().BeInRange(0, 20000000, "raw value - needs offset decoding for -25 to +25dB");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsReverbLoColor_FromBytes354To357()
+    {
+        // Arrange
+        // Range: 0-6 (thick/round/real/light/tight/thin/nobass)
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.ReverbLoColor.Should().BeInRange(0, 6, "reverb lo-color must be 0-6");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsReverbLoLevel_FromBytes358To361()
+    {
+        // Arrange
+        // Range: -25 to +25dB (needs offset decoding)
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.ReverbLoLevel.Should().BeInRange(0, 20000000, "raw value - needs offset decoding for -25 to +25dB");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsReverbRoomLevel_FromBytes362To365()
+    {
+        // Arrange
+        // Range: -100 to 0dB (needs offset decoding)
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.ReverbRoomLevel.Should().BeInRange(0, 20000000, "raw value - needs offset decoding for -100 to 0dB");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsReverbLevel_FromBytes366To369()
+    {
+        // Arrange
+        // Range: -100 to 0dB (needs offset decoding)
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.ReverbLevel.Should().BeInRange(0, 20000000, "raw value - needs offset decoding for -100 to 0dB");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsReverbDiffuse_FromBytes370To373()
+    {
+        // Arrange
+        // Range: -25 to +25dB (needs offset decoding)
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.ReverbDiffuse.Should().BeInRange(0, 20000000, "raw value - needs offset decoding for -25 to +25dB");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsReverbMix_FromBytes374To377()
+    {
+        // Arrange
+        // Range: 0-100%
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.ReverbMix.Should().BeInRange(0, 100, "reverb mix must be 0-100%");
+    }
 }
