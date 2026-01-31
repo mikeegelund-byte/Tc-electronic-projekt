@@ -38,6 +38,19 @@ Modul 3: Save/Load Presets       [NOT STARTED]
   - Received 60 User Bank presets (521 bytes each)
   - Received 1 System Dump (527 bytes)
   - Sent data back to pedal successfully
+
+[BUILD-SYSTEM] Update documentation to reflect reality (commit: 07125d6)
+  - Confirmed parameter extraction is ESSENTIAL for Phase 2
+  - Reality: 60 User Bank presets (31-90), not 128
+  - Updated SESSION_MEMORY.md and tasks/03
+
+[MODUL-1][PHASE-2][RED→GREEN] Implement basic parameter extraction (commit: 7563c20)
+  - RED: Created PresetParametersTests.cs with 9 tests
+  - GREEN: Implemented 9 properties + 4-byte little-endian decoding
+  - Decode4ByteValue(): b0 | (b1 << 7) | (b2 << 14) | (b3 << 21)
+  - Fixed fixture path + filename bugs
+  - Test Status: ✅ 48/48 PASSING (39 domain + 9 new + 6 midi + 3 baseline)
+```
   - Nova.HardwareTest console app created
 
 [MODUL-1][PHASE-2] Implement Preset domain model with TDD (commit: 1530506)
