@@ -66,6 +66,21 @@ public class Preset
     public int DelayLoCut { get; private set; }     // 20Hz-20kHz table (bytes 294-297)
     public int DelayMix { get; private set; }       // 0-100% (bytes 298-301)
 
+    // REVERB effect parameters (bytes 326-385)
+    public int ReverbType { get; private set; }     // 0-3 (spring/hall/room/plate) (bytes 326-329)
+    public int ReverbDecay { get; private set; }    // 1-200 (0.1-20s by 0.1s) (bytes 330-333)
+    public int ReverbPreDelay { get; private set; } // 0-100ms (bytes 334-337)
+    public int ReverbShape { get; private set; }    // 0-2 (round/curved/square) (bytes 338-341)
+    public int ReverbSize { get; private set; }     // 0-7 (box/.../huge) (bytes 342-345)
+    public int ReverbHiColor { get; private set; }  // 0-6 (wool/.../glass) (bytes 346-349)
+    public int ReverbHiLevel { get; private set; }  // -25 to +25dB (bytes 350-353)
+    public int ReverbLoColor { get; private set; }  // 0-6 (thick/.../nobass) (bytes 354-357)
+    public int ReverbLoLevel { get; private set; }  // -25 to +25dB (bytes 358-361)
+    public int ReverbRoomLevel { get; private set; } // -100 to 0dB (bytes 362-365)
+    public int ReverbLevel { get; private set; }    // -100 to 0dB (bytes 366-369)
+    public int ReverbDiffuse { get; private set; }  // -25 to +25dB (bytes 370-373)
+    public int ReverbMix { get; private set; }      // 0-100% (bytes 374-377)
+
     private Preset() { }
 
 
@@ -158,6 +173,21 @@ public class Preset
         int delayLoCut = Decode4ByteValue(sysex, 294);
         int delayMix = Decode4ByteValue(sysex, 298);
 
+        // Extract REVERB effect parameters (bytes 326-385)
+        int reverbType = Decode4ByteValue(sysex, 326);
+        int reverbDecay = Decode4ByteValue(sysex, 330);
+        int reverbPreDelay = Decode4ByteValue(sysex, 334);
+        int reverbShape = Decode4ByteValue(sysex, 338);
+        int reverbSize = Decode4ByteValue(sysex, 342);
+        int reverbHiColor = Decode4ByteValue(sysex, 346);
+        int reverbHiLevel = Decode4ByteValue(sysex, 350);
+        int reverbLoColor = Decode4ByteValue(sysex, 354);
+        int reverbLoLevel = Decode4ByteValue(sysex, 358);
+        int reverbRoomLevel = Decode4ByteValue(sysex, 362);
+        int reverbLevel = Decode4ByteValue(sysex, 366);
+        int reverbDiffuse = Decode4ByteValue(sysex, 370);
+        int reverbMix = Decode4ByteValue(sysex, 374);
+
         // Extract effect on/off switches (4-byte encoded boolean: 0x00=off, 0x01=on)
         bool compressorEnabled = Decode4ByteValue(sysex, 130) == 1;
         bool driveEnabled = Decode4ByteValue(sysex, 194) == 1;
@@ -206,6 +236,19 @@ public class Preset
             DelayHiCut = delayHiCut,
             DelayLoCut = delayLoCut,
             DelayMix = delayMix,
+            ReverbType = reverbType,
+            ReverbDecay = reverbDecay,
+            ReverbPreDelay = reverbPreDelay,
+            ReverbShape = reverbShape,
+            ReverbSize = reverbSize,
+            ReverbHiColor = reverbHiColor,
+            ReverbHiLevel = reverbHiLevel,
+            ReverbLoColor = reverbLoColor,
+            ReverbLoLevel = reverbLoLevel,
+            ReverbRoomLevel = reverbRoomLevel,
+            ReverbLevel = reverbLevel,
+            ReverbDiffuse = reverbDiffuse,
+            ReverbMix = reverbMix,
             CompressorEnabled = compressorEnabled,
             DriveEnabled = driveEnabled,
             ModulationEnabled = modulationEnabled,
