@@ -4,15 +4,17 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Nova.Common\Nova.Common.csproj" />
+    <ProjectReference Include="..\Nova.Midi\Nova.Midi.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentResults" Version="4.0.0" />
-    <PackageReference Include="Melanchall.DryWetMidi" Version="7.*" />
+    <Using Include="Xunit" />
   </ItemGroup>
 
 </Project>
