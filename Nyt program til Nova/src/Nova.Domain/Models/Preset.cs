@@ -27,7 +27,7 @@ public class Preset
         // Validate F0/F7 framing
         if (sysex[0] != 0xF0)
             return Result.Fail("SysEx must start with F0");
-        
+
         if (sysex[520] != 0xF7)
             return Result.Fail("SysEx must end with F7");
 

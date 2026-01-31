@@ -2,9 +2,9 @@
 
 ## 📋 Module: 1 (MVP - Connection + Bank Dump)
 ## 📋 Phase: 2 (Domain layer - core models)
-**Duration**: 1 week  
-**Prerequisite**: Phase 0 complete + Modul 1 Phase 1 complete  
-**Output**: Domain entities + value objects, full unit test suite  
+**Duration**: 1 week
+**Prerequisite**: Phase 0 complete + Modul 1 Phase 1 complete
+**Output**: Domain entities + value objects, full unit test suite
 
 ---
 
@@ -46,7 +46,7 @@ Reality: Nova System User Bank = 60 presets (31-90), validated with real hardwar
 **ACTUAL IMPLEMENTATION (✅ 80% COMPLETE):**
 - [✅] `Nova.Domain` project exists
 - [✅] `Preset` entity with FromSysEx() parsing (6 unit tests + 2 integration tests)
-- [✅] `UserBankDump` collection of 60 presets (6 unit tests + 2 integration tests)  
+- [✅] `UserBankDump` collection of 60 presets (6 unit tests + 2 integration tests)
 - [✅] `SystemDump` entity with FromSysEx() parsing (4 unit tests + 1 integration test)
 - [✅] Preset.ToSysEx() serialization (2 roundtrip tests)
 - [✅] SystemDump.ToSysEx() serialization (1 roundtrip test)
@@ -60,8 +60,8 @@ Reality: Nova System User Bank = 60 presets (31-90), validated with real hardwar
 
 ## Task 2.1: Create `ParameterValue` Value Object
 
-**Status**: Not started  
-**Estimated**: 30 min  
+**Status**: Not started
+**Estimated**: 30 min
 **Files**:
 - `src/Nova.Domain/ValueObjects/ParameterValue.cs`
 - `tests/Nova.Domain.Tests/ValueObjects/ParameterValueTests.cs`
@@ -114,8 +114,8 @@ public sealed record ParameterValue
 
 ## Task 2.2: Create `SysExMessage` Value Object
 
-**Status**: Not started  
-**Estimated**: 40 min  
+**Status**: Not started
+**Estimated**: 40 min
 **Files**:
 - `src/Nova.Domain/ValueObjects/SysExMessage.cs`
 - `tests/Nova.Domain.Tests/ValueObjects/SysExMessageTests.cs`
@@ -175,8 +175,8 @@ public sealed record SysExMessage
 
 ## Task 2.3: Create `PresetBank` Entity
 
-**Status**: Not started  
-**Estimated**: 60 min  
+**Status**: Not started
+**Estimated**: 60 min
 **Files**:
 - `src/Nova.Domain/Entities/PresetBank.cs`
 - `tests/Nova.Domain.Tests/Entities/PresetBankTests.cs`
@@ -229,8 +229,8 @@ public sealed class PresetBank
 
 ## Task 2.4: Create `SystemDump` Entity
 
-**Status**: Not started  
-**Estimated**: 60 min  
+**Status**: Not started
+**Estimated**: 60 min
 **Files**:
 - `src/Nova.Domain/Entities/SystemDump.cs`
 - `tests/Nova.Domain.Tests/Entities/SystemDumpTests.cs`
@@ -272,8 +272,8 @@ public sealed class SystemDump
 
 ## Task 2.5: Coverage Verification
 
-**Status**: Not started  
-**Estimated**: 15 min  
+**Status**: Not started
+**Estimated**: 15 min
 **Requirement**: Domain coverage ≥ 95%
 
 ### Verification
