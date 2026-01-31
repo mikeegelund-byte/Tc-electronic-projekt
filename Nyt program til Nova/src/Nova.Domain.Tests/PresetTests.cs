@@ -126,11 +126,11 @@ public class PresetTests
         sysex[6] = 0x20;
         sysex[7] = 0x01;
         sysex[8] = (byte)number;
-        
+
         // Encode name (24 bytes, space-padded)
         var nameBytes = System.Text.Encoding.ASCII.GetBytes(name.PadRight(24));
         Array.Copy(nameBytes, 0, sysex, 9, 24);
-        
+
         sysex[520] = 0xF7;
         return sysex;
     }

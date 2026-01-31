@@ -4,7 +4,7 @@
 
 **14 Nye Dokumentations-filer** (Fase 1-6 komplet)
 - **01-10**: Kern architecture + produkt design
-- **11-13**: Implementering guide + test fixtures  
+- **11-13**: Implementering guide + test fixtures
 - **14**: Ready-for-implementation checklist
 - **STATUS.md**: Master status rapport
 
@@ -118,9 +118,9 @@ OS:       Windows 11 (primary), macOS future
 
 ## 🚀 Næste Fase: Miljøopsætning
 
-**Hvornår**: Nu!  
-**Hvor**: `docs/12-environment-setup-checklist.md`  
-**Estimat**: 1-2 timer  
+**Hvornår**: Nu!
+**Hvor**: `docs/12-environment-setup-checklist.md`
+**Estimat**: 1-2 timer
 
 ### Faser:
 1. **Phase 1**: Install tools (.NET SDK, Visual Studio, Git)
@@ -227,7 +227,7 @@ docs/12-environment-setup-checklist.md (75 min, følg 7 faser)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 FASE 1: PDF Læsning            ✅ KOMPLET
-FASE 2: Viden-syntese          ✅ KOMPLET  
+FASE 2: Viden-syntese          ✅ KOMPLET
 FASE 3: Stack-valg             ✅ KOMPLET
 FASE 4: Modul-roadmap          ✅ KOMPLET
 FASE 5: Dok-struktur           ✅ KOMPLET
@@ -330,7 +330,7 @@ Status: 🟢 ACTIVELY DEVELOPING (39/39 tests passing)
 
 ---
 
-*Projekt: Nova System MIDI Control*  
-*Stack: C# + Avalonia + DryWetMIDI*  
-*Status: 🟢 Ready for Implementation*  
+*Projekt: Nova System MIDI Control*
+*Stack: C# + Avalonia + DryWetMIDI*
+*Status: 🟢 Ready for Implementation*
 *Dato: [Project Start]*
