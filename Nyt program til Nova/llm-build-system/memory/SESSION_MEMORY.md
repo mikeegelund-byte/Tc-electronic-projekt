@@ -35,8 +35,8 @@
 - ToSysEx() serialization for all 3 models + 3 roundtrip tests
 - Total: 22 domain tests + 3 integration tests ✅
 
-**Test Status:** 48/48 PASS (100% green)
-- Nova.Domain.Tests: 39 passed (30 original + 9 parameter extraction)
+**Test Status:** 62/62 PASS (100% green)
+- Nova.Domain.Tests: 53 passed (30 original + 23 parameter extraction)
 - Nova.Midi.Tests: 6 passed
 - Baseline tests: 3 passed
 
@@ -48,6 +48,12 @@
 1. ✅ Complete session template (steps 1-5)
 2. ✅ Review Phase 2 remaining tasks
 3. ✅ DECISION: Parameter extraction is ESSENTIAL - complete before Phase 3
+4. ✅ Implement basic parameters (9 params): TapTempo, Routing, LevelOut, 5 enable flags
+5. 🔄 **ACTIVE**: Detailed effect parameters extraction
+   - ✅ COMP (Compressor): 8 params (commit b8a1f59)
+   - ✅ DRIVE: 3 params (commit bc54946)
+   - ✅ BOOST: 3 params (commit 6b95144)
+   - 🔄 MOD (Modulation): 8 params IN PROGRESS
 4. ✅ RED→GREEN cycle: Basic parameter extraction (9 params) - commit 7563c20
    - TapTempo, Routing, LevelOut L/R, 5 effect enable flags
    - 4-byte little-endian decoding working correctly
