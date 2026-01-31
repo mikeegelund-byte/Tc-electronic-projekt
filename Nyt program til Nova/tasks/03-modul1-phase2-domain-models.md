@@ -30,6 +30,13 @@ Instead of ParameterValue/SysExMessage value objects, we implemented:
 The original plan assumed 128 presets per bank across 4 banks.
 Reality: Nova System User Bank = 60 presets (31-90), validated with real hardware data.
 
+**CRITICAL DECISION (2026-01-31):**
+Parameter extraction (bytes 33-519) is ESSENTIAL for reading preset details:
+- Tap Tempo, Routing, Level Out
+- All effect parameters (COMP, Drive, Boost, Mod, Delay, Reverb)
+- This is NOT optional - it's required to understand what's in each preset.
+Therefore: Complete parameter extraction BEFORE Phase 3.
+
 ---
 
 ## Exit Criteria (Phase 2 Complete When ALL True)
@@ -43,7 +50,7 @@ Reality: Nova System User Bank = 60 presets (31-90), validated with real hardwar
 - [ ] `dotnet test` passes (all new tests green)
 - [ ] Coverage ≥ 95% for Domain layer
 
-**ACTUAL IMPLEMENTATION (✅ 80% COMPLETE):**
+**ACTUAL IMPLEMENTATION (✅ 80% COMPLETE - Parameter extraction in progress):**
 - [✅] `Nova.Domain` project exists
 - [✅] `Preset` entity with FromSysEx() parsing (6 unit tests + 2 integration tests)
 - [✅] `UserBankDump` collection of 60 presets (6 unit tests + 2 integration tests)
@@ -52,7 +59,7 @@ Reality: Nova System User Bank = 60 presets (31-90), validated with real hardwar
 - [✅] SystemDump.ToSysEx() serialization (1 roundtrip test)
 - [✅] All 39 tests passing (30 Domain + 6 Midi + 3 baseline)
 - [✅] Real hardware validation: 60 presets + 1 system dump parsed successfully
-- [⏳] PENDING: Parameter extraction (detailed preset data parsing)
+- [🔴] IN PROGRESS: Parameter extraction (bytes 33-519 - ALL preset details)
 - [⏳] PENDING: Preset modification (change name, parameters)
 - [⏳] PENDING: Coverage measurement (estimated >90% for Domain layer)
 
