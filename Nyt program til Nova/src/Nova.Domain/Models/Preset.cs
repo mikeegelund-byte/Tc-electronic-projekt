@@ -61,4 +61,17 @@ public class Preset
             RawSysEx = sysex
         });
     }
+
+    /// <summary>
+    /// Serializes the preset back to a 521-byte SysEx message.
+    /// Simply returns the stored RawSysEx since we preserve original bytes.
+    /// </summary>
+    /// <returns>Result with 521-byte SysEx or error</returns>
+    public Result<byte[]> ToSysEx()
+    {
+        if (RawSysEx == null || RawSysEx.Length != 521)
+            return Result.Fail("Preset has no valid RawSysEx data");
+
+        return Result.Ok(RawSysEx);
+    }
 }

@@ -77,4 +77,32 @@ public class SystemDumpTests
         result.IsFailed.Should().BeTrue();
         result.Errors.Should().ContainSingle(e => e.Message.Contains("0x02"));
     }
+
+    [Fact]
+    public void ToSysEx_ValidSystemDump_ReturnsOriginalBytes()
+    {
+        // Arrange
+        var originalSysex = CreateValidSystemDumpSysEx();
+        var systemDump = SystemDump.FromSysEx(originalSysex).Value;
+
+        // Act
+        var result = systemDump.ToSysEx();
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.Should().BeEquivalentTo(originalSysex);
+    }
+
+    private static byte[] CreateValidSystemDumpSysEx()
+    {
+        var sysex = new byte[527];
+        sysex[0] = 0xF0;
+        sysex[1] = 0x00; sysex[2] = 0x20; sysex[3] = 0x1F;
+        sysex[4] = 0x00;
+        sysex[5] = 0x63;
+        sysex[6] = 0x20;
+        sysex[7] = 0x02; // System Dump data type
+        sysex[526] = 0xF7;
+        return sysex;
+    }
 }
