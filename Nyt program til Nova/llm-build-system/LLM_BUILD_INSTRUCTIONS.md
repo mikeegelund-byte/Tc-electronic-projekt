@@ -1,5 +1,7 @@
 # LLM Build Instructions — Uundgåeligt Testregime
 
+Status: læst
+
 ## ⚠️ KRITISK REGEL: **NO CODE WITHOUT TESTS**
 
 Du SKAL følge denne regel 100% - ingen undtagelser:

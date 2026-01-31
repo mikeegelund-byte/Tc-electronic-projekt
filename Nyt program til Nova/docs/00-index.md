@@ -1,5 +1,7 @@
 # Dokumentation Index
 
+Status: læst (bekræftet)
+
 Kort indgang til alt dokumentation. Hver fil dækker ét emne og er holdt kort.
 
 ## Core

@@ -1,5 +1,7 @@
 # CLEANUP_POLICY.md — When & How to Delete/Refactor
 
+Status: læst
+
 ## 🎯 Purpose
 
 Maintain code cleanliness without breaking things. Every deletion or major refactor must follow this policy.

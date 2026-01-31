@@ -1,5 +1,7 @@
 # Task Index — All Phases & Modules
 
+Status: læst
+
 ## 📋 Complete Roadmap
 
 ```
