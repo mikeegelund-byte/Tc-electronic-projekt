@@ -166,4 +166,118 @@ public class PresetParametersTests
         result.IsSuccess.Should().BeTrue();
         // Bool property extracted successfully
     }
+
+    // ========== COMP (Compressor) Effect Parameters (bytes 70-129) ==========
+
+    [Fact]
+    public void FromSysEx_ExtractsCompType_FromBytes70To73()
+    {
+        // Arrange: Bytes 70-73 contain COMP Type (0=perc, 1=sustain, 2=advanced)
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.CompType.Should().BeInRange(0, 2,
+            "COMP Type must be 0-2 (perc/sustain/advanced)");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsCompThreshold_FromBytes74To77()
+    {
+        // Arrange: Bytes 74-77 contain COMP Threshold (advanced mode: -30 to 0dB)
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.CompThreshold.Should().BeInRange(0, 20000000,
+            "COMP Threshold raw value - needs offset decoding");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsCompRatio_FromBytes78To81()
+    {
+        // Arrange: Bytes 78-81 contain COMP Ratio (0=Off, 1-15=ratios per table)
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.CompRatio.Should().BeInRange(0, 15,
+            "COMP Ratio must be 0-15 (Off to Infinite:1)");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsCompAttack_FromBytes82To85()
+    {
+        // Arrange: Bytes 82-85 contain COMP Attack (0-16 = table lookup)
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.CompAttack.Should().BeInRange(0, 16,
+            "COMP Attack must be 0-16 (0.3ms to 140ms per table)");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsCompRelease_FromBytes86To89()
+    {
+        // Arrange: Bytes 86-89 contain COMP Release (13-23 = 50ms to 2000ms per table)
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.CompRelease.Should().BeInRange(13, 23,
+            "COMP Release must be 13-23 (50ms to 2000ms per table)");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsCompResponse_FromBytes90To93()
+    {
+        // Arrange: Bytes 90-93 contain COMP Response (perc/sustain modes: 1-10)
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.CompResponse.Should().BeInRange(0, 20,
+            "COMP Response actual range TBD");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsCompDrive_FromBytes94To97()
+    {
+        // Arrange: Bytes 94-97 contain COMP Drive (perc/sustain modes: 1-20)
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.CompDrive.Should().BeInRange(0, 30,
+            "COMP Drive actual range TBD");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsCompLevel_FromBytes98To101()
+    {
+        // Arrange: Bytes 98-101 contain COMP Level (-12 to +12dB)
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.CompLevel.Should().BeInRange(0, 20000000,
+            "COMP Level raw value - needs offset decoding");
+    }
 }

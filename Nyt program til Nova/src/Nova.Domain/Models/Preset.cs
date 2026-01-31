@@ -24,7 +24,18 @@ public class Preset
     public bool DelayEnabled { get; private set; }       // bytes 322-325
     public bool ReverbEnabled { get; private set; }      // bytes 386-389
 
+    // COMP (Compressor) effect parameters (bytes 70-129)
+    public int CompType { get; private set; }       // 0=perc, 1=sustain, 2=advanced (bytes 70-73)
+    public int CompThreshold { get; private set; }  // -30 to 0dB (bytes 74-77)
+    public int CompRatio { get; private set; }      // 0=Off, 1-15=ratios (bytes 78-81)
+    public int CompAttack { get; private set; }     // 0-16 table index (bytes 82-85)
+    public int CompRelease { get; private set; }    // 13-23 table index (bytes 86-89)
+    public int CompResponse { get; private set; }   // 1-10 (bytes 90-93)
+    public int CompDrive { get; private set; }      // 1-20 (bytes 94-97)
+    public int CompLevel { get; private set; }      // -12 to +12dB (bytes 98-101)
+
     private Preset() { }
+
 
     /// <summary>
     /// Parses a 521-byte SysEx message into a Preset.
@@ -73,6 +84,16 @@ public class Preset
         int levelOutLeft = Decode4ByteValue(sysex, 46);
         int levelOutRight = Decode4ByteValue(sysex, 50);
 
+        // Extract COMP (Compressor) parameters (bytes 70-101)
+        int compType = Decode4ByteValue(sysex, 70);
+        int compThreshold = Decode4ByteValue(sysex, 74);
+        int compRatio = Decode4ByteValue(sysex, 78);
+        int compAttack = Decode4ByteValue(sysex, 82);
+        int compRelease = Decode4ByteValue(sysex, 86);
+        int compResponse = Decode4ByteValue(sysex, 90);
+        int compDrive = Decode4ByteValue(sysex, 94);
+        int compLevel = Decode4ByteValue(sysex, 98);
+
         // Extract effect on/off switches (4-byte encoded boolean: 0x00=off, 0x01=on)
         bool compressorEnabled = Decode4ByteValue(sysex, 130) == 1;
         bool driveEnabled = Decode4ByteValue(sysex, 194) == 1;
@@ -89,6 +110,14 @@ public class Preset
             Routing = routing,
             LevelOutLeft = levelOutLeft,
             LevelOutRight = levelOutRight,
+            CompType = compType,
+            CompThreshold = compThreshold,
+            CompRatio = compRatio,
+            CompAttack = compAttack,
+            CompRelease = compRelease,
+            CompResponse = compResponse,
+            CompDrive = compDrive,
+            CompLevel = compLevel,
             CompressorEnabled = compressorEnabled,
             DriveEnabled = driveEnabled,
             ModulationEnabled = modulationEnabled,
