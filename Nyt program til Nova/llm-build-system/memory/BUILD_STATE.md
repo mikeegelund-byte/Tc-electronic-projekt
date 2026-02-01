@@ -5,12 +5,19 @@
 ```
 Modul 0: Environment Setup       [✅ COMPLETE]
 Modul 1: Connection + Bank       [✅ 100% COMPLETE]
-  Phase 1: MIDI Foundation       [✅ COMPLETE]
-  Phase 2: Domain Models         [✅ COMPLETE]
-  Phase 3: Use Cases             [✅ COMPLETE]
-  Phase 4: Infrastructure        [✅ COMPLETE]
-  Phase 5: Presentation          [✅ 100% COMPLETE] ✓ Hardware test SUCCESS
-Modul 2-10                       [⬜ NOT STARTED] ← NEXT: Modul 2 Preset Viewer
+Modul 2: Preset Viewer           [✅ 100% COMPLETE]
+  Task 2.1-2.4: PresetListView   [✅ COMPLETE]
+  Task 2.5: Unit Tests           [✅ COMPLETE] 12/12 passing
+  Task 2.6: Hardware Test        [✅ COMPLETE] Downloaded 60 presets
+Modul 3: System Viewer           [🔄 40% IN PROGRESS]
+  Task 3.1: SysExBuilder.BuildSystemDumpRequest() [✅ COMPLETE] 8/8 tests
+  Task 3.2: RequestSystemDumpUseCase [✅ COMPLETE] 3/3 tests
+  Task 3.3: SystemSettingsViewModel [✅ COMPLETE] 3/3 tests
+  Task 3.4: SystemSettingsView.axaml [✅ COMPLETE]
+  Task 3.5-3.7: Agent work in progress
+Modul 4: Preset File I/O         [🔄 0% STARTING]
+  Export/Import PresetUseCase - Agent deploying
+Modul 5-10                       [⬜ NOT STARTED]
 ```
 
 ---
@@ -59,12 +66,12 @@ Modul 2-10                       [⬜ NOT STARTED] ← NEXT: Modul 2 Preset View
 ## 📊 Test Status
 
 ```
-Total tests: 176
-  Nova.Domain.Tests:        140 tests ✅
+Total tests: 183
+  Nova.Domain.Tests:        144 tests ✅
   Nova.Midi.Tests:          6 tests ✅
-  Nova.Application.Tests:   3 tests ✅
+  Nova.Application.Tests:   6 tests ✅ (RequestSystemDumpUseCase 3/3)
   Nova.Infrastructure.Tests: 12 tests ✅
-  Nova.Presentation.Tests:  15 tests (3 ❌ Moq sealed issue, 12 ✅ PresetSummaryViewModel)
+  Nova.Presentation.Tests:  15 tests (3 ❌ MainViewModelTests sealed UseCases, 15 ✅ others)
 
 Build: 0 warnings, 0 errors ✅
 Framework: .NET 8.0 LTS
