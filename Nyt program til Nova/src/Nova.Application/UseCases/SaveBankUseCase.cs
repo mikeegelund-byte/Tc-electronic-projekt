@@ -65,13 +65,14 @@ public sealed class SaveBankUseCase
     {
         const int presetSize = 521;
         const int presetCount = 60;
+        const int firstPresetNumber = 31;
         var sysexData = new byte[presetSize * presetCount];
 
         for (int i = 0; i < presetCount; i++)
         {
             var preset = bank.Presets[i];
             if (preset == null)
-                return Result.Fail($"Preset at index {i} (number {i + 31}) is null");
+                return Result.Fail($"Preset at index {i} (number {i + firstPresetNumber}) is null");
 
             var presetSysExResult = preset.ToSysEx();
             if (presetSysExResult.IsFailed)

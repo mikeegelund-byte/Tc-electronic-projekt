@@ -55,6 +55,7 @@ public sealed class LoadBankUseCase
         var bank = bankResult.Value;
 
         // Upload each preset to the pedal
+        const int firstPresetNumber = 31;
         for (int i = 0; i < 60; i++)
         {
             if (cancellationToken.IsCancellationRequested)
@@ -62,7 +63,7 @@ public sealed class LoadBankUseCase
 
             var preset = bank.Presets[i];
             if (preset == null)
-                return Result.Fail($"Preset at index {i} (number {i + 31}) is null");
+                return Result.Fail($"Preset at index {i} (number {i + firstPresetNumber}) is null");
 
             var presetSysExResult = preset.ToSysEx();
             if (presetSysExResult.IsFailed)
@@ -84,6 +85,7 @@ public sealed class LoadBankUseCase
     {
         const int presetSize = 521;
         const int presetCount = 60;
+        const int firstPresetNumber = 31;
         const int expectedSize = presetSize * presetCount;
 
         // Validate file size
@@ -99,7 +101,7 @@ public sealed class LoadBankUseCase
 
             var presetResult = Preset.FromSysEx(presetData);
             if (presetResult.IsFailed)
-                return Result.Fail($"Failed to parse preset at index {i}: {string.Join(", ", presetResult.Errors)}");
+                return Result.Fail($"Failed to parse preset at index {i} (number {i + firstPresetNumber}): {string.Join(", ", presetResult.Errors)}");
 
             presets.Add(presetResult.Value);
         }
