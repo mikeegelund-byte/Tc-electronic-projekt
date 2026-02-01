@@ -1,0 +1,187 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Nova.Presentation.ViewModels"
+             x:Class="Nova.Presentation.Views.EditablePresetView"
+             x:DataType="vm:EditablePresetViewModel">
+
+    <Border Background="#2D2D2D" Padding="16" CornerRadius="8">
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel Spacing="16">
+                <!-- Header Section -->
+                <StackPanel Spacing="8">
+                    <TextBlock Text="Edit Preset" 
+                               FontWeight="Bold" 
+                               FontSize="16"
+                               Foreground="#FFFFFF"/>
+                    
+                    <TextBlock Text="{Binding PresetNumber, StringFormat='Preset #{0}'}" 
+                               Foreground="#AAAAAA"
+                               FontFamily="Consolas"/>
+                </StackPanel>
+
+                <!-- Validation Error Display -->
+                <Border Background="#CC3333" 
+                        Padding="12" 
+                        CornerRadius="4"
+                        IsVisible="{Binding ValidationError, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+                    <TextBlock Text="{Binding ValidationError}" 
+                               Foreground="#FFFFFF"
+                               TextWrapping="Wrap"/>
+                </Border>
+
+                <!-- Basic Info Section -->
+                <Border Background="#1E1E1E" 
+                        Padding="12" 
+                        CornerRadius="4">
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="Basic Information" 
+                                   FontWeight="Bold" 
+                                   Foreground="#FFFFFF"
+                                   Margin="0,0,0,4"/>
+                        
+                        <TextBox Header="Preset Name" 
+                                 Text="{Binding PresetName}" 
+                                 MaxLength="24"
+                                 Watermark="Enter preset name (max 24 chars)"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Global Parameters Section -->
+                <Border Background="#1E1E1E" 
+                        Padding="12" 
+                        CornerRadius="4">
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="Global Parameters" 
+                                   FontWeight="Bold" 
+                                   Foreground="#FFFFFF"
+                                   Margin="0,0,0,4"/>
+                        
+                        <NumericUpDown Header="Tap Tempo (ms)" 
+                                       Value="{Binding TapTempo}" 
+                                       Minimum="100" 
+                                       Maximum="3000"
+                                       Increment="10"/>
+                        
+                        <NumericUpDown Header="Routing (0=Semi-parallel, 1=Serial, 2=Parallel)" 
+                                       Value="{Binding Routing}" 
+                                       Minimum="0" 
+                                       Maximum="2"/>
+                        
+                        <NumericUpDown Header="Level Out Left (dB)" 
+                                       Value="{Binding LevelOutLeft}" 
+                                       Minimum="-100" 
+                                       Maximum="0"/>
+                        
+                        <NumericUpDown Header="Level Out Right (dB)" 
+                                       Value="{Binding LevelOutRight}" 
+                                       Minimum="-100" 
+                                       Maximum="0"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Effect Switches Section -->
+                <Border Background="#1E1E1E" 
+                        Padding="12" 
+                        CornerRadius="4">
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="Effect On/Off" 
+                                   FontWeight="Bold" 
+                                   Foreground="#FFFFFF"
+                                   Margin="0,0,0,4"/>
+                        
+                        <CheckBox Content="Compressor Enabled" 
+                                  IsChecked="{Binding CompressorEnabled}"/>
+                        <CheckBox Content="Drive Enabled" 
+                                  IsChecked="{Binding DriveEnabled}"/>
+                        <CheckBox Content="Modulation Enabled" 
+                                  IsChecked="{Binding ModulationEnabled}"/>
+                        <CheckBox Content="Delay Enabled" 
+                                  IsChecked="{Binding DelayEnabled}"/>
+                        <CheckBox Content="Reverb Enabled" 
+                                  IsChecked="{Binding ReverbEnabled}"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Compressor Parameters Section -->
+                <Border Background="#1E1E1E" 
+                        Padding="12" 
+                        CornerRadius="4">
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="Compressor Parameters" 
+                                   FontWeight="Bold" 
+                                   Foreground="#FFFFFF"
+                                   Margin="0,0,0,4"/>
+                        
+                        <NumericUpDown Header="Type (0=perc, 1=sustain, 2=advanced)" 
+                                       Value="{Binding CompType}" 
+                                       Minimum="0" 
+                                       Maximum="2"/>
+                        
+                        <NumericUpDown Header="Threshold (dB)" 
+                                       Value="{Binding CompThreshold}" 
+                                       Minimum="-30" 
+                                       Maximum="0"/>
+                        
+                        <NumericUpDown Header="Ratio" 
+                                       Value="{Binding CompRatio}" 
+                                       Minimum="0" 
+                                       Maximum="15"/>
+                        
+                        <NumericUpDown Header="Attack" 
+                                       Value="{Binding CompAttack}" 
+                                       Minimum="0" 
+                                       Maximum="16"/>
+                        
+                        <NumericUpDown Header="Release" 
+                                       Value="{Binding CompRelease}" 
+                                       Minimum="13" 
+                                       Maximum="23"/>
+                        
+                        <NumericUpDown Header="Response" 
+                                       Value="{Binding CompResponse}" 
+                                       Minimum="1" 
+                                       Maximum="10"/>
+                        
+                        <NumericUpDown Header="Drive" 
+                                       Value="{Binding CompDrive}" 
+                                       Minimum="1" 
+                                       Maximum="20"/>
+                        
+                        <NumericUpDown Header="Level (dB)" 
+                                       Value="{Binding CompLevel}" 
+                                       Minimum="-12" 
+                                       Maximum="12"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Note: Additional effect sections (Drive, Boost, Modulation, Delay, Reverb, EQ/Gate, Pitch)
+                     would follow the same pattern as above. Abbreviated for brevity. -->
+
+                <!-- Action Buttons -->
+                <StackPanel Orientation="Horizontal" Spacing="12" HorizontalAlignment="Right">
+                    <Button Content="Save Changes" 
+                            Command="{Binding SaveCommand}"
+                            IsEnabled="{Binding HasChanges}"
+                            Classes="accent"
+                            Padding="16,8"/>
+                    
+                    <Button Content="Revert Changes" 
+                            Command="{Binding RevertChangesCommand}"
+                            IsEnabled="{Binding HasChanges}"
+                            Padding="16,8"/>
+                </StackPanel>
+
+                <!-- Status Section -->
+                <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Right">
+                    <TextBlock Text="Changes detected" 
+                               Foreground="#FFA500"
+                               IsVisible="{Binding HasChanges}"/>
+                    
+                    <TextBlock Text="Saving..." 
+                               Foreground="#00AA00"
+                               IsVisible="{Binding IsSaving}"/>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+    </Border>
+</UserControl>
