@@ -10,9 +10,9 @@
 
 ## 🎯 NUVÆRENDE TASK
 
-**Fil**: `tasks/07-modul2-preset-viewer.md`  
-**Task**: Modul 2 - Preset Viewer  
-**Status**: 🔄 IN PROGRESS (Tasks 2.1-2.4 done, working on 2.5 tests)
+**Fil**: `tasks/08-modul3-system-viewer.md`  
+**Task**: Modul 3.1 - Extend SysExBuilder for System Dump Request  
+**Status**: ✅ COMPLETE (Tests pass, implementation complete)
 
 ---
 
@@ -27,7 +27,7 @@
 | 1.4 | Infrastructure | ✅ DONE | 100% |
 | 1.5 | Presentation | ✅ DONE | 100% |
 | 2 | Preset Viewer | 🔄 IN PROGRESS | 70% |
-| 3 | System Viewer | ⬜ TODO | 0% |
+| 3 | System Viewer | 🔄 IN PROGRESS | 10% |
 | 4 | System Editor | ⬜ TODO | 0% |
 | 5 | Preset Detail | ⬜ TODO | 0% |
 | 6 | Preset Editor | ⬜ TODO | 0% |

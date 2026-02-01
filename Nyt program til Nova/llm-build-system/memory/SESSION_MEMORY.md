@@ -1,9 +1,16 @@
 # SESSION_MEMORY.md — Current Session State
 
-## 📅 Session: 2025-02-01 (Phase 5 - Presentation Layer 100% COMPLETE)
+## 📅 Session: 2026-02-01 (Modul 3 - System Dump Viewer)
 
 ### 🎯 Mål
-Implementer Avalonia UI med MVVM pattern for at give brugeren en grafisk grænseflade til Nova System Manager.
+[MODUL-3][TASK-3.1] Extend SysExBuilder for System Dump Request
+- Add BuildSystemDumpRequest() method to SysExBuilder following existing pattern
+- Implement TDD approach (RED -> GREEN -> REFACTOR)
+- Method should build 9-byte SysEx message for requesting system dump from Nova System pedal
+
+### Nuværende task
+**Fil**: tasks/08-modul3-system-viewer.md  
+**Task**: 3.1 - Extend SysExBuilder for System Dump Request
 
 ### 🔧 Status Update
 **Latest Commit**: Phase 5 COMPLETE - Hardware test SUCCESS 🎉  

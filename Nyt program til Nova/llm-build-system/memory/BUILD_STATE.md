@@ -10,18 +10,20 @@ Modul 1: Connection + Bank       [✅ 100% COMPLETE]
   Phase 3: Use Cases             [✅ COMPLETE]
   Phase 4: Infrastructure        [✅ COMPLETE]
   Phase 5: Presentation          [✅ 100% COMPLETE] ✓ Hardware test SUCCESS
-Modul 2-10                       [⬜ NOT STARTED] ← NEXT: Modul 2 Preset Viewer
+Modul 2: Preset Viewer           [🔄 IN PROGRESS] 70%
+Modul 3: System Viewer           [🔄 IN PROGRESS] Task 3.1 COMPLETE
+Modul 4-10                       [⬜ NOT STARTED]
 ```
 
 ---
 
 ## 📂 Completed Layers
 
-### Nova.Domain ✅ 100%
+### Nova.Domain ✅ Updated
 - Models/Preset.cs — 521 bytes, 78 parameters
 - Models/UserBankDump.cs — 60 presets collection
 - Models/SystemDump.cs — 527 bytes global settings
-- SysEx/SysExBuilder.cs — Request builders
+- Midi/SysExBuilder.cs — Request builders (Bank + System Dump)
 - SysEx/SysExValidator.cs — Checksum validation
 
 ### Nova.Application ✅ 100%
