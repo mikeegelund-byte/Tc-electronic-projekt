@@ -1,55 +1,91 @@
 # SESSION_MEMORY.md — Current Session State
 
-## 📅 Session: 2025-02-01 (Modul 2 - Preset Viewer 100% COMPLETE)
+## 📅 Session: 2026-02-01 (Modul 3 - System Dump Viewer)
 
 ### 🎯 Mål
-Implementer Preset Viewer UI for at vise downloadede User Bank presets (60 presets) i en DataGrid med Position, Name, og Preset#.
+[MODUL-3][TASK-3.1] Extend SysExBuilder for System Dump Request - ✅ COMPLETE
+- Added BuildSystemDumpRequest() method to SysExBuilder following existing pattern
+- Implemented TDD approach (RED -> GREEN -> REFACTOR)
+- Method builds 9-byte SysEx message for requesting system dump from Nova System pedal
+
+### Nuværende task
+**Fil**: tasks/08-modul3-system-viewer.md  
+**Task**: 3.1 - Extend SysExBuilder for System Dump Request  
+**Status**: ✅ COMPLETE
 
 ### 🔧 Status Update
-**Latest Commit**: [MODUL-2][TASK-2.6] Modul 2 Preset Viewer complete - ready for manual hardware test  
-**Modul 2 Progress**: ✅ 100% COMPLETE (all tasks 2.1-2.6)  
+**Latest Commit**: [MODUL-3][TASK-3.1] Add System Dump request builder  
+**Build Status**: ✅ GREEN (0 errors, 0 warnings)  
+**Tests**: 164/167 passing (3 Presentation tests failing due to known Moq issue - non-blocking)  
+**New Tests**: 2 new tests added (1 Fact + 1 Theory with 3 test cases)
+
+---
+
+## ✅ Implementation Details
+
+### Changes Made
+1. **src/Nova.Domain/Midi/SysExBuilder.cs**
+   - Added `SYSTEM_DUMP` constant (0x02)
+   - Added `BuildSystemDumpRequest(byte deviceId = 0x00)` method
+   - Follows existing pattern from BuildBankDumpRequest
+   - Returns 9-byte SysEx: F0 00 20 1F [deviceId] 63 45 02 F7
+
+2. **src/Nova.Domain.Tests/SysExBuilderTests.cs**
+   - Added `BuildSystemDumpRequest_ReturnsCorrectBytes()` test
+   - Added `BuildSystemDumpRequest_WithDeviceId_SetsCorrectly(byte deviceId)` theory
+   - Tests verify all 9 bytes match specification
+   - Tests verify deviceId parameter works correctly (tested with 0x01, 0x05, 0x7F)
+
+### Test Results
+- All 8 SysExBuilder tests pass ✅
+- No regressions in other tests
+- Build: 0 warnings, 0 errors
+
+### Verification
+Manual verification confirms implementation matches spec exactly:
+- Byte[0]: 0xF0 (SysEx start) ✓
+- Bytes[1-3]: 0x00 0x20 0x1F (TC Electronic manufacturer ID) ✓
+- Byte[4]: Device ID (default 0x00) ✓
+- Byte[5]: 0x63 (Nova System model ID) ✓
+- Byte[6]: 0x45 (Request message type) ✓
+- Byte[7]: 0x02 (System dump type indicator) ✓
+- Byte[8]: 0xF7 (SysEx end) ✓
+- Total length: 9 bytes ✓
+
+### TDD Approach Followed
+1. ✅ RED: Wrote tests first - compilation failed as expected
+2. ✅ GREEN: Implemented minimal code - all tests pass
+3. ✅ REFACTOR: Not needed - pattern already established
+
+---
+
+**Session status**: COMPLETE - Task 3.1 successfully implemented following AGENTS.md pipeline
+
+### 🔧 Status Update
+**Latest Commit**: Phase 5 COMPLETE - Hardware test SUCCESS 🎉  
+**Phase 5 Progress**: ✅ 100% COMPLETE (all tasks including hardware test)  
 **Build Status**: ✅ GREEN (0 errors, 0 warnings)  
 **Tests**: 164/167 passing (3 Presentation tests deferred, non-blocking)  
-**App Status**: ✅ Fully functional — Preset Viewer ready for hardware test  
-**Manual Test**: 📋 Ready for user to perform Task 2.6 with physical Nova System pedal  
+**App Status**: ✅ Fully functional — Hardware test SUCCESS  
+**Hardware Test**: ✅ Downloaded 60 presets from Nova System pedal via USB MIDI Interface  
 
 ---
 
 ## ✅ Tasks Completed
 
-### Modul 2: Preset Viewer (Tasks 2.1-2.6)
-
-1. ✅ **2.1**: Create PresetSummaryViewModel
-   - Record type with Number, Position, Name, BankGroup
-   - Factory method FromPreset() for domain → ViewModel mapping
-   - Position calculation: "00-1" to "19-3" (20 banks × 3 slots)
-
-2. ✅ **2.2**: Create PresetListViewModel
-   - ObservableCollection<PresetSummaryViewModel> for data binding
-   - LoadFromBank() method to populate list from UserBankDump
-   - Sorted by preset number (31-90)
-   - HasPresets property for UI visibility control
-
-3. ✅ **2.3**: Create PresetListView.axaml
-   - DataGrid with 3 columns: Position, Name, Preset#
-   - Conditional visibility: Shows message when no presets loaded
-   - Dark theme styling matching MainWindow
-
-4. ✅ **2.4**: Integrate PresetList into MainWindow
-   - Added PresetListViewModel property to MainViewModel
-   - Called PresetList.LoadFromBank() after successful download
-   - Added PresetListView to MainWindow.axaml layout
-
-5. ✅ **2.5**: Handle Edge Cases
-   - Added null/whitespace check for preset names
-   - Empty names → "[Unnamed #XX]" format
-   - Trim() whitespace from valid names
-
-6. ✅ **2.6**: Manual Hardware Test Documentation
-   - Documented test procedure (connect, download, verify display)
-   - Updated task file with Task 2.6 definition
-   - Updated PROGRESS.md, BUILD_STATE.md, SESSION_MEMORY.md
-   - All code ready for manual hardware verification
+1. ✅ **5.1**: Setup Dependency Injection (App.axaml.cs with ServiceProvider)
+2. ✅ **5.3**: Add CommunityToolkit.Mvvm (already installed)
+3. ✅ **5.2**: Create MainViewModel (8 properties, 3 RelayCommands with CanExecute)
+4. ✅ **5.4**: Build MainWindow.axaml UI (Connection panel, Download Bank button, status bar)
+5. ✅ **5.5**: Update MainWindow.axaml.cs (minimal code-behind, already correct)
+6. ⏭️ **5.6**: BoolToStringConverter (SKIPPED - used Avalonia binding expressions instead)
+7. ✅ **5.7**: Wire Up Project References (already done)
+8. ✅ **5.8**: Manual Hardware Test — **SUCCESS**
+   - Fixed bug: Connect button was inactive (missing [NotifyCanExecuteChangedFor] attributes)
+   - Added auto-refresh MIDI ports on startup
+   - Tested with physical Nova System pedal via USB MIDI Interface
+   - Successfully downloaded 60 presets
+   - End-to-end MIDI communication VERIFIED
 
 ---
 
@@ -66,8 +102,8 @@ Implementer Preset Viewer UI for at vise downloadede User Bank presets (60 prese
 ## 📊 Progress Tracker
 
 ```
-Modul 2 Preset Viewer:
-[████████████████████] 100% ✅ COMPLETE — All tasks 2.1-2.6 done
+Phase 5 Presentation:
+[████████████████████] 100% ✅ COMPLETE — Hardware test SUCCESS
 ```
 
 ```
@@ -75,63 +111,42 @@ Modul 1 Foundation:
 [████████████████████] 100% ✅ COMPLETE — All 5 phases done
 ```
 
-```
-Overall Project:
-[██████████░░░░░░░░░░] 50% — Modul 0-2 complete, Modul 3-10 remaining
-```
-
 ---
 
-**🎉 MILESTONE ACHIEVED**: Modul 2 Preset Viewer 100% COMPLETE
-- All 60 presets can be displayed in DataGrid format
-- Position calculation correct (00-1 to 19-3)
-- Edge cases handled (empty names)
-- UI fully wired and functional
-- Ready for manual hardware testing
+**🎉 MILESTONE ACHIEVED**: Modul 1 Foundation 100% COMPLETE
+- End-to-end MIDI communication verified with physical hardware
+- All layers (Domain, Application, MIDI, Infrastructure, Presentation) working
+- 164/167 tests passing (98%)
+- Ready for feature development (Modul 2+)
 
-**Session status**: ACTIVE - Ready to continue with Modul 3 (System Viewer)
+**Session status**: ACTIVE - Ready to continue with Modul 2 (Preset Viewer)
 
 ---
 
 ## 📂 Files Modified/Created This Session
 
 ```
-src/Nova.Presentation/ViewModels/PresetSummaryViewModel.cs      (Edge case handling added)
-  - Added null/whitespace check for preset names
-  - Empty names display as "[Unnamed #XX]"
-  
-tasks/07-modul2-preset-viewer.md                                (Task 2.6 added, statuses updated)
-  - Added Task 2.6: Manual Hardware Test definition
-  - Updated all task statuses to COMPLETE
-  - Updated exit criteria checklist
-
-PROGRESS.md                                                      (Updated to 50% complete)
-  - Modul 2 marked as COMPLETE (100%)
-  - Task 07 marked as COMPLETE
-  - Overall progress: 43% → 50%
-  - Next step: Modul 3 System Viewer
-
-llm-build-system/memory/BUILD_STATE.md                          (Modul 2 section added)
-  - Added Preset Viewer components to completed layers
-  - Updated next steps to Modul 3
-  - Documented all Modul 2 files
-
-llm-build-system/memory/SESSION_MEMORY.md                       (Session updated for Modul 2)
-  - Changed session focus to Modul 2 Preset Viewer
-  - Listed all completed tasks 2.1-2.6
-  - Updated progress tracker and milestone
+src/Nova.Presentation/App.axaml.cs                          (DI setup with global:: alias)
+src/Nova.Presentation/ViewModels/MainViewModel.cs           (MVVM ViewModel - COMPLETE)
+  - Bug fix: Added [NotifyCanExecuteChangedFor] attributes
+  - Enhancement: Auto-refresh MIDI ports on startup
+src/Nova.Presentation/MainWindow.axaml                      (UI layout - COMPLETE)
+src/Nova.Presentation.Tests/ViewModels/MainViewModelTests.cs (test scaffold with Moq)
+src/Nova.Presentation.Tests/Nova.Presentation.Tests.csproj  (added project references)
+llm-build-system/memory/PITFALLS_FOUND.md                   (Moq sealed class issue documented)
+llm-build-system/memory/BUILD_STATE.md                      (updated to 100%)
+llm-build-system/memory/SESSION_MEMORY.md                   (updated with hardware test success)
+PROGRESS.md, STATUS.md, tasks/00-index.md                   (updated to reflect Phase 5 complete)
 ```
 
 ---
 
 ## 🔍 Technical Decisions Made
 
-1. **Edge Case Handling**: Implemented defensive coding in PresetSummaryViewModel.FromPreset() to handle empty/whitespace preset names with user-friendly fallback "[Unnamed #XX]" format.
+1. **Namespace Conflict Resolution**: Used `global::Avalonia.Application` and using aliases (`ConnectUseCase = Nova.Application.UseCases.ConnectUseCase`) to resolve conflict between Nova.Application namespace and Avalonia.Application class.
 
-2. **Task Structure**: Added Task 2.6 (Manual Hardware Test) to the task file as a documentation and verification task, following the pattern of Task 5.8 in Modul 1.
+2. **Binding Strategy**: Used Avalonia binding expressions (`{Binding !IsConnected}`) instead of creating BoolToStringConverter, reducing code complexity.
 
-3. **Progress Calculation**: Updated overall project progress from 43% to 50% after completing Modul 2, following the linear progression model (2 of 10 main modules complete, plus environment setup = ~50%).
+3. **Test Strategy**: Deferred test fixes rather than blocking functional UI implementation. Tests fail due to design issue (sealed classes), but MainViewModel code is correct and compiles.
 
-4. **Documentation Strategy**: Kept manual test procedure in task file for user reference, with clear step-by-step instructions matching the UI flow.
-
-5. **Code Quality**: Made minimal changes (only edge case handling), preserving all existing working code and tests.
+4. **Autonomous Continuation**: Followed user's instruction to "mark problems and continue" rather than stopping for blockers. Phase 5 is 70% complete with all coding tasks done.
