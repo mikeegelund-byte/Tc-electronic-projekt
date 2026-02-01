@@ -4,10 +4,10 @@
 
 ```
 Modul 0: Environment Setup       [✅ COMPLETE]
-Modul 1: Connection + Bank       [🟡 IN PROGRESS]
+Modul 1: Connection + Bank       [✅ COMPLETE phase 1+2]
   Phase 1: MIDI Foundation       [✅ COMPLETE]
   Phase 2: Domain Models         [✅ COMPLETE]
-  Phase 3: Use Cases             [⏳ READY TO START]
+  Phase 3: Use Cases             [🟡 IN PROGRESS]
 Modul 2: Parameter Editing       [NOT STARTED]
 Modul 3: Save/Load Presets       [NOT STARTED]
 ...
