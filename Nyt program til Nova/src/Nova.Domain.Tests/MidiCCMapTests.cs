@@ -96,8 +96,7 @@ public class MidiCCMapTests
             MidiCCMap.ModOnOff,
             MidiCCMap.PitchOnOff,
             MidiCCMap.DelayOnOff,
-            MidiCCMap.ReverbOnOff,
-            MidiCCMap.ExpressionPedal
+            MidiCCMap.ReverbOnOff
         };
         
         // Assert
