@@ -93,13 +93,13 @@ Disse filer er arkitektur-dokumentation. Læs dem, men ændr dem IKKE.
 | Projekt | Status | Indhold |
 |---------|--------|---------|
 | `Nova.Domain/` | ✅ KOMPLET | Preset, UserBankDump, SystemDump |
-| `Nova.Application/` | ✅ KOMPLET | ConnectUseCase, DownloadBankUseCase |
+| `Nova.Application/` | ✅ KOMPLET | ConnectUseCase, DownloadBankUseCase, SaveBankUseCase, LoadBankUseCase |
 | `Nova.Midi/` | ✅ KOMPLET | IMidiPort, MockMidiPort |
 | `Nova.Infrastructure/` | ⬜ TOM | Mangler DryWetMidiPort |
 | `Nova.Presentation/` | ⬜ TEMPLATE | Kun Avalonia skabelon |
 | `Nova.Common/` | ⬜ TOM | Delte utilities |
 | `Nova.HardwareTest/` | ✅ VÆRKTØJ | Console app til MIDI test |
-| `*.Tests/` | ✅ 149 tests | Unit tests |
+| `*.Tests/` | ✅ 195 tests | Unit tests (156 passing, 39 pre-existing failures) |
 
 ---
 
@@ -132,4 +132,4 @@ Gamle/forældede filer. Brug dem IKKE.
 
 ---
 
-**Sidst opdateret**: 2025-02-01
+**Sidst opdateret**: 2026-02-01
