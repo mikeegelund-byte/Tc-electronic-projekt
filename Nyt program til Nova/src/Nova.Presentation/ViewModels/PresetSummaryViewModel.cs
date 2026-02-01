@@ -25,10 +25,15 @@ public record PresetSummaryViewModel(
         var slot = ((preset.Number - 31) % 3) + 1;
         var position = $"{bankGroup:D2}-{slot}";
         
+        // Handle empty or corrupt names
+        var name = string.IsNullOrWhiteSpace(preset.Name) 
+            ? $"[Unnamed #{preset.Number}]" 
+            : preset.Name.Trim();
+        
         return new PresetSummaryViewModel(
             preset.Number,
             position,
-            preset.Name,
+            name,
             bankGroup
         );
     }

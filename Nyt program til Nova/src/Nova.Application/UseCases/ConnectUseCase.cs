@@ -3,7 +3,7 @@ using Nova.Midi;
 
 namespace Nova.Application.UseCases;
 
-public sealed class ConnectUseCase
+public sealed class ConnectUseCase : IConnectUseCase
 {
     private readonly IMidiPort _midiPort;
 
