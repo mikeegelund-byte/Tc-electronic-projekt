@@ -1,11 +1,19 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using Microsoft.Extensions.DependencyInjection;
+using Nova.Infrastructure.Midi;
+using Nova.Midi;
+using Nova.Presentation.ViewModels;
+using ConnectUseCase = Nova.Application.UseCases.ConnectUseCase;
+using DownloadBankUseCase = Nova.Application.UseCases.DownloadBankUseCase;
 
 namespace Nova.Presentation;
 
-public partial class App : Application
+public partial class App : global::Avalonia.Application
 {
+    public static IServiceProvider Services { get; private set; } = null!;
+
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
@@ -13,9 +21,26 @@ public partial class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
+        var services = new ServiceCollection();
+        
+        // Infrastructure
+        services.AddSingleton<IMidiPort, DryWetMidiPort>();
+        
+        // Application
+        services.AddTransient<ConnectUseCase>();
+        services.AddTransient<DownloadBankUseCase>();
+        
+        // ViewModels
+        services.AddTransient<MainViewModel>();
+        
+        Services = services.BuildServiceProvider();
+
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            desktop.MainWindow = new MainWindow();
+            desktop.MainWindow = new MainWindow
+            {
+                DataContext = Services.GetRequiredService<MainViewModel>()
+            };
         }
 
         base.OnFrameworkInitializationCompleted();
