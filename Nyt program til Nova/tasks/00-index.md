@@ -21,7 +21,7 @@ Før du starter: Læs `llm-build-system/AGENTS.md` og følg pipelinen.
 | 1.3 | Use Cases | ✅ DONE | 04-modul1-phase3-use-cases.md |
 | 1.4 | Infrastructure | ✅ DONE | 05-modul1-phase4-infrastructure.md |
 | 1.5 | Presentation | ✅ DONE | **06-modul1-phase5-presentation-SONNET45.md** |
-| 2 | Preset Viewer | ⬜ TODO | 07-modul2-preset-viewer.md |
+| 2 | Preset Viewer | 🔄 IN PROGRESS | 07-modul2-preset-viewer.md |
 | 3 | System Viewer | ⬜ TODO | 08-modul3-system-viewer.md |
 | 4 | System Editor | ⬜ TODO | 09-modul4-system-editor.md |
 | 5 | Preset Detail | ⬜ TODO | 10-modul5-preset-detail.md |
@@ -38,7 +38,7 @@ Før du starter: Læs `llm-build-system/AGENTS.md` og følg pipelinen.
 ## 🚀 Nuværende Task
 
 **Fil**: `07-modul2-preset-viewer.md`  
-**Status**: Modul 1 COMPLETE - Ready to start Modul 2  
+**Status**: 🔄 IN PROGRESS (Tasks 2.1-2.2 done, working on 2.3)  
 **Se**: `PROGRESS.md` for detaljer
 
 ---

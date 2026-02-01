@@ -12,7 +12,7 @@
 
 **Fil**: `tasks/07-modul2-preset-viewer.md`  
 **Task**: Modul 2 - Preset Viewer  
-**Status**: Phase 5 COMPLETE ✅ — Ready for Modul 2
+**Status**: 🔄 IN PROGRESS (Task 2.1-2.2 done, working on 2.3)
 
 ---
 
@@ -26,7 +26,7 @@
 | 1.3 | Use Cases | ✅ DONE | 100% |
 | 1.4 | Infrastructure | ✅ DONE | 100% |
 | 1.5 | Presentation | ✅ DONE | 100% |
-| 2 | Preset Viewer | ⬜ TODO | 0% |
+| 2 | Preset Viewer | 🔄 IN PROGRESS | 30% |
 | 3 | System Viewer | ⬜ TODO | 0% |
 | 4 | System Editor | ⬜ TODO | 0% |
 | 5 | Preset Detail | ⬜ TODO | 0% |
@@ -48,7 +48,7 @@
 | 4 | `04-modul1-phase3-use-cases.md` | ✅ DONE |
 | 5 | `05-modul1-phase4-infrastructure.md` | ✅ DONE |
 | 6 | `06-modul1-phase5-presentation-SONNET45.md` | ✅ DONE |
-| 7 | `07-modul2-preset-viewer.md` | ⬜ TODO |
+| 7 | `07-modul2-preset-viewer.md` | 🔄 IN PROGRESS |
 | 8 | `08-modul3-system-viewer.md` | ⬜ TODO |
 | 9 | `09-modul4-system-editor.md` | ⬜ TODO |
 | 10 | `10-modul5-preset-detail.md` | ⬜ TODO |
@@ -84,7 +84,7 @@ HARDWARE TEST: ✅ SUCCESS
 ## 📅 SIDST OPDATERET
 
 **Dato**: 2025-02-01  
-**Commit**: Hardware test SUCCESS - Phase 5 COMPLETE
+**Commit**: Modul 2 started - PresetSummaryViewModel and PresetListViewModel created
 
 ---
 
