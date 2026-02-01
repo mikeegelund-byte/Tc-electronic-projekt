@@ -1,8 +1,6 @@
-using Avalonia.Controls;
-
 namespace Nova.Presentation.Views;
 
-public partial class SystemSettingsView : UserControl
+public partial class SystemSettingsView : Avalonia.Controls.UserControl
 {
     public SystemSettingsView()
     {
