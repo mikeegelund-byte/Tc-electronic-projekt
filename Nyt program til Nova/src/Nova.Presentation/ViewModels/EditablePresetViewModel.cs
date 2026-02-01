@@ -487,9 +487,9 @@ public partial class EditablePresetViewModel : ObservableObject
     }
 
     /// <summary>
-    /// Creates a new Preset from the edited properties with validation.
-    /// Note: Since Preset has a private constructor, this returns the original preset.
-    /// In a full implementation, this would require a factory method in the Preset class.
+    /// Validates the current edited properties and returns the original preset.
+    /// Note: Since Preset has a private constructor, this currently returns the original preset.
+    /// In a full implementation with encoding support, this would create a new Preset with the modified values.
     /// </summary>
     public Result<Preset> ToPreset()
     {
@@ -604,6 +604,11 @@ public partial class EditablePresetViewModel : ObservableObject
 
     /// <summary>
     /// Checks if any property has changed from the original preset.
+    /// Uses explicit property comparison for clarity and performance.
+    /// While reflection could reduce code, explicit comparison provides:
+    /// - Better performance (no reflection overhead)
+    /// - Clear tracking of exactly which properties are monitored
+    /// - Compile-time safety when properties are added/removed
     /// </summary>
     private bool HasAnyPropertyChanged()
     {
