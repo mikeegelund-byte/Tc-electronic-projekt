@@ -17,6 +17,7 @@ public record PresetSummaryViewModel(
     /// Converts a Preset domain model to a display ViewModel.
     /// Nova System presets are numbered 31-90 (60 presets).
     /// Bank groups: 0-19 (20 banks of 3 presets each).
+    /// Handles edge cases: Empty or whitespace names display as "[Unnamed #XX]".
     /// </summary>
     public static PresetSummaryViewModel FromPreset(Preset preset)
     {
@@ -25,10 +26,15 @@ public record PresetSummaryViewModel(
         var slot = ((preset.Number - 31) % 3) + 1;
         var position = $"{bankGroup:D2}-{slot}";
         
+        // Handle empty or corrupt names - Task 2.5 edge case handling
+        var displayName = string.IsNullOrWhiteSpace(preset.Name)
+            ? $"[Unnamed #{preset.Number}]"
+            : preset.Name.Trim();
+        
         return new PresetSummaryViewModel(
             preset.Number,
             position,
-            preset.Name,
+            displayName,
             bankGroup
         );
     }
