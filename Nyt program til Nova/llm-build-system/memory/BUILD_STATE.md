@@ -4,11 +4,11 @@
 
 ```
 Modul 0: Environment Setup       [✅ COMPLETE]
-Modul 1: Connection + Bank       [🟡 60% COMPLETE]
+Modul 1: Connection + Bank       [🟡 68% COMPLETE]
   Phase 1: MIDI Foundation       [✅ COMPLETE]
   Phase 2: Domain Models         [✅ COMPLETE]
   Phase 3: Use Cases             [✅ COMPLETE]
-  Phase 4: Infrastructure        [⬜ NOT STARTED] ← CRITICAL GAP
+  Phase 4: Infrastructure        [🟡 44% IN PROGRESS] ← Tasks 4.1-4.3 DONE
   Phase 5: Presentation          [⬜ NOT STARTED]
 Modul 2-10                       [⬜ NOT STARTED]
 ```
@@ -32,8 +32,13 @@ Modul 2-10                       [⬜ NOT STARTED]
 - IMidiPort.cs — Interface with FluentResults
 - MockMidiPort.cs — Test double
 
-### Nova.Infrastructure ⬜ 0%
-- **EMPTY** — Needs DryWetMidiPort.cs
+### Nova.Infrastructure 🟡 44%
+- DryWetMidiPort.cs — Partial implementation
+  - ✅ GetAvailablePorts() — Static method working
+  - ⏳ ConnectAsync() — Not started (SONNET 4.5+)
+  - ⏳ DisconnectAsync() — Not started
+  - ⏳ SendSysExAsync() — Not started
+  - ⏳ ReceiveSysExAsync() — Not started (SONNET 4.5+)
 
 ### Nova.Presentation ⬜ 0%
 - Only Avalonia template — No real UI
@@ -43,11 +48,12 @@ Modul 2-10                       [⬜ NOT STARTED]
 ## 📊 Test Status
 
 ```
-Total tests: 117+
-  Nova.Domain.Tests:        108 tests ✅
+Total tests: 156
+  Nova.Domain.Tests:        140 tests ✅
   Nova.Midi.Tests:          6 tests ✅
-  Nova.Application.Tests:   4 tests ✅
-  Baseline tests:           3 tests ✅
+  Nova.Application.Tests:   3 tests ✅
+  Nova.Infrastructure.Tests: 4 tests ✅ (NEW!)
+  Nova.Presentation.Tests:  3 tests ✅
 
 Build: 0 warnings, 0 errors
 Framework: .NET 8.0 LTS
@@ -55,20 +61,24 @@ Framework: .NET 8.0 LTS
 
 ---
 
-## ⚠️ Known Issues
+## ⚠️ Known Issues & Blockers
 
-1. **Infrastructure Gap**: App cannot communicate with hardware
-2. **Placeholder files**: All deleted (9 Class1.cs/UnitTest1.cs files)
-3. **Obsolete docs**: Archived to Arkiv/ folder
+1. **Next Tasks (4.4 & 4.7)**: REQUIRE SONNET 4.5+
+   - ConnectAsync() — Complex async patterns
+   - ReceiveSysExAsync() — IAsyncEnumerable, Channel<T>
+2. **Placeholder methods**: All other IMidiPort methods still throw NotImplementedException
 
 ---
 
 ## 🎯 Next Step
 
-**Modul 1, Phase 4: Infrastructure**
-- Implement DryWetMidiPort.cs
-- See tasks/05-modul1-phase4-infrastructure.md
+**Tasks 4.4 - 4.7**: Require Copilot Sonnet 4.5+
+- Complex async patterns
+- Channel<T> for event->async conversion
+- Error handling with FluentResults
+
+**Alternative**: Continue with Task 4.5 (DisconnectAsync) — SIMPLE complexity
 
 ---
 
-**Sidst opdateret**: 2025-02-02
+**Sidst opdateret**: 2025-02-01 (Commit 1ee162c)

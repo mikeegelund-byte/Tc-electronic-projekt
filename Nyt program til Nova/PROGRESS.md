@@ -1,9 +1,9 @@
 # PROGRESS.md — Projekt Fremskridt
 
-## 📊 TOTAL FREMSKRIDT: 25%
+## 📊 TOTAL FREMSKRIDT: 28%
 
 ```
-████████░░░░░░░░░░░░░░░░░░░░░░░░ 25%
+█████████░░░░░░░░░░░░░░░░░░░░ 28%
 ```
 
 ---
@@ -11,8 +11,8 @@
 ## 🎯 NUVÆRENDE TASK
 
 **Fil**: `tasks/05-modul1-phase4-infrastructure.md`  
-**Task**: 4.1 (Install DryWetMIDI)  
-**Model-krav**: Ingen (alle modeller kan bruges)
+**Task**: 4.4 (ConnectAsync method) — **REQUIRES SONNET 4.5+**  
+**Status**: Awaiting capable model
 
 ---
 
@@ -24,7 +24,7 @@
 | 1.1 | MIDI Abstraction | ✅ DONE | 100% |
 | 1.2 | Domain Models | ✅ DONE | 100% |
 | 1.3 | Use Cases | ✅ DONE | 100% |
-| 1.4 | Infrastructure | ⬜ TODO | 0% |
+| 1.4 | Infrastructure | 🟡 IN PROGRESS | 44% |
 | 1.5 | Presentation | ⬜ TODO | 0% |
 | 2 | Preset Viewer | ⬜ TODO | 0% |
 | 3 | System Viewer | ⬜ TODO | 0% |
@@ -68,8 +68,10 @@
 Domain:      140 tests ✅
 MIDI:        6 tests ✅
 Application: 3 tests ✅
+Infrastructure: 4 tests ✅ (NEW!)
+Presentation: 3 tests ✅
 ─────────────────────────
-TOTAL:       149 tests ✅
+TOTAL:       156 tests ✅
 ```
 
 ---
@@ -77,14 +79,14 @@ TOTAL:       149 tests ✅
 ## 📅 SIDST OPDATERET
 
 **Dato**: 2025-02-01  
-**Commit**: `[CLEANUP] Comprehensive project reorganization`
+**Commit**: `1ee162c` - Initial DryWetMidiPort infrastructure setup
 
 ---
 
 ## 🔜 NÆSTE SKRIDT
 
-1. Åbn `tasks/05-modul1-phase4-infrastructure.md`
-2. Udfør Task 4.1 (Install DryWetMIDI)
+1. Næste task: Task 4.4 (ConnectAsync) — **REQUIRES SONNET 4.5+**
+2. Alternative: Task 4.5 (DisconnectAsync) — SIMPLE complexity
 3. Opdater denne fil når task er færdig
 
 ---
