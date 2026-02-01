@@ -1,0 +1,220 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  Nova.Common -> C:\Users\mike_\Desktop\Tc electronic projekt\Nyt program til Nova\src\Nova.Common\bin\Debug\net8.0\Nova.Common.dll
+  Nova.Midi -> C:\Users\mike_\Desktop\Tc electronic projekt\Nyt program til Nova\src\Nova.Midi\bin\Debug\net8.0\Nova.Midi.dll
+  Nova.Domain -> C:\Users\mike_\Desktop\Tc electronic projekt\Nyt program til Nova\src\Nova.Domain\bin\Debug\net8.0\Nova.Domain.dll
+  Nova.Application -> C:\Users\mike_\Desktop\Tc electronic projekt\Nyt program til Nova\src\Nova.Application\bin\Debug\net8.0\Nova.Application.dll
+  Nova.Infrastructure -> C:\Users\mike_\Desktop\Tc electronic projekt\Nyt program til Nova\src\Nova.Infrastructure\bin\Debug\net8.0\Nova.Infrastructure.dll
+  Nova.Presentation -> C:\Users\mike_\Desktop\Tc electronic projekt\Nyt program til Nova\src\Nova.Presentation\bin\Debug\net8.0\Nova.Presentation.dll
+  Nova.Presentation.Tests -> C:\Users\mike_\Desktop\Tc electronic projekt\Nyt program til Nova\src\Nova.Presentation.Tests\bin\Debug\net8.0\Nova.Presentation.Tests.dll
+Test run for C:\Users\mike_\Desktop\Tc electronic projekt\Nyt program til Nova\src\Nova.Presentation.Tests\bin\Debug\net8.0\Nova.Presentation.Tests.dll (.NETCoreApp,Version=v8.0)
+VSTest version 17.11.1 (x64)
+
+Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+C:\Users\mike_\Desktop\Tc electronic projekt\Nyt program til Nova\src\Nova.Presentation.Tests\bin\Debug\net8.0\Nova.Presentation.Tests.dll
+[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 8.0.23)
+[xUnit.net 00:00:00.09]   Discovering: Nova.Presentation.Tests
+[xUnit.net 00:00:00.14]   Discovered:  Nova.Presentation.Tests
+[xUnit.net 00:00:00.15]   Starting:    Nova.Presentation.Tests
+[xUnit.net 00:00:00.29]     Nova.Presentation.Tests.ViewModels.EditablePresetViewModelTests.SaveCommand_WithNoChanges_ShowsMessage [FAIL]
+[xUnit.net 00:00:00.29]       System.NotSupportedException : Type to mock (UpdatePresetUseCase) must be an interface, a delegate, or a non-sealed, non-static class.
+[xUnit.net 00:00:00.29]       Stack Trace:
+[xUnit.net 00:00:00.29]         /_/src/Moq/Guard.cs(207,0): at Moq.Guard.IsMockable(Type type)
+[xUnit.net 00:00:00.29]         /_/src/Moq/Mock`1.cs(173,0): at Moq.Mock`1..ctor(MockBehavior behavior, Object[] args)
+[xUnit.net 00:00:00.29]         C:\Users\mike_\Desktop\Tc electronic projekt\Nyt program til Nova\src\Nova.Presentation.Tests\ViewModels\EditablePresetViewModelTests.cs(24,0): at Nova.Presentation.Tests.ViewModels.EditablePresetViewModelTests..ctor()
+[xUnit.net 00:00:00.29]            at System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)
+[xUnit.net 00:00:00.30]     Nova.Presentation.Tests.ViewModels.EditablePresetViewModelTests.CompressorEnabledChange_SetsHasChanges [FAIL]
+[xUnit.net 00:00:00.30]       System.NotSupportedException : Type to mock (UpdatePresetUseCase) must be an interface, a delegate, or a non-sealed, non-static class.
+[xUnit.net 00:00:00.30]       Stack Trace:
+[xUnit.net 00:00:00.30]         /_/src/Moq/Guard.cs(207,0): at Moq.Guard.IsMockable(Type type)
+[xUnit.net 00:00:00.30]         /_/src/Moq/Mock`1.cs(173,0): at Moq.Mock`1..ctor(MockBehavior behavior, Object[] args)
+[xUnit.net 00:00:00.30]         C:\Users\mike_\Desktop\Tc electronic projekt\Nyt program til Nova\src\Nova.Presentation.Tests\ViewModels\EditablePresetViewModelTests.cs(24,0): at Nova.Presentation.Tests.ViewModels.EditablePresetViewModelTests..ctor()
+[xUnit.net 00:00:00.30]            at System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)
+[xUnit.net 00:00:00.30]     Nova.Presentation.Tests.ViewModels.EditablePresetViewModelTests.RevertCommand_ReloadsOriginalPreset [FAIL]
+[xUnit.net 00:00:00.30]       System.NotSupportedException : Type to mock (UpdatePresetUseCase) must be an interface, a delegate, or a non-sealed, non-static class.
+[xUnit.net 00:00:00.30]       Stack Trace:
+[xUnit.net 00:00:00.30]         /_/src/Moq/Guard.cs(207,0): at Moq.Guard.IsMockable(Type type)
+[xUnit.net 00:00:00.30]         /_/src/Moq/Mock`1.cs(173,0): at Moq.Mock`1..ctor(MockBehavior behavior, Object[] args)
+[xUnit.net 00:00:00.30]         C:\Users\mike_\Desktop\Tc electronic projekt\Nyt program til Nova\src\Nova.Presentation.Tests\ViewModels\EditablePresetViewModelTests.cs(24,0): at Nova.Presentation.Tests.ViewModels.EditablePresetViewModelTests..ctor()
+[xUnit.net 00:00:00.30]            at System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)
+[xUnit.net 00:00:00.30]     Nova.Presentation.Tests.ViewModels.EditablePresetViewModelTests.SaveCommand_WithInvalidName_ShowsError [FAIL]
+[xUnit.net 00:00:00.30]       System.NotSupportedException : Type to mock (UpdatePresetUseCase) must be an interface, a delegate, or a non-sealed, non-static class.
+[xUnit.net 00:00:00.30]       Stack Trace:
+[xUnit.net 00:00:00.30]         /_/src/Moq/Guard.cs(207,0): at Moq.Guard.IsMockable(Type type)
+[xUnit.net 00:00:00.30]         /_/src/Moq/Mock`1.cs(173,0): at Moq.Mock`1..ctor(MockBehavior behavior, Object[] args)
+[xUnit.net 00:00:00.30]         C:\Users\mike_\Desktop\Tc electronic projekt\Nyt program til Nova\src\Nova.Presentation.Tests\ViewModels\EditablePresetViewModelTests.cs(24,0): at Nova.Presentation.Tests.ViewModels.EditablePresetViewModelTests..ctor()
+[xUnit.net 00:00:00.30]            at System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)
+[xUnit.net 00:00:00.30]     Nova.Presentation.Tests.ViewModels.EditablePresetViewModelTests.PropertyChange_SetsHasChanges [FAIL]
+[xUnit.net 00:00:00.30]       System.NotSupportedException : Type to mock (UpdatePresetUseCase) must be an interface, a delegate, or a non-sealed, non-static class.
+[xUnit.net 00:00:00.30]       Stack Trace:
+[xUnit.net 00:00:00.30]         /_/src/Moq/Guard.cs(207,0): at Moq.Guard.IsMockable(Type type)
+[xUnit.net 00:00:00.30]         /_/src/Moq/Mock`1.cs(173,0): at Moq.Mock`1..ctor(MockBehavior behavior, Object[] args)
+[xUnit.net 00:00:00.30]         C:\Users\mike_\Desktop\Tc electronic projekt\Nyt program til Nova\src\Nova.Presentation.Tests\ViewModels\EditablePresetViewModelTests.cs(24,0): at Nova.Presentation.Tests.ViewModels.EditablePresetViewModelTests..ctor()
+[xUnit.net 00:00:00.30]            at System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)
+[xUnit.net 00:00:00.30]     Nova.Presentation.Tests.ViewModels.EditablePresetViewModelTests.ReverbTypeChange_SetsHasChanges [FAIL]
+[xUnit.net 00:00:00.30]       System.NotSupportedException : Type to mock (UpdatePresetUseCase) must be an interface, a delegate, or a non-sealed, non-static class.
+[xUnit.net 00:00:00.30]       Stack Trace:
+[xUnit.net 00:00:00.30]         /_/src/Moq/Guard.cs(207,0): at Moq.Guard.IsMockable(Type type)
+[xUnit.net 00:00:00.30]         /_/src/Moq/Mock`1.cs(173,0): at Moq.Mock`1..ctor(MockBehavior behavior, Object[] args)
+[xUnit.net 00:00:00.30]         C:\Users\mike_\Desktop\Tc electronic projekt\Nyt program til Nova\src\Nova.Presentation.Tests\ViewModels\EditablePresetViewModelTests.cs(24,0): at Nova.Presentation.Tests.ViewModels.EditablePresetViewModelTests..ctor()
+[xUnit.net 00:00:00.30]            at System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)
+[xUnit.net 00:00:00.30]     Nova.Presentation.Tests.ViewModels.EditablePresetViewModelTests.LoadPreset_WithNull_ShowsError [FAIL]
+[xUnit.net 00:00:00.30]       System.NotSupportedException : Type to mock (UpdatePresetUseCase) must be an interface, a delegate, or a non-sealed, non-static class.
+[xUnit.net 00:00:00.30]       Stack Trace:
+[xUnit.net 00:00:00.30]         /_/src/Moq/Guard.cs(207,0): at Moq.Guard.IsMockable(Type type)
+[xUnit.net 00:00:00.30]         /_/src/Moq/Mock`1.cs(173,0): at Moq.Mock`1..ctor(MockBehavior behavior, Object[] args)
+[xUnit.net 00:00:00.30]         C:\Users\mike_\Desktop\Tc electronic projekt\Nyt program til Nova\src\Nova.Presentation.Tests\ViewModels\EditablePresetViewModelTests.cs(24,0): at Nova.Presentation.Tests.ViewModels.EditablePresetViewModelTests..ctor()
+[xUnit.net 00:00:00.30]            at System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)
+[xUnit.net 00:00:00.30]     Nova.Presentation.Tests.ViewModels.EditablePresetViewModelTests.RoutingChange_SetsHasChanges [FAIL]
+[xUnit.net 00:00:00.30]     Nova.Presentation.Tests.ViewModels.EditablePresetViewModelTests.TapTempoChange_SetsHasChanges [FAIL]
+[xUnit.net 00:00:00.30]       System.NotSupportedException : Type to mock (UpdatePresetUseCase) must be an interface, a delegate, or a non-sealed, non-static class.
+[xUnit.net 00:00:00.30]       Stack Trace:
+[xUnit.net 00:00:00.30]         /_/src/Moq/Guard.cs(207,0): at Moq.Guard.IsMockable(Type type)
+[xUnit.net 00:00:00.30]         /_/src/Moq/Mock`1.cs(173,0): at Moq.Mock`1..ctor(MockBehavior behavior, Object[] args)
+[xUnit.net 00:00:00.30]         C:\Users\mike_\Desktop\Tc electronic projekt\Nyt program til Nova\src\Nova.Presentation.Tests\ViewModels\EditablePresetViewModelTests.cs(24,0): at Nova.Presentation.Tests.ViewModels.EditablePresetViewModelTests..ctor()
+[xUnit.net 00:00:00.30]            at System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)
+[xUnit.net 00:00:00.30]       System.NotSupportedException : Type to mock (UpdatePresetUseCase) must be an interface, a delegate, or a non-sealed, non-static class.
+[xUnit.net 00:00:00.30]       Stack Trace:
+[xUnit.net 00:00:00.30]         /_/src/Moq/Guard.cs(207,0): at Moq.Guard.IsMockable(Type type)
+[xUnit.net 00:00:00.30]         /_/src/Moq/Mock`1.cs(173,0): at Moq.Mock`1..ctor(MockBehavior behavior, Object[] args)
+[xUnit.net 00:00:00.30]         C:\Users\mike_\Desktop\Tc electronic projekt\Nyt program til Nova\src\Nova.Presentation.Tests\ViewModels\EditablePresetViewModelTests.cs(24,0): at Nova.Presentation.Tests.ViewModels.EditablePresetViewModelTests..ctor()
+[xUnit.net 00:00:00.30]            at System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)
+  Failed Nova.Presentation.Tests.ViewModels.EditablePresetViewModelTests.SaveCommand_WithNoChanges_ShowsMessage [1 ms]
+  Error Message:
+   System.NotSupportedException : Type to mock (UpdatePresetUseCase) must be an interface, a delegate, or a non-sealed, non-static class.
+  Stack Trace:
+     at Moq.Guard.IsMockable(Type type) in /_/src/Moq/Guard.cs:line 207
+   at Moq.Mock`1..ctor(MockBehavior behavior, Object[] args) in /_/src/Moq/Mock`1.cs:line 173
+   at Nova.Presentation.Tests.ViewModels.EditablePresetViewModelTests..ctor() in C:\Users\mike_\Desktop\Tc electronic projekt\Nyt program til Nova\src\Nova.Presentation.Tests\ViewModels\EditablePresetViewModelTests.cs:line 24
+   at System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)
+  Failed Nova.Presentation.Tests.ViewModels.EditablePresetViewModelTests.CompressorEnabledChange_SetsHasChanges [1 ms]
+  Error Message:
+   System.NotSupportedException : Type to mock (UpdatePresetUseCase) must be an interface, a delegate, or a non-sealed, non-static class.
+  Stack Trace:
+     at Moq.Guard.IsMockable(Type type) in /_/src/Moq/Guard.cs:line 207
+   at Moq.Mock`1..ctor(MockBehavior behavior, Object[] args) in /_/src/Moq/Mock`1.cs:line 173
+   at Nova.Presentation.Tests.ViewModels.EditablePresetViewModelTests..ctor() in C:\Users\mike_\Desktop\Tc electronic projekt\Nyt program til Nova\src\Nova.Presentation.Tests\ViewModels\EditablePresetViewModelTests.cs:line 24
+   at System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)
+  Failed Nova.Presentation.Tests.ViewModels.EditablePresetViewModelTests.RevertCommand_ReloadsOriginalPreset [1 ms]
+  Error Message:
+   System.NotSupportedException : Type to mock (UpdatePresetUseCase) must be an interface, a delegate, or a non-sealed, non-static class.
+  Stack Trace:
+     at Moq.Guard.IsMockable(Type type) in /_/src/Moq/Guard.cs:line 207
+   at Moq.Mock`1..ctor(MockBehavior behavior, Object[] args) in /_/src/Moq/Mock`1.cs:line 173
+   at Nova.Presentation.Tests.ViewModels.EditablePresetViewModelTests..ctor() in C:\Users\mike_\Desktop\Tc electronic projekt\Nyt program til Nova\src\Nova.Presentation.Tests\ViewModels\EditablePresetViewModelTests.cs:line 24
+   at System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)
+  Failed Nova.Presentation.Tests.ViewModels.EditablePresetViewModelTests.SaveCommand_WithInvalidName_ShowsError [1 ms]
+  Error Message:
+   System.NotSupportedException : Type to mock (UpdatePresetUseCase) must be an interface, a delegate, or a non-sealed, non-static class.
+  Stack Trace:
+     at Moq.Guard.IsMockable(Type type) in /_/src/Moq/Guard.cs:line 207
+   at Moq.Mock`1..ctor(MockBehavior behavior, Object[] args) in /_/src/Moq/Mock`1.cs:line 173
+   at Nova.Presentation.Tests.ViewModels.EditablePresetViewModelTests..ctor() in C:\Users\mike_\Desktop\Tc electronic projekt\Nyt program til Nova\src\Nova.Presentation.Tests\ViewModels\EditablePresetViewModelTests.cs:line 24
+   at System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)
+  Failed Nova.Presentation.Tests.ViewModels.EditablePresetViewModelTests.PropertyChange_SetsHasChanges [1 ms]
+  Error Message:
+   System.NotSupportedException : Type to mock (UpdatePresetUseCase) must be an interface, a delegate, or a non-sealed, non-static class.
+  Stack Trace:
+     at Moq.Guard.IsMockable(Type type) in /_/src/Moq/Guard.cs:line 207
+   at Moq.Mock`1..ctor(MockBehavior behavior, Object[] args) in /_/src/Moq/Mock`1.cs:line 173
+   at Nova.Presentation.Tests.ViewModels.EditablePresetViewModelTests..ctor() in C:\Users\mike_\Desktop\Tc electronic projekt\Nyt program til Nova\src\Nova.Presentation.Tests\ViewModels\EditablePresetViewModelTests.cs:line 24
+   at System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)
+  Failed Nova.Presentation.Tests.ViewModels.EditablePresetViewModelTests.ReverbTypeChange_SetsHasChanges [1 ms]
+  Error Message:
+   System.NotSupportedException : Type to mock (UpdatePresetUseCase) must be an interface, a delegate, or a non-sealed, non-static class.
+  Stack Trace:
+     at Moq.Guard.IsMockable(Type type) in /_/src/Moq/Guard.cs:line 207
+   at Moq.Mock`1..ctor(MockBehavior behavior, Object[] args) in /_/src/Moq/Mock`1.cs:line 173
+   at Nova.Presentation.Tests.ViewModels.EditablePresetViewModelTests..ctor() in C:\Users\mike_\Desktop\Tc electronic projekt\Nyt program til Nova\src\Nova.Presentation.Tests\ViewModels\EditablePresetViewModelTests.cs:line 24
+   at System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)
+  Failed Nova.Presentation.Tests.ViewModels.EditablePresetViewModelTests.LoadPreset_WithNull_ShowsError [1 ms]
+  Error Message:
+   System.NotSupportedException : Type to mock (UpdatePresetUseCase) must be an interface, a delegate, or a non-sealed, non-static class.
+  Stack Trace:
+     at Moq.Guard.IsMockable(Type type) in /_/src/Moq/Guard.cs:line 207
+   at Moq.Mock`1..ctor(MockBehavior behavior, Object[] args) in /_/src/Moq/Mock`1.cs:line 173
+   at Nova.Presentation.Tests.ViewModels.EditablePresetViewModelTests..ctor() in C:\Users\mike_\Desktop\Tc electronic projekt\Nyt program til Nova\src\Nova.Presentation.Tests\ViewModels\EditablePresetViewModelTests.cs:line 24
+   at System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)
+  Failed Nova.Presentation.Tests.ViewModels.EditablePresetViewModelTests.RoutingChange_SetsHasChanges [1 ms]
+  Error Message:
+   System.NotSupportedException : Type to mock (UpdatePresetUseCase) must be an interface, a delegate, or a non-sealed, non-static class.
+  Stack Trace:
+     at Moq.Guard.IsMockable(Type type) in /_/src/Moq/Guard.cs:line 207
+   at Moq.Mock`1..ctor(MockBehavior behavior, Object[] args) in /_/src/Moq/Mock`1.cs:line 173
+   at Nova.Presentation.Tests.ViewModels.EditablePresetViewModelTests..ctor() in C:\Users\mike_\Desktop\Tc electronic projekt\Nyt program til Nova\src\Nova.Presentation.Tests\ViewModels\EditablePresetViewModelTests.cs:line 24
+   at System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)
+  Failed Nova.Presentation.Tests.ViewModels.EditablePresetViewModelTests.TapTempoChange_SetsHasChanges [1 ms]
+  Error Message:
+   System.NotSupportedException : Type to mock (UpdatePresetUseCase) must be an interface, a delegate, or a non-sealed, non-static class.
+  Stack Trace:
+     at Moq.Guard.IsMockable(Type type) in /_/src/Moq/Guard.cs:line 207
+   at Moq.Mock`1..ctor(MockBehavior behavior, Object[] args) in /_/src/Moq/Mock`1.cs:line 173
+   at Nova.Presentation.Tests.ViewModels.EditablePresetViewModelTests..ctor() in C:\Users\mike_\Desktop\Tc electronic projekt\Nyt program til Nova\src\Nova.Presentation.Tests\ViewModels\EditablePresetViewModelTests.cs:line 24
+   at System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)
+[xUnit.net 00:00:00.33]     Nova.Presentation.Tests.ViewModels.EditablePresetViewModelTests.SaveCommand_WithNoPreset_ShowsError [FAIL]
+[xUnit.net 00:00:00.33]       System.NotSupportedException : Type to mock (UpdatePresetUseCase) must be an interface, a delegate, or a non-sealed, non-static class.
+[xUnit.net 00:00:00.33]       Stack Trace:
+[xUnit.net 00:00:00.33]         /_/src/Moq/Guard.cs(207,0): at Moq.Guard.IsMockable(Type type)
+[xUnit.net 00:00:00.33]         /_/src/Moq/Mock`1.cs(173,0): at Moq.Mock`1..ctor(MockBehavior behavior, Object[] args)
+[xUnit.net 00:00:00.33]         C:\Users\mike_\Desktop\Tc electronic projekt\Nyt program til Nova\src\Nova.Presentation.Tests\ViewModels\EditablePresetViewModelTests.cs(24,0): at Nova.Presentation.Tests.ViewModels.EditablePresetViewModelTests..ctor()
+[xUnit.net 00:00:00.33]            at System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)
+[xUnit.net 00:00:00.33]     Nova.Presentation.Tests.ViewModels.EditablePresetViewModelTests.LoadPreset_LoadsAllProperties [FAIL]
+[xUnit.net 00:00:00.33]       System.NotSupportedException : Type to mock (UpdatePresetUseCase) must be an interface, a delegate, or a non-sealed, non-static class.
+[xUnit.net 00:00:00.33]       Stack Trace:
+[xUnit.net 00:00:00.33]         /_/src/Moq/Guard.cs(207,0): at Moq.Guard.IsMockable(Type type)
+[xUnit.net 00:00:00.33]         /_/src/Moq/Mock`1.cs(173,0): at Moq.Mock`1..ctor(MockBehavior behavior, Object[] args)
+[xUnit.net 00:00:00.33]         C:\Users\mike_\Desktop\Tc electronic projekt\Nyt program til Nova\src\Nova.Presentation.Tests\ViewModels\EditablePresetViewModelTests.cs(24,0): at Nova.Presentation.Tests.ViewModels.EditablePresetViewModelTests..ctor()
+[xUnit.net 00:00:00.33]            at System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)
+[xUnit.net 00:00:00.33]     Nova.Presentation.Tests.ViewModels.EditablePresetViewModelTests.Constructor_InitializesDefaultValues [FAIL]
+[xUnit.net 00:00:00.33]       System.NotSupportedException : Type to mock (UpdatePresetUseCase) must be an interface, a delegate, or a non-sealed, non-static class.
+[xUnit.net 00:00:00.33]       Stack Trace:
+[xUnit.net 00:00:00.33]         /_/src/Moq/Guard.cs(207,0): at Moq.Guard.IsMockable(Type type)
+[xUnit.net 00:00:00.33]         /_/src/Moq/Mock`1.cs(173,0): at Moq.Mock`1..ctor(MockBehavior behavior, Object[] args)
+[xUnit.net 00:00:00.33]         C:\Users\mike_\Desktop\Tc electronic projekt\Nyt program til Nova\src\Nova.Presentation.Tests\ViewModels\EditablePresetViewModelTests.cs(24,0): at Nova.Presentation.Tests.ViewModels.EditablePresetViewModelTests..ctor()
+[xUnit.net 00:00:00.33]            at System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)
+[xUnit.net 00:00:00.33]     Nova.Presentation.Tests.ViewModels.EditablePresetViewModelTests.AllEffectPropertiesLoadCorrectly [FAIL]
+[xUnit.net 00:00:00.33]       System.NotSupportedException : Type to mock (UpdatePresetUseCase) must be an interface, a delegate, or a non-sealed, non-static class.
+[xUnit.net 00:00:00.33]       Stack Trace:
+[xUnit.net 00:00:00.33]         /_/src/Moq/Guard.cs(207,0): at Moq.Guard.IsMockable(Type type)
+[xUnit.net 00:00:00.33]         /_/src/Moq/Mock`1.cs(173,0): at Moq.Mock`1..ctor(MockBehavior behavior, Object[] args)
+[xUnit.net 00:00:00.33]         C:\Users\mike_\Desktop\Tc electronic projekt\Nyt program til Nova\src\Nova.Presentation.Tests\ViewModels\EditablePresetViewModelTests.cs(24,0): at Nova.Presentation.Tests.ViewModels.EditablePresetViewModelTests..ctor()
+[xUnit.net 00:00:00.33]            at System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)
+[xUnit.net 00:00:00.33]   Finished:    Nova.Presentation.Tests
+  Failed Nova.Presentation.Tests.ViewModels.EditablePresetViewModelTests.SaveCommand_WithNoPreset_ShowsError [1 ms]
+  Error Message:
+   System.NotSupportedException : Type to mock (UpdatePresetUseCase) must be an interface, a delegate, or a non-sealed, non-static class.
+  Stack Trace:
+     at Moq.Guard.IsMockable(Type type) in /_/src/Moq/Guard.cs:line 207
+   at Moq.Mock`1..ctor(MockBehavior behavior, Object[] args) in /_/src/Moq/Mock`1.cs:line 173
+   at Nova.Presentation.Tests.ViewModels.EditablePresetViewModelTests..ctor() in C:\Users\mike_\Desktop\Tc electronic projekt\Nyt program til Nova\src\Nova.Presentation.Tests\ViewModels\EditablePresetViewModelTests.cs:line 24
+   at System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)
+  Failed Nova.Presentation.Tests.ViewModels.EditablePresetViewModelTests.LoadPreset_LoadsAllProperties [1 ms]
+  Error Message:
+   System.NotSupportedException : Type to mock (UpdatePresetUseCase) must be an interface, a delegate, or a non-sealed, non-static class.
+  Stack Trace:
+     at Moq.Guard.IsMockable(Type type) in /_/src/Moq/Guard.cs:line 207
+   at Moq.Mock`1..ctor(MockBehavior behavior, Object[] args) in /_/src/Moq/Mock`1.cs:line 173
+   at Nova.Presentation.Tests.ViewModels.EditablePresetViewModelTests..ctor() in C:\Users\mike_\Desktop\Tc electronic projekt\Nyt program til Nova\src\Nova.Presentation.Tests\ViewModels\EditablePresetViewModelTests.cs:line 24
+   at System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)
+  Failed Nova.Presentation.Tests.ViewModels.EditablePresetViewModelTests.Constructor_InitializesDefaultValues [1 ms]
+  Error Message:
+   System.NotSupportedException : Type to mock (UpdatePresetUseCase) must be an interface, a delegate, or a non-sealed, non-static class.
+  Stack Trace:
+     at Moq.Guard.IsMockable(Type type) in /_/src/Moq/Guard.cs:line 207
+   at Moq.Mock`1..ctor(MockBehavior behavior, Object[] args) in /_/src/Moq/Mock`1.cs:line 173
+   at Nova.Presentation.Tests.ViewModels.EditablePresetViewModelTests..ctor() in C:\Users\mike_\Desktop\Tc electronic projekt\Nyt program til Nova\src\Nova.Presentation.Tests\ViewModels\EditablePresetViewModelTests.cs:line 24
+   at System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)
+  Failed Nova.Presentation.Tests.ViewModels.EditablePresetViewModelTests.AllEffectPropertiesLoadCorrectly [1 ms]
+  Error Message:
+   System.NotSupportedException : Type to mock (UpdatePresetUseCase) must be an interface, a delegate, or a non-sealed, non-static class.
+  Stack Trace:
+     at Moq.Guard.IsMockable(Type type) in /_/src/Moq/Guard.cs:line 207
+   at Moq.Mock`1..ctor(MockBehavior behavior, Object[] args) in /_/src/Moq/Mock`1.cs:line 173
+   at Nova.Presentation.Tests.ViewModels.EditablePresetViewModelTests..ctor() in C:\Users\mike_\Desktop\Tc electronic projekt\Nyt program til Nova\src\Nova.Presentation.Tests\ViewModels\EditablePresetViewModelTests.cs:line 24
+   at System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean wrapExceptions)
+
+Test Run Failed.
+Total tests: 13
+     Failed: 13
+ Total time: 0,9933 Seconds

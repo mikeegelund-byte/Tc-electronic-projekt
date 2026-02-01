@@ -9,7 +9,7 @@ namespace Nova.Application.UseCases;
 /// Use case for updating a preset on the Nova System device.
 /// Validates preset data and sends via MIDI SysEx.
 /// </summary>
-public sealed class UpdatePresetUseCase
+public sealed class UpdatePresetUseCase : IUpdatePresetUseCase
 {
     private readonly IMidiPort _midiPort;
     private readonly ILogger _logger;

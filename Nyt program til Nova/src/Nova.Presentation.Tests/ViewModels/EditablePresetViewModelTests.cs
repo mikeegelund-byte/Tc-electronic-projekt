@@ -2,7 +2,6 @@ using FluentAssertions;
 using Moq;
 using Nova.Application.UseCases;
 using Nova.Domain.Models;
-using Nova.Midi;
 using Nova.Presentation.ViewModels;
 using Serilog;
 using Xunit;
@@ -15,16 +14,13 @@ namespace Nova.Presentation.Tests.ViewModels;
 /// </summary>
 public class EditablePresetViewModelTests
 {
-    private readonly Mock<UpdatePresetUseCase> _mockUpdateUseCase;
+    private readonly Mock<IUpdatePresetUseCase> _mockUpdateUseCase;
     private readonly Mock<ILogger> _mockLogger;
     private readonly EditablePresetViewModel _viewModel;
 
     public EditablePresetViewModelTests()
     {
-        _mockUpdateUseCase = new Mock<UpdatePresetUseCase>(MockBehavior.Loose, 
-            new Mock<IMidiPort>().Object, 
-            new Mock<ILogger>().Object);
-        
+        _mockUpdateUseCase = new Mock<IUpdatePresetUseCase>();
         _mockLogger = new Mock<ILogger>();
         _viewModel = new EditablePresetViewModel(_mockUpdateUseCase.Object, _mockLogger.Object);
     }
