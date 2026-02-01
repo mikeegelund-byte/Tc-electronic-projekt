@@ -18,9 +18,11 @@ public partial class MainViewModel : ObservableObject
     private ObservableCollection<string> _availablePorts = new();
 
     [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(ConnectCommand))]
     private string? _selectedPort;
 
     [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(ConnectCommand), nameof(DownloadBankCommand))]
     private bool _isConnected;
 
     [ObservableProperty]
@@ -40,6 +42,9 @@ public partial class MainViewModel : ObservableObject
         _midiPort = midiPort;
         _connectUseCase = connectUseCase;
         _downloadBankUseCase = downloadBankUseCase;
+        
+        // Auto-refresh ports on startup
+        RefreshPorts();
     }
 
     [RelayCommand]
