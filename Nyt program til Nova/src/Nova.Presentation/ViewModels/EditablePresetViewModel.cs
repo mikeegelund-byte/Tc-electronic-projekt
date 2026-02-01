@@ -15,9 +15,10 @@ namespace Nova.Presentation.ViewModels;
 /// </summary>
 public partial class EditablePresetViewModel : ObservableObject
 {
-    private readonly UpdatePresetUseCase _updatePresetUseCase;
+    private readonly IUpdatePresetUseCase _updatePresetUseCase;
     private readonly ILogger _logger;
     private Preset _originalPreset;
+    private bool _isLoadingPreset = false;  // Flag to disable change tracking during load
 
     /// <summary>
     /// The immutable original preset being edited.
@@ -238,7 +239,7 @@ public partial class EditablePresetViewModel : ObservableObject
     /// <summary>
     /// Initializes a new EditablePresetViewModel.
     /// </summary>
-    public EditablePresetViewModel(UpdatePresetUseCase updatePresetUseCase, ILogger? logger = null)
+    public EditablePresetViewModel(IUpdatePresetUseCase updatePresetUseCase, ILogger? logger = null)
     {
         _updatePresetUseCase = updatePresetUseCase ?? throw new ArgumentNullException(nameof(updatePresetUseCase));
         _logger = logger ?? new LoggerConfiguration().MinimumLevel.Warning().CreateLogger();
@@ -267,77 +268,90 @@ public partial class EditablePresetViewModel : ObservableObject
             return;
         }
 
-        _originalPreset = preset;
-        CurrentPreset = preset;
-        HasChanges = false;
+        _isLoadingPreset = true;
+        try
+        {
+            _originalPreset = preset;
+            CurrentPreset = preset;
 
-        // Load all properties from preset
-        PresetNumber = preset.Number;
-        PresetName = preset.Name ?? string.Empty;
-        TapTempo = preset.TapTempo;
-        Routing = preset.Routing;
-        LevelOutLeft = preset.LevelOutLeft;
-        LevelOutRight = preset.LevelOutRight;
-        CompressorEnabled = preset.CompressorEnabled;
-        DriveEnabled = preset.DriveEnabled;
-        ModulationEnabled = preset.ModulationEnabled;
-        DelayEnabled = preset.DelayEnabled;
-        ReverbEnabled = preset.ReverbEnabled;
-        CompType = preset.CompType;
-        CompThreshold = preset.CompThreshold;
-        CompRatio = preset.CompRatio;
-        CompAttack = preset.CompAttack;
-        CompRelease = preset.CompRelease;
-        CompResponse = preset.CompResponse;
-        CompDrive = preset.CompDrive;
-        CompLevel = preset.CompLevel;
-        DriveType = preset.DriveType;
-        DriveGain = preset.DriveGain;
-        DriveLevel = preset.DriveLevel;
-        BoostType = preset.BoostType;
-        BoostGain = preset.BoostGain;
-        BoostLevel = preset.BoostLevel;
-        ModType = preset.ModType;
-        ModSpeed = preset.ModSpeed;
-        ModDepth = preset.ModDepth;
-        ModTempo = preset.ModTempo;
-        ModHiCut = preset.ModHiCut;
-        ModFeedback = preset.ModFeedback;
-        ModDelayOrRange = preset.ModDelayOrRange;
-        ModMix = preset.ModMix;
-        DelayType = preset.DelayType;
-        DelayTime = preset.DelayTime;
-        DelayTime2 = preset.DelayTime2;
-        DelayTempo = preset.DelayTempo;
-        DelayTempo2OrWidth = preset.DelayTempo2OrWidth;
-        DelayFeedback = preset.DelayFeedback;
-        DelayClipOrFeedback2 = preset.DelayClipOrFeedback2;
-        DelayHiCut = preset.DelayHiCut;
-        DelayLoCut = preset.DelayLoCut;
-        DelayMix = preset.DelayMix;
-        ReverbType = preset.ReverbType;
-        ReverbDecay = preset.ReverbDecay;
-        ReverbPreDelay = preset.ReverbPreDelay;
-        ReverbShape = preset.ReverbShape;
-        ReverbSize = preset.ReverbSize;
-        ReverbHiColor = preset.ReverbHiColor;
-        ReverbHiLevel = preset.ReverbHiLevel;
-        ReverbLoColor = preset.ReverbLoColor;
-        ReverbLoLevel = preset.ReverbLoLevel;
-        ReverbRoomLevel = preset.ReverbRoomLevel;
-        ReverbLevel = preset.ReverbLevel;
+            // Load all properties from preset
+            PresetNumber = preset.Number;
+            PresetName = preset.Name ?? string.Empty;
+            TapTempo = preset.TapTempo;
+            Routing = preset.Routing;
+            LevelOutLeft = preset.LevelOutLeft;
+            LevelOutRight = preset.LevelOutRight;
+            CompressorEnabled = preset.CompressorEnabled;
+            DriveEnabled = preset.DriveEnabled;
+            ModulationEnabled = preset.ModulationEnabled;
+            DelayEnabled = preset.DelayEnabled;
+            ReverbEnabled = preset.ReverbEnabled;
+            CompType = preset.CompType;
+            CompThreshold = preset.CompThreshold;
+            CompRatio = preset.CompRatio;
+            CompAttack = preset.CompAttack;
+            CompRelease = preset.CompRelease;
+            CompResponse = preset.CompResponse;
+            CompDrive = preset.CompDrive;
+            CompLevel = preset.CompLevel;
+            DriveType = preset.DriveType;
+            DriveGain = preset.DriveGain;
+            DriveLevel = preset.DriveLevel;
+            BoostType = preset.BoostType;
+            BoostGain = preset.BoostGain;
+            BoostLevel = preset.BoostLevel;
+            ModType = preset.ModType;
+            ModSpeed = preset.ModSpeed;
+            ModDepth = preset.ModDepth;
+            ModTempo = preset.ModTempo;
+            ModHiCut = preset.ModHiCut;
+            ModFeedback = preset.ModFeedback;
+            ModDelayOrRange = preset.ModDelayOrRange;
+            ModMix = preset.ModMix;
+            DelayType = preset.DelayType;
+            DelayTime = preset.DelayTime;
+            DelayTime2 = preset.DelayTime2;
+            DelayTempo = preset.DelayTempo;
+            DelayTempo2OrWidth = preset.DelayTempo2OrWidth;
+            DelayFeedback = preset.DelayFeedback;
+            DelayClipOrFeedback2 = preset.DelayClipOrFeedback2;
+            DelayHiCut = preset.DelayHiCut;
+            DelayLoCut = preset.DelayLoCut;
+            DelayMix = preset.DelayMix;
+            ReverbType = preset.ReverbType;
+            ReverbDecay = preset.ReverbDecay;
+            ReverbPreDelay = preset.ReverbPreDelay;
+            ReverbShape = preset.ReverbShape;
+            ReverbSize = preset.ReverbSize;
+            ReverbHiColor = preset.ReverbHiColor;
+            ReverbHiLevel = preset.ReverbHiLevel;
+            ReverbLoColor = preset.ReverbLoColor;
+            ReverbLoLevel = preset.ReverbLoLevel;
+            ReverbRoomLevel = preset.ReverbRoomLevel;
+            ReverbLevel = preset.ReverbLevel;
 
-        StatusMessage = $"Loaded preset: {preset.Name}";
-        _logger.Information("EditablePresetViewModel: Loaded preset #{PresetNumber}: {PresetName}", PresetNumber, PresetName);
+            StatusMessage = $"Loaded preset: {preset.Name}";
+            HasChanges = false;  // Set after all properties loaded
+            _logger.Information("EditablePresetViewModel: Loaded preset #{PresetNumber}: {PresetName}", PresetNumber, PresetName);
+        }
+        finally
+        {
+            _isLoadingPreset = false;
+        }
     }
 
     /// <summary>
     /// Override PropertyChanged to track when any property changes, marking HasChanges = true.
     /// Excludes CurrentPreset and StatusMessage to avoid unnecessary triggering.
+    /// Disables tracking during preset load to prevent false positives.
     /// </summary>
     protected override void OnPropertyChanged(PropertyChangedEventArgs e)
     {
         base.OnPropertyChanged(e);
+        
+        // Don't track changes while loading preset
+        if (_isLoadingPreset)
+            return;
         
         // Exclude internal properties that shouldn't trigger HasChanges
         if (!string.IsNullOrEmpty(e.PropertyName) &&
