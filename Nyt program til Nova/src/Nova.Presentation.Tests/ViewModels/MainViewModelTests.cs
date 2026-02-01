@@ -13,8 +13,8 @@ public class MainViewModelTests
     public void AvailablePorts_InitiallyEmpty()
     {
         var mockMidi = new Mock<IMidiPort>();
-        var mockConnect = new Mock<ConnectUseCase>(mockMidi.Object);
-        var mockDownload = new Mock<DownloadBankUseCase>(mockMidi.Object);
+        var mockConnect = new Mock<IConnectUseCase>();
+        var mockDownload = new Mock<IDownloadBankUseCase>();
         
         var vm = new MainViewModel(mockMidi.Object, mockConnect.Object, mockDownload.Object);
         
@@ -25,8 +25,8 @@ public class MainViewModelTests
     public void IsConnected_InitiallyFalse()
     {
         var mockMidi = new Mock<IMidiPort>();
-        var mockConnect = new Mock<ConnectUseCase>(mockMidi.Object);
-        var mockDownload = new Mock<DownloadBankUseCase>(mockMidi.Object);
+        var mockConnect = new Mock<IConnectUseCase>();
+        var mockDownload = new Mock<IDownloadBankUseCase>();
         
         var vm = new MainViewModel(mockMidi.Object, mockConnect.Object, mockDownload.Object);
         
@@ -37,8 +37,8 @@ public class MainViewModelTests
     public void StatusMessage_InitiallyReady()
     {
         var mockMidi = new Mock<IMidiPort>();
-        var mockConnect = new Mock<ConnectUseCase>(mockMidi.Object);
-        var mockDownload = new Mock<DownloadBankUseCase>(mockMidi.Object);
+        var mockConnect = new Mock<IConnectUseCase>();
+        var mockDownload = new Mock<IDownloadBankUseCase>();
         
         var vm = new MainViewModel(mockMidi.Object, mockConnect.Object, mockDownload.Object);
         

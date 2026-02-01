@@ -1,19 +1,18 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Nova.Application.UseCases;
 using Nova.Domain.Models;
 using Nova.Infrastructure.Midi;
 using Nova.Midi;
-using ConnectUseCase = Nova.Application.UseCases.ConnectUseCase;
-using DownloadBankUseCase = Nova.Application.UseCases.DownloadBankUseCase;
 
 namespace Nova.Presentation.ViewModels;
 
 public partial class MainViewModel : ObservableObject
 {
     private readonly IMidiPort _midiPort;
-    private readonly ConnectUseCase _connectUseCase;
-    private readonly DownloadBankUseCase _downloadBankUseCase;
+    private readonly IConnectUseCase _connectUseCase;
+    private readonly IDownloadBankUseCase _downloadBankUseCase;
     private UserBankDump? _currentBank;
 
     [ObservableProperty]
@@ -44,8 +43,8 @@ public partial class MainViewModel : ObservableObject
 
     public MainViewModel(
         IMidiPort midiPort,
-        ConnectUseCase connectUseCase,
-        DownloadBankUseCase downloadBankUseCase)
+        IConnectUseCase connectUseCase,
+        IDownloadBankUseCase downloadBankUseCase)
     {
         _midiPort = midiPort;
         _connectUseCase = connectUseCase;
