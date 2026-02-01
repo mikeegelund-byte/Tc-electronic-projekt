@@ -1,3 +1,5 @@
+using System.Runtime.CompilerServices;
+using System.Threading.Channels;
 using FluentResults;
 using Melanchall.DryWetMidi.Core;
 using Melanchall.DryWetMidi.Multimedia;
@@ -9,6 +11,7 @@ public sealed class DryWetMidiPort : IMidiPort, IDisposable
 {
     private InputDevice? _inputDevice;
     private OutputDevice? _outputDevice;
+    private Channel<byte[]>? _sysExChannel;
 
     public string Name { get; private set; } = string.Empty;
     public bool IsConnected => _inputDevice != null && _outputDevice != null;
@@ -112,7 +115,38 @@ public sealed class DryWetMidiPort : IMidiPort, IDisposable
 
     public IAsyncEnumerable<byte[]> ReceiveSysExAsync(CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        if (_inputDevice == null)
+            throw new InvalidOperationException("Not connected");
+
+        _sysExChannel = Channel.CreateUnbounded<byte[]>();
+        _inputDevice.EventReceived += OnEventReceived;
+
+        return ReadSysExAsync(cancellationToken);
+    }
+
+    private void OnEventReceived(object? sender, MidiEventReceivedEventArgs e)
+    {
+        if (e.Event is NormalSysExEvent sysEx)
+        {
+            // DryWetMIDI returns data WITHOUT F0/F7, we add them back
+            var data = new byte[sysEx.Data.Length + 2];
+            data[0] = 0xF0;
+            Array.Copy(sysEx.Data, 0, data, 1, sysEx.Data.Length);
+            data[^1] = 0xF7;
+
+            _sysExChannel?.Writer.TryWrite(data);
+        }
+    }
+
+    private async IAsyncEnumerable<byte[]> ReadSysExAsync(
+        [EnumeratorCancellation] CancellationToken cancellationToken)
+    {
+        if (_sysExChannel == null) yield break;
+
+        await foreach (var sysex in _sysExChannel.Reader.ReadAllAsync(cancellationToken))
+        {
+            yield return sysex;
+        }
     }
 
     public void Dispose()

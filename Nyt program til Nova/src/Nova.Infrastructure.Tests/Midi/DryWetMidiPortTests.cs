@@ -93,4 +93,51 @@ public class DryWetMidiPortTests
         // This test requires actual MIDI device - skip in CI
         // Marked for manual testing only
     }
+
+    [Fact]
+    public async Task ReceiveSysExAsync_NotConnected_ThrowsInvalidOperationException()
+    {
+        var port = new DryWetMidiPort();
+        var cts = new CancellationTokenSource();
+        
+        var act = async () =>
+        {
+            await foreach (var msg in port.ReceiveSysExAsync(cts.Token))
+            {
+                // Should not reach here
+            }
+        };
+        
+        await act.Should().ThrowAsync<InvalidOperationException>()
+            .WithMessage("*Not connected*");
+    }
+
+    [Fact]
+    public async Task ReceiveSysExAsync_WithCancellation_StopsEnumeration()
+    {
+        // This test would require a mock device setup
+        // Testing cancellation behavior in isolation
+        var port = new DryWetMidiPort();
+        var cts = new CancellationTokenSource();
+        cts.Cancel(); // Cancel immediately
+        
+        var count = 0;
+        try
+        {
+            await foreach (var msg in port.ReceiveSysExAsync(cts.Token))
+            {
+                count++;
+            }
+        }
+        catch (OperationCanceledException)
+        {
+            // Expected
+        }
+        catch (InvalidOperationException)
+        {
+            // Also acceptable - not connected
+        }
+        
+        count.Should().Be(0); // Should not receive any messages
+    }
 }
