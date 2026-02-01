@@ -1,18 +1,18 @@
 # PROGRESS.md — Projekt Fremskridt
 
-## 📊 TOTAL FREMSKRIDT: 28%
+## 📊 TOTAL FREMSKRIDT: 32%
 
 ```
-█████████░░░░░░░░░░░░░░░░░░░░ 28%
+██████████░░░░░░░░░░░░░░░░░░ 32%
 ```
 
 ---
 
 ## 🎯 NUVÆRENDE TASK
 
-**Fil**: `tasks/05-modul1-phase4-infrastructure.md`  
-**Task**: 4.4 (ConnectAsync method) — **REQUIRES SONNET 4.5+**  
-**Status**: Awaiting capable model
+**Fil**: `tasks/06-modul1-phase5-presentation-SONNET45.md`  
+**Task**: 5.1 (Avalonia UI Foundation)  
+**Status**: Ready to start — **REQUIRES SONNET 4.5+**
 
 ---
 
@@ -24,7 +24,7 @@
 | 1.1 | MIDI Abstraction | ✅ DONE | 100% |
 | 1.2 | Domain Models | ✅ DONE | 100% |
 | 1.3 | Use Cases | ✅ DONE | 100% |
-| 1.4 | Infrastructure | 🟡 IN PROGRESS | 44% |
+| 1.4 | Infrastructure | ✅ DONE | 100% |
 | 1.5 | Presentation | ⬜ TODO | 0% |
 | 2 | Preset Viewer | ⬜ TODO | 0% |
 | 3 | System Viewer | ⬜ TODO | 0% |
@@ -68,10 +68,10 @@
 Domain:      140 tests ✅
 MIDI:        6 tests ✅
 Application: 3 tests ✅
-Infrastructure: 4 tests ✅ (NEW!)
+Infrastructure: 12 tests ✅
 Presentation: 3 tests ✅
 ─────────────────────────
-TOTAL:       156 tests ✅
+TOTAL:       164 tests ✅
 ```
 
 ---
