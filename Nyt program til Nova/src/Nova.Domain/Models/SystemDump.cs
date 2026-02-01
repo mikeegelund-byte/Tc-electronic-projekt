@@ -13,6 +13,47 @@ public class SystemDump
     /// </summary>
     public byte[] RawSysEx { get; private init; } = Array.Empty<byte>();
 
+    /// <summary>
+    /// MIDI Channel setting (0-15).
+    /// Extracted from byte offset 8 in the SysEx data.
+    /// </summary>
+    public int MidiChannel => RawSysEx.Length > 8 ? RawSysEx[8] : 0;
+
+    /// <summary>
+    /// Device ID (0-127).
+    /// Extracted from byte offset 4 in the SysEx data.
+    /// </summary>
+    public int DeviceId => RawSysEx.Length > 4 ? RawSysEx[4] : 0;
+
+    /// <summary>
+    /// Indicates if MIDI Clock is enabled.
+    /// Extracted from byte offset 9 bit 0 in the SysEx data.
+    /// </summary>
+    public bool IsMidiClockEnabled => RawSysEx.Length > 9 && (RawSysEx[9] & 0x01) != 0;
+
+    /// <summary>
+    /// Indicates if MIDI Program Change is enabled.
+    /// Extracted from byte offset 9 bit 1 in the SysEx data.
+    /// </summary>
+    public bool IsMidiProgramChangeEnabled => RawSysEx.Length > 9 && (RawSysEx[9] & 0x02) != 0;
+
+    /// <summary>
+    /// Gets the firmware version string.
+    /// Returns "Unknown" if version data is not available.
+    /// </summary>
+    /// <returns>Version string in format "X.Y" or "Unknown"</returns>
+    public string GetVersionString()
+    {
+        if (RawSysEx.Length < 12)
+            return "Unknown";
+
+        // Version info typically stored at bytes 10-11 (major.minor)
+        var major = RawSysEx[10];
+        var minor = RawSysEx[11];
+        
+        return $"{major}.{minor}";
+    }
+
     private SystemDump() { }
 
     /// <summary>
