@@ -42,9 +42,6 @@ public static class MidiCCMap
     public const byte DelayOnOff = 72;
     public const byte ReverbOnOff = 73;
     
-    // Expression Pedal (assignable to any parameter)
-    public const byte ExpressionPedal = 11; // Same as Expression CC
-    
     /// <summary>
     /// Validates if a CC number is within the valid MIDI CC range.
     /// </summary>

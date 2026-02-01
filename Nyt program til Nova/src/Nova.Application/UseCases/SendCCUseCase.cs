@@ -7,6 +7,11 @@ namespace Nova.Application.UseCases;
 
 /// <summary>
 /// Use case for sending MIDI Control Change (CC) messages.
+/// 
+/// WARNING: This use case validates and prepares MIDI CC messages but does not
+/// actually transmit them. The current IMidiPort interface only supports SysEx messages.
+/// For full MIDI CC support, the IMidiPort interface needs to be extended with a
+/// SendMidiAsync(byte[] midiData) method for channel voice messages.
 /// </summary>
 public sealed class SendCCUseCase
 {
