@@ -22,7 +22,6 @@ public static class SysExBuilder
     private const byte REQUEST_MESSAGE_ID = 0x45;
     private const byte RESPONSE_MESSAGE_ID = 0x20;
     private const byte USER_BANK_DUMP = 0x03;
-    private const byte SYSTEM_DUMP = 0x02;
 
     /// <summary>
     /// Builds request for User Bank Dump (all 60 presets).
@@ -38,25 +37,6 @@ public static class SysExBuilder
             MODEL_ID,
             REQUEST_MESSAGE_ID,
             USER_BANK_DUMP,
-            SYSEX_END
-        };
-    }
-
-    /// <summary>
-    /// Builds request for System Dump (global settings).
-    /// </summary>
-    /// <param name="deviceId">Nova System device ID (default 0x00 = any device)</param>
-    /// <returns>9-byte SysEx request: F0 00 20 1F [deviceId] 63 45 02 F7</returns>
-    public static byte[] BuildSystemDumpRequest(byte deviceId = 0x00)
-    {
-        return new byte[]
-        {
-            SYSEX_START,
-            TC_ID_1, TC_ID_2, TC_ID_3,
-            deviceId,
-            MODEL_ID,
-            REQUEST_MESSAGE_ID,
-            SYSTEM_DUMP,
             SYSEX_END
         };
     }
