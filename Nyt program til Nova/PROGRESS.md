@@ -1,9 +1,9 @@
 # PROGRESS.md — Projekt Fremskridt
 
-## 📊 TOTAL FREMSKRIDT: 50%
+## 📊 TOTAL FREMSKRIDT: 35%
 
 ```
-██████████████░░░░░░░░░░░░░░ 50%
+█████████░░░░░░░░░░░░░░░░░░ 35%
 ```
 
 ---
@@ -27,13 +27,13 @@
 | 1.4 | Infrastructure | ✅ DONE | 100% |
 | 1.5 | Presentation | ✅ DONE | 100% |
 | 2 | Preset Viewer | ✅ COMPLETE | 100% |
-| 3 | System Viewer | 🔄 IN PROGRESS | 10% |
-| 4 | System Editor | ⬜ TODO | 0% |
-| 5 | Preset Detail | ⬜ TODO | 0% |
-| 6 | Preset Editor | ⬜ TODO | 0% |
-| 7 | Preset Management | ⬜ TODO | 0% |
-| 8 | File I/O | ⬜ TODO | 0% |
-| 9 | MIDI Mapping | ⬜ TODO | 0% |
+| 3 | System Viewer | 🔄 IN PROGRESS | 40% |
+| 4 | File I/O | ⬜ TODO | 0% |
+| 5 | Preset Editor | ⬜ TODO | 0% |
+| 6 | Bank Manager | ⬜ TODO | 0% |
+| 7 | MIDI CC Mapping | ⬜ TODO | 0% |
+| 8 | UI Dashboard | ⬜ TODO | 0% |
+| 9 | Advanced Features | ⬜ TODO | 0% |
 | 10 | Release | ⬜ TODO | 0% |
 
 ---
@@ -65,13 +65,13 @@
 ## 🧪 TEST STATUS
 
 ```
-Domain:      140 tests ✅
+Domain:      144 tests ✅
 MIDI:        6 tests ✅
-Application: 3 tests ✅
+Application: 6 tests ✅ (includes RequestSystemDumpUseCase)
 Infrastructure: 12 tests ✅
-Presentation: 3 tests ❌ (Moq sealed class issue - non-blocking)
+Presentation: 21 tests ✅ (MainViewModel tests fixed!)
 ─────────────────────────
-TOTAL:       164/167 passing (98%)
+TOTAL:       189/189 passing (100%)
 
 HARDWARE TEST: ✅ SUCCESS
 - Connected to USB MIDI Interface
