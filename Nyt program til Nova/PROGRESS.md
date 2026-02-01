@@ -46,8 +46,8 @@
 | 2 | ~~02-modul1-phase1-foundation.md~~ | ✅ Arkiveret |
 | 3 | `03-modul1-phase2-domain-models.md` | ✅ DONE |
 | 4 | `04-modul1-phase3-use-cases.md` | ✅ DONE |
-| 5 | `05-modul1-phase4-infrastructure.md` | ⬜ **CURRENT** |
-| 6 | `06-modul1-phase5-presentation-SONNET45.md` | ⬜ TODO |
+| 5 | `05-modul1-phase4-infrastructure.md` | ✅ DONE |
+| 6 | `06-modul1-phase5-presentation-SONNET45.md` | ⬜ **CURRENT** |
 | 7 | `07-modul2-preset-viewer.md` | ⬜ TODO |
 | 8 | `08-modul3-system-viewer.md` | ⬜ TODO |
 | 9 | `09-modul4-system-editor.md` | ⬜ TODO |
@@ -79,15 +79,16 @@ TOTAL:       164 tests ✅
 ## 📅 SIDST OPDATERET
 
 **Dato**: 2025-02-01  
-**Commit**: `1ee162c` - Initial DryWetMidiPort infrastructure setup
+**Commit**: `7c92339` - Phase 4 Infrastructure COMPLETE (Session afslutning)
 
 ---
 
 ## 🔜 NÆSTE SKRIDT
 
-1. Næste task: Task 4.4 (ConnectAsync) — **REQUIRES SONNET 4.5+**
-2. Alternative: Task 4.5 (DisconnectAsync) — SIMPLE complexity
-3. Opdater denne fil når task er færdig
+1. Start Phase 5: Avalonia Presentation layer
+2. Åbn `tasks/06-modul1-phase5-presentation-SONNET45.md`
+3. Task 5.1: Avalonia UI Foundation — **REQUIRES SONNET 4.5+**
+4. Opdater denne fil når task er færdig
 
 ---
 
