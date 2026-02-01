@@ -1,5 +1,11 @@
 # LLM Build Instructions — Uundgåeligt Testregime
 
+## ⚠️ LÆS FØRST: `llm-build-system/AGENTS.md`
+
+AGENTS.md indeholder den komplette pipeline. Denne fil er supplement.
+
+---
+
 Status: læst
 
 ## ⚠️ KRITISK REGEL: **NO CODE WITHOUT TESTS**
