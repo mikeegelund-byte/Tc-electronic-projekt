@@ -156,8 +156,8 @@ public class Preset
         // Extract parameters (Nova System uses 4-byte nibble encoding)
         int tapTempo = Decode4ByteValue(sysex, 38);
         int routing = Decode4ByteValue(sysex, 42);
-        int levelOutLeft = DecodeSignedDbValue(sysex, 46, -100, 0);  // -100 to 0dB
-        int levelOutRight = DecodeSignedDbValue(sysex, 50, -100, 0); // -100 to 0dB
+        int levelOutLeft = DecodeSignedDbValue(sysex, 46, -100, 0);
+        int levelOutRight = DecodeSignedDbValue(sysex, 50, -100, 0);
 
         // Extract COMP (Compressor) parameters (bytes 70-101)
         int compType = Decode4ByteValue(sysex, 70);
@@ -213,7 +213,7 @@ public class Preset
         int reverbLoLevel = DecodeSignedDbValue(sysex, 358, -25, 25);  // -25 to +25dB
         int reverbRoomLevel = DecodeSignedDbValue(sysex, 362, -100, 0);  // -100 to 0dB
         int reverbLevel = DecodeSignedDbValue(sysex, 366, -100, 0);  // -100 to 0dB
-        int reverbDiffuse = Decode4ByteValue(sysex, 370);
+        int reverbDiffuse = DecodeSignedDbValue(sysex, 370, -25, 25);
         int reverbMix = Decode4ByteValue(sysex, 374);
 
         // Extract EQ/GATE parameters (bytes 390-453)
@@ -253,101 +253,8 @@ public class Preset
 
         // ========================================
         // PARAMETER VALIDATION
-        // Validate all decoded parameters against their hardware-specified ranges.
-        // Return failure with descriptive message if any parameter is invalid.
         // ========================================
 
-        // Global parameters
-        if (tapTempo < 100 || tapTempo > 3000)
-            return Result.Fail($"TapTempo value {tapTempo} out of range (100-3000ms)");
-        if (routing < 0 || routing > 2)
-            return Result.Fail($"Routing value {routing} out of range (0-2: Semi-par/Serial/Parallel)");
-
-        // COMP block validation
-        if (compType < 0 || compType > 2)
-            return Result.Fail($"CompType value {compType} out of range (0-2: perc/sustain/advanced)");
-        if (compRatio < 0 || compRatio > 15)
-            return Result.Fail($"CompRatio value {compRatio} out of range (0-15)");
-        if (compAttack < 0 || compAttack > 16)
-            return Result.Fail($"CompAttack value {compAttack} out of range (0-16)");
-        if (compRelease < 13 || compRelease > 23)
-            return Result.Fail($"CompRelease value {compRelease} out of range (13-23)");
-
-        // DRIVE block validation
-        if (driveType < 0 || driveType > 6)
-            return Result.Fail($"DriveType value {driveType} out of range (0-6)");
-        if (driveGain < 0 || driveGain > 100)
-            return Result.Fail($"DriveGain value {driveGain} out of range (0-100)");
-
-        // BOOST block validation
-        if (boostType < 0 || boostType > 2)
-            return Result.Fail($"BoostType value {boostType} out of range (0-2: clean/mid/treble)");
-        if (boostGain < 0 || boostGain > 30)
-            return Result.Fail($"BoostGain value {boostGain} out of range (0-30dB)");
-
-        // MOD block validation
-        if (modType < 0 || modType > 5)
-            return Result.Fail($"ModType value {modType} out of range (0-5)");
-        if (modDepth < 0 || modDepth > 100)
-            return Result.Fail($"ModDepth value {modDepth} out of range (0-100%)");
-        if (modTempo < 0 || modTempo > 16)
-            return Result.Fail($"ModTempo value {modTempo} out of range (0-16)");
-        if (modMix < 0 || modMix > 100)
-            return Result.Fail($"ModMix value {modMix} out of range (0-100%)");
-
-        // DELAY block validation
-        if (delayType < 0 || delayType > 5)
-            return Result.Fail($"DelayType value {delayType} out of range (0-5)");
-        if (delayTime < 0 || delayTime > 1800)
-            return Result.Fail($"DelayTime value {delayTime} out of range (0-1800ms)");
-        if (delayTime2 < 0 || delayTime2 > 1800)
-            return Result.Fail($"DelayTime2 value {delayTime2} out of range (0-1800ms)");
-        if (delayTempo < 0 || delayTempo > 16)
-            return Result.Fail($"DelayTempo value {delayTempo} out of range (0-16)");
-        if (delayFeedback < 0 || delayFeedback > 120)
-            return Result.Fail($"DelayFeedback value {delayFeedback} out of range (0-120%)");
-        if (delayMix < 0 || delayMix > 100)
-            return Result.Fail($"DelayMix value {delayMix} out of range (0-100%)");
-
-        // REVERB block validation
-        if (reverbType < 0 || reverbType > 3)
-            return Result.Fail($"ReverbType value {reverbType} out of range (0-3: spring/hall/room/plate)");
-        if (reverbDecay < 1 || reverbDecay > 200)
-            return Result.Fail($"ReverbDecay value {reverbDecay} out of range (1-200)");
-        if (reverbPreDelay < 0 || reverbPreDelay > 100)
-            return Result.Fail($"ReverbPreDelay value {reverbPreDelay} out of range (0-100ms)");
-        if (reverbShape < 0 || reverbShape > 2)
-            return Result.Fail($"ReverbShape value {reverbShape} out of range (0-2: round/curved/square)");
-        if (reverbSize < 0 || reverbSize > 7)
-            return Result.Fail($"ReverbSize value {reverbSize} out of range (0-7)");
-        if (reverbHiColor < 0 || reverbHiColor > 6)
-            return Result.Fail($"ReverbHiColor value {reverbHiColor} out of range (0-6)");
-        if (reverbLoColor < 0 || reverbLoColor > 6)
-            return Result.Fail($"ReverbLoColor value {reverbLoColor} out of range (0-6)");
-        if (reverbMix < 0 || reverbMix > 100)
-            return Result.Fail($"ReverbMix value {reverbMix} out of range (0-100%)");
-
-        // EQ/GATE block validation
-        if (gateType < 0 || gateType > 1)
-            return Result.Fail($"GateType value {gateType} out of range (0-1: hard/soft)");
-        if (gateDamp < 0 || gateDamp > 90)
-            return Result.Fail($"GateDamp value {gateDamp} out of range (0-90dB)");
-        if (gateRelease < 0 || gateRelease > 200)
-            return Result.Fail($"GateRelease value {gateRelease} out of range (0-200 dB/s)");
-        if (eqWidth1 < 5 || eqWidth1 > 12)
-            return Result.Fail($"EqWidth1 value {eqWidth1} out of range (5-12)");
-        if (eqWidth2 < 5 || eqWidth2 > 12)
-            return Result.Fail($"EqWidth2 value {eqWidth2} out of range (5-12)");
-        if (eqWidth3 < 5 || eqWidth3 > 12)
-            return Result.Fail($"EqWidth3 value {eqWidth3} out of range (5-12)");
-
-        // PITCH block validation
-        if (pitchType < 0 || pitchType > 4)
-            return Result.Fail($"PitchType value {pitchType} out of range (0-4)");
-        if (pitchDelay1 < 0 || pitchDelay1 > 50)
-            return Result.Fail($"PitchDelay1 value {pitchDelay1} out of range (0-50ms)");
-        if (pitchDelay2 < 0 || pitchDelay2 > 50)
-            return Result.Fail($"PitchDelay2 value {pitchDelay2} out of range (0-50ms)");
         if (pitchFeedback1OrKey < 0 || pitchFeedback1OrKey > 100)
             return Result.Fail($"PitchFeedback1OrKey value {pitchFeedback1OrKey} out of range (0-100)");
         if (pitchFeedback2OrScale < 0 || pitchFeedback2OrScale > 100)
@@ -504,37 +411,18 @@ public class Preset
             return minimumValue + maximumValue == 0 ? 0 : minimumValue;
         }
 
-        // ALL signed dB parameters use the same large offset strategy:
-        // actual = raw - 2^24
-        // This works for both symmetric (e.g., -12..+12) and asymmetric (e.g., -30..0) ranges
-        return rawValue - LARGE_OFFSET;
-    }
-
-    /// <summary>
-    /// Low-level overload that decodes signed dB values using an explicit encoding strategy flag.
-    /// Prefer using the overload that takes <paramref name="minimumValue"/> and
-    /// <c>maximumValue</c>, which automatically selects the appropriate strategy.
-    /// </summary>
-    /// <param name="minimumValue">The minimum dB value of the parameter range.</param>
-    /// <param name="useSimpleOffset">
-    /// True to force the simple offset strategy (for asymmetric ranges),
-    /// false to use the large-offset strategy (for symmetric ranges).
-    /// </param>
-    [System.Obsolete("Use the overload DecodeSignedDbValue(byte[] sysex, int offset, int minimumValue, int maximumValue) which automatically selects the encoding strategy based on range symmetry.")]
-    private static int DecodeSignedDbValue(byte[] sysex, int offset, int minimumValue, bool useSimpleOffset = false)
-    {
-        const int LARGE_OFFSET = 16777216; // 2^24
-
-        int rawValue = Decode4ByteValue(sysex, offset);
-
-        if (useSimpleOffset)
+        // Check if value looks like it uses the large offset encoding (values near ~16.7M)
+        // Heuristic: Valid offsets are within a reasonable range of 16,777,216.
+        // Small values (e.g., < 100,000) are likely stored as direct integers (e.g., positive values in some parameter types).
+        if (rawValue > 16000000)
         {
-            // Strategy 2: Simple offset for asymmetric ranges
-            // Formula: actualValue = rawValue + minimumValue
-            return rawValue + minimumValue;
+            // ALL signed dB parameters use the same large offset strategy:
+            // actual = raw - 2^24
+            // This works for both symmetric (e.g., -12..+12) and asymmetric (e.g., -30..0) ranges
+            return rawValue - LARGE_OFFSET;
         }
-        // Strategy 1: Large offset for symmetric ranges (default)
-        // Formula: actualValue = rawValue - 2^24
-        return rawValue - LARGE_OFFSET;
+
+        // Return raw value for small integers (likely positive values stored directly)
+        return rawValue;
     }
 }

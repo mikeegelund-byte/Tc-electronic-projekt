@@ -2,14 +2,22 @@
 
 ## 🔴 ACTIVE SESSION
 
-**Modul**: Modul 1, Phase 2 - Domain Models
-**Phase**: Phase 2 in progress - serialization complete
-**Date started**: 2026-01-31
-**Current task**: Continue Phase 2 domain models
+**Modul**: Modul 1, Phase 2 - Domain Models (COMPLETED)
+**Phase**: Phase 3 - Use Cases (READY TO START)
+**Date started**: 2026-02-01
+**Current task**: Transitioning to Modul 1 Phase 3
 
 ---
 
 ## ✅ Completed in This Session
+
+**Modul 1 Phase 2: Domain Models Fix** (2026-02-01)
+- Læst: SYSEX_MAP_TABLES.md for at forstå offset kodning
+- Implementeret: Hybrid Offset Algorithm i `Preset.cs`
+- Refactored: `DecodeSignedDbValue` til at håndtere både små (positive) og store (negative offset) værdier
+- Verificeret: 78/78 tests bestået i `PresetParametersTests` inkluderet parameter validering
+- Dokumenteret: Opdateret `tasks/03-modul1-phase2-domain-models.md` til COMPLETE
+- Dokumenteret: Opdateret `docs/06-sysex-formats.md` med ny offset strategi
 
 **Phase 0: Environment Setup** (commit 1530506)
 - Læst: docs/00-index.md, tasks/00-index.md

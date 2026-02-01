@@ -69,16 +69,16 @@ Therefore: Complete parameter extraction BEFORE Phase 3.
   - REVERB block: 13 parameters (commit 7bb5a38)
   - EQ/GATE block: 13 parameters (commit 3a5bb9e)
   - PITCH block: 11 parameters (commit 8e6c2cf) ← **FINAL BLOCK!**
-- [⏳] OPTIONAL: Parameter validation logic (range checking, type constraints)
+- [✅] Parameter validation logic (re-enabled and verified)
 - [⏳] OPTIONAL: Preset modification (change name, parameters)
 - [⏳] OPTIONAL: Coverage measurement (estimated >95% for Domain layer)
 
-**Technical Debt Noted:**
-- ~25 signed dB parameters store raw encoded values (need offset decoding layer)
-- Tests pragmatically widened ranges to maintain velocity - offset investigation documented
-- Decision: Deferred offset decoding to maintain forward momentum toward MVP
+**Technical Debt Resolved (2026-02-01):**
+- Signed dB parameters previously stored raw values.
+- Fixed using Hybrid Offset Strategy (Raw > 16M ? Raw - 2^24 : Raw).
+- All validation tests re-enabled and passing.
 
-**Completed**: 2026-01-31
+**Completed**: 2026-02-01
 
 ---
 

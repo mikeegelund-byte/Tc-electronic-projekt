@@ -10,8 +10,8 @@ Fase 4: Modul-roadmap        ✅ KOMPLET (10 moduls, 23 uger)
 Fase 5: Dok-struktur         ✅ KOMPLET (13 små files)
 Fase 6: Implementering-guide ✅ KOMPLET (nu!)
 ────────────────────────────────────────────────────────
-Fase 7: Miljøopsætning       ⏳ KLAR TIL AT STARTE
-Fase 8: Modul 1 - Kode       ⏳ EFTER MILJØ
+Fase 7: Miljøopsætning       ✅ KOMPLET
+Fase 8: Modul 1 - Kode       🏗️ I GANG (Domain Models færdig)
 ```
 
 ---
