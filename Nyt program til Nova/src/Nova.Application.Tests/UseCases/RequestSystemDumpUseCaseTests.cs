@@ -104,7 +104,7 @@ public class FailingSendMockMidiPort : IMidiPort
 
         private class AsyncEnumeratorEmpty : IAsyncEnumerator<byte[]>
         {
-            public byte[] Current => null!;
+            public byte[] Current => System.Array.Empty<byte>();
             public ValueTask<bool> MoveNextAsync() => ValueTask.FromResult(false);
             public ValueTask DisposeAsync() => ValueTask.CompletedTask;
         }
