@@ -46,8 +46,12 @@ Modul 2-10                       [⬜ NOT STARTED] ← NEXT: Modul 2 Preset View
 - ViewModels/MainViewModel.cs — MVVM with 8 properties, 3 commands
   - Fixed: Added [NotifyCanExecuteChangedFor] attributes for Connect button
   - Auto-refresh MIDI ports on startup
-- MainWindow.axaml — Connection panel, Download Bank UI
+- ViewModels/PresetSummaryViewModel.cs — Record display model with FromPreset factory
+- ViewModels/PresetListViewModel.cs — ObservableCollection with LoadFromBank method
+- Views/PresetListView.axaml — DataGrid UI showing preset list
+- MainWindow.axaml — Connection panel, Download Bank UI, PresetListView integrated
 - MainWindow.axaml.cs — Code-behind (InitializeComponent)
+- **Modul 2 Task 2.5**: ✅ PresetSummaryViewModel unit tests (12/12 passing)
 - **Hardware Test**: ✅ SUCCESS — Downloaded 60 presets from Nova System pedal
 
 ---
@@ -55,12 +59,12 @@ Modul 2-10                       [⬜ NOT STARTED] ← NEXT: Modul 2 Preset View
 ## 📊 Test Status
 
 ```
-Total tests: 167
+Total tests: 176
   Nova.Domain.Tests:        140 tests ✅
   Nova.Midi.Tests:          6 tests ✅
   Nova.Application.Tests:   3 tests ✅
   Nova.Infrastructure.Tests: 12 tests ✅
-  Nova.Presentation.Tests:  3 tests ❌ (Moq cannot mock sealed UseCases - deferred)
+  Nova.Presentation.Tests:  15 tests (3 ❌ Moq sealed issue, 12 ✅ PresetSummaryViewModel)
 
 Build: 0 warnings, 0 errors ✅
 Framework: .NET 8.0 LTS
