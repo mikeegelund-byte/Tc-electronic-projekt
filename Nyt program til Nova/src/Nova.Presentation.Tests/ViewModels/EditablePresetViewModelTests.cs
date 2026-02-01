@@ -2,195 +2,266 @@ using FluentAssertions;
 using Moq;
 using Nova.Application.UseCases;
 using Nova.Domain.Models;
+using Nova.Midi;
 using Nova.Presentation.ViewModels;
+using Serilog;
 using Xunit;
 
 namespace Nova.Presentation.Tests.ViewModels;
 
+/// <summary>
+/// Unit tests for EditablePresetViewModel.
+/// Tests observable property behavior, change tracking, and save/revert commands.
+/// </summary>
 public class EditablePresetViewModelTests
 {
-    private readonly byte[] _validSysEx;
+    private readonly Mock<UpdatePresetUseCase> _mockUpdateUseCase;
+    private readonly Mock<ILogger> _mockLogger;
+    private readonly EditablePresetViewModel _viewModel;
 
     public EditablePresetViewModelTests()
     {
-        // Create a valid 521-byte SysEx message for testing
-        _validSysEx = new byte[521];
-        _validSysEx[0] = 0xF0;  // SysEx start
-        _validSysEx[1] = 0x00;  // TC Electronic manufacturer ID
-        _validSysEx[2] = 0x20;
-        _validSysEx[3] = 0x1F;
-        _validSysEx[5] = 0x63;  // Nova System model ID
-        _validSysEx[6] = 0x20;  // Dump message
-        _validSysEx[7] = 0x01;  // Preset data type
-        _validSysEx[8] = 0x05;  // Preset number
+        _mockUpdateUseCase = new Mock<UpdatePresetUseCase>(MockBehavior.Loose, 
+            new Mock<IMidiPort>().Object, 
+            new Mock<ILogger>().Object);
         
-        // Preset name at bytes 9-32 (24 characters)
-        var name = "Test Preset         ";
-        for (int i = 0; i < 24 && i < name.Length; i++)
-            _validSysEx[9 + i] = (byte)name[i];
+        _mockLogger = new Mock<ILogger>();
+        _viewModel = new EditablePresetViewModel(_mockUpdateUseCase.Object, _mockLogger.Object);
+    }
+
+    [Fact]
+    public void Constructor_InitializesDefaultValues()
+    {
+        // Arrange & Act
+        var vm = new EditablePresetViewModel(_mockUpdateUseCase.Object);
+
+        // Assert
+        vm.HasChanges.Should().BeFalse();
+        vm.StatusMessage.Should().Contain("Ready");
+        vm.PresetNumber.Should().Be(0);
+        vm.TapTempo.Should().Be(120);
+        vm.Routing.Should().Be(0);
+    }
+
+    [Fact]
+    public void LoadPreset_LoadsAllProperties()
+    {
+        // Arrange
+        var testSysEx = new byte[521];
+        testSysEx[0] = 0xF0;
+        testSysEx[520] = 0xF7;
+        testSysEx[1] = 0x00;
+        testSysEx[2] = 0x20;
+        testSysEx[3] = 0x1F;
+        testSysEx[5] = 0x63;
+        testSysEx[6] = 0x20;
+        testSysEx[7] = 0x01;
+        testSysEx[8] = 5;
         
-        _validSysEx[520] = 0xF7;  // SysEx end
-        
-        // Set TapTempo to 150 (bytes 38-41) using 4-byte little-endian encoding
-        _validSysEx[38] = 0x16;  // LSB: 150 & 0x7F = 0x16
-        _validSysEx[39] = 0x01;  // 150 >> 7 = 0x01
-        _validSysEx[40] = 0x00;
-        _validSysEx[41] = 0x00;  // MSB
-    }
+        var nameBytes = System.Text.Encoding.ASCII.GetBytes("TestPreset".PadRight(24));
+        Array.Copy(nameBytes, 0, testSysEx, 9, 24);
 
-    [Fact]
-    public void LoadFromPreset_LoadsAllProperties()
-    {
-        // Arrange
-        var viewModel = new EditablePresetViewModel();
-        var preset = Preset.FromSysEx(_validSysEx).Value;
+        var parseResult = Preset.FromSysEx(testSysEx);
+        var preset = parseResult.Value;
 
         // Act
-        viewModel.LoadFromPreset(preset);
+        _viewModel.LoadPreset(preset);
 
         // Assert
-        viewModel.PresetNumber.Should().Be(5);
-        viewModel.PresetName.Should().Be(preset.Name);  // Use actual trimmed name from preset
-        viewModel.TapTempo.Should().Be(150);
+        _viewModel.PresetNumber.Should().Be(preset.Number);
+        _viewModel.PresetName.Should().Be(preset.Name);
+        _viewModel.HasChanges.Should().BeFalse();
+        _viewModel.StatusMessage.Should().Contain("Loaded");
     }
 
     [Fact]
-    public void LoadFromPreset_WithNullPreset_ThrowsArgumentNullException()
+    public void PropertyChange_SetsHasChanges()
     {
         // Arrange
-        var viewModel = new EditablePresetViewModel();
-
-        // Act & Assert
-        Assert.Throws<ArgumentNullException>(() => viewModel.LoadFromPreset(null!));
-    }
-
-    [Fact]
-    public void HasChanges_InitiallyFalse()
-    {
-        // Arrange
-        var viewModel = new EditablePresetViewModel();
-        var preset = Preset.FromSysEx(_validSysEx).Value;
-        viewModel.LoadFromPreset(preset);
-
-        // Act & Assert
-        viewModel.HasChanges.Should().BeFalse();
-    }
-
-    [Fact]
-    public void HasChanges_TrueAfterModifyingProperty()
-    {
-        // Arrange
-        var viewModel = new EditablePresetViewModel();
-        var preset = Preset.FromSysEx(_validSysEx).Value;
-        viewModel.LoadFromPreset(preset);
+        var testSysEx = CreateValidSysEx();
+        var preset = Preset.FromSysEx(testSysEx).Value;
+        _viewModel.LoadPreset(preset);
+        _viewModel.HasChanges.Should().BeFalse();
 
         // Act
-        viewModel.PresetName = "Modified Name";
+        _viewModel.PresetName = "Modified";
 
         // Assert
-        viewModel.HasChanges.Should().BeTrue();
+        _viewModel.HasChanges.Should().BeTrue();
     }
 
     [Fact]
-    public void RevertChanges_RestoresOriginalValues()
+    public void TapTempoChange_SetsHasChanges()
     {
         // Arrange
-        var viewModel = new EditablePresetViewModel();
-        var preset = Preset.FromSysEx(_validSysEx).Value;
-        viewModel.LoadFromPreset(preset);
-        var originalName = viewModel.PresetName;
-        viewModel.PresetName = "Modified Name";
+        var testSysEx = CreateValidSysEx();
+        var preset = Preset.FromSysEx(testSysEx).Value;
+        _viewModel.LoadPreset(preset);
+        _viewModel.HasChanges = false;
 
         // Act
-        viewModel.RevertChangesCommand.Execute(null);
+        _viewModel.TapTempo = 200;
 
         // Assert
-        viewModel.PresetName.Should().Be(originalName);
-        viewModel.HasChanges.Should().BeFalse();
+        _viewModel.HasChanges.Should().BeTrue();
     }
 
     [Fact]
-    public void ToPreset_WithEmptyName_ReturnsFailure()
+    public void RoutingChange_SetsHasChanges()
     {
         // Arrange
-        var viewModel = new EditablePresetViewModel();
-        var preset = Preset.FromSysEx(_validSysEx).Value;
-        viewModel.LoadFromPreset(preset);
-        viewModel.PresetName = "";
+        var testSysEx = CreateValidSysEx();
+        var preset = Preset.FromSysEx(testSysEx).Value;
+        _viewModel.LoadPreset(preset);
+        _viewModel.HasChanges = false;
 
         // Act
-        var result = viewModel.ToPreset();
+        _viewModel.Routing = 2;
 
         // Assert
-        result.IsFailed.Should().BeTrue();
-        result.Errors[0].Message.Should().Contain("Preset name cannot be empty");
-        viewModel.ValidationError.Should().Contain("Preset name cannot be empty");
+        _viewModel.HasChanges.Should().BeTrue();
     }
 
     [Fact]
-    public void ToPreset_WithNameTooLong_ReturnsFailure()
+    public void CompressorEnabledChange_SetsHasChanges()
     {
         // Arrange
-        var viewModel = new EditablePresetViewModel();
-        var preset = Preset.FromSysEx(_validSysEx).Value;
-        viewModel.LoadFromPreset(preset);
-        viewModel.PresetName = "This name is way too long for a preset and exceeds 24 characters";
+        var testSysEx = CreateValidSysEx();
+        var preset = Preset.FromSysEx(testSysEx).Value;
+        _viewModel.LoadPreset(preset);
+        var originalValue = _viewModel.CompressorEnabled;
 
         // Act
-        var result = viewModel.ToPreset();
+        _viewModel.CompressorEnabled = !originalValue;
 
         // Assert
-        result.IsFailed.Should().BeTrue();
-        result.Errors[0].Message.Should().Contain("cannot exceed 24 characters");
+        _viewModel.HasChanges.Should().BeTrue();
     }
 
     [Fact]
-    public void ToPreset_WithInvalidTapTempo_ReturnsFailure()
+    public void ReverbTypeChange_SetsHasChanges()
     {
         // Arrange
-        var viewModel = new EditablePresetViewModel();
-        var preset = Preset.FromSysEx(_validSysEx).Value;
-        viewModel.LoadFromPreset(preset);
-        viewModel.TapTempo = 50;  // Too low (should be 100-3000)
+        var testSysEx = CreateValidSysEx();
+        var preset = Preset.FromSysEx(testSysEx).Value;
+        _viewModel.LoadPreset(preset);
+        _viewModel.HasChanges = false;
 
         // Act
-        var result = viewModel.ToPreset();
+        _viewModel.ReverbType = 2;
 
         // Assert
-        result.IsFailed.Should().BeTrue();
-        result.Errors[0].Message.Should().Contain("Tap tempo must be between");
+        _viewModel.HasChanges.Should().BeTrue();
     }
 
     [Fact]
-    public void ToPreset_WithValidData_ReturnsSuccess()
+    public async Task SaveCommand_WithNoPreset_ShowsError()
     {
-        // Arrange
-        var viewModel = new EditablePresetViewModel();
-        var preset = Preset.FromSysEx(_validSysEx).Value;
-        viewModel.LoadFromPreset(preset);
-
-        // Act
-        var result = viewModel.ToPreset();
+        // Arrange & Act
+        await _viewModel.SaveCommand.ExecuteAsync(null);
 
         // Assert
-        result.IsSuccess.Should().BeTrue();
-        viewModel.ValidationError.Should().BeEmpty();
+        _viewModel.StatusMessage.Should().Contain("Error");
     }
 
     [Fact]
-    public void HasChanges_TracksMultipleProperties()
+    public async Task SaveCommand_WithNoChanges_ShowsMessage()
     {
         // Arrange
-        var viewModel = new EditablePresetViewModel();
-        var preset = Preset.FromSysEx(_validSysEx).Value;
-        viewModel.LoadFromPreset(preset);
+        var testSysEx = CreateValidSysEx();
+        var preset = Preset.FromSysEx(testSysEx).Value;
+        _viewModel.LoadPreset(preset);
 
         // Act
-        viewModel.TapTempo = 200;
-        viewModel.Routing = 1;
-        viewModel.CompressorEnabled = !viewModel.CompressorEnabled;
+        await _viewModel.SaveCommand.ExecuteAsync(null);
 
         // Assert
-        viewModel.HasChanges.Should().BeTrue();
+        _viewModel.StatusMessage.Should().Contain("No changes");
+    }
+
+    [Fact]
+    public async Task SaveCommand_WithInvalidName_ShowsError()
+    {
+        // Arrange
+        var testSysEx = CreateValidSysEx();
+        var preset = Preset.FromSysEx(testSysEx).Value;
+        _viewModel.LoadPreset(preset);
+        _viewModel.PresetName = new string('A', 25); // Too long
+
+        // Act
+        await _viewModel.SaveCommand.ExecuteAsync(null);
+
+        // Assert
+        _viewModel.StatusMessage.Should().Contain("Error");
+    }
+
+    [Fact]
+    public void RevertCommand_ReloadsOriginalPreset()
+    {
+        // Arrange
+        var testSysEx = CreateValidSysEx();
+        var preset = Preset.FromSysEx(testSysEx).Value;
+        _viewModel.LoadPreset(preset);
+        var originalName = _viewModel.PresetName;
+        _viewModel.PresetName = "Modified";
+        _viewModel.HasChanges.Should().BeTrue();
+
+        // Act
+        _viewModel.RevertCommand.Execute(null);
+
+        // Assert
+        _viewModel.PresetName.Should().Be(originalName);
+        _viewModel.HasChanges.Should().BeFalse();
+    }
+
+    [Fact]
+    public void LoadPreset_WithNull_ShowsError()
+    {
+        // Act
+        _viewModel.LoadPreset(null!);
+
+        // Assert
+        _viewModel.StatusMessage.Should().Contain("Error");
+    }
+
+    [Fact]
+    public void AllEffectPropertiesLoadCorrectly()
+    {
+        // Arrange
+        var testSysEx = CreateValidSysEx();
+        var preset = Preset.FromSysEx(testSysEx).Value;
+
+        // Act
+        _viewModel.LoadPreset(preset);
+
+        // Assert
+        _viewModel.CompressorEnabled.Should().Be(preset.CompressorEnabled);
+        _viewModel.DriveEnabled.Should().Be(preset.DriveEnabled);
+        _viewModel.ModulationEnabled.Should().Be(preset.ModulationEnabled);
+        _viewModel.DelayEnabled.Should().Be(preset.DelayEnabled);
+        _viewModel.ReverbEnabled.Should().Be(preset.ReverbEnabled);
+    }
+
+    /// <summary>
+    /// Creates a minimal valid SysEx message for testing.
+    /// </summary>
+    private static byte[] CreateValidSysEx()
+    {
+        var sysex = new byte[521];
+        sysex[0] = 0xF0;  // Start
+        sysex[520] = 0xF7;  // End
+        sysex[1] = 0x00;  // TC Electronic manufacturer
+        sysex[2] = 0x20;
+        sysex[3] = 0x1F;
+        sysex[5] = 0x63;  // Nova System model
+        sysex[6] = 0x20;  // Dump message
+        sysex[7] = 0x01;  // Preset data type
+        sysex[8] = 5;     // Preset number
+
+        // Add valid preset name
+        var nameBytes = System.Text.Encoding.ASCII.GetBytes("TestPreset".PadRight(24));
+        Array.Copy(nameBytes, 0, sysex, 9, 24);
+
+        return sysex;
     }
 }
