@@ -40,13 +40,18 @@ MODUL 2: Parameter Editing (3 weeks)
   - 17 subtasks
   - Status: ✅ COMPLETE (2026-01-31)
 
-**Modul 1, Phase 1: MIDI Foundation**
-- [02-modul1-phase1-foundation.md](02-modul1-phase1-foundation.md)
-  - 5 subtasks + hardware test app
-  - Status: ✅ COMPLETE (2026-01-31)
-  - Results: 13 MIDI tests, 60 presets captured
+**Modul 1, Phase 2: Domain Models**
+- [03-modul1-phase2-domain-models.md](03-modul1-phase2-domain-models.md)
+  - 5 subtasks
+  - Status: ✅ COMPLETE (2026-02-01)
+  - Results: Preset entity (521 bytes), UserBankDump (60 presets), SystemDump (527 bytes), 100% test pass
 
 ### 🟡 In Progress
+
+**Modul 1, Phase 3: Application Layer**
+- [04-modul1-phase3-use-cases.md](04-modul1-phase3-use-cases.md)
+  - 3 subtasks
+  - Status: 🟡 IN PROGRESS
 
 **Modul 1, Phase 2: Domain Models**
 - [03-modul1-phase2-domain-models.md](03-modul1-phase2-domain-models.md)
