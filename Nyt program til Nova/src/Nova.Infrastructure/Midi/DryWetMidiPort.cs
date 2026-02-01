@@ -24,7 +24,47 @@ public sealed class DryWetMidiPort : IMidiPort, IDisposable
 
     public Task<Result> ConnectAsync(string portName)
     {
-        throw new NotImplementedException();
+        try
+        {
+            // Dispose existing connections if any
+            if (_inputDevice != null || _outputDevice != null)
+            {
+                DisconnectAsync().GetAwaiter().GetResult();
+            }
+
+            var inputDevices = InputDevice.GetAll();
+            var outputDevices = OutputDevice.GetAll();
+
+            var input = inputDevices.FirstOrDefault(d => d.Name == portName);
+            var output = outputDevices.FirstOrDefault(d => d.Name == portName);
+
+            if (input == null || output == null)
+            {
+                // Clean up any partial resources
+                input?.Dispose();
+                output?.Dispose();
+                return Task.FromResult(Result.Fail($"MIDI port '{portName}' not found"));
+            }
+
+            _inputDevice = input;
+            _outputDevice = output;
+            
+            _inputDevice.StartEventsListening();
+            Name = portName;
+
+            return Task.FromResult(Result.Ok());
+        }
+        catch (Exception ex)
+        {
+            // Clean up on error
+            _inputDevice?.Dispose();
+            _outputDevice?.Dispose();
+            _inputDevice = null;
+            _outputDevice = null;
+            Name = string.Empty;
+            
+            return Task.FromResult(Result.Fail($"Failed to connect: {ex.Message}"));
+        }
     }
 
     public Task<Result> DisconnectAsync()
