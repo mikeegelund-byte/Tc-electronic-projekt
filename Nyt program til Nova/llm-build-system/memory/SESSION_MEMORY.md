@@ -1,17 +1,19 @@
 # SESSION_MEMORY.md — Current Session State
 
-## 📅 Session: 2025-02-01 (Phase 5 - Presentation Layer 100% COMPLETE)
+## 📅 Session: 2025-02-01 (Modul 2 - Preset Viewer IN PROGRESS)
 
 ### 🎯 Mål
-Implementer Avalonia UI med MVVM pattern for at give brugeren en grafisk grænseflade til Nova System Manager.
+Implementer Preset Viewer UI for at vise de 60 downloadede presets fra Nova System User Bank i en liste.
 
 ### 🔧 Status Update
-**Latest Commit**: Phase 5 COMPLETE - Hardware test SUCCESS 🎉  
-**Phase 5 Progress**: ✅ 100% COMPLETE (all tasks including hardware test)  
+**Latest Commit**: feat(modul2): Complete Tasks 2.3-2.4 - Wire PresetListView into UI
+**Modul 2 Progress**: 🔄 70% (Tasks 2.1-2.4 DONE, working on Task 2.5 unit tests)  
 **Build Status**: ✅ GREEN (0 errors, 0 warnings)  
 **Tests**: 164/167 passing (3 Presentation tests deferred, non-blocking)  
-**App Status**: ✅ Fully functional — Hardware test SUCCESS  
-**Hardware Test**: ✅ Downloaded 60 presets from Nova System pedal via USB MIDI Interface  
+
+### 🎯 Nuværende Task
+**Fil**: tasks/07-modul2-preset-viewer.md  
+**Task**: 2.5 - Write unit tests for PresetSummaryViewModel mapping logic  
 
 ---
 
