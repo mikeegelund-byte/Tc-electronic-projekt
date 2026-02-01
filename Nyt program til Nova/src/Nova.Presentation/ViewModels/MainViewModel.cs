@@ -34,6 +34,9 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty]
     private int _downloadProgress;
 
+    [ObservableProperty]
+    private PresetListViewModel _presetList = new();
+
     public MainViewModel(
         IMidiPort midiPort,
         ConnectUseCase connectUseCase,
@@ -97,7 +100,9 @@ public partial class MainViewModel : ObservableObject
                 var bank = result.Value;
                 StatusMessage = $"Downloaded {bank.Presets.Length} presets successfully";
                 DownloadProgress = 100;
-                // TODO: Store bank and update preset list (Phase 2)
+                
+                // Load presets into list view
+                PresetList.LoadFromBank(bank);
             }
             else
             {

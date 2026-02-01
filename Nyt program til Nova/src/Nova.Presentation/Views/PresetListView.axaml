@@ -32,8 +32,7 @@
                       BorderThickness="1"
                       BorderBrush="#404040"
                       Background="#1E1E1E"
-                      RowBackground="#2D2D2D"
-                      AlternatingRowBackground="#252525">
+                      RowBackground="#2D2D2D">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Position" 
                                         Binding="{Binding Position}" 

@@ -1,9 +1,9 @@
 # PROGRESS.md — Projekt Fremskridt
 
-## 📊 TOTAL FREMSKRIDT: 40%
+## 📊 TOTAL FREMSKRIDT: 43%
 
 ```
-████████████░░░░░░░░░░░░░░░░ 40%
+████████████░░░░░░░░░░░░░░░░ 43%
 ```
 
 ---
@@ -12,7 +12,7 @@
 
 **Fil**: `tasks/07-modul2-preset-viewer.md`  
 **Task**: Modul 2 - Preset Viewer  
-**Status**: 🔄 IN PROGRESS (Task 2.1-2.2 done, working on 2.3)
+**Status**: 🔄 IN PROGRESS (Tasks 2.1-2.4 done, working on 2.5 tests)
 
 ---
 
@@ -26,7 +26,7 @@
 | 1.3 | Use Cases | ✅ DONE | 100% |
 | 1.4 | Infrastructure | ✅ DONE | 100% |
 | 1.5 | Presentation | ✅ DONE | 100% |
-| 2 | Preset Viewer | 🔄 IN PROGRESS | 30% |
+| 2 | Preset Viewer | 🔄 IN PROGRESS | 70% |
 | 3 | System Viewer | ⬜ TODO | 0% |
 | 4 | System Editor | ⬜ TODO | 0% |
 | 5 | Preset Detail | ⬜ TODO | 0% |
