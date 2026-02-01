@@ -11,16 +11,17 @@ namespace Nova.Presentation.Converters;
 /// </summary>
 public class BoolToGreenGrayBrushConverter : IValueConverter
 {
+    private static readonly SolidColorBrush GreenBrush = new(Color.Parse("#4CAF50"));
+    private static readonly SolidColorBrush GrayBrush = new(Color.Parse("#757575"));
+
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         if (value is bool boolValue)
         {
-            return boolValue 
-                ? new SolidColorBrush(Color.Parse("#4CAF50")) 
-                : new SolidColorBrush(Color.Parse("#757575"));
+            return boolValue ? GreenBrush : GrayBrush;
         }
         
-        return new SolidColorBrush(Color.Parse("#757575"));
+        return GrayBrush;
     }
 
     public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
