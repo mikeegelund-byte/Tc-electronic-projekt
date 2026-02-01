@@ -52,6 +52,7 @@ Create modern, AI-driven software for controlling the TC Electronic Nova System 
 - **Connection:** USB-MIDI converter cable
 - **MIDI Implementation:** Full SysEx + PC + CC
 - **Firmware:** v1.2 (SVN rev. 675, released 2010)
+- **Note:** No amp modeling/amp sim; it is a multi-FX with an analog drive circuit.
 
 ---
 

@@ -141,8 +141,8 @@ debug-*.ps1
 # scripts by default while ignoring build outputs and local artifacts above.
 
 # ============================================================================
-# Hardware capture output (auto-generated)
+# Hardware dump output (auto-generated)
 # ============================================================================
 
-src/Nova.HardwareTest/Captures/
+src/Nova.HardwareTest/Dumps/
 src/Nova.HardwareTest/nova-dump-*.syx

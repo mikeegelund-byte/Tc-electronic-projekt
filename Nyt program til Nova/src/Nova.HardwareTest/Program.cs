@@ -11,7 +11,7 @@ if (args.Length > 0)
 }
 
 Console.WriteLine("=== Nova System MIDI Listener ===\n");
-Console.WriteLine("This program will capture SysEx dumps sent FROM the Nova System pedal.\n");
+Console.WriteLine("This program will record SysEx dumps sent FROM the Nova System pedal.\n");
 
 // Step 1: List all available MIDI input devices
 Console.WriteLine("Available MIDI Input Devices:");
@@ -86,15 +86,15 @@ Console.WriteLine("   1. Press UTILITY button");
     {
         Console.WriteLine($"\n✅ Capture complete! Received {receivedMessages.Count} SysEx messages");
 
-        var captureDir = Path.Combine(Environment.CurrentDirectory, "Captures");
-        Directory.CreateDirectory(captureDir);
+        var dumpDir = Path.Combine(Environment.CurrentDirectory, "Dumps");
+        Directory.CreateDirectory(dumpDir);
 
         // Save each message
         for (int i = 0; i < receivedMessages.Count; i++)
         {
             var data = receivedMessages[i];
             var filename = $"nova-dump-{DateTime.Now:yyyyMMdd-HHmmss}-msg{i + 1:D3}.syx";
-            var outputPath = Path.Combine(captureDir, filename);
+            var outputPath = Path.Combine(dumpDir, filename);
 
             // Add F0 and F7 delimiters for standard .syx file format
             var fullSysEx = new byte[] { 0xF0 }.Concat(data).Concat(new byte[] { 0xF7 }).ToArray();
