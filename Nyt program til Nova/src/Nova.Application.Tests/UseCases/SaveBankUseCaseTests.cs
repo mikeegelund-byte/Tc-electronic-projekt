@@ -11,16 +11,16 @@ namespace Nova.Application.Tests.UseCases;
 
 public class SaveBankUseCaseTests
 {
-    private readonly Mock<IMidiPort> _midiPort;
+    private readonly Mock<IDownloadBankUseCase> _downloadBankUseCase;
     private readonly Mock<ILogger> _logger;
     private readonly SaveBankUseCase _useCase;
     private readonly string _testFilePath;
 
     public SaveBankUseCaseTests()
     {
-        _midiPort = new Mock<IMidiPort>();
+        _downloadBankUseCase = new Mock<IDownloadBankUseCase>();
         _logger = new Mock<ILogger>();
-        _useCase = new SaveBankUseCase(_midiPort.Object, _logger.Object);
+        _useCase = new SaveBankUseCase(_downloadBankUseCase.Object, _logger.Object);
         _testFilePath = Path.Combine(Path.GetTempPath(), $"test_bank_{Guid.NewGuid()}.syx");
     }
 
@@ -28,14 +28,17 @@ public class SaveBankUseCaseTests
     public async Task SaveBank_WithValidBank_CreatesFile()
     {
         // Arrange
-        var presets = new List<byte[]>();
+        var presets = new List<Preset>();
         for (int i = 0; i < 60; i++)
         {
-            presets.Add(CreateDummyPreset(31 + i));
+            var presetData = CreateDummyPreset(31 + i);
+            var preset = Preset.FromSysEx(presetData).Value;
+            presets.Add(preset);
         }
 
-        _midiPort.Setup(m => m.ReceiveSysExAsync(It.IsAny<CancellationToken>()))
-            .Returns(presets.ToAsyncEnumerable());
+        var userBank = UserBankDump.FromPresets(presets).Value;
+        _downloadBankUseCase.Setup(d => d.ExecuteAsync(It.IsAny<CancellationToken>()))
+            .ReturnsAsync(Result.Ok(userBank));
 
         // Act
         var result = await _useCase.ExecuteAsync(_testFilePath, CancellationToken.None);
@@ -58,14 +61,17 @@ public class SaveBankUseCaseTests
         // Arrange - use an invalid path (directory doesn't exist)
         var invalidPath = "/nonexistent/directory/test.syx";
         
-        var presets = new List<byte[]>();
+        var presets = new List<Preset>();
         for (int i = 0; i < 60; i++)
         {
-            presets.Add(CreateDummyPreset(31 + i));
+            var presetData = CreateDummyPreset(31 + i);
+            var preset = Preset.FromSysEx(presetData).Value;
+            presets.Add(preset);
         }
 
-        _midiPort.Setup(m => m.ReceiveSysExAsync(It.IsAny<CancellationToken>()))
-            .Returns(presets.ToAsyncEnumerable());
+        var userBank = UserBankDump.FromPresets(presets).Value;
+        _downloadBankUseCase.Setup(d => d.ExecuteAsync(It.IsAny<CancellationToken>()))
+            .ReturnsAsync(Result.Ok(userBank));
 
         // Act
         var result = await _useCase.ExecuteAsync(invalidPath, CancellationToken.None);
@@ -83,14 +89,17 @@ public class SaveBankUseCaseTests
         await File.WriteAllTextAsync(_testFilePath, "old content");
         File.Exists(_testFilePath).Should().BeTrue();
 
-        var presets = new List<byte[]>();
+        var presets = new List<Preset>();
         for (int i = 0; i < 60; i++)
         {
-            presets.Add(CreateDummyPreset(31 + i));
+            var presetData = CreateDummyPreset(31 + i);
+            var preset = Preset.FromSysEx(presetData).Value;
+            presets.Add(preset);
         }
 
-        _midiPort.Setup(m => m.ReceiveSysExAsync(It.IsAny<CancellationToken>()))
-            .Returns(presets.ToAsyncEnumerable());
+        var userBank = UserBankDump.FromPresets(presets).Value;
+        _downloadBankUseCase.Setup(d => d.ExecuteAsync(It.IsAny<CancellationToken>()))
+            .ReturnsAsync(Result.Ok(userBank));
 
         // Act
         var result = await _useCase.ExecuteAsync(_testFilePath, CancellationToken.None);
