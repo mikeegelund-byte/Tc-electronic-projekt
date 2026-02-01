@@ -11,6 +11,8 @@
         "redhat.vscode-yaml",
         "github.copilot",
         "ms-dotnettools.vscode-dotnet-modernize",
-        "tobysmith568.run-in-powershell"
+        "tobysmith568.run-in-powershell",
+        "ms-dotnettools.csharp",
+        "ms-dotnettools.csdevkit"
     ]
 }
