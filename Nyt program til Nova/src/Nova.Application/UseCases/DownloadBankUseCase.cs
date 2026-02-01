@@ -4,7 +4,7 @@ using Nova.Midi;
 
 namespace Nova.Application.UseCases;
 
-public sealed class DownloadBankUseCase
+public sealed class DownloadBankUseCase : IDownloadBankUseCase
 {
     private readonly IMidiPort _midiPort;
 
