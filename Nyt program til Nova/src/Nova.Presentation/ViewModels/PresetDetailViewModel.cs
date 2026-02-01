@@ -17,6 +17,13 @@ public partial class PresetDetailViewModel : ObservableObject
     [ObservableProperty]
     private string _presetName = string.Empty;
 
+    // UI helper properties
+    [ObservableProperty]
+    private bool _hasPreset;
+
+    [ObservableProperty]
+    private string _position = "";
+
     // Global parameters
     [ObservableProperty]
     private int _tapTempo;
@@ -272,6 +279,8 @@ public partial class PresetDetailViewModel : ObservableObject
             // Reset all properties to defaults for consistent state
             PresetNumber = 0;
             PresetName = string.Empty;
+            HasPreset = false;
+            Position = "";
             TapTempo = 0;
             Routing = 0;
             LevelOutLeft = 0;
@@ -356,6 +365,12 @@ public partial class PresetDetailViewModel : ObservableObject
         // Basic info
         PresetNumber = preset.Number;
         PresetName = preset.Name;
+        HasPreset = true;
+        
+        // Calculate position (bank group and slot)
+        var bankGroup = (preset.Number - 31) / 3;
+        var slot = ((preset.Number - 31) % 3) + 1;
+        Position = $"{bankGroup:D2}-{slot}";
 
         // Global parameters
         TapTempo = preset.TapTempo;
