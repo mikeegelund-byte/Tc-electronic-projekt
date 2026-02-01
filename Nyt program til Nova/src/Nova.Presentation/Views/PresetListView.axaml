@@ -1,0 +1,53 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Nova.Presentation.ViewModels"
+             x:Class="Nova.Presentation.Views.PresetListView"
+             x:DataType="vm:PresetListViewModel">
+
+    <Border Background="#2D2D2D" Padding="16" CornerRadius="8" Margin="0,16,0,0">
+        <DockPanel>
+            <TextBlock DockPanel.Dock="Top" 
+                       Text="User Bank Presets (60)" 
+                       FontWeight="Bold" 
+                       FontSize="16"
+                       Margin="0,0,0,12"
+                       Foreground="#FFFFFF"/>
+
+            <TextBlock DockPanel.Dock="Top"
+                       Text="No presets loaded. Click 'Download Bank' to retrieve presets from pedal."
+                       IsVisible="{Binding !HasPresets}"
+                       Foreground="#999999"
+                       FontStyle="Italic"
+                       Margin="0,8"/>
+
+            <DataGrid ItemsSource="{Binding Presets}"
+                      SelectedItem="{Binding SelectedPreset}"
+                      AutoGenerateColumns="False"
+                      IsReadOnly="True"
+                      IsVisible="{Binding HasPresets}"
+                      CanUserReorderColumns="False"
+                      CanUserResizeColumns="True"
+                      GridLinesVisibility="Horizontal"
+                      HeadersVisibility="Column"
+                      BorderThickness="1"
+                      BorderBrush="#404040"
+                      Background="#1E1E1E"
+                      RowBackground="#2D2D2D"
+                      AlternatingRowBackground="#252525">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Position" 
+                                        Binding="{Binding Position}" 
+                                        Width="100"
+                                        FontFamily="Consolas"/>
+                    <DataGridTextColumn Header="Name" 
+                                        Binding="{Binding Name}" 
+                                        Width="*"/>
+                    <DataGridTextColumn Header="Preset #" 
+                                        Binding="{Binding Number}" 
+                                        Width="100"
+                                        FontFamily="Consolas"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </DockPanel>
+    </Border>
+</UserControl>
