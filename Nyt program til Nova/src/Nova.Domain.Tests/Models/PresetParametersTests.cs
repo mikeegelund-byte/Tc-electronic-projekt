@@ -20,7 +20,7 @@ public class PresetParametersTests
         // Path to real hardware test fixtures in Nova.HardwareTest project
         var fixturesPath = Path.Combine(
             AppDomain.CurrentDomain.BaseDirectory,
-            "..", "..", "..", "..", "..", "src", "Nova.HardwareTest"
+            "..", "..", "..", "..", "..", "src", "Nova.HardwareTest", "Dumps"
         );
         var presetPath = Path.Combine(fixturesPath, "nova-dump-20260131-181507-msg001.syx");
 
@@ -193,8 +193,8 @@ public class PresetParametersTests
 
         // Assert
         result.IsSuccess.Should().BeTrue();
-        result.Value.CompThreshold.Should().BeInRange(0, 20000000,
-            "COMP Threshold raw value - needs offset decoding");
+        result.Value.CompThreshold.Should().BeInRange(-30, 0,
+            "COMP Threshold must be between -30dB and 0dB");
     }
 
     [Fact]
@@ -277,8 +277,8 @@ public class PresetParametersTests
 
         // Assert
         result.IsSuccess.Should().BeTrue();
-        result.Value.CompLevel.Should().BeInRange(0, 20000000,
-            "COMP Level raw value - needs offset decoding");
+        result.Value.CompLevel.Should().BeInRange(-12, 12,
+            "COMP Level must be between -12dB and +12dB");
     }
 
     // ==================================
@@ -327,7 +327,7 @@ public class PresetParametersTests
 
         // Assert
         result.IsSuccess.Should().BeTrue();
-        result.Value.DriveLevel.Should().BeInRange(0, 20000000, "raw value - needs offset decoding for -30 to +20dB range");
+        result.Value.DriveLevel.Should().BeInRange(-30, 20, "Drive Level must be between -30dB and +20dB");
     }
 
     // ==================================
@@ -369,14 +369,14 @@ public class PresetParametersTests
     {
         // Arrange - Already loaded in constructor
         // Reference: Nova System Sysex Map.txt - bytes 122-125
-        // Range: -30 to +20dB (may need offset decoding)
+        // Range: 0 to 10dB (unsigned)
 
         // Act
         var result = Preset.FromSysEx(_realPresetBytes);
 
         // Assert
         result.IsSuccess.Should().BeTrue();
-        result.Value.BoostLevel.Should().BeInRange(0, 20000000, "raw value - needs offset decoding for -30 to +20dB range");
+        result.Value.BoostLevel.Should().BeInRange(0, 10, "Boost Level must be between 0dB and 10dB");
     }
 
     // ==================================
@@ -470,7 +470,7 @@ public class PresetParametersTests
 
         // Assert
         result.IsSuccess.Should().BeTrue();
-        result.Value.ModFeedback.Should().BeInRange(0, 20000000, "raw value - needs offset decoding for -100 to +100%");
+        result.Value.ModFeedback.Should().BeInRange(-100, 100, "Mod Feedback must be between -100% and +100%");
     }
 
     [Fact]
@@ -756,7 +756,7 @@ public class PresetParametersTests
 
         // Assert
         result.IsSuccess.Should().BeTrue();
-        result.Value.ReverbHiLevel.Should().BeInRange(0, 20000000, "raw value - needs offset decoding for -25 to +25dB");
+        result.Value.ReverbHiLevel.Should().BeInRange(-25, 25, "Reverb Hi Level must be between -25dB and +25dB");
     }
 
     [Fact]
@@ -784,7 +784,7 @@ public class PresetParametersTests
 
         // Assert
         result.IsSuccess.Should().BeTrue();
-        result.Value.ReverbLoLevel.Should().BeInRange(0, 20000000, "raw value - needs offset decoding for -25 to +25dB");
+        result.Value.ReverbLoLevel.Should().BeInRange(-25, 25, "Reverb Lo Level must be between -25dB and +25dB");
     }
 
     [Fact]
@@ -798,7 +798,7 @@ public class PresetParametersTests
 
         // Assert
         result.IsSuccess.Should().BeTrue();
-        result.Value.ReverbRoomLevel.Should().BeInRange(0, 20000000, "raw value - needs offset decoding for -100 to 0dB");
+        result.Value.ReverbRoomLevel.Should().BeInRange(-100, 0, "Reverb Room Level must be between -100dB and 0dB");
     }
 
     [Fact]
@@ -812,7 +812,7 @@ public class PresetParametersTests
 
         // Assert
         result.IsSuccess.Should().BeTrue();
-        result.Value.ReverbLevel.Should().BeInRange(0, 20000000, "raw value - needs offset decoding for -100 to 0dB");
+        result.Value.ReverbLevel.Should().BeInRange(-100, 0, "Reverb Level must be between -100dB and 0dB");
     }
 
     [Fact]
@@ -826,7 +826,7 @@ public class PresetParametersTests
 
         // Assert
         result.IsSuccess.Should().BeTrue();
-        result.Value.ReverbDiffuse.Should().BeInRange(0, 20000000, "raw value - needs offset decoding for -25 to +25dB");
+        result.Value.ReverbDiffuse.Should().BeInRange(-25, 25, "Reverb Diffuse must be between -25dB and +25dB");
     }
 
     [Fact]
@@ -872,7 +872,7 @@ public class PresetParametersTests
 
         // Assert
         result.IsSuccess.Should().BeTrue();
-        result.Value.GateThreshold.Should().BeInRange(0, 20000000, "raw value - needs offset decoding for -60 to 0dB");
+        result.Value.GateThreshold.Should().BeInRange(-60, 0, "Gate Threshold must be between -60dB and 0dB");
     }
 
     [Fact]
@@ -928,7 +928,7 @@ public class PresetParametersTests
 
         // Assert
         result.IsSuccess.Should().BeTrue();
-        result.Value.EqGain1.Should().BeInRange(0, 20000000, "raw value - needs offset decoding for -12 to +12dB");
+        result.Value.EqGain1.Should().BeInRange(-12, 12, "EQ Gain 1 must be between -12dB and +12dB");
     }
 
     [Fact]
@@ -969,7 +969,7 @@ public class PresetParametersTests
 
         // Assert
         result.IsSuccess.Should().BeTrue();
-        result.Value.EqGain2.Should().BeInRange(0, 20000000, "raw value - needs offset decoding for -12 to +12dB");
+        result.Value.EqGain2.Should().BeInRange(-12, 12, "EQ Gain 2 must be between -12dB and +12dB");
     }
 
     [Fact]
@@ -1008,7 +1008,7 @@ public class PresetParametersTests
 
         // Assert
         result.IsSuccess.Should().BeTrue();
-        result.Value.EqGain3.Should().BeInRange(0, 20000000, "raw value - needs offset decoding for -12 to +12dB");
+        result.Value.EqGain3.Should().BeInRange(-12, 12, "EQ Gain 3 must be between -12dB and +12dB");
     }
 
     [Fact]
@@ -1053,7 +1053,7 @@ public class PresetParametersTests
 
         // Assert
         result.IsSuccess.Should().BeTrue();
-        result.Value.PitchVoice1.Should().BeInRange(0, 20000000, "raw value - needs offset decoding");
+        result.Value.PitchVoice1.Should().BeInRange(-100, 100, "Pitch Voice 1 must be between -100 and +100 cents");
     }
 
     [Fact]
@@ -1066,7 +1066,7 @@ public class PresetParametersTests
 
         // Assert
         result.IsSuccess.Should().BeTrue();
-        result.Value.PitchVoice2.Should().BeInRange(0, 20000000, "raw value - needs offset decoding");
+        result.Value.PitchVoice2.Should().BeInRange(-100, 100, "Pitch Voice 2 must be between -100 and +100 cents");
     }
 
     [Fact]
@@ -1080,7 +1080,7 @@ public class PresetParametersTests
 
         // Assert
         result.IsSuccess.Should().BeTrue();
-        result.Value.PitchPan1.Should().BeInRange(0, 20000000, "raw value - needs offset decoding for -50 to +50");
+        result.Value.PitchPan1.Should().BeInRange(-50, 50, "Pitch Pan 1 must be between -50 and +50");
     }
 
     [Fact]
@@ -1093,7 +1093,7 @@ public class PresetParametersTests
 
         // Assert
         result.IsSuccess.Should().BeTrue();
-        result.Value.PitchPan2.Should().BeInRange(0, 20000000, "raw value - needs offset decoding for -50 to +50");
+        result.Value.PitchPan2.Should().BeInRange(-50, 50, "Pitch Pan 2 must be between -50 and +50");
     }
 
     [Fact]
@@ -1162,7 +1162,7 @@ public class PresetParametersTests
 
         // Assert
         result.IsSuccess.Should().BeTrue();
-        result.Value.PitchLevel1.Should().BeInRange(0, 20000000, "raw value - needs offset decoding for -100 to 0dB");
+        result.Value.PitchLevel1.Should().BeInRange(-100, 0, "Pitch Level 1 must be between -100dB and 0dB");
     }
 
     [Fact]
@@ -1175,6 +1175,6 @@ public class PresetParametersTests
 
         // Assert
         result.IsSuccess.Should().BeTrue();
-        result.Value.PitchLevel2.Should().BeInRange(0, 20000000, "raw value - needs offset decoding for -100 to 0dB");
+        result.Value.PitchLevel2.Should().BeInRange(-100, 0, "Pitch Level 2 must be between -100dB and 0dB");
     }
 }

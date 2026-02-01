@@ -42,7 +42,7 @@ public class Preset
     // BOOST effect parameters (bytes 114-125)
     public int BoostType { get; private set; }      // 0-2 (clean/mid/treble) (bytes 114-117)
     public int BoostGain { get; private set; }      // 0-30dB (bytes 118-121)
-    public int BoostLevel { get; private set; }     // -30 to +20dB (bytes 122-125)
+    public int BoostLevel { get; private set; }     // 0 to 10dB (bytes 122-125) - unsigned per SYSEX_MAP_TABLES.md
 
     // MOD (Modulation) effect parameters (bytes 198-257)
     public int ModType { get; private set; }        // 0-5 (chorus/flanger/vibrato/phaser/tremolo/panner) (bytes 198-201)
@@ -233,10 +233,10 @@ public class Preset
 
         // Extract PITCH effect parameters (bytes 454-513)
         int pitchType = Decode4ByteValue(sysex, 454);
-        int pitchVoice1 = Decode4ByteValue(sysex, 458);
-        int pitchVoice2 = Decode4ByteValue(sysex, 462);
-        int pitchPan1 = Decode4ByteValue(sysex, 466);
-        int pitchPan2 = Decode4ByteValue(sysex, 470);
+        int pitchVoice1 = DecodeSignedDbValue(sysex, 458, -100, 100);  // -100 to +100 cents
+        int pitchVoice2 = DecodeSignedDbValue(sysex, 462, -100, 100);  // -100 to +100 cents
+        int pitchPan1 = DecodeSignedDbValue(sysex, 466, -50, 50);  // -50 to +50
+        int pitchPan2 = DecodeSignedDbValue(sysex, 470, -50, 50);  // -50 to +50
         int pitchDelay1 = Decode4ByteValue(sysex, 474);
         int pitchDelay2 = Decode4ByteValue(sysex, 478);
         int pitchFeedback1OrKey = Decode4ByteValue(sysex, 482);
@@ -471,7 +471,7 @@ public class Preset
 
         // Combine 4x7-bit values into single int (little-endian)
         int value = b0 | (b1 << 7) | (b2 << 14) | (b3 << 21);
-        
+
         return value;
     }
 
@@ -493,24 +493,21 @@ public class Preset
     private static int DecodeSignedDbValue(byte[] sysex, int offset, int minimumValue, int maximumValue)
     {
         const int LARGE_OFFSET = 16777216; // 2^24
-        
+
         int rawValue = Decode4ByteValue(sysex, offset);
-        
-        // Determine strategy based on range symmetry:
-        // - Symmetric ranges (min + max == 0, e.g. -12..+12, -100..+100): use large offset
-        // - Asymmetric ranges (min + max != 0, e.g. -100..0, -30..0): use simple offset
-        bool isSymmetric = minimumValue + maximumValue == 0;
-        
-        if (isSymmetric)
+
+        // Special case: raw value 0 indicates unused/uninitialized parameter
+        // (e.g., feedback for chorus when hardware only uses it for flanger/phaser)
+        // Map to safe default: 0 for symmetric ranges, minimumValue for asymmetric
+        if (rawValue == 0)
         {
-            // Large offset strategy for symmetric ranges
-            return rawValue - LARGE_OFFSET;
+            return minimumValue + maximumValue == 0 ? 0 : minimumValue;
         }
-        else
-        {
-            // Simple offset strategy for asymmetric ranges
-            return rawValue + minimumValue;
-        }
+
+        // ALL signed dB parameters use the same large offset strategy:
+        // actual = raw - 2^24
+        // This works for both symmetric (e.g., -12..+12) and asymmetric (e.g., -30..0) ranges
+        return rawValue - LARGE_OFFSET;
     }
 
     /// <summary>

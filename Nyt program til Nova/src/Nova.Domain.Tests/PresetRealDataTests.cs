@@ -11,7 +11,7 @@ public class PresetRealDataTests
         // Arrange - load first real preset from hardware dump
         var sysexFile = Path.Combine(
             AppDomain.CurrentDomain.BaseDirectory,
-            "..", "..", "..", "..", "Nova.HardwareTest",
+            "..", "..", "..", "..", "Nova.HardwareTest", "Dumps",
             "nova-dump-20260131-181507-msg001.syx");
 
         var sysex = File.ReadAllBytes(sysexFile);
@@ -32,7 +32,7 @@ public class PresetRealDataTests
         // Arrange - find all preset files
         var hardwareTestDir = Path.Combine(
             AppDomain.CurrentDomain.BaseDirectory,
-            "..", "..", "..", "..", "Nova.HardwareTest");
+            "..", "..", "..", "..", "Nova.HardwareTest", "Dumps");
 
         var presetFiles = Directory.GetFiles(hardwareTestDir, "nova-dump-*-msg*.syx")
             .Where(f => !f.Contains("182108")) // Exclude system dump

@@ -15,7 +15,7 @@ public class PresetOffsetDecodingTests
     {
         // Load real hardware fixture
         var fixturePath = Path.Combine(
-            "..", "..", "..", "..", "Nova.HardwareTest",
+            "..", "..", "..", "..", "Nova.HardwareTest", "Dumps",
             "nova-dump-20260131-181507-msg001.syx");
         var fullPath = Path.GetFullPath(fixturePath);
         _realPresetBytes = File.ReadAllBytes(fullPath);
@@ -105,8 +105,8 @@ public class PresetOffsetDecodingTests
 
         // Assert
         result.IsSuccess.Should().BeTrue();
-        result.Value.BoostLevel.Should().BeInRange(-12, 12,
-            "BoostLevel is -12 to +12dB");
+        result.Value.BoostLevel.Should().BeInRange(0, 10,
+            "BoostLevel is 0 to 10dB");
     }
 
     // ========================================
@@ -288,8 +288,8 @@ public class PresetOffsetDecodingTests
 
         // Assert
         result.IsSuccess.Should().BeTrue();
-        result.Value.PitchLevel1.Should().BeInRange(-12, 12,
-            "PitchLevel1 is -12 to +12dB");
+        result.Value.PitchLevel1.Should().BeInRange(-100, 0,
+            "PitchLevel1 is -100 to 0dB");
     }
 
     [Fact]
@@ -303,8 +303,8 @@ public class PresetOffsetDecodingTests
 
         // Assert
         result.IsSuccess.Should().BeTrue();
-        result.Value.PitchLevel2.Should().BeInRange(-12, 12,
-            "PitchLevel2 is -12 to +12dB");
+        result.Value.PitchLevel2.Should().BeInRange(-100, 0,
+            "PitchLevel2 is -100 to 0dB");
     }
 
     // ========================================
