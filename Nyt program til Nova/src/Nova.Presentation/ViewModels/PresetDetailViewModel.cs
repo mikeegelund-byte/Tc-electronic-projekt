@@ -264,14 +264,92 @@ public partial class PresetDetailViewModel : ObservableObject
     /// <summary>
     /// Loads all preset data from a Preset domain model into the ViewModel.
     /// </summary>
-    /// <param name="preset">The preset to load, or null to clear</param>
+    /// <param name="preset">The preset to load, or null to reset all properties to defaults</param>
     public void LoadFromPreset(Preset? preset)
     {
         if (preset == null)
         {
-            // Reset to defaults
+            // Reset all properties to defaults for consistent state
             PresetNumber = 0;
             PresetName = string.Empty;
+            TapTempo = 0;
+            Routing = 0;
+            LevelOutLeft = 0;
+            LevelOutRight = 0;
+            CompressorEnabled = false;
+            DriveEnabled = false;
+            ModulationEnabled = false;
+            DelayEnabled = false;
+            ReverbEnabled = false;
+            CompType = 0;
+            CompThreshold = 0;
+            CompRatio = 0;
+            CompAttack = 0;
+            CompRelease = 0;
+            CompResponse = 0;
+            CompDrive = 0;
+            CompLevel = 0;
+            DriveType = 0;
+            DriveGain = 0;
+            DriveLevel = 0;
+            BoostType = 0;
+            BoostGain = 0;
+            BoostLevel = 0;
+            ModType = 0;
+            ModSpeed = 0;
+            ModDepth = 0;
+            ModTempo = 0;
+            ModHiCut = 0;
+            ModFeedback = 0;
+            ModDelayOrRange = 0;
+            ModMix = 0;
+            DelayType = 0;
+            DelayTime = 0;
+            DelayTime2 = 0;
+            DelayTempo = 0;
+            DelayTempo2OrWidth = 0;
+            DelayFeedback = 0;
+            DelayClipOrFeedback2 = 0;
+            DelayHiCut = 0;
+            DelayLoCut = 0;
+            DelayMix = 0;
+            ReverbType = 0;
+            ReverbDecay = 0;
+            ReverbPreDelay = 0;
+            ReverbShape = 0;
+            ReverbSize = 0;
+            ReverbHiColor = 0;
+            ReverbHiLevel = 0;
+            ReverbLoColor = 0;
+            ReverbLoLevel = 0;
+            ReverbRoomLevel = 0;
+            ReverbLevel = 0;
+            ReverbDiffuse = 0;
+            ReverbMix = 0;
+            GateType = 0;
+            GateThreshold = 0;
+            GateDamp = 0;
+            GateRelease = 0;
+            EqFreq1 = 0;
+            EqGain1 = 0;
+            EqWidth1 = 0;
+            EqFreq2 = 0;
+            EqGain2 = 0;
+            EqWidth2 = 0;
+            EqFreq3 = 0;
+            EqGain3 = 0;
+            EqWidth3 = 0;
+            PitchType = 0;
+            PitchVoice1 = 0;
+            PitchVoice2 = 0;
+            PitchPan1 = 0;
+            PitchPan2 = 0;
+            PitchDelay1 = 0;
+            PitchDelay2 = 0;
+            PitchFeedback1OrKey = 0;
+            PitchFeedback2OrScale = 0;
+            PitchLevel1 = 0;
+            PitchLevel2 = 0;
             return;
         }
 

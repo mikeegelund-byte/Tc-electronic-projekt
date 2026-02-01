@@ -221,8 +221,8 @@ public class PresetDetailViewModelTests
 
     private static void EncodeSignedDbValue(byte[] sysex, int offset, int value)
     {
-        const int LARGE_OFFSET = 16777216; // 2^24
-        int encoded = value + LARGE_OFFSET;
+        const int DB_ENCODING_OFFSET = 16777216; // 2^24 - offset used for encoding signed dB values
+        int encoded = value + DB_ENCODING_OFFSET;
         Encode4ByteValue(sysex, offset, encoded);
     }
 }
