@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Nova.Domain\Nova.Domain.csproj" />
+    <ProjectReference Include="..\Nova.Midi\Nova.Midi.csproj" />
   </ItemGroup>
 
   <ItemGroup>

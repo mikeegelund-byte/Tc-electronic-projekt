@@ -50,16 +50,4 @@ public interface IMidiPort
     /// <param name="cancellationToken">Token to cancel reception</param>
     /// <returns>Async enumerable of SysEx messages</returns>
     IAsyncEnumerable<byte[]> ReceiveSysExAsync(CancellationToken cancellationToken = default);
-
-    /// <summary>
-    /// Enumerates available MIDI output ports on the system.
-    /// </summary>
-    /// <returns>Port names (e.g., "Nova System", "In From MIDI Port 1")</returns>
-    static abstract IEnumerable<string> GetAvailableOutputPorts();
-
-    /// <summary>
-    /// Enumerates available MIDI input ports on the system.
-    /// </summary>
-    /// <returns>Port names</returns>
-    static abstract IEnumerable<string> GetAvailableInputPorts();
 }
