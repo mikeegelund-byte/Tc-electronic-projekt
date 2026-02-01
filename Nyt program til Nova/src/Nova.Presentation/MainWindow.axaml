@@ -31,73 +31,88 @@
             </Grid>
         </Border>
 
-        <!-- Main Content -->
-        <Grid ColumnDefinitions="*,16,400" RowDefinitions="*">
-            <!-- Left Side: Connection, Bank Operations, and Preset List -->
-            <StackPanel Grid.Column="0" Spacing="16">
-                <!-- Connection Section -->
-                <Border Background="#2D2D2D" Padding="16" CornerRadius="8">
-                    <StackPanel Spacing="12">
-                        <TextBlock Text="MIDI Connection" 
-                                   FontWeight="Bold" 
-                                   FontSize="16"/>
-                        
-                        <Grid ColumnDefinitions="*,Auto,Auto" RowDefinitions="Auto">
-                            <ComboBox ItemsSource="{Binding AvailablePorts}"
-                                      SelectedItem="{Binding SelectedPort}"
-                                      PlaceholderText="Select MIDI Port..."
-                                      HorizontalAlignment="Stretch"/>
-                            
-                            <Button Grid.Column="1" 
-                                    Content="🔄" 
-                                    Command="{Binding RefreshPortsCommand}"
-                                    ToolTip.Tip="Refresh port list"
-                                    Margin="8,0,0,0"/>
-                            
-                            <Button Grid.Column="2"
-                                    Content="Connect"
-                                    Command="{Binding ConnectCommand}"
-                                    Margin="8,0,0,0"
-                                    Width="100"/>
-                        </Grid>
-                        
-                        <StackPanel Orientation="Horizontal" Spacing="8" IsVisible="{Binding IsConnected}">
-                            <Ellipse Width="12" Height="12" Fill="#4CAF50"/>
-                            <TextBlock Text="Connected" Foreground="#AAAAAA"/>
-                        </StackPanel>
-                        
-                        <StackPanel Orientation="Horizontal" Spacing="8" IsVisible="{Binding !IsConnected}">
-                            <Ellipse Width="12" Height="12" Fill="#757575"/>
-                            <TextBlock Text="Disconnected" Foreground="#AAAAAA"/>
-                        </StackPanel>
-                    </StackPanel>
-                </Border>
+        <!-- Main Content with Tab Control -->
+        <TabControl>
+            <!-- Connection Tab -->
+            <TabItem Header="🔌 Connection">
+                <Grid ColumnDefinitions="*,16,400" RowDefinitions="*">
+                    <!-- Left Side: Connection, Bank Operations, and Preset List -->
+                    <StackPanel Grid.Column="0" Spacing="16">
+                        <!-- Connection Section -->
+                        <Border Background="#2D2D2D" Padding="16" CornerRadius="8">
+                            <StackPanel Spacing="12">
+                                <TextBlock Text="MIDI Connection" 
+                                           FontWeight="Bold" 
+                                           FontSize="16"/>
+                                
+                                <Grid ColumnDefinitions="*,Auto,Auto" RowDefinitions="Auto">
+                                    <ComboBox ItemsSource="{Binding AvailablePorts}"
+                                              SelectedItem="{Binding SelectedPort}"
+                                              PlaceholderText="Select MIDI Port..."
+                                              HorizontalAlignment="Stretch"/>
+                                    
+                                    <Button Grid.Column="1" 
+                                            Content="🔄" 
+                                            Command="{Binding RefreshPortsCommand}"
+                                            ToolTip.Tip="Refresh port list"
+                                            Margin="8,0,0,0"/>
+                                    
+                                    <Button Grid.Column="2"
+                                            Content="Connect"
+                                            Command="{Binding ConnectCommand}"
+                                            Margin="8,0,0,0"
+                                            Width="100"/>
+                                </Grid>
+                                
+                                <StackPanel Orientation="Horizontal" Spacing="8" IsVisible="{Binding IsConnected}">
+                                    <Ellipse Width="12" Height="12" Fill="#4CAF50"/>
+                                    <TextBlock Text="Connected" Foreground="#AAAAAA"/>
+                                </StackPanel>
+                                
+                                <StackPanel Orientation="Horizontal" Spacing="8" IsVisible="{Binding !IsConnected}">
+                                    <Ellipse Width="12" Height="12" Fill="#757575"/>
+                                    <TextBlock Text="Disconnected" Foreground="#AAAAAA"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
 
-                <!-- Bank Operations Section -->
-                <Border Background="#2D2D2D" Padding="16" CornerRadius="8">
-                    <StackPanel Spacing="12">
-                        <TextBlock Text="User Bank" 
-                                   FontWeight="Bold" 
-                                   FontSize="16"/>
+                        <!-- Bank Operations Section -->
+                        <Border Background="#2D2D2D" Padding="16" CornerRadius="8">
+                            <StackPanel Spacing="12">
+                                <TextBlock Text="User Bank" 
+                                           FontWeight="Bold" 
+                                           FontSize="16"/>
+                                
+                                <TextBlock Text="Trigger 'Send Dump' from your Nova System pedal (UTILITY → MIDI → Send Dump)"
+                                           Foreground="#888888"
+                                           TextWrapping="Wrap"/>
+                                
+                                <Button Content="📥 Download User Bank"
+                                        Command="{Binding DownloadBankCommand}"
+                                        HorizontalAlignment="Left"
+                                        Padding="16,8"/>
+                            </StackPanel>
+                        </Border>
                         
-                        <TextBlock Text="Trigger 'Send Dump' from your Nova System pedal (UTILITY → MIDI → Send Dump)"
-                                   Foreground="#888888"
-                                   TextWrapping="Wrap"/>
-                        
-                        <Button Content="📥 Download User Bank"
-                                Command="{Binding DownloadBankCommand}"
-                                HorizontalAlignment="Left"
-                                Padding="16,8"/>
+                        <!-- Preset List View -->
+                        <views:PresetListView DataContext="{Binding PresetList}" />
                     </StackPanel>
-                </Border>
-                
-                <!-- Preset List View -->
-                <views:PresetListView DataContext="{Binding PresetList}" />
-            </StackPanel>
-            
-            <!-- Right Side: Preset Detail View -->
-            <views:PresetDetailView Grid.Column="2" 
-                                    DataContext="{Binding PresetDetail}" />
-        </Grid>
+                    
+                    <!-- Right Side: Preset Detail View -->
+                    <views:PresetDetailView Grid.Column="2" 
+                                            DataContext="{Binding PresetDetail}" />
+                </Grid>
+            </TabItem>
+
+            <!-- File Manager Tab -->
+            <TabItem Header="💾 File Manager">
+                <views:FileManagerView DataContext="{Binding FileManager}" />
+            </TabItem>
+
+            <!-- System Settings Tab -->
+            <TabItem Header="⚙️ System Settings">
+                <views:SystemSettingsView DataContext="{Binding SystemSettings}" />
+            </TabItem>
+        </TabControl>
     </DockPanel>
 </Window>
