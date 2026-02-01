@@ -3,14 +3,63 @@
 ## 📅 Session: 2026-02-01 (Modul 3 - System Dump Viewer)
 
 ### 🎯 Mål
-[MODUL-3][TASK-3.1] Extend SysExBuilder for System Dump Request
-- Add BuildSystemDumpRequest() method to SysExBuilder following existing pattern
-- Implement TDD approach (RED -> GREEN -> REFACTOR)
-- Method should build 9-byte SysEx message for requesting system dump from Nova System pedal
+[MODUL-3][TASK-3.1] Extend SysExBuilder for System Dump Request - ✅ COMPLETE
+- Added BuildSystemDumpRequest() method to SysExBuilder following existing pattern
+- Implemented TDD approach (RED -> GREEN -> REFACTOR)
+- Method builds 9-byte SysEx message for requesting system dump from Nova System pedal
 
 ### Nuværende task
 **Fil**: tasks/08-modul3-system-viewer.md  
-**Task**: 3.1 - Extend SysExBuilder for System Dump Request
+**Task**: 3.1 - Extend SysExBuilder for System Dump Request  
+**Status**: ✅ COMPLETE
+
+### 🔧 Status Update
+**Latest Commit**: [MODUL-3][TASK-3.1] Add System Dump request builder  
+**Build Status**: ✅ GREEN (0 errors, 0 warnings)  
+**Tests**: 164/167 passing (3 Presentation tests failing due to known Moq issue - non-blocking)  
+**New Tests**: 2 new tests added (1 Fact + 1 Theory with 3 test cases)
+
+---
+
+## ✅ Implementation Details
+
+### Changes Made
+1. **src/Nova.Domain/Midi/SysExBuilder.cs**
+   - Added `SYSTEM_DUMP` constant (0x02)
+   - Added `BuildSystemDumpRequest(byte deviceId = 0x00)` method
+   - Follows existing pattern from BuildBankDumpRequest
+   - Returns 9-byte SysEx: F0 00 20 1F [deviceId] 63 45 02 F7
+
+2. **src/Nova.Domain.Tests/SysExBuilderTests.cs**
+   - Added `BuildSystemDumpRequest_ReturnsCorrectBytes()` test
+   - Added `BuildSystemDumpRequest_WithDeviceId_SetsCorrectly(byte deviceId)` theory
+   - Tests verify all 9 bytes match specification
+   - Tests verify deviceId parameter works correctly (tested with 0x01, 0x05, 0x7F)
+
+### Test Results
+- All 8 SysExBuilder tests pass ✅
+- No regressions in other tests
+- Build: 0 warnings, 0 errors
+
+### Verification
+Manual verification confirms implementation matches spec exactly:
+- Byte[0]: 0xF0 (SysEx start) ✓
+- Bytes[1-3]: 0x00 0x20 0x1F (TC Electronic manufacturer ID) ✓
+- Byte[4]: Device ID (default 0x00) ✓
+- Byte[5]: 0x63 (Nova System model ID) ✓
+- Byte[6]: 0x45 (Request message type) ✓
+- Byte[7]: 0x02 (System dump type indicator) ✓
+- Byte[8]: 0xF7 (SysEx end) ✓
+- Total length: 9 bytes ✓
+
+### TDD Approach Followed
+1. ✅ RED: Wrote tests first - compilation failed as expected
+2. ✅ GREEN: Implemented minimal code - all tests pass
+3. ✅ REFACTOR: Not needed - pattern already established
+
+---
+
+**Session status**: COMPLETE - Task 3.1 successfully implemented following AGENTS.md pipeline
 
 ### 🔧 Status Update
 **Latest Commit**: Phase 5 COMPLETE - Hardware test SUCCESS 🎉  
