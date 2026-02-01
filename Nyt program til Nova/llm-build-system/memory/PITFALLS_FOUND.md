@@ -66,6 +66,17 @@ Status: læst
 - **Prevention**: **MUST update memory files after EVERY commit** - add checklist step before commit
 - **Related**: llm-build-system/memory/*.md files
 
+### [2026-01-31] Moq cannot mock sealed classes
+- **Symptom**: MainViewModelTests failing with "Type to mock (ConnectUseCase) must be an interface, a delegate, or a non-sealed, non-static class"
+- **Root cause**: UseCases (ConnectUseCase, DownloadBankUseCase) are sealed classes. Moq can only mock interfaces, abstract classes, or non-sealed classes.
+- **Fix**: Either:
+  1. Extract IConnectUseCase and IDownloadBankUseCase interfaces from UseCases (RECOMMENDED for testability)
+  2. Make UseCases non-sealed (violates design)
+  3. Use real instances in tests instead of mocks (not ideal for unit tests)
+- **Prevention**: Always design for testability - prefer interfaces for dependencies that need mocking
+- **Status**: ⚠️ DEFERRED - MainViewModel code is complete and compiles, tests will be fixed later when extracting UseCase interfaces
+- **Related**: src/Nova.Presentation.Tests/ViewModels/MainViewModelTests.cs, src/Nova.Application/UseCases/
+
 ---
 
 ## Anti-Patterns to Watch

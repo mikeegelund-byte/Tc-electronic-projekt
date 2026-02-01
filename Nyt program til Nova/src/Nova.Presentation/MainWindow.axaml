@@ -1,9 +1,92 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        xmlns:vm="using:Nova.Presentation.ViewModels"
         x:Class="Nova.Presentation.MainWindow"
-        Title="Nova.Presentation">
-    Welcome to Avalonia!
+        x:DataType="vm:MainViewModel"
+        Title="Nova System Manager"
+        Width="600" Height="400"
+        WindowStartupLocation="CenterScreen">
+
+    <Design.DataContext>
+        <vm:MainViewModel />
+    </Design.DataContext>
+
+    <DockPanel Margin="16">
+        <!-- Status Bar at Bottom -->
+        <Border DockPanel.Dock="Bottom" 
+                Background="#1E1E1E" 
+                Padding="8" 
+                CornerRadius="4"
+                Margin="0,16,0,0">
+            <Grid ColumnDefinitions="*,Auto">
+                <TextBlock Text="{Binding StatusMessage}" 
+                           Foreground="#CCCCCC"
+                           VerticalAlignment="Center"/>
+                <ProgressBar Grid.Column="1" 
+                             Value="{Binding DownloadProgress}"
+                             Width="100"
+                             IsVisible="{Binding IsDownloading}"
+                             Margin="16,0,0,0"/>
+            </Grid>
+        </Border>
+
+        <!-- Main Content -->
+        <StackPanel Spacing="16">
+            <!-- Connection Section -->
+            <Border Background="#2D2D2D" Padding="16" CornerRadius="8">
+                <StackPanel Spacing="12">
+                    <TextBlock Text="MIDI Connection" 
+                               FontWeight="Bold" 
+                               FontSize="16"/>
+                    
+                    <Grid ColumnDefinitions="*,Auto,Auto" RowDefinitions="Auto">
+                        <ComboBox ItemsSource="{Binding AvailablePorts}"
+                                  SelectedItem="{Binding SelectedPort}"
+                                  PlaceholderText="Select MIDI Port..."
+                                  HorizontalAlignment="Stretch"/>
+                        
+                        <Button Grid.Column="1" 
+                                Content="🔄" 
+                                Command="{Binding RefreshPortsCommand}"
+                                ToolTip.Tip="Refresh port list"
+                                Margin="8,0,0,0"/>
+                        
+                        <Button Grid.Column="2"
+                                Content="Connect"
+                                Command="{Binding ConnectCommand}"
+                                Margin="8,0,0,0"
+                                Width="100"/>
+                    </Grid>
+                    
+                    <StackPanel Orientation="Horizontal" Spacing="8" IsVisible="{Binding IsConnected}">
+                        <Ellipse Width="12" Height="12" Fill="#4CAF50"/>
+                        <TextBlock Text="Connected" Foreground="#AAAAAA"/>
+                    </StackPanel>
+                    
+                    <StackPanel Orientation="Horizontal" Spacing="8" IsVisible="{Binding !IsConnected}">
+                        <Ellipse Width="12" Height="12" Fill="#757575"/>
+                        <TextBlock Text="Disconnected" Foreground="#AAAAAA"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Bank Operations Section -->
+            <Border Background="#2D2D2D" Padding="16" CornerRadius="8">
+                <StackPanel Spacing="12">
+                    <TextBlock Text="User Bank" 
+                               FontWeight="Bold" 
+                               FontSize="16"/>
+                    
+                    <TextBlock Text="Trigger 'Send Dump' from your Nova System pedal (UTILITY → MIDI → Send Dump)"
+                               Foreground="#888888"
+                               TextWrapping="Wrap"/>
+                    
+                    <Button Content="📥 Download User Bank"
+                            Command="{Binding DownloadBankCommand}"
+                            HorizontalAlignment="Left"
+                            Padding="16,8"/>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </DockPanel>
 </Window>

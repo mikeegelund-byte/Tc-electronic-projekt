@@ -17,9 +17,14 @@
       <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
       <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.2" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Nova.Application\Nova.Application.csproj" />
+    <ProjectReference Include="..\Nova.Domain\Nova.Domain.csproj" />
     <ProjectReference Include="..\Nova.Infrastructure\Nova.Infrastructure.csproj" />
+    <ProjectReference Include="..\Nova.Midi\Nova.Midi.csproj" />
   </ItemGroup>
 </Project>
