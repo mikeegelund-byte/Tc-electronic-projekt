@@ -24,11 +24,11 @@ src/Nova.Domain.Tests/
 │   └── README.md                              (hex dumps for documentation)
 ```
 
-Raw hardware captures (auto-generated) live under the hardware test tool and are ignored by Git:
+Raw hardware dumps (auto-generated) live under the hardware test tool and are ignored by Git:
 
 ```
 src/Nova.HardwareTest/
-└── Captures/
+└── Dumps/
     └── nova-dump-YYYYMMDD-HHMMSS-msgNNN.syx
 ```
 

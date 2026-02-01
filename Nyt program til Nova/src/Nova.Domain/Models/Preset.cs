@@ -172,7 +172,7 @@ public class Preset
         // Extract DRIVE effect parameters (bytes 102-113)
         int driveType = Decode4ByteValue(sysex, 102);
         int driveGain = Decode4ByteValue(sysex, 106);
-        int driveLevel = Decode4ByteValue(sysex, 110);  // Unknown range (unsigned per spec)
+        int driveLevel = DecodeSignedDbValue(sysex, 110, -30, 20);  // -30 to +20dB (signed, simple offset)
 
         // Extract BOOST effect parameters (bytes 114-125)
         int boostType = Decode4ByteValue(sysex, 114);
@@ -492,12 +492,25 @@ public class Preset
     /// </remarks>
     private static int DecodeSignedDbValue(byte[] sysex, int offset, int minimumValue, int maximumValue)
     {
-        // ALL signed parameters use large offset (2^24) strategy.
-        // Hardware encodes signed values by adding 16777216 (2^24).
-        // Real hardware data shows ALL signed parameters have raw ~16777xxx.
-        const int LARGE_OFFSET = 16777216;
-        int rawDecoded = Decode4ByteValue(sysex, offset);
-        return rawDecoded - LARGE_OFFSET;
+        const int LARGE_OFFSET = 16777216; // 2^24
+        
+        int rawValue = Decode4ByteValue(sysex, offset);
+        
+        // Determine strategy based on range symmetry:
+        // - Symmetric ranges (min + max == 0, e.g. -12..+12, -100..+100): use large offset
+        // - Asymmetric ranges (min + max != 0, e.g. -100..0, -30..0): use simple offset
+        bool isSymmetric = minimumValue + maximumValue == 0;
+        
+        if (isSymmetric)
+        {
+            // Large offset strategy for symmetric ranges
+            return rawValue - LARGE_OFFSET;
+        }
+        else
+        {
+            // Simple offset strategy for asymmetric ranges
+            return rawValue + minimumValue;
+        }
     }
 
     /// <summary>
