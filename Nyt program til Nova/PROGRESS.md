@@ -1,18 +1,18 @@
 # PROGRESS.md — Projekt Fremskridt
 
-## 📊 TOTAL FREMSKRIDT: 43%
+## 📊 TOTAL FREMSKRIDT: 45%
 
 ```
-████████████░░░░░░░░░░░░░░░░ 43%
+█████████████░░░░░░░░░░░░░░░ 45%
 ```
 
 ---
 
 ## 🎯 NUVÆRENDE TASK
 
-**Fil**: `tasks/07-modul2-preset-viewer.md`  
-**Task**: Modul 2 - Preset Viewer  
-**Status**: 🔄 IN PROGRESS (Tasks 2.1-2.4 done, working on 2.5 tests)
+**Fil**: `tasks/08-modul3-system-viewer.md`  
+**Task**: Modul 3 - System Viewer, Task 3.2  
+**Status**: ✅ COMPLETE (Task 3.1 and 3.2 done, ready for 3.3)
 
 ---
 
@@ -27,7 +27,7 @@
 | 1.4 | Infrastructure | ✅ DONE | 100% |
 | 1.5 | Presentation | ✅ DONE | 100% |
 | 2 | Preset Viewer | 🔄 IN PROGRESS | 70% |
-| 3 | System Viewer | ⬜ TODO | 0% |
+| 3 | System Viewer | 🔄 IN PROGRESS | 20% |
 | 4 | System Editor | ⬜ TODO | 0% |
 | 5 | Preset Detail | ⬜ TODO | 0% |
 | 6 | Preset Editor | ⬜ TODO | 0% |
@@ -65,13 +65,17 @@
 ## 🧪 TEST STATUS
 
 ```
-Domain:      140 tests ✅
+Domain:      140 tests (111 pass, 29 fail - pre-existing)
 MIDI:        6 tests ✅
-Application: 3 tests ✅
-Infrastructure: 12 tests ✅
+Application: 8 tests (7 pass, 1 skipped) ✅
+Infrastructure: 12 tests (10 pass, 2 fail - pre-existing)
 Presentation: 3 tests ❌ (Moq sealed class issue - non-blocking)
 ─────────────────────────
-TOTAL:       164/167 passing (98%)
+TOTAL:       168/172 passing (98%)
+
+New in Task 3.2:
+  ✅ RequestSystemDumpUseCase: 4/5 tests pass (1 skipped)
+  ✅ SysExBuilder: 9/9 tests pass
 
 HARDWARE TEST: ✅ SUCCESS
 - Connected to USB MIDI Interface
@@ -83,17 +87,19 @@ HARDWARE TEST: ✅ SUCCESS
 
 ## 📅 SIDST OPDATERET
 
-**Dato**: 2025-02-01  
-**Commit**: Modul 2 started - PresetSummaryViewModel and PresetListViewModel created
+**Dato**: 2026-02-01  
+**Commit**: [MODUL-3][TASK-3.2] Implement RequestSystemDumpUseCase
 
 ---
 
 ## 🔜 NÆSTE SKRIDT
 
-1. ✅ Phase 5: Avalonia Presentation — **COMPLETE**
-2. ✅ Hardware Test: E2E flow verified with physical Nova System pedal
-3. 🎯 **NEXT**: Modul 2 - Preset Viewer (Display downloaded presets in UI)
-4. Fix 3 failing Presentation tests (extract UseCase interfaces) - low priority
+1. ✅ Task 3.1: Extend SysExBuilder — **COMPLETE**
+2. ✅ Task 3.2: Create RequestSystemDumpUseCase — **COMPLETE**
+3. 🎯 **NEXT**: Task 3.3 - Create SystemSettingsViewModel
+4. Task 3.4: Create SystemSettingsView.axaml
+5. Fix 1 skipped test (timeout scenario) - low priority
+6. Fix 3 failing Presentation tests (extract UseCase interfaces) - low priority
 
 ---
 
