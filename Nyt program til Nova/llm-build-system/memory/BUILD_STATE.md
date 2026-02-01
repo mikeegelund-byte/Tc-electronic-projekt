@@ -56,13 +56,16 @@ Modul 7-10: Advanced             [⬜ NOT STARTED]
 - ViewModels/MainViewModel.cs — MVVM with 8 properties, 3 commands
   - Fixed: Added [NotifyCanExecuteChangedFor] attributes for Connect button
   - Auto-refresh MIDI ports on startup
-- ViewModels/PresetSummaryViewModel.cs — Record display model with FromPreset factory
+  - PresetList integration with LoadFromBank()
 - ViewModels/PresetListViewModel.cs — ObservableCollection with LoadFromBank method
-- Views/PresetListView.axaml — DataGrid UI showing preset list
+- ViewModels/PresetSummaryViewModel.cs — Record display model with FromPreset factory
+  - Edge case handling: Empty names → "[Unnamed #XX]"
+- Views/PresetListView.axaml — DataGrid with 3 columns (Position, Name, Preset#)
 - MainWindow.axaml — Connection panel, Download Bank UI, PresetListView integrated
 - MainWindow.axaml.cs — Code-behind (InitializeComponent)
 - **Modul 2 Task 2.5**: ✅ PresetSummaryViewModel unit tests (12/12 passing)
 - **Hardware Test**: ✅ SUCCESS — Downloaded 60 presets from Nova System pedal
+- **Modul 2 Complete**: ✅ All tasks 2.1-2.6 done, ready for manual hardware test
 
 ---
 
@@ -103,16 +106,17 @@ Hardware test: ✅ SUCCESS — Downloaded 60 presets from Nova System pedal via 
 
 ## 🎯 Next Steps
 
-**✅ Phase 5 COMPLETE** (100%):
-- All tasks completed including Task 5.8 hardware test
-- Bug fixed: Connect button now activates when port selected
-- End-to-end flow verified with physical Nova System pedal
-- Successfully downloaded 60 presets via USB MIDI Interface
+**✅ Modul 2 COMPLETE** (100%):
+- All tasks 2.1-2.6 completed
+- PresetListView displays 60 presets with Position, Name, and Number
+- Edge case handling for empty/whitespace preset names
+- UI properly wired to MainViewModel
+- Ready for manual hardware testing with physical Nova System pedal
 
-**🎯 NEXT: Modul 2 - Preset Viewer**:
-- Display downloaded 60 presets in list view
-- Show preset names, categories, and basic info
-- File: tasks/07-modul2-preset-viewer.md
+**🎯 NEXT: Modul 3 - System Viewer**:
+- Display global settings from SystemDump
+- Show effect parameters and system configuration
+- File: tasks/08-modul3-system-viewer.md
 
 **Known Issues (Non-Blocking)**:
 - 3 Presentation tests failing (Moq sealed class issue)
@@ -121,4 +125,4 @@ Hardware test: ✅ SUCCESS — Downloaded 60 presets from Nova System pedal via 
 
 ---
 
-**Sidst opdateret**: 2025-02-01 (Phase 5 COMPLETE, ready for Modul 2)
+**Sidst opdateret**: 2025-02-01 (Modul 2 COMPLETE, ready for Modul 3)
