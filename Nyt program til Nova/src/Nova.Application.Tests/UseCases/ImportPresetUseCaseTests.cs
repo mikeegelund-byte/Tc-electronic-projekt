@@ -221,6 +221,7 @@ Routing: 1
 
     private string CreateValidPresetText(int number, string name)
     {
+        // Note: Using fixed date in test data - not a real export timestamp
         return $@"# TC Electronic Nova System Preset
 # Exported: 2024-01-01 12:00:00 UTC
 
