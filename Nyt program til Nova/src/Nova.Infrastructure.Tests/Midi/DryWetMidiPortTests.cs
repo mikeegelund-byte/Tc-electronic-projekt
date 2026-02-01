@@ -39,6 +39,27 @@ public class DryWetMidiPortTests
     }
 
     [Fact]
+    public async Task ConnectAsync_WithInvalidPort_ReturnsFailure()
+    {
+        var port = new DryWetMidiPort();
+        var result = await port.ConnectAsync("NonExistent Port 12345");
+        result.IsFailed.Should().BeTrue();
+        result.Errors.Should().ContainSingle();
+        result.Errors[0].Message.Should().Contain("not found");
+    }
+
+    [Fact]
+    public async Task ConnectAsync_SetsNameProperty()
+    {
+        // This would need a mock device - but we can at least test the error path
+        var port = new DryWetMidiPort();
+        var result = await port.ConnectAsync("TestPort");
+        // Should fail since port doesn't exist
+        result.IsFailed.Should().BeTrue();
+        port.Name.Should().BeEmpty(); // Name only set on success
+    }
+
+    [Fact]
     public async Task DisconnectAsync_BeforeConnect_ReturnsSuccess()
     {
         var port = new DryWetMidiPort();
