@@ -1,9 +1,9 @@
 # PROGRESS.md — Projekt Fremskridt
 
-## 📊 TOTAL FREMSKRIDT: 32%
+## 📊 TOTAL FREMSKRIDT: 36%
 
 ```
-██████████░░░░░░░░░░░░░░░░░░ 32%
+██████████░░░░░░░░░░░░░░░░░░ 36%
 ```
 
 ---
@@ -11,8 +11,8 @@
 ## 🎯 NUVÆRENDE TASK
 
 **Fil**: `tasks/06-modul1-phase5-presentation-SONNET45.md`  
-**Task**: 5.1 (Avalonia UI Foundation)  
-**Status**: Ready to start — **REQUIRES SONNET 4.5+**
+**Task**: 5.8 (Manual Hardware Test)  
+**Status**: Phase 5 ~70% complete — **AWAITING USER FOR HARDWARE TEST**
 
 ---
 
@@ -25,7 +25,7 @@
 | 1.2 | Domain Models | ✅ DONE | 100% |
 | 1.3 | Use Cases | ✅ DONE | 100% |
 | 1.4 | Infrastructure | ✅ DONE | 100% |
-| 1.5 | Presentation | ⬜ TODO | 0% |
+| 1.5 | Presentation | 🟡 IN PROGRESS | 70% |
 | 2 | Preset Viewer | ⬜ TODO | 0% |
 | 3 | System Viewer | ⬜ TODO | 0% |
 | 4 | System Editor | ⬜ TODO | 0% |
@@ -47,7 +47,7 @@
 | 3 | `03-modul1-phase2-domain-models.md` | ✅ DONE |
 | 4 | `04-modul1-phase3-use-cases.md` | ✅ DONE |
 | 5 | `05-modul1-phase4-infrastructure.md` | ✅ DONE |
-| 6 | `06-modul1-phase5-presentation-SONNET45.md` | ⬜ **CURRENT** |
+| 6 | `06-modul1-phase5-presentation-SONNET45.md` | 🟡 **IN PROGRESS (70%)** |
 | 7 | `07-modul2-preset-viewer.md` | ⬜ TODO |
 | 8 | `08-modul3-system-viewer.md` | ⬜ TODO |
 | 9 | `09-modul4-system-editor.md` | ⬜ TODO |
@@ -69,9 +69,9 @@ Domain:      140 tests ✅
 MIDI:        6 tests ✅
 Application: 3 tests ✅
 Infrastructure: 12 tests ✅
-Presentation: 3 tests ✅
+Presentation: 3 tests ❌ (Moq sealed class issue - deferred)
 ─────────────────────────
-TOTAL:       164 tests ✅
+TOTAL:       164/167 passing (98%)
 ```
 
 ---
@@ -79,16 +79,17 @@ TOTAL:       164 tests ✅
 ## 📅 SIDST OPDATERET
 
 **Dato**: 2025-02-01  
-**Commit**: `7c92339` - Phase 4 Infrastructure COMPLETE (Session afslutning)
+**Commit**: `33f5538` - Phase 5 ~70% complete (UI functional, awaiting hardware test)
 
 ---
 
 ## 🔜 NÆSTE SKRIDT
 
-1. Start Phase 5: Avalonia Presentation layer
-2. Åbn `tasks/06-modul1-phase5-presentation-SONNET45.md`
-3. Task 5.1: Avalonia UI Foundation — **REQUIRES SONNET 4.5+**
-4. Opdater denne fil når task er færdig
+1. ✅ Tasks 5.1-5.7: DI setup, MainViewModel, MainWindow UI — **COMPLETE**
+2. ⏸️ Task 5.8: Manual hardware test — **REQUIRES PHYSICAL NOVA SYSTEM PEDAL**
+3. User returns with hardware to complete E2E test
+4. Fix 3 failing Presentation tests (extract UseCase interfaces)
+5. Proceed to Modul 2: Preset Viewer
 
 ---
 
