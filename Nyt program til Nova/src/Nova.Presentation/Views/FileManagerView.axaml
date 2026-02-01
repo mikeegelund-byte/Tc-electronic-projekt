@@ -1,0 +1,138 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="Nova.Presentation.Views.FileManagerView"
+             Background="#2D2D2D"
+             Foreground="#E0E0E0">
+  
+  <ScrollViewer>
+    <StackPanel Margin="20" Spacing="20">
+      <!-- Title -->
+      <TextBlock Text="File Manager" 
+                 FontSize="18" 
+                 FontWeight="Bold"
+                 Foreground="#FFFFFF"
+                 Margin="0,0,0,10" />
+      
+      <!-- Save Bank Section -->
+      <Border Background="#1E1E1E" 
+              Padding="16" 
+              CornerRadius="8"
+              BorderThickness="1"
+              BorderBrush="#404040">
+        <StackPanel Spacing="12">
+          <TextBlock Text="Save User Bank" 
+                     FontWeight="Bold" 
+                     FontSize="14"
+                     Foreground="#FFFFFF"/>
+          
+          <TextBlock Text="Export the current user bank to a file"
+                     Foreground="#AAAAAA"
+                     TextWrapping="Wrap"/>
+          
+          <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto">
+            <TextBox Grid.Column="0"
+                     Watermark="Select file location..."
+                     IsReadOnly="True"
+                     Background="#2D2D2D"
+                     Foreground="#CCCCCC"
+                     BorderBrush="#555555"
+                     Padding="8"/>
+            
+            <Button Grid.Column="1" 
+                    Content="Browse..."
+                    Margin="8,0,0,0"
+                    Padding="16,8"
+                    Background="#404040"
+                    Foreground="#E0E0E0"/>
+          </Grid>
+          
+          <Button Content="💾 Save Bank"
+                  HorizontalAlignment="Left"
+                  Padding="16,8"
+                  Background="#4CAF50"
+                  Foreground="#FFFFFF"
+                  IsEnabled="False"/>
+        </StackPanel>
+      </Border>
+      
+      <!-- Load Bank Section -->
+      <Border Background="#1E1E1E" 
+              Padding="16" 
+              CornerRadius="8"
+              BorderThickness="1"
+              BorderBrush="#404040">
+        <StackPanel Spacing="12">
+          <TextBlock Text="Load User Bank" 
+                     FontWeight="Bold" 
+                     FontSize="14"
+                     Foreground="#FFFFFF"/>
+          
+          <TextBlock Text="Import a user bank from a file"
+                     Foreground="#AAAAAA"
+                     TextWrapping="Wrap"/>
+          
+          <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto">
+            <TextBox Grid.Column="0"
+                     Watermark="Select file to load..."
+                     IsReadOnly="True"
+                     Background="#2D2D2D"
+                     Foreground="#CCCCCC"
+                     BorderBrush="#555555"
+                     Padding="8"/>
+            
+            <Button Grid.Column="1" 
+                    Content="Browse..."
+                    Margin="8,0,0,0"
+                    Padding="16,8"
+                    Background="#404040"
+                    Foreground="#E0E0E0"/>
+          </Grid>
+          
+          <Button Content="📂 Load Bank"
+                  HorizontalAlignment="Left"
+                  Padding="16,8"
+                  Background="#2196F3"
+                  Foreground="#FFFFFF"
+                  IsEnabled="False"/>
+        </StackPanel>
+      </Border>
+      
+      <!-- Status Section -->
+      <Border Background="#1E1E1E" 
+              Padding="16" 
+              CornerRadius="8"
+              BorderThickness="1"
+              BorderBrush="#404040">
+        <StackPanel Spacing="8">
+          <TextBlock Text="Status" 
+                     FontWeight="Bold" 
+                     FontSize="14"
+                     Foreground="#FFFFFF"/>
+          
+          <TextBlock Text="Ready - No file operations in progress"
+                     Foreground="#AAAAAA"
+                     TextWrapping="Wrap"/>
+        </StackPanel>
+      </Border>
+      
+      <!-- Info Section -->
+      <Border Background="#1E1E1E" 
+              Padding="16" 
+              CornerRadius="8"
+              BorderThickness="1"
+              BorderBrush="#404040">
+        <StackPanel Spacing="8">
+          <TextBlock Text="ℹ️ Information" 
+                     FontWeight="Bold" 
+                     FontSize="14"
+                     Foreground="#FFFFFF"/>
+          
+          <TextBlock Text="This feature allows you to save and load user banks to/from files. Connect to your device first to enable these features."
+                     Foreground="#AAAAAA"
+                     TextWrapping="Wrap"/>
+        </StackPanel>
+      </Border>
+    </StackPanel>
+  </ScrollViewer>
+  
+</UserControl>
