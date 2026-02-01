@@ -6,10 +6,11 @@ namespace Nova.Infrastructure.Midi;
 
 public sealed class DryWetMidiPort : IMidiPort, IDisposable
 {
-    // Placeholder implementation - will be extended in subsequent tasks
-    
+    private InputDevice? _inputDevice;
+    private OutputDevice? _outputDevice;
+
     public string Name { get; private set; } = string.Empty;
-    public bool IsConnected => false;
+    public bool IsConnected => _inputDevice != null && _outputDevice != null;
 
     public static List<string> GetAvailablePorts()
     {
@@ -27,7 +28,22 @@ public sealed class DryWetMidiPort : IMidiPort, IDisposable
 
     public Task<Result> DisconnectAsync()
     {
-        throw new NotImplementedException();
+        try
+        {
+            _inputDevice?.StopEventsListening();
+            _inputDevice?.Dispose();
+            _outputDevice?.Dispose();
+            
+            _inputDevice = null;
+            _outputDevice = null;
+            Name = string.Empty;
+
+            return Task.FromResult(Result.Ok());
+        }
+        catch (Exception ex)
+        {
+            return Task.FromResult(Result.Fail($"Failed to disconnect: {ex.Message}"));
+        }
     }
 
     public Task<Result> SendSysExAsync(byte[] sysex)
@@ -42,6 +58,6 @@ public sealed class DryWetMidiPort : IMidiPort, IDisposable
 
     public void Dispose()
     {
-        // Cleanup will be implemented in subsequent tasks
+        DisconnectAsync().GetAwaiter().GetResult();
     }
 }
