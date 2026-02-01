@@ -11,12 +11,12 @@ namespace Nova.Application.UseCases;
 /// </summary>
 public sealed class SaveBankUseCase
 {
-    private readonly IMidiPort _midiPort;
+    private readonly IDownloadBankUseCase _downloadBankUseCase;
     private readonly ILogger _logger;
 
-    public SaveBankUseCase(IMidiPort midiPort, ILogger logger)
+    public SaveBankUseCase(IDownloadBankUseCase downloadBankUseCase, ILogger logger)
     {
-        _midiPort = midiPort;
+        _downloadBankUseCase = downloadBankUseCase;
         _logger = logger;
     }
 
@@ -35,8 +35,7 @@ public sealed class SaveBankUseCase
             _logger.Information("Starting bank save to {FilePath}", filePath);
 
             // Step 1: Download current bank from device
-            var downloadUseCase = new DownloadBankUseCase(_midiPort);
-            var downloadResult = await downloadUseCase.ExecuteAsync(cancellationToken);
+            var downloadResult = await _downloadBankUseCase.ExecuteAsync(cancellationToken);
 
             if (downloadResult.IsFailed)
             {
