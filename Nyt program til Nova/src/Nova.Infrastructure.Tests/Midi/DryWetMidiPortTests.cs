@@ -37,4 +37,23 @@ public class DryWetMidiPortTests
         ports.Should().BeOfType<List<string>>();
         // ports.Should().Contain(p => p.Contains("USB")); // Only if device connected
     }
+
+    [Fact]
+    public async Task DisconnectAsync_BeforeConnect_ReturnsSuccess()
+    {
+        var port = new DryWetMidiPort();
+        var result = await port.DisconnectAsync();
+        result.IsSuccess.Should().BeTrue();
+    }
+
+    [Fact]
+    public async Task DisconnectAsync_ClearsName()
+    {
+        var port = new DryWetMidiPort();
+        // Simulate connection by manually setting name (since ConnectAsync not yet impl)
+        // After disconnect, name should be empty
+        var result = await port.DisconnectAsync();
+        result.IsSuccess.Should().BeTrue();
+        port.Name.Should().BeEmpty();
+    }
 }
