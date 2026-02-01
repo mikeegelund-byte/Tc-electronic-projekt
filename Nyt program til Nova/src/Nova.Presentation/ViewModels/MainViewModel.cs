@@ -44,6 +44,9 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty]
     private FileManagerViewModel _fileManager = new();
 
+    [ObservableProperty]
+    private SystemSettingsViewModel _systemSettings = new();
+
     public MainViewModel(
         IMidiPort midiPort,
         IConnectUseCase connectUseCase,

@@ -111,7 +111,7 @@
 
             <!-- System Settings Tab -->
             <TabItem Header="⚙️ System Settings">
-                <views:SystemSettingsView />
+                <views:SystemSettingsView DataContext="{Binding SystemSettings}" />
             </TabItem>
         </TabControl>
     </DockPanel>
