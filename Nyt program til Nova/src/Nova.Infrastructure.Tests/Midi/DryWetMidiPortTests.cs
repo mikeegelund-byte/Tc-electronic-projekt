@@ -56,4 +56,20 @@ public class DryWetMidiPortTests
         result.IsSuccess.Should().BeTrue();
         port.Name.Should().BeEmpty();
     }
+
+    [Fact]
+    public async Task SendSysExAsync_NotConnected_ReturnsFail()
+    {
+        var port = new DryWetMidiPort();
+        var sysex = new byte[] { 0xF0, 0x41, 0x10, 0x42, 0x12, 0x7F, 0x7F, 0xF7 };
+        var result = await port.SendSysExAsync(sysex);
+        result.IsFailed.Should().BeTrue();
+    }
+
+    [Fact]
+    public void SendSysExAsync_WithValidData_SkippedForManualTesting()
+    {
+        // This test requires actual MIDI device - skip in CI
+        // Marked for manual testing only
+    }
 }

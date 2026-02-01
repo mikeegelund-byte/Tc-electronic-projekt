@@ -1,4 +1,5 @@
 using FluentResults;
+using Melanchall.DryWetMidi.Core;
 using Melanchall.DryWetMidi.Multimedia;
 using Nova.Midi;
 
@@ -48,7 +49,25 @@ public sealed class DryWetMidiPort : IMidiPort, IDisposable
 
     public Task<Result> SendSysExAsync(byte[] sysex)
     {
-        throw new NotImplementedException();
+        if (_outputDevice == null)
+            return Task.FromResult(Result.Fail("Not connected"));
+
+        try
+        {
+            // DryWetMIDI expects data WITHOUT F0/F7 framing
+            var dataWithoutFrame = sysex.Length > 2 && sysex[0] == 0xF0 && sysex[^1] == 0xF7
+                ? sysex[1..^1]
+                : sysex;
+
+            var sysExEvent = new NormalSysExEvent(dataWithoutFrame);
+            _outputDevice.SendEvent(sysExEvent);
+
+            return Task.FromResult(Result.Ok());
+        }
+        catch (Exception ex)
+        {
+            return Task.FromResult(Result.Fail($"Failed to send SysEx: {ex.Message}"));
+        }
     }
 
     public IAsyncEnumerable<byte[]> ReceiveSysExAsync(CancellationToken cancellationToken = default)
