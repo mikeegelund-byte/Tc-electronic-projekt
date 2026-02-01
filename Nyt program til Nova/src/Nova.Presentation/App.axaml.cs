@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Nova.Infrastructure.Midi;
 using Nova.Midi;
 using Nova.Presentation.ViewModels;
+using Nova.Application.UseCases;
 using ConnectUseCase = Nova.Application.UseCases.ConnectUseCase;
 using DownloadBankUseCase = Nova.Application.UseCases.DownloadBankUseCase;
 
@@ -27,8 +28,8 @@ public partial class App : global::Avalonia.Application
         services.AddSingleton<IMidiPort, DryWetMidiPort>();
         
         // Application
-        services.AddTransient<ConnectUseCase>();
-        services.AddTransient<DownloadBankUseCase>();
+        services.AddTransient<IConnectUseCase, ConnectUseCase>();
+        services.AddTransient<IDownloadBankUseCase, DownloadBankUseCase>();
         
         // ViewModels
         services.AddTransient<MainViewModel>();

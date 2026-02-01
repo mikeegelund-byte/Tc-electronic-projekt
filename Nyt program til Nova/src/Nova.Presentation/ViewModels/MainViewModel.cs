@@ -3,16 +3,15 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Nova.Infrastructure.Midi;
 using Nova.Midi;
-using ConnectUseCase = Nova.Application.UseCases.ConnectUseCase;
-using DownloadBankUseCase = Nova.Application.UseCases.DownloadBankUseCase;
+using Nova.Application.UseCases;
 
 namespace Nova.Presentation.ViewModels;
 
 public partial class MainViewModel : ObservableObject
 {
     private readonly IMidiPort _midiPort;
-    private readonly ConnectUseCase _connectUseCase;
-    private readonly DownloadBankUseCase _downloadBankUseCase;
+    private readonly IConnectUseCase _connectUseCase;
+    private readonly IDownloadBankUseCase _downloadBankUseCase;
 
     [ObservableProperty]
     private ObservableCollection<string> _availablePorts = new();
@@ -39,15 +38,12 @@ public partial class MainViewModel : ObservableObject
 
     public MainViewModel(
         IMidiPort midiPort,
-        ConnectUseCase connectUseCase,
-        DownloadBankUseCase downloadBankUseCase)
+        IConnectUseCase connectUseCase,
+        IDownloadBankUseCase downloadBankUseCase)
     {
         _midiPort = midiPort;
         _connectUseCase = connectUseCase;
         _downloadBankUseCase = downloadBankUseCase;
-        
-        // Auto-refresh ports on startup
-        RefreshPorts();
     }
 
     [RelayCommand]
