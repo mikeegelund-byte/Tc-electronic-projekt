@@ -40,4 +40,23 @@ public static class SysExBuilder
             SYSEX_END
         };
     }
+
+    /// <summary>
+    /// Builds request for System Dump (global settings, 527 bytes).
+    /// </summary>
+    /// <param name="deviceId">Device ID (default 0x00 = any device)</param>
+    /// <returns>9-byte SysEx request: F0 00 20 1F 00 63 45 02 F7</returns>
+    public static byte[] BuildSystemDumpRequest(byte deviceId = 0x00)
+    {
+        return new byte[]
+        {
+            SYSEX_START,
+            TC_ID_1, TC_ID_2, TC_ID_3,
+            deviceId,
+            MODEL_ID,
+            REQUEST_MESSAGE_ID,
+            0x02,  // System dump data type
+            SYSEX_END
+        };
+    }
 }

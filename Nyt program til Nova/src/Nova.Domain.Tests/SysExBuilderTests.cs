@@ -39,4 +39,48 @@ public class SysExBuilderTests
 
         Assert.Equal(0x45, request[6]);  // Request message ID
     }
+
+    [Fact]
+    public void BuildSystemDumpRequest_Returns9Bytes()
+    {
+        var request = SysExBuilder.BuildSystemDumpRequest();
+
+        Assert.Equal(9, request.Length);
+        Assert.Equal(0xF0, request[0]);
+        Assert.Equal(0xF7, request[8]);
+    }
+
+    [Fact]
+    public void BuildSystemDumpRequest_HasCorrectManufacturerId()
+    {
+        var request = SysExBuilder.BuildSystemDumpRequest();
+
+        Assert.Equal(0x00, request[1]);
+        Assert.Equal(0x20, request[2]);
+        Assert.Equal(0x1F, request[3]);
+    }
+
+    [Fact]
+    public void BuildSystemDumpRequest_HasCorrectModelId()
+    {
+        var request = SysExBuilder.BuildSystemDumpRequest();
+
+        Assert.Equal(0x63, request[5]);  // Nova System
+    }
+
+    [Fact]
+    public void BuildSystemDumpRequest_HasCorrectMessageId()
+    {
+        var request = SysExBuilder.BuildSystemDumpRequest();
+
+        Assert.Equal(0x45, request[6]);  // Request message ID
+    }
+
+    [Fact]
+    public void BuildSystemDumpRequest_HasCorrectDataType()
+    {
+        var request = SysExBuilder.BuildSystemDumpRequest();
+
+        Assert.Equal(0x02, request[7]);  // System dump data type
+    }
 }
