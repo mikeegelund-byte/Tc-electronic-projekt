@@ -485,8 +485,8 @@ User Request → AI Processing → Software Action → Hardware Update
    - Reference implementation
    - MIDI protocol handlers
 
-7. **.github/copilot-instructions.md** (project root)
-   - AI agent guide
+7. **AGENTS.md** (Nyt program til Nova/)
+   - AI agent guide (fixed instructions)
    - Project philosophy
    - Critical files list
    - Next steps
@@ -603,7 +603,7 @@ User Request → AI Processing → Software Action → Hardware Update
 
 ---
 
-## Project Philosophy (from .github/copilot-instructions.md)
+## Project Philosophy (from AGENTS.md)
 
 ### 1. Systematic Approach Required
 **Why:** Previous project failed due to "overspringshandlinger" (jumping ahead)
