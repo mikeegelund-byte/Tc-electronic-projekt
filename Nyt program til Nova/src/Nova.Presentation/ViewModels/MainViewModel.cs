@@ -158,7 +158,7 @@ public partial class MainViewModel : ObservableObject
         }
         else
         {
-            PresetDetail.Clear();
+            PresetDetail.LoadFromPreset(null);
         }
     }
 }
