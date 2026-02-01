@@ -41,6 +41,9 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty]
     private PresetDetailViewModel _presetDetail = new();
 
+    [ObservableProperty]
+    private FileManagerViewModel _fileManager = new();
+
     public MainViewModel(
         IMidiPort midiPort,
         IConnectUseCase connectUseCase,
