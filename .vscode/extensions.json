@@ -10,6 +10,7 @@
         "tomoki1207.pdf",
         "redhat.vscode-yaml",
         "github.copilot",
-        "ms-dotnettools.vscode-dotnet-modernize"
+        "ms-dotnettools.vscode-dotnet-modernize",
+        "tobysmith568.run-in-powershell"
     ]
 }

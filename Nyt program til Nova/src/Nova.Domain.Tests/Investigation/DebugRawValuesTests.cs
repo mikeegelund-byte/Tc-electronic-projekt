@@ -13,7 +13,7 @@ public class DebugRawValuesTests
     public DebugRawValuesTests()
     {
         var fixturePath = Path.Combine(
-            "..", "..", "..", "..", "Nova.HardwareTest",
+            "..", "..", "..", "..", "Nova.HardwareTest", "Dumps",
             "nova-dump-20260131-181507-msg001.syx");
         var fullPath = Path.GetFullPath(fixturePath);
         _realPresetBytes = File.ReadAllBytes(fullPath);
@@ -33,11 +33,11 @@ public class DebugRawValuesTests
     {
         int raw = DecodeRaw(122);
         // BoostLevel: -12 to +12 dB
-        
+
         // Test both strategies:
         int withLargeOffset = raw - 16777216;
         int withSimpleOffset = raw + (-12);
-        
+
         // Output via assertion failure to see values
         raw.Should().Be(999999, $"Raw: {raw}, Large: {withLargeOffset}, Simple: {withSimpleOffset}");
     }
@@ -47,10 +47,10 @@ public class DebugRawValuesTests
     {
         int raw = DecodeRaw(74);
         // CompThreshold: -30 to 0 dB
-        
+
         int withLargeOffset = raw - 16777216;
         int withSimpleOffset = raw + (-30);
-        
+
         raw.Should().Be(999999, $"Raw: {raw}, Large: {withLargeOffset}, Simple: {withSimpleOffset}");
     }
 
@@ -59,10 +59,10 @@ public class DebugRawValuesTests
     {
         int raw = DecodeRaw(394);
         // GateThreshold: -90 to 0 dB
-        
+
         int withLargeOffset = raw - 16777216;
         int withSimpleOffset = raw + (-90);
-        
+
         raw.Should().Be(999999, $"Raw: {raw}, Large: {withLargeOffset}, Simple: {withSimpleOffset}");
     }
 
@@ -71,10 +71,10 @@ public class DebugRawValuesTests
     {
         int raw = DecodeRaw(366);
         // ReverbLevel: -100 to 0 dB
-        
+
         int withLargeOffset = raw - 16777216;
         int withSimpleOffset = raw + (-100);
-        
+
         raw.Should().Be(999999, $"Raw: {raw}, Large: {withLargeOffset}, Simple: {withSimpleOffset}");
     }
 
@@ -83,10 +83,10 @@ public class DebugRawValuesTests
     {
         int raw = DecodeRaw(218);
         // ModFeedback: -100 to +100%
-        
+
         int withLargeOffset = raw - 16777216;
         int withSimpleOffset = raw + (-100);
-        
+
         raw.Should().Be(999999, $"Raw: {raw}, Large: {withLargeOffset}, Simple: {withSimpleOffset}");
     }
 }

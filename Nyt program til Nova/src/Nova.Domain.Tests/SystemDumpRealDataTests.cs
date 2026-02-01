@@ -35,7 +35,7 @@ public class SystemDumpRealDataTests
     {
         var baseDir = Path.Combine(
             AppDomain.CurrentDomain.BaseDirectory,
-            "..", "..", "..", "..", "Nova.HardwareTest");
+            "..", "..", "..", "..", "Nova.HardwareTest", "Dumps");
         return Path.GetFullPath(baseDir);
     }
 }

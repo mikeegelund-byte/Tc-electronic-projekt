@@ -10,5 +10,24 @@
         }
     },
     "axaml.selectedSolution": "d:\\Tc electronic projekt\\Nyt program til Nova\\NovaApp.sln",
-    "chat.mcp.assisted.nuget.enabled": true
+    "chat.mcp.assisted.nuget.enabled": true,
+    "chat.agent.thinkingStyle": "collapsedPreview",
+    "chat.allowAnonymousAccess": true,
+    "chat.checkpoints.showFileChanges": true,
+    "chat.customAgentInSubagent.enabled": true,
+    "chat.edits2.enabled": true,
+    "chat.mcp.discovery.enabled": {
+        "claude-desktop": true
+    },
+    "chat.mcp.gallery.enabled": true,
+    "chat.restoreLastPanelSession": true,
+    "chat.renderRelatedFiles": true,
+    "chat.todoListTool.descriptionField": true,
+    "chat.tools.terminal.autoReplyToPrompts": true,
+    "chat.tools.terminal.blockDetectedFileWrites": "never",
+    "chat.tools.terminal.ignoreDefaultAutoApproveRules": true,
+    "chat.useAgentSkills": true,
+    "chat.useNestedAgentsMdFiles": true,
+    "inlineChat.enableV2": true,
+    "inlineChat.notebookAgent": true
 }

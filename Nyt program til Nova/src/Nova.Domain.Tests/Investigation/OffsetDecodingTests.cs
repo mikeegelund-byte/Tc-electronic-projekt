@@ -14,7 +14,7 @@ public class OffsetDecodingTests
     {
         // Load real hardware fixture
         var fixturePath = Path.Combine(
-            "..", "..", "..", "..", "Nova.HardwareTest",
+            "..", "..", "..", "..", "Nova.HardwareTest", "Dumps",
             "nova-dump-20260131-181507-msg001.syx");
         var fullPath = Path.GetFullPath(fixturePath);
         _realPresetBytes = File.ReadAllBytes(fullPath);
