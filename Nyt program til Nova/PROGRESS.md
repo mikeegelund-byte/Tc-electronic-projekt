@@ -50,6 +50,7 @@
 | 6 | `06-modul1-phase5-presentation-SONNET45.md` | ✅ DONE |
 | 7 | `07-modul2-preset-viewer.md` | 🔄 IN PROGRESS |
 | 8 | `08-modul3-system-viewer.md` | 🔄 IN PROGRESS |
+| 8 | `08-modul3-system-viewer.md` | 🔄 IN PROGRESS |
 | 9 | `09-modul4-system-editor.md` | ⬜ TODO |
 | 10 | `10-modul5-preset-detail.md` | ⬜ TODO |
 | 11 | `11-modul6-preset-editor-SONNET45.md` | ⬜ TODO |
@@ -70,7 +71,17 @@ MIDI:        6 tests ✅
 Application: 3 tests ✅
 Infrastructure: 12 tests ✅
 Presentation: 8 tests (5 SystemSettingsViewModel ✅, 3 MainViewModel ❌)
+Presentation: 8 tests (5 SystemSettingsViewModel ✅, 3 MainViewModel ❌)
 ─────────────────────────
+TOTAL:       169/172 passing (98%)
+
+NEW in this session:
++ SystemSettingsViewModelTests: 5 tests ✅
+  - LoadFromDump_WithValidSystemDump_SetsAllProperties
+  - LoadFromDump_SetsVersionString
+  - MidiChannel_WithinValidRange
+  - DeviceId_WithinValidRange
+  - InitialState_HasEmptyVersion
 TOTAL:       169/172 passing (98%)
 
 NEW in this session:
@@ -91,6 +102,8 @@ HARDWARE TEST: ✅ SUCCESS
 
 ## 📅 SIDST OPDATERET
 
+**Dato**: 2026-02-01  
+**Commit**: [MODUL-3][TASK-3.3] Create SystemSettingsViewModel
 **Dato**: 2026-02-01  
 **Commit**: [MODUL-3][TASK-3.3] Create SystemSettingsViewModel
 

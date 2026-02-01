@@ -10,8 +10,8 @@ Modul 1: Connection + Bank       [✅ 100% COMPLETE]
   Phase 3: Use Cases             [✅ COMPLETE]
   Phase 4: Infrastructure        [✅ COMPLETE]
   Phase 5: Presentation          [✅ 100% COMPLETE] ✓ Hardware test SUCCESS
-Modul 2: Preset Viewer           [🔄 IN PROGRESS] 70%
-Modul 3: System Viewer           [🔄 IN PROGRESS] Tasks 3.1 + 3.3 COMPLETE
+Modul 2: Preset Viewer           [🔄 IN PROGRESS] ← 70% complete
+Modul 3: System Viewer           [🔄 STARTED] ← Task 3.3 COMPLETE
 Modul 4-10                       [⬜ NOT STARTED]
 ```
 
@@ -23,12 +23,12 @@ Modul 4-10                       [⬜ NOT STARTED]
 - Models/Preset.cs — 521 bytes, 78 parameters
 - Models/UserBankDump.cs — 60 presets collection
 - Models/SystemDump.cs — 527 bytes global settings
-- Midi/SysExBuilder.cs — Request builders (Bank + System Dump)
   - ✅ MidiChannel property (0-15)
   - ✅ DeviceId property (0-127)
   - ✅ IsMidiClockEnabled property
   - ✅ IsMidiProgramChangeEnabled property
   - ✅ GetVersionString() method
+- SysEx/SysExBuilder.cs — Request builders
 - SysEx/SysExValidator.cs — Checksum validation
 
 ### Nova.Application ✅ 100%
@@ -114,6 +114,7 @@ Hardware test: ✅ SUCCESS — Downloaded 60 presets from Nova System pedal via 
 - SystemDump enhanced with necessary properties
 
 **🎯 NEXT: Continue Modul 3**:
+- Task 3.1: Extend SysExBuilder for System Dump Request
 - Task 3.2: Create RequestSystemDumpUseCase
 - Task 3.4: Create SystemSettingsView.axaml UI
 
