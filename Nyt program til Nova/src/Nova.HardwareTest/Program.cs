@@ -71,9 +71,9 @@ using (var input = novaInput)
 
     input.StartEventsListening();
 
-    Console.WriteLine("\n📡 Listening for MIDI data...");
-    Console.WriteLine("\n🎸 ON THE PEDAL:");
-    Console.WriteLine("   1. Press UTILITY button");
+Console.WriteLine("\n📡 Listening for MIDI data...");
+Console.WriteLine("\n🎸 ON THE PEDAL:");
+Console.WriteLine("   1. Press UTILITY button");
     Console.WriteLine("   2. Navigate to MIDI menu");
     Console.WriteLine("   3. Select 'Send Dump' or 'Transmit Bank'");
     Console.WriteLine("   4. Confirm to send data");
@@ -86,17 +86,21 @@ using (var input = novaInput)
     {
         Console.WriteLine($"\n✅ Capture complete! Received {receivedMessages.Count} SysEx messages");
 
+        var captureDir = Path.Combine(Environment.CurrentDirectory, "Captures");
+        Directory.CreateDirectory(captureDir);
+
         // Save each message
         for (int i = 0; i < receivedMessages.Count; i++)
         {
             var data = receivedMessages[i];
             var filename = $"nova-dump-{DateTime.Now:yyyyMMdd-HHmmss}-msg{i + 1:D3}.syx";
+            var outputPath = Path.Combine(captureDir, filename);
 
             // Add F0 and F7 delimiters for standard .syx file format
             var fullSysEx = new byte[] { 0xF0 }.Concat(data).Concat(new byte[] { 0xF7 }).ToArray();
-            await File.WriteAllBytesAsync(filename, fullSysEx);
+            await File.WriteAllBytesAsync(outputPath, fullSysEx);
 
-            Console.WriteLine($"\n💾 Message {i + 1}: {filename} ({data.Length} bytes)");
+            Console.WriteLine($"\n💾 Message {i + 1}: {outputPath} ({data.Length} bytes)");
             Console.WriteLine($"   Start: {BitConverter.ToString(data.Take(8).ToArray())}");
 
             // Validate if it's a preset (518 bytes without delimiters)

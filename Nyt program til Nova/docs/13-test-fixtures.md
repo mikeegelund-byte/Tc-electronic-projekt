@@ -12,7 +12,7 @@ This document defines all test fixtures (real SysEx data) needed for Modul 1 tes
 ## Test Data Organization
 
 ```
-Nova.Tests/
+src/Nova.Domain.Tests/
 ├── Fixtures/
 │   ├── BankDumps/
 │   │   ├── nova-bank-all-defaults.syx        (60 empty presets)
@@ -22,6 +22,14 @@ Nova.Tests/
 │   │   ├── preset-001-clean.bin               (single 520-byte preset)
 │   │   └── preset-001-bad-checksum.bin
 │   └── README.md                              (hex dumps for documentation)
+```
+
+Raw hardware captures (auto-generated) live under the hardware test tool and are ignored by Git:
+
+```
+src/Nova.HardwareTest/
+└── Captures/
+    └── nova-dump-YYYYMMDD-HHMMSS-msgNNN.syx
 ```
 
 ---
@@ -61,7 +69,7 @@ public void BuildBankDumpRequest_Returns9Bytes()
 
 ### File
 ```
-Nova.Tests/Fixtures/BankDumpRequest.bin
+src/Nova.Domain.Tests/Fixtures/BankDumpRequest.bin
 (actual file: 9 bytes)
 ```
 
@@ -127,7 +135,7 @@ public void ParsePreset_ValidSysEx_ReturnsCorrectName()
 
 ### File
 ```
-Nova.Tests/Fixtures/PresetResponses/preset-001-clean.bin
+src/Nova.Domain.Tests/Fixtures/PresetResponses/preset-001-clean.bin
 (actual file: 520 bytes)
 
 Hex representation (for documentation):
@@ -181,10 +189,10 @@ public void ParseBankDump_60Presets_AllValid()
 
 ### Files
 ```
-Nova.Tests/Fixtures/BankDumps/nova-bank-all-defaults.syx (~31 KB)
+src/Nova.Domain.Tests/Fixtures/BankDumps/nova-bank-all-defaults.syx (~31 KB)
 - All 60 presets with default empty settings
 
-Nova.Tests/Fixtures/BankDumps/nova-bank-with-artist-presets.syx (~31 KB)
+src/Nova.Domain.Tests/Fixtures/BankDumps/nova-bank-with-artist-presets.syx (~31 KB)
 - Artist presets from Nova-System-LTD_Artists-Presets-for-User-Bank.syx
 - Real data from hardware
 ```
@@ -219,7 +227,7 @@ public void ParsePreset_BadChecksum_ReturnsFail()
 
 ### File
 ```
-Nova.Tests/Fixtures/PresetResponses/preset-001-bad-checksum.bin (520 bytes)
+src/Nova.Domain.Tests/Fixtures/PresetResponses/preset-001-bad-checksum.bin (520 bytes)
 ```
 
 ---
@@ -247,7 +255,7 @@ public async Task ReceiveSysExAsync_TimeoutAfter30s_ReturnsFailure()
 
 ### File
 ```
-Nova.Tests/Fixtures/PresetResponses/preset-001-incomplete.bin (300 bytes)
+src/Nova.Domain.Tests/Fixtures/PresetResponses/preset-001-incomplete.bin (300 bytes)
 (No F7 at end)
 ```
 
@@ -296,10 +304,10 @@ public async Task ReceiveSysExAsync_ChunkedData_BuffersCorrectly(int numChunks)
 
 ### Files
 ```
-Nova.Tests/Fixtures/PresetResponses/bank-dump-chunked-10.bin
+src/Nova.Domain.Tests/Fixtures/PresetResponses/bank-dump-chunked-10.bin
 (Bank dump split into 10 chunks, stored as: [len1][chunk1][len2][chunk2]...)
 
-Nova.Tests/Fixtures/PresetResponses/bank-dump-chunked-60.bin
+src/Nova.Domain.Tests/Fixtures/PresetResponses/bank-dump-chunked-60.bin
 (Bank dump split into 60 chunks)
 ```
 
@@ -341,7 +349,7 @@ Create a PowerShell script to prepare all fixtures:
 ```powershell
 # prepare-fixtures.ps1
 
-$fixtureDir = "Nova.Tests/Fixtures"
+$fixtureDir = "src/Nova.Domain.Tests/Fixtures"
 
 # Create directories
 @("BankDumps", "PresetResponses") | ForEach-Object {

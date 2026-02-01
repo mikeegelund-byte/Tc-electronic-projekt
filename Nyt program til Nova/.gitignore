@@ -135,26 +135,14 @@ test-*.ps1
 debug-*.ps1
 
 # ============================================================================
-# SPECIAL RULES
+# Notes (no global allowlist is used)
+# ============================================================================
+# We do not use a blanket ignore-all rule. The repo keeps source, docs, and
+# scripts by default while ignoring build outputs and local artifacts above.
+
+# ============================================================================
+# Hardware capture output (auto-generated)
 # ============================================================================
 
-# Everything is ignored EXCEPT:
-!.github/
-!.gitignore
-!.editorconfig
-!.gitattributes
-!docs/
-!reference/
-!src/
-!tests/
-!tasks/
-!llm-build-system/
-!*.md
-!*.json
-!*.xml
-!*.sln
-!*.csproj
-!setup.ps1
-!APPLICATION_MANIFEST.md
-!FOLDER_STRUCTURE.md
-!SETUP_AUTOMATION.md
+src/Nova.HardwareTest/Captures/
+src/Nova.HardwareTest/nova-dump-*.syx

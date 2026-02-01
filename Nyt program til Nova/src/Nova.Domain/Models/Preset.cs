@@ -156,28 +156,28 @@ public class Preset
         // Extract parameters (Nova System uses 4-byte nibble encoding)
         int tapTempo = Decode4ByteValue(sysex, 38);
         int routing = Decode4ByteValue(sysex, 42);
-        int levelOutLeft = DecodeSignedDbValue(sysex, 46, -100, 0);  // -100 to 0dB (simple offset)
-        int levelOutRight = DecodeSignedDbValue(sysex, 50, -100, 0); // -100 to 0dB (simple offset)
+        int levelOutLeft = DecodeSignedDbValue(sysex, 46, -100, 0);  // -100 to 0dB
+        int levelOutRight = DecodeSignedDbValue(sysex, 50, -100, 0); // -100 to 0dB
 
         // Extract COMP (Compressor) parameters (bytes 70-101)
         int compType = Decode4ByteValue(sysex, 70);
-        int compThreshold = DecodeSignedDbValue(sysex, 74, -30, 0);  // -30 to 0dB (simple offset)
+        int compThreshold = DecodeSignedDbValue(sysex, 74, -30, 0);  // -30 to 0dB
         int compRatio = Decode4ByteValue(sysex, 78);
         int compAttack = Decode4ByteValue(sysex, 82);
         int compRelease = Decode4ByteValue(sysex, 86);
         int compResponse = Decode4ByteValue(sysex, 90);
         int compDrive = Decode4ByteValue(sysex, 94);  // 0-12dB (unsigned)
-        int compLevel = DecodeSignedDbValue(sysex, 98, -12, 12);  // -12 to +12dB (large offset)
+        int compLevel = DecodeSignedDbValue(sysex, 98, -12, 12);  // -12 to +12dB
 
         // Extract DRIVE effect parameters (bytes 102-113)
         int driveType = Decode4ByteValue(sysex, 102);
         int driveGain = Decode4ByteValue(sysex, 106);
-        int driveLevel = DecodeSignedDbValue(sysex, 110, -30, 20);  // -30 to +20dB (simple offset)
+        int driveLevel = Decode4ByteValue(sysex, 110);  // Unknown range (unsigned per spec)
 
         // Extract BOOST effect parameters (bytes 114-125)
         int boostType = Decode4ByteValue(sysex, 114);
         int boostGain = Decode4ByteValue(sysex, 118);
-        int boostLevel = DecodeSignedDbValue(sysex, 122, -12, 12);  // -12 to +12dB (large offset)
+        int boostLevel = Decode4ByteValue(sysex, 122);  // 0-10 dB (unsigned per spec)
 
         // Extract MOD (Modulation) effect parameters (bytes 198-257)
         int modType = Decode4ByteValue(sysex, 198);
@@ -185,7 +185,7 @@ public class Preset
         int modDepth = Decode4ByteValue(sysex, 206);
         int modTempo = Decode4ByteValue(sysex, 210);
         int modHiCut = Decode4ByteValue(sysex, 214);
-        int modFeedback = DecodeSignedDbValue(sysex, 218, -100, 100);  // -100 to +100% (large offset)
+        int modFeedback = DecodeSignedDbValue(sysex, 218, -100, 100);  // -100 to +100%
         int modDelayOrRange = Decode4ByteValue(sysex, 222);
         int modMix = Decode4ByteValue(sysex, 250);
 
@@ -208,27 +208,27 @@ public class Preset
         int reverbShape = Decode4ByteValue(sysex, 338);
         int reverbSize = Decode4ByteValue(sysex, 342);
         int reverbHiColor = Decode4ByteValue(sysex, 346);
-        int reverbHiLevel = DecodeSignedDbValue(sysex, 350, -25, 25);  // -25 to +25dB (large offset)
+        int reverbHiLevel = DecodeSignedDbValue(sysex, 350, -25, 25);  // -25 to +25dB
         int reverbLoColor = Decode4ByteValue(sysex, 354);
-        int reverbLoLevel = DecodeSignedDbValue(sysex, 358, -25, 25);  // -25 to +25dB (large offset)
-        int reverbRoomLevel = DecodeSignedDbValue(sysex, 362, -100, 0);  // -100 to 0dB (simple offset)
-        int reverbLevel = DecodeSignedDbValue(sysex, 366, -100, 0);  // -100 to 0dB (simple offset)
+        int reverbLoLevel = DecodeSignedDbValue(sysex, 358, -25, 25);  // -25 to +25dB
+        int reverbRoomLevel = DecodeSignedDbValue(sysex, 362, -100, 0);  // -100 to 0dB
+        int reverbLevel = DecodeSignedDbValue(sysex, 366, -100, 0);  // -100 to 0dB
         int reverbDiffuse = Decode4ByteValue(sysex, 370);
         int reverbMix = Decode4ByteValue(sysex, 374);
 
         // Extract EQ/GATE parameters (bytes 390-453)
         int gateType = Decode4ByteValue(sysex, 390);
-        int gateThreshold = DecodeSignedDbValue(sysex, 394, -90, 0);  // -90 to 0dB (simple offset)
+        int gateThreshold = DecodeSignedDbValue(sysex, 394, -60, 0);  // -60 to 0dB
         int gateDamp = Decode4ByteValue(sysex, 398);
         int gateRelease = Decode4ByteValue(sysex, 402);
         int eqFreq1 = Decode4ByteValue(sysex, 406);
-        int eqGain1 = DecodeSignedDbValue(sysex, 414, -12, 12);  // -12 to +12dB (large offset) - FIXED: was 410
+        int eqGain1 = DecodeSignedDbValue(sysex, 414, -12, 12);  // -12 to +12dB
         int eqWidth1 = Decode4ByteValue(sysex, 418);
         int eqFreq2 = Decode4ByteValue(sysex, 422);
-        int eqGain2 = DecodeSignedDbValue(sysex, 426, -12, 12);  // -12 to +12dB (large offset) - FIXED: was 422
+        int eqGain2 = DecodeSignedDbValue(sysex, 426, -12, 12);  // -12 to +12dB
         int eqWidth2 = Decode4ByteValue(sysex, 430);
         int eqFreq3 = Decode4ByteValue(sysex, 434);
-        int eqGain3 = DecodeSignedDbValue(sysex, 438, -12, 12);  // -12 to +12dB (large offset) - FIXED: was 434
+        int eqGain3 = DecodeSignedDbValue(sysex, 438, -12, 12);  // -12 to +12dB
         int eqWidth3 = Decode4ByteValue(sysex, 442);
 
         // Extract PITCH effect parameters (bytes 454-513)
@@ -241,8 +241,8 @@ public class Preset
         int pitchDelay2 = Decode4ByteValue(sysex, 478);
         int pitchFeedback1OrKey = Decode4ByteValue(sysex, 482);
         int pitchFeedback2OrScale = Decode4ByteValue(sysex, 486);
-        int pitchLevel1 = DecodeSignedDbValue(sysex, 490, -12, 12);  // -12 to +12dB (large offset) - FIXED: was 494
-        int pitchLevel2 = DecodeSignedDbValue(sysex, 494, -12, 12);  // -12 to +12dB (large offset) - FIXED: was 498
+        int pitchLevel1 = DecodeSignedDbValue(sysex, 490, -100, 0);  // -100 to 0dB
+        int pitchLevel2 = DecodeSignedDbValue(sysex, 494, -100, 0);  // -100 to 0dB
 
         // Extract effect on/off switches (4-byte encoded boolean: 0x00=off, 0x01=on)
         bool compressorEnabled = Decode4ByteValue(sysex, 130) == 1;
@@ -250,6 +250,108 @@ public class Preset
         bool modulationEnabled = Decode4ByteValue(sysex, 258) == 1;
         bool delayEnabled = Decode4ByteValue(sysex, 322) == 1;
         bool reverbEnabled = Decode4ByteValue(sysex, 386) == 1;
+
+        // ========================================
+        // PARAMETER VALIDATION
+        // Validate all decoded parameters against their hardware-specified ranges.
+        // Return failure with descriptive message if any parameter is invalid.
+        // ========================================
+
+        // Global parameters
+        if (tapTempo < 100 || tapTempo > 3000)
+            return Result.Fail($"TapTempo value {tapTempo} out of range (100-3000ms)");
+        if (routing < 0 || routing > 2)
+            return Result.Fail($"Routing value {routing} out of range (0-2: Semi-par/Serial/Parallel)");
+
+        // COMP block validation
+        if (compType < 0 || compType > 2)
+            return Result.Fail($"CompType value {compType} out of range (0-2: perc/sustain/advanced)");
+        if (compRatio < 0 || compRatio > 15)
+            return Result.Fail($"CompRatio value {compRatio} out of range (0-15)");
+        if (compAttack < 0 || compAttack > 16)
+            return Result.Fail($"CompAttack value {compAttack} out of range (0-16)");
+        if (compRelease < 13 || compRelease > 23)
+            return Result.Fail($"CompRelease value {compRelease} out of range (13-23)");
+
+        // DRIVE block validation
+        if (driveType < 0 || driveType > 6)
+            return Result.Fail($"DriveType value {driveType} out of range (0-6)");
+        if (driveGain < 0 || driveGain > 100)
+            return Result.Fail($"DriveGain value {driveGain} out of range (0-100)");
+
+        // BOOST block validation
+        if (boostType < 0 || boostType > 2)
+            return Result.Fail($"BoostType value {boostType} out of range (0-2: clean/mid/treble)");
+        if (boostGain < 0 || boostGain > 30)
+            return Result.Fail($"BoostGain value {boostGain} out of range (0-30dB)");
+
+        // MOD block validation
+        if (modType < 0 || modType > 5)
+            return Result.Fail($"ModType value {modType} out of range (0-5)");
+        if (modDepth < 0 || modDepth > 100)
+            return Result.Fail($"ModDepth value {modDepth} out of range (0-100%)");
+        if (modTempo < 0 || modTempo > 16)
+            return Result.Fail($"ModTempo value {modTempo} out of range (0-16)");
+        if (modMix < 0 || modMix > 100)
+            return Result.Fail($"ModMix value {modMix} out of range (0-100%)");
+
+        // DELAY block validation
+        if (delayType < 0 || delayType > 5)
+            return Result.Fail($"DelayType value {delayType} out of range (0-5)");
+        if (delayTime < 0 || delayTime > 1800)
+            return Result.Fail($"DelayTime value {delayTime} out of range (0-1800ms)");
+        if (delayTime2 < 0 || delayTime2 > 1800)
+            return Result.Fail($"DelayTime2 value {delayTime2} out of range (0-1800ms)");
+        if (delayTempo < 0 || delayTempo > 16)
+            return Result.Fail($"DelayTempo value {delayTempo} out of range (0-16)");
+        if (delayFeedback < 0 || delayFeedback > 120)
+            return Result.Fail($"DelayFeedback value {delayFeedback} out of range (0-120%)");
+        if (delayMix < 0 || delayMix > 100)
+            return Result.Fail($"DelayMix value {delayMix} out of range (0-100%)");
+
+        // REVERB block validation
+        if (reverbType < 0 || reverbType > 3)
+            return Result.Fail($"ReverbType value {reverbType} out of range (0-3: spring/hall/room/plate)");
+        if (reverbDecay < 1 || reverbDecay > 200)
+            return Result.Fail($"ReverbDecay value {reverbDecay} out of range (1-200)");
+        if (reverbPreDelay < 0 || reverbPreDelay > 100)
+            return Result.Fail($"ReverbPreDelay value {reverbPreDelay} out of range (0-100ms)");
+        if (reverbShape < 0 || reverbShape > 2)
+            return Result.Fail($"ReverbShape value {reverbShape} out of range (0-2: round/curved/square)");
+        if (reverbSize < 0 || reverbSize > 7)
+            return Result.Fail($"ReverbSize value {reverbSize} out of range (0-7)");
+        if (reverbHiColor < 0 || reverbHiColor > 6)
+            return Result.Fail($"ReverbHiColor value {reverbHiColor} out of range (0-6)");
+        if (reverbLoColor < 0 || reverbLoColor > 6)
+            return Result.Fail($"ReverbLoColor value {reverbLoColor} out of range (0-6)");
+        if (reverbMix < 0 || reverbMix > 100)
+            return Result.Fail($"ReverbMix value {reverbMix} out of range (0-100%)");
+
+        // EQ/GATE block validation
+        if (gateType < 0 || gateType > 1)
+            return Result.Fail($"GateType value {gateType} out of range (0-1: hard/soft)");
+        if (gateDamp < 0 || gateDamp > 90)
+            return Result.Fail($"GateDamp value {gateDamp} out of range (0-90dB)");
+        if (gateRelease < 0 || gateRelease > 200)
+            return Result.Fail($"GateRelease value {gateRelease} out of range (0-200 dB/s)");
+        if (eqWidth1 < 5 || eqWidth1 > 12)
+            return Result.Fail($"EqWidth1 value {eqWidth1} out of range (5-12)");
+        if (eqWidth2 < 5 || eqWidth2 > 12)
+            return Result.Fail($"EqWidth2 value {eqWidth2} out of range (5-12)");
+        if (eqWidth3 < 5 || eqWidth3 > 12)
+            return Result.Fail($"EqWidth3 value {eqWidth3} out of range (5-12)");
+
+        // PITCH block validation
+        if (pitchType < 0 || pitchType > 4)
+            return Result.Fail($"PitchType value {pitchType} out of range (0-4)");
+        if (pitchDelay1 < 0 || pitchDelay1 > 50)
+            return Result.Fail($"PitchDelay1 value {pitchDelay1} out of range (0-50ms)");
+        if (pitchDelay2 < 0 || pitchDelay2 > 50)
+            return Result.Fail($"PitchDelay2 value {pitchDelay2} out of range (0-50ms)");
+        if (pitchFeedback1OrKey < 0 || pitchFeedback1OrKey > 100)
+            return Result.Fail($"PitchFeedback1OrKey value {pitchFeedback1OrKey} out of range (0-100)");
+        if (pitchFeedback2OrScale < 0 || pitchFeedback2OrScale > 100)
+            return Result.Fail($"PitchFeedback2OrScale value {pitchFeedback2OrScale} out of range (0-100)");
 
         return Result.Ok(new Preset
         {
@@ -375,35 +477,54 @@ public class Preset
 
     /// <summary>
     /// Decodes signed dB values that use offset encoding.
-    /// Two encoding strategies discovered from hardware:
-    /// 1. Large offset (2^24 = 16777216): For SYMMETRIC ranges (zero in middle)
+    /// Two encoding strategies discovered from hardware investigation:
+    /// 1. Large offset (2^24 = 16777216): For symmetric ranges (zero in middle)
     ///    Examples: -12 to +12, -25 to +25, -100 to +100
-    /// 2. Simple offset: For ASYMMETRIC ranges (zero at end or near end)
+    /// 2. Simple offset: For asymmetric ranges (zero at end or near end)
     ///    Examples: -100 to 0, -90 to 0, -30 to 0, -30 to +20
     /// </summary>
+    /// <param name="minimumValue">The minimum dB value of the parameter range.</param>
+    /// <param name="maximumValue">The maximum dB value of the parameter range.</param>
+    /// <remarks>
+    /// The encoding strategy is selected automatically based on whether the range is symmetric
+    /// (minimumValue + maximumValue == 0). Symmetric ranges use the large-offset strategy,
+    /// while asymmetric ranges use the simple-offset strategy.
+    /// </remarks>
     private static int DecodeSignedDbValue(byte[] sysex, int offset, int minimumValue, int maximumValue)
     {
+        // ALL signed parameters use large offset (2^24) strategy.
+        // Hardware encodes signed values by adding 16777216 (2^24).
+        // Real hardware data shows ALL signed parameters have raw ~16777xxx.
+        const int LARGE_OFFSET = 16777216;
+        int rawDecoded = Decode4ByteValue(sysex, offset);
+        return rawDecoded - LARGE_OFFSET;
+    }
+
+    /// <summary>
+    /// Low-level overload that decodes signed dB values using an explicit encoding strategy flag.
+    /// Prefer using the overload that takes <paramref name="minimumValue"/> and
+    /// <c>maximumValue</c>, which automatically selects the appropriate strategy.
+    /// </summary>
+    /// <param name="minimumValue">The minimum dB value of the parameter range.</param>
+    /// <param name="useSimpleOffset">
+    /// True to force the simple offset strategy (for asymmetric ranges),
+    /// false to use the large-offset strategy (for symmetric ranges).
+    /// </param>
+    [System.Obsolete("Use the overload DecodeSignedDbValue(byte[] sysex, int offset, int minimumValue, int maximumValue) which automatically selects the encoding strategy based on range symmetry.")]
+    private static int DecodeSignedDbValue(byte[] sysex, int offset, int minimumValue, bool useSimpleOffset = false)
+    {
         const int LARGE_OFFSET = 16777216; // 2^24
-        
+
         int rawValue = Decode4ByteValue(sysex, offset);
-        
-        // Determine encoding strategy based on range symmetry
-        // If range is symmetric or near-symmetric around zero, use large offset
-        // Threshold: abs(min) and abs(max) within 20% of each other
-        int absMin = Math.Abs(minimumValue);
-        int absMax = Math.Abs(maximumValue);
-        int maxOfTwo = Math.Max(absMin, absMax);
-        int minOfTwo = Math.Min(absMin, absMax);
-        
-        bool isSymmetric = (maxOfTwo == 0) || (minOfTwo * 1.2 >= maxOfTwo);
-        
-        if (isSymmetric && minimumValue < 0 && maximumValue > 0)
+
+        if (useSimpleOffset)
         {
-            // Strategy 1: Large offset for symmetric ranges
-            return rawValue - LARGE_OFFSET;
+            // Strategy 2: Simple offset for asymmetric ranges
+            // Formula: actualValue = rawValue + minimumValue
+            return rawValue + minimumValue;
         }
-        
-        // Strategy 2: Simple offset for asymmetric ranges
-        return rawValue + minimumValue;
+        // Strategy 1: Large offset for symmetric ranges (default)
+        // Formula: actualValue = rawValue - 2^24
+        return rawValue - LARGE_OFFSET;
     }
 }
