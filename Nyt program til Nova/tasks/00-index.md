@@ -51,7 +51,14 @@ MODUL 2: Parameter Editing (3 weeks)
 **Modul 1, Phase 3: Application Layer**
 - [04-modul1-phase3-use-cases.md](04-modul1-phase3-use-cases.md)
   - 3 subtasks
-  - Status: 🟡 IN PROGRESS
+  - Status: ✅ COMPLETE (2026-02-01)
+  - Results: ConnectUseCase, DownloadBankUseCase, 90% coverage
+
+### 🟡 In Progress
+
+**Modul 2, Phase 1: UI Foundation**
+- (Task file pending)
+- Status: ⏳ READY TO START
 
 **Modul 1, Phase 2: Domain Models**
 - [03-modul1-phase2-domain-models.md](03-modul1-phase2-domain-models.md)

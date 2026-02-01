@@ -11,7 +11,7 @@ Fase 5: Dok-struktur         ✅ KOMPLET (13 små files)
 Fase 6: Implementering-guide ✅ KOMPLET (nu!)
 ────────────────────────────────────────────────────────
 Fase 7: Miljøopsætning       ✅ KOMPLET
-Fase 8: Modul 1 - Kode       🏗️ I GANG (Domain Models færdig)
+Fase 8: Modul 1 - Kode       🏗️ I GANG (Phase 3: Use Cases start)
 ```
 
 ---
