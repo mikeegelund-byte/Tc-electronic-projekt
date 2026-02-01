@@ -16,7 +16,7 @@
 6. Den aktuelle task-fil (se PROGRESS.md for hvilken)
 ```
 
-Læs HELE filen. Ikke kun overskrifter.
+Læs HELE filen. Ikke kun overskrifter. alle 206 linjer! jeg holder øje
 
 ---
 

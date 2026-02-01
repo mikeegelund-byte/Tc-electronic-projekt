@@ -66,7 +66,7 @@ public record PresetSummaryViewModel(
 
 **🟡 COMPLEXITY: MEDIUM** — ObservableCollection + sorting
 
-**Status**: Not started  
+**Status**: ✅ COMPLETE  
 **Estimated**: 30 min  
 **Files**:
 - `src/Nova.Presentation/ViewModels/PresetListViewModel.cs`

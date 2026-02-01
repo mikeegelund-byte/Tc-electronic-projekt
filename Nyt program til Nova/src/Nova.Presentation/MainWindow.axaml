@@ -1,10 +1,11 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="using:Nova.Presentation.ViewModels"
+        xmlns:views="using:Nova.Presentation.Views"
         x:Class="Nova.Presentation.MainWindow"
         x:DataType="vm:MainViewModel"
         Title="Nova System Manager"
-        Width="600" Height="400"
+        Width="900" Height="700"
         WindowStartupLocation="CenterScreen">
 
     <Design.DataContext>
@@ -87,6 +88,9 @@
                             Padding="16,8"/>
                 </StackPanel>
             </Border>
+            
+            <!-- Preset List View -->
+            <views:PresetListView DataContext="{Binding PresetList}" />
         </StackPanel>
     </DockPanel>
 </Window>
