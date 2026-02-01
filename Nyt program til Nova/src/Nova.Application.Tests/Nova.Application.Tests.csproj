@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Nova.Application\Nova.Application.csproj" />
+    <ProjectReference Include="..\Nova.Midi.Tests\Nova.Midi.Tests.csproj" />
   </ItemGroup>
 
 </Project>

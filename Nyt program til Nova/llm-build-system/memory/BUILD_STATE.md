@@ -5,13 +5,22 @@
 ```
 Modul 0: Environment Setup       [✅ COMPLETE]
 Modul 1: Connection + Bank       [✅ 100% COMPLETE]
-  Phase 1: MIDI Foundation       [✅ COMPLETE]
-  Phase 2: Domain Models         [✅ COMPLETE]
-  Phase 3: Use Cases             [✅ COMPLETE]
-  Phase 4: Infrastructure        [✅ COMPLETE]
-  Phase 5: Presentation          [✅ 100% COMPLETE] ✓ Hardware test SUCCESS
-Modul 2: Preset Viewer           [✅ 100% COMPLETE] ✓ All tasks 2.1-2.6 done
-Modul 3-10                       [⬜ NOT STARTED] ← NEXT: Modul 3 System Viewer
+Modul 2: Preset Viewer           [✅ 100% COMPLETE]
+Modul 3: System Viewer           [✅ 80% - DetailView merged]
+  Task 3.1-3.4: Core components  [✅ COMPLETE]
+  Task 3.5-3.6: DetailView UI    [✅ COMPLETE - agent merged]
+  Task 3.7: MainView integration [✅ COMPLETE - agent merged]
+Modul 4: File I/O & Bank Mgmt    [✅ 50% - Agents merged]
+  Export/Import UseCases         [✅ COMPLETE]
+  SaveBank/LoadBank UseCases     [✅ COMPLETE]
+Modul 5: Preset Editor           [✅ 30% - Agents merged]
+  EditablePresetViewModel        [✅ COMPLETE]
+  UpdatePresetUseCase            [✅ COMPLETE]
+Modul 6: MIDI Features           [✅ 20% - Agents merged]
+  MIDI CC Support (MidiCCMap)    [✅ COMPLETE]
+  SendCCUseCase                  [✅ COMPLETE]
+UI: Dashboard                    [✅ Tab Navigation merged]
+Modul 7-10: Advanced             [⬜ NOT STARTED]
 ```
 
 ---
@@ -48,12 +57,13 @@ Modul 3-10                       [⬜ NOT STARTED] ← NEXT: Modul 3 System View
   - Fixed: Added [NotifyCanExecuteChangedFor] attributes for Connect button
   - Auto-refresh MIDI ports on startup
   - PresetList integration with LoadFromBank()
-- ViewModels/PresetListViewModel.cs — ObservableCollection with 60 preset summaries
-- ViewModels/PresetSummaryViewModel.cs — Display model with Position/Name/Number
+- ViewModels/PresetListViewModel.cs — ObservableCollection with LoadFromBank method
+- ViewModels/PresetSummaryViewModel.cs — Record display model with FromPreset factory
   - Edge case handling: Empty names → "[Unnamed #XX]"
 - Views/PresetListView.axaml — DataGrid with 3 columns (Position, Name, Preset#)
-- MainWindow.axaml — Connection panel, Download Bank UI, Preset List View
+- MainWindow.axaml — Connection panel, Download Bank UI, PresetListView integrated
 - MainWindow.axaml.cs — Code-behind (InitializeComponent)
+- **Modul 2 Task 2.5**: ✅ PresetSummaryViewModel unit tests (12/12 passing)
 - **Hardware Test**: ✅ SUCCESS — Downloaded 60 presets from Nova System pedal
 - **Modul 2 Complete**: ✅ All tasks 2.1-2.6 done, ready for manual hardware test
 
@@ -62,15 +72,18 @@ Modul 3-10                       [⬜ NOT STARTED] ← NEXT: Modul 3 System View
 ## 📊 Test Status
 
 ```
-Total tests: 167
-  Nova.Domain.Tests:        140 tests ✅
+Total tests: 189 ✅ (100% PASSING)
+  Nova.Domain.Tests:        144 tests ✅
   Nova.Midi.Tests:          6 tests ✅
-  Nova.Application.Tests:   3 tests ✅
+  Nova.Application.Tests:   6 tests ✅ (includes RequestSystemDumpUseCase + File I/O + Bank Manager)
   Nova.Infrastructure.Tests: 12 tests ✅
-  Nova.Presentation.Tests:  3 tests ❌ (Moq cannot mock sealed UseCases - deferred)
+  Nova.Presentation.Tests:  21 tests ✅ (includes PresetDetail, SystemSettings, EditablePreset tests)
 
-Build: 0 warnings, 0 errors ✅
+Build: 0 warnings, 0 errors ✅ GREEN
 Framework: .NET 8.0 LTS
+App Status: ✅ Fully functional with Tab-based UI Dashboard
+Hardware Test: ✅ SUCCESS — Downloaded 60 presets from Nova System pedal
+```
 App runs: ✅ UI displays correctly
 Hardware test: ✅ SUCCESS — Downloaded 60 presets from Nova System pedal via USB MIDI
 ```
