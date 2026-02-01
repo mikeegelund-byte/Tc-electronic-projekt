@@ -1,18 +1,18 @@
 # PROGRESS.md — Projekt Fremskridt
 
-## 📊 TOTAL FREMSKRIDT: 43%
+## 📊 TOTAL FREMSKRIDT: 45%
 
 ```
-████████████░░░░░░░░░░░░░░░░ 43%
+█████████████░░░░░░░░░░░░░░░ 45%
 ```
 
 ---
 
 ## 🎯 NUVÆRENDE TASK
 
-**Fil**: `tasks/07-modul2-preset-viewer.md`  
-**Task**: Modul 2 - Preset Viewer  
-**Status**: 🔄 IN PROGRESS (Tasks 2.1-2.4 done, working on 2.5 tests)
+**Fil**: `tasks/08-modul3-system-viewer.md`  
+**Task**: Modul 3 - System Viewer (Task 3.3 COMPLETE)  
+**Status**: 🔄 IN PROGRESS (Task 3.3 done, continuing with 3.1, 3.2, 3.4)
 
 ---
 
@@ -27,7 +27,7 @@
 | 1.4 | Infrastructure | ✅ DONE | 100% |
 | 1.5 | Presentation | ✅ DONE | 100% |
 | 2 | Preset Viewer | 🔄 IN PROGRESS | 70% |
-| 3 | System Viewer | ⬜ TODO | 0% |
+| 3 | System Viewer | 🔄 IN PROGRESS | 25% |
 | 4 | System Editor | ⬜ TODO | 0% |
 | 5 | Preset Detail | ⬜ TODO | 0% |
 | 6 | Preset Editor | ⬜ TODO | 0% |
@@ -49,7 +49,7 @@
 | 5 | `05-modul1-phase4-infrastructure.md` | ✅ DONE |
 | 6 | `06-modul1-phase5-presentation-SONNET45.md` | ✅ DONE |
 | 7 | `07-modul2-preset-viewer.md` | 🔄 IN PROGRESS |
-| 8 | `08-modul3-system-viewer.md` | ⬜ TODO |
+| 8 | `08-modul3-system-viewer.md` | 🔄 IN PROGRESS |
 | 9 | `09-modul4-system-editor.md` | ⬜ TODO |
 | 10 | `10-modul5-preset-detail.md` | ⬜ TODO |
 | 11 | `11-modul6-preset-editor-SONNET45.md` | ⬜ TODO |
@@ -69,9 +69,17 @@ Domain:      140 tests ✅
 MIDI:        6 tests ✅
 Application: 3 tests ✅
 Infrastructure: 12 tests ✅
-Presentation: 3 tests ❌ (Moq sealed class issue - non-blocking)
+Presentation: 8 tests (5 SystemSettingsViewModel ✅, 3 MainViewModel ❌)
 ─────────────────────────
-TOTAL:       164/167 passing (98%)
+TOTAL:       169/172 passing (98%)
+
+NEW in this session:
++ SystemSettingsViewModelTests: 5 tests ✅
+  - LoadFromDump_WithValidSystemDump_SetsAllProperties
+  - LoadFromDump_SetsVersionString
+  - MidiChannel_WithinValidRange
+  - DeviceId_WithinValidRange
+  - InitialState_HasEmptyVersion
 
 HARDWARE TEST: ✅ SUCCESS
 - Connected to USB MIDI Interface
@@ -83,8 +91,8 @@ HARDWARE TEST: ✅ SUCCESS
 
 ## 📅 SIDST OPDATERET
 
-**Dato**: 2025-02-01  
-**Commit**: Modul 2 started - PresetSummaryViewModel and PresetListViewModel created
+**Dato**: 2026-02-01  
+**Commit**: [MODUL-3][TASK-3.3] Create SystemSettingsViewModel
 
 ---
 
@@ -92,8 +100,16 @@ HARDWARE TEST: ✅ SUCCESS
 
 1. ✅ Phase 5: Avalonia Presentation — **COMPLETE**
 2. ✅ Hardware Test: E2E flow verified with physical Nova System pedal
-3. 🎯 **NEXT**: Modul 2 - Preset Viewer (Display downloaded presets in UI)
-4. Fix 3 failing Presentation tests (extract UseCase interfaces) - low priority
+3. ✅ **Task 3.3**: SystemSettingsViewModel — **COMPLETE**
+   - Created ViewModel with 5 observable properties
+   - Added properties to SystemDump (MidiChannel, DeviceId, IsMidiClockEnabled, IsMidiProgramChangeEnabled, GetVersionString)
+   - Created 5 tests following TDD RED-GREEN pattern
+   - All tests passing
+4. 🎯 **NEXT**: Continue Modul 3
+   - Task 3.1: Extend SysExBuilder for System Dump Request
+   - Task 3.2: Create RequestSystemDumpUseCase
+   - Task 3.4: Create SystemSettingsView.axaml UI
+5. Fix 3 failing Presentation tests (extract UseCase interfaces) - low priority
 
 ---
 

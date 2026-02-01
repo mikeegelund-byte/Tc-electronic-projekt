@@ -10,7 +10,9 @@ Modul 1: Connection + Bank       [✅ 100% COMPLETE]
   Phase 3: Use Cases             [✅ COMPLETE]
   Phase 4: Infrastructure        [✅ COMPLETE]
   Phase 5: Presentation          [✅ 100% COMPLETE] ✓ Hardware test SUCCESS
-Modul 2-10                       [⬜ NOT STARTED] ← NEXT: Modul 2 Preset Viewer
+Modul 2: Preset Viewer           [🔄 IN PROGRESS] ← 70% complete
+Modul 3: System Viewer           [🔄 STARTED] ← Task 3.3 COMPLETE
+Modul 4-10                       [⬜ NOT STARTED]
 ```
 
 ---
@@ -21,6 +23,11 @@ Modul 2-10                       [⬜ NOT STARTED] ← NEXT: Modul 2 Preset View
 - Models/Preset.cs — 521 bytes, 78 parameters
 - Models/UserBankDump.cs — 60 presets collection
 - Models/SystemDump.cs — 527 bytes global settings
+  - ✅ MidiChannel property (0-15)
+  - ✅ DeviceId property (0-127)
+  - ✅ IsMidiClockEnabled property
+  - ✅ IsMidiProgramChangeEnabled property
+  - ✅ GetVersionString() method
 - SysEx/SysExBuilder.cs — Request builders
 - SysEx/SysExValidator.cs — Checksum validation
 
@@ -46,6 +53,11 @@ Modul 2-10                       [⬜ NOT STARTED] ← NEXT: Modul 2 Preset View
 - ViewModels/MainViewModel.cs — MVVM with 8 properties, 3 commands
   - Fixed: Added [NotifyCanExecuteChangedFor] attributes for Connect button
   - Auto-refresh MIDI ports on startup
+- ViewModels/PresetSummaryViewModel.cs — Display model for preset list items
+- ViewModels/PresetListViewModel.cs — Collection of presets
+- ViewModels/SystemSettingsViewModel.cs — ✅ NEW: Display model for system settings
+  - 5 observable properties (MidiChannel, DeviceId, MidiClockEnabled, MidiProgramChangeEnabled, Version)
+  - LoadFromDump() method to populate from SystemDump
 - MainWindow.axaml — Connection panel, Download Bank UI
 - MainWindow.axaml.cs — Code-behind (InitializeComponent)
 - **Hardware Test**: ✅ SUCCESS — Downloaded 60 presets from Nova System pedal
@@ -55,12 +67,20 @@ Modul 2-10                       [⬜ NOT STARTED] ← NEXT: Modul 2 Preset View
 ## 📊 Test Status
 
 ```
-Total tests: 167
+Total tests: 172 (5 new)
   Nova.Domain.Tests:        140 tests ✅
   Nova.Midi.Tests:          6 tests ✅
   Nova.Application.Tests:   3 tests ✅
   Nova.Infrastructure.Tests: 12 tests ✅
-  Nova.Presentation.Tests:  3 tests ❌ (Moq cannot mock sealed UseCases - deferred)
+  Nova.Presentation.Tests:  8 tests (5 new SystemSettingsViewModel tests ✅, 3 MainViewModel tests ❌)
+
+New Tests Added:
+  SystemSettingsViewModelTests:
+    - LoadFromDump_WithValidSystemDump_SetsAllProperties ✅
+    - LoadFromDump_SetsVersionString ✅
+    - MidiChannel_WithinValidRange ✅
+    - DeviceId_WithinValidRange ✅
+    - InitialState_HasEmptyVersion ✅
 
 Build: 0 warnings, 0 errors ✅
 Framework: .NET 8.0 LTS
@@ -86,22 +106,23 @@ Hardware test: ✅ SUCCESS — Downloaded 60 presets from Nova System pedal via 
 
 ## 🎯 Next Steps
 
-**✅ Phase 5 COMPLETE** (100%):
-- All tasks completed including Task 5.8 hardware test
-- Bug fixed: Connect button now activates when port selected
-- End-to-end flow verified with physical Nova System pedal
-- Successfully downloaded 60 presets via USB MIDI Interface
+**✅ Task 3.3 COMPLETE**:
+- SystemSettingsViewModel created with MVVM Toolkit pattern
+- 5 properties: MidiChannel, DeviceId, MidiClockEnabled, MidiProgramChangeEnabled, Version
+- LoadFromDump() method implemented
+- 5 tests added and passing
+- SystemDump enhanced with necessary properties
 
-**🎯 NEXT: Modul 2 - Preset Viewer**:
-- Display downloaded 60 presets in list view
-- Show preset names, categories, and basic info
-- File: tasks/07-modul2-preset-viewer.md
+**🎯 NEXT: Continue Modul 3**:
+- Task 3.1: Extend SysExBuilder for System Dump Request
+- Task 3.2: Create RequestSystemDumpUseCase
+- Task 3.4: Create SystemSettingsView.axaml UI
 
 **Known Issues (Non-Blocking)**:
-- 3 Presentation tests failing (Moq sealed class issue)
+- 3 Presentation tests failing (Moq sealed class issue - pre-existing)
 - Solution: Extract IConnectUseCase/IDownloadBankUseCase interfaces
 - Priority: LOW — does not block feature development
 
 ---
 
-**Sidst opdateret**: 2025-02-01 (Phase 5 COMPLETE, ready for Modul 2)
+**Sidst opdateret**: 2026-02-01 (Task 3.3 COMPLETE - SystemSettingsViewModel)
