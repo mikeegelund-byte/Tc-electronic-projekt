@@ -8,7 +8,8 @@
         "ms-python.vscode-pylance",
         "the0807.uv-toolkit",
         "tomoki1207.pdf",
+        "redhat.vscode-yaml",
         "github.copilot",
-        "redhat.vscode-yaml"
+        "ms-dotnettools.vscode-dotnet-modernize"
     ]
 }
