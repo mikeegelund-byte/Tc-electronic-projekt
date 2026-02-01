@@ -101,11 +101,24 @@ public static byte[] EncodeNibble(int value)
 // Decode
 public static int DecodeNibble(byte b1, byte b2, byte b3, byte b4)
 {
-    int value = (b4 << 21) | (b3 << 14) | (b2 << 7) | b1;
-    // Sign extension for negative values
-    if ((value & 0x8000000) != 0)
-        value |= unchecked((int)0xF0000000);
-    return value;
+    // Combine 4x7-bit values into single int (little-endian)
+    int rawValue = (b4 << 21) | (b3 << 14) | (b2 << 7) | b1;
+    return rawValue;
+}
+
+// Global/Hybrid Offset Strategy (TC Electronic Specific)
+// Used for signed dB values (e.g. -100dB, -30dB, etc.)
+public static int DecodeSignedDbValue(int rawValue)
+{
+    const int LARGE_OFFSET = 16777216; // 2^24
+
+    // Heuristic: If value is ~16M, it uses the large offset.
+    // If value is small (positive), it is a direct integer.
+    if (rawValue > 16000000)
+    {
+        return rawValue - LARGE_OFFSET;
+    }
+    return rawValue;
 }
 ```
 
