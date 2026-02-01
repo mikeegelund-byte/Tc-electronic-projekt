@@ -1,0 +1,73 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="Nova.Presentation.Views.SystemSettingsView"
+             xmlns:vm="using:Nova.Presentation.ViewModels"
+             x:DataType="vm:SystemSettingsViewModel"
+             Background="#2D2D2D"
+             Foreground="#E0E0E0">
+  
+  <ScrollViewer>
+    <StackPanel Margin="20">
+      <!-- Title -->
+      <TextBlock Text="System Settings" 
+                 FontSize="18" 
+                 FontWeight="Bold"
+                 Foreground="#FFFFFF"
+                 Margin="0,0,0,20" />
+      
+      <!-- Settings Grid -->
+      <Grid ColumnDefinitions="200,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto">
+        
+        <!-- MIDI Channel -->
+        <TextBlock Grid.Row="0" Grid.Column="0" 
+                   Text="MIDI Channel:" 
+                   Foreground="#CCCCCC"
+                   Margin="0,0,10,10" />
+        <TextBlock Grid.Row="0" Grid.Column="1" 
+                   Text="{Binding MidiChannel}"
+                   Foreground="#E0E0E0"
+                   Margin="0,0,0,10" />
+        
+        <!-- Device ID -->
+        <TextBlock Grid.Row="1" Grid.Column="0" 
+                   Text="Device ID:" 
+                   Foreground="#CCCCCC"
+                   Margin="0,0,10,10" />
+        <TextBlock Grid.Row="1" Grid.Column="1" 
+                   Text="{Binding DeviceId}"
+                   Foreground="#E0E0E0"
+                   Margin="0,0,0,10" />
+        
+        <!-- MIDI Clock Enabled -->
+        <TextBlock Grid.Row="2" Grid.Column="0" 
+                   Text="MIDI Clock:" 
+                   Foreground="#CCCCCC"
+                   Margin="0,0,10,10" />
+        <TextBlock Grid.Row="2" Grid.Column="1" 
+                   Text="{Binding MidiClockEnabled}"
+                   Foreground="#E0E0E0"
+                   Margin="0,0,0,10" />
+        
+        <!-- MIDI Program Change Enabled -->
+        <TextBlock Grid.Row="3" Grid.Column="0" 
+                   Text="Program Change:" 
+                   Foreground="#CCCCCC"
+                   Margin="0,0,10,10" />
+        <TextBlock Grid.Row="3" Grid.Column="1" 
+                   Text="{Binding MidiProgramChangeEnabled}"
+                   Foreground="#E0E0E0"
+                   Margin="0,0,0,10" />
+        
+        <!-- Version -->
+        <TextBlock Grid.Row="4" Grid.Column="0" 
+                   Text="Version:" 
+                   Foreground="#CCCCCC"
+                   Margin="0,0,10,0" />
+        <TextBlock Grid.Row="4" Grid.Column="1" 
+                   Text="{Binding Version}"
+                   Foreground="#E0E0E0" />
+      </Grid>
+    </StackPanel>
+  </ScrollViewer>
+  
+</UserControl>

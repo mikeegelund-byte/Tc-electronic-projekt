@@ -1,18 +1,19 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Nova.Application.UseCases;
+using Nova.Domain.Models;
 using Nova.Infrastructure.Midi;
 using Nova.Midi;
-using ConnectUseCase = Nova.Application.UseCases.ConnectUseCase;
-using DownloadBankUseCase = Nova.Application.UseCases.DownloadBankUseCase;
 
 namespace Nova.Presentation.ViewModels;
 
 public partial class MainViewModel : ObservableObject
 {
     private readonly IMidiPort _midiPort;
-    private readonly ConnectUseCase _connectUseCase;
-    private readonly DownloadBankUseCase _downloadBankUseCase;
+    private readonly IConnectUseCase _connectUseCase;
+    private readonly IDownloadBankUseCase _downloadBankUseCase;
+    private UserBankDump? _currentBank;
 
     [ObservableProperty]
     private ObservableCollection<string> _availablePorts = new();
@@ -37,10 +38,13 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty]
     private PresetListViewModel _presetList = new();
 
+    [ObservableProperty]
+    private PresetDetailViewModel _presetDetail = new();
+
     public MainViewModel(
         IMidiPort midiPort,
-        ConnectUseCase connectUseCase,
-        DownloadBankUseCase downloadBankUseCase)
+        IConnectUseCase connectUseCase,
+        IDownloadBankUseCase downloadBankUseCase)
     {
         _midiPort = midiPort;
         _connectUseCase = connectUseCase;
@@ -48,6 +52,15 @@ public partial class MainViewModel : ObservableObject
         
         // Auto-refresh ports on startup
         RefreshPorts();
+        
+        // Subscribe to preset selection changes
+        PresetList.PropertyChanged += (sender, e) =>
+        {
+            if (e.PropertyName == nameof(PresetListViewModel.SelectedPreset))
+            {
+                OnPresetSelectionChanged();
+            }
+        };
     }
 
     [RelayCommand]
@@ -101,6 +114,9 @@ public partial class MainViewModel : ObservableObject
                 StatusMessage = $"Downloaded {bank.Presets.Length} presets successfully";
                 DownloadProgress = 100;
                 
+                // Store the bank for later preset retrieval
+                _currentBank = bank;
+                
                 // Load presets into list view
                 PresetList.LoadFromBank(bank);
             }
@@ -122,4 +138,27 @@ public partial class MainViewModel : ObservableObject
     }
 
     private bool CanDownload() => IsConnected && !IsDownloading;
+
+    /// <summary>
+    /// Handles preset selection changes and loads the full preset details.
+    /// </summary>
+    private void OnPresetSelectionChanged()
+    {
+        var selectedPreset = PresetList.SelectedPreset;
+        
+        if (selectedPreset != null && _currentBank != null)
+        {
+            // Find the full preset in the bank
+            var fullPreset = _currentBank.Presets.FirstOrDefault(p => p?.Number == selectedPreset.Number);
+            
+            if (fullPreset != null)
+            {
+                PresetDetail.LoadFromPreset(fullPreset);
+            }
+        }
+        else
+        {
+            PresetDetail.LoadFromPreset(null);
+        }
+    }
 }

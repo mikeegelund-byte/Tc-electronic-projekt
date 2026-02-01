@@ -10,8 +10,8 @@ Modul 1: Connection + Bank       [✅ 100% COMPLETE]
   Phase 3: Use Cases             [✅ COMPLETE]
   Phase 4: Infrastructure        [✅ COMPLETE]
   Phase 5: Presentation          [✅ 100% COMPLETE] ✓ Hardware test SUCCESS
-Modul 2: Preset Viewer           [🔄 IN PROGRESS] ← 70% complete
-Modul 3: System Viewer           [🔄 STARTED] ← Task 3.3 COMPLETE
+Modul 2: Preset Viewer           [🔄 IN PROGRESS] 70%
+Modul 3: System Viewer           [🔄 IN PROGRESS] Task 3.1 COMPLETE
 Modul 4-10                       [⬜ NOT STARTED]
 ```
 
@@ -19,16 +19,11 @@ Modul 4-10                       [⬜ NOT STARTED]
 
 ## 📂 Completed Layers
 
-### Nova.Domain ✅ Updated
+### Nova.Domain ✅ 100%
 - Models/Preset.cs — 521 bytes, 78 parameters
 - Models/UserBankDump.cs — 60 presets collection
 - Models/SystemDump.cs — 527 bytes global settings
-  - ✅ MidiChannel property (0-15)
-  - ✅ DeviceId property (0-127)
-  - ✅ IsMidiClockEnabled property
-  - ✅ IsMidiProgramChangeEnabled property
-  - ✅ GetVersionString() method
-- SysEx/SysExBuilder.cs — Request builders
+- Midi/SysExBuilder.cs — Request builders (Bank + System Dump)
 - SysEx/SysExValidator.cs — Checksum validation
 
 ### Nova.Application ✅ 100%
@@ -53,37 +48,29 @@ Modul 4-10                       [⬜ NOT STARTED]
 - ViewModels/MainViewModel.cs — MVVM with 8 properties, 3 commands
   - Fixed: Added [NotifyCanExecuteChangedFor] attributes for Connect button
   - Auto-refresh MIDI ports on startup
-- ViewModels/PresetSummaryViewModel.cs — Display model for preset list items
-- ViewModels/PresetListViewModel.cs — Collection of presets
-- ViewModels/SystemSettingsViewModel.cs — ✅ NEW: Display model for system settings
-  - 5 observable properties (MidiChannel, DeviceId, MidiClockEnabled, MidiProgramChangeEnabled, Version)
-  - LoadFromDump() method to populate from SystemDump
 - MainWindow.axaml — Connection panel, Download Bank UI
 - MainWindow.axaml.cs — Code-behind (InitializeComponent)
+- **Modul 2 Task 2.5**: ✅ PresetSummaryViewModel unit tests (12/12 passing)
 - **Hardware Test**: ✅ SUCCESS — Downloaded 60 presets from Nova System pedal
+- **Modul 2 Complete**: ✅ All tasks 2.1-2.6 done, ready for manual hardware test
 
 ---
 
 ## 📊 Test Status
 
 ```
-Total tests: 172 (5 new)
+Total tests: 167
   Nova.Domain.Tests:        140 tests ✅
   Nova.Midi.Tests:          6 tests ✅
-  Nova.Application.Tests:   3 tests ✅
+  Nova.Application.Tests:   6 tests ✅ (includes RequestSystemDumpUseCase + File I/O + Bank Manager)
   Nova.Infrastructure.Tests: 12 tests ✅
-  Nova.Presentation.Tests:  8 tests (5 new SystemSettingsViewModel tests ✅, 3 MainViewModel tests ❌)
+  Nova.Presentation.Tests:  3 tests ❌ (Moq cannot mock sealed UseCases - deferred)
 
-New Tests Added:
-  SystemSettingsViewModelTests:
-    - LoadFromDump_WithValidSystemDump_SetsAllProperties ✅
-    - LoadFromDump_SetsVersionString ✅
-    - MidiChannel_WithinValidRange ✅
-    - DeviceId_WithinValidRange ✅
-    - InitialState_HasEmptyVersion ✅
-
-Build: 0 warnings, 0 errors ✅
+Build: 0 warnings, 0 errors ✅ GREEN
 Framework: .NET 8.0 LTS
+App Status: ✅ Fully functional with Tab-based UI Dashboard
+Hardware Test: ✅ SUCCESS — Downloaded 60 presets from Nova System pedal
+```
 App runs: ✅ UI displays correctly
 Hardware test: ✅ SUCCESS — Downloaded 60 presets from Nova System pedal via USB MIDI
 ```
@@ -106,17 +93,16 @@ Hardware test: ✅ SUCCESS — Downloaded 60 presets from Nova System pedal via 
 
 ## 🎯 Next Steps
 
-**✅ Task 3.3 COMPLETE**:
-- SystemSettingsViewModel created with MVVM Toolkit pattern
-- 5 properties: MidiChannel, DeviceId, MidiClockEnabled, MidiProgramChangeEnabled, Version
-- LoadFromDump() method implemented
-- 5 tests added and passing
-- SystemDump enhanced with necessary properties
+**✅ Phase 5 COMPLETE** (100%):
+- All tasks completed including Task 5.8 hardware test
+- Bug fixed: Connect button now activates when port selected
+- End-to-end flow verified with physical Nova System pedal
+- Successfully downloaded 60 presets via USB MIDI Interface
 
-**🎯 NEXT: Continue Modul 3**:
-- Task 3.1: Extend SysExBuilder for System Dump Request
-- Task 3.2: Create RequestSystemDumpUseCase
-- Task 3.4: Create SystemSettingsView.axaml UI
+**🎯 NEXT: Modul 2 - Preset Viewer**:
+- Display downloaded 60 presets in list view
+- Show preset names, categories, and basic info
+- File: tasks/07-modul2-preset-viewer.md
 
 **Known Issues (Non-Blocking)**:
 - 3 Presentation tests failing (Moq sealed class issue - pre-existing)
@@ -125,4 +111,4 @@ Hardware test: ✅ SUCCESS — Downloaded 60 presets from Nova System pedal via 
 
 ---
 
-**Sidst opdateret**: 2026-02-01 (Task 3.3 COMPLETE - SystemSettingsViewModel)
+**Sidst opdateret**: 2025-02-01 (Phase 5 COMPLETE, ready for Modul 2)
