@@ -8,11 +8,12 @@
 ## PIPELINE TRIN 1: Læs disse filer (i denne rækkefølge)
 
 ```
-1. llm-build-system/memory/SESSION_MEMORY.md
-2. llm-build-system/memory/BUILD_STATE.md
-3. PROGRESS.md (rod-mappen)
-4. tasks/00-index.md
-5. Den aktuelle task-fil (se PROGRESS.md for hvilken)
+1. MASTER_FILE_INDEX.md (rod-mappen) — Oversigt over ALLE filer
+2. llm-build-system/memory/SESSION_MEMORY.md
+3. llm-build-system/memory/BUILD_STATE.md
+4. PROGRESS.md (rod-mappen)
+5. tasks/00-index.md
+6. Den aktuelle task-fil (se PROGRESS.md for hvilken)
 ```
 
 Læs HELE filen. Ikke kun overskrifter.
