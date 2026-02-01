@@ -10,9 +10,9 @@
 
 ## 🎯 NUVÆRENDE TASK
 
-**Fil**: `tasks/07-modul2-preset-viewer.md`  
-**Task**: Modul 2 - Preset Viewer  
-**Status**: 🔄 IN PROGRESS (Tasks 2.1-2.4 done, working on 2.5 tests)
+**Fil**: `tasks/08-modul3-system-viewer.md`  
+**Task**: Modul 3 - System Viewer (Task 3.4)  
+**Status**: ✅ Task 3.4 COMPLETE (SystemSettingsView.axaml UI created)
 
 ---
 
@@ -27,7 +27,7 @@
 | 1.4 | Infrastructure | ✅ DONE | 100% |
 | 1.5 | Presentation | ✅ DONE | 100% |
 | 2 | Preset Viewer | 🔄 IN PROGRESS | 70% |
-| 3 | System Viewer | ⬜ TODO | 0% |
+| 3 | System Viewer | 🔄 IN PROGRESS | 25% |
 | 4 | System Editor | ⬜ TODO | 0% |
 | 5 | Preset Detail | ⬜ TODO | 0% |
 | 6 | Preset Editor | ⬜ TODO | 0% |
@@ -83,8 +83,8 @@ HARDWARE TEST: ✅ SUCCESS
 
 ## 📅 SIDST OPDATERET
 
-**Dato**: 2025-02-01  
-**Commit**: Modul 2 started - PresetSummaryViewModel and PresetListViewModel created
+**Dato**: 2026-02-01  
+**Commit**: [MODUL-3][TASK-3.4] Create SystemSettingsView.axaml UI
 
 ---
 
@@ -92,8 +92,10 @@ HARDWARE TEST: ✅ SUCCESS
 
 1. ✅ Phase 5: Avalonia Presentation — **COMPLETE**
 2. ✅ Hardware Test: E2E flow verified with physical Nova System pedal
-3. 🎯 **NEXT**: Modul 2 - Preset Viewer (Display downloaded presets in UI)
-4. Fix 3 failing Presentation tests (extract UseCase interfaces) - low priority
+3. ✅ Task 3.4: SystemSettingsView.axaml UI created
+4. 🎯 **NEXT**: Tasks 3.1-3.3 (System dump request and ViewModel)
+5. Continue Modul 2 - Preset Viewer
+6. Fix 3 failing Presentation tests (extract UseCase interfaces) - low priority
 
 ---
 

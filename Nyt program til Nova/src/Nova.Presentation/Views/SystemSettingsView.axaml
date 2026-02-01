@@ -1,0 +1,33 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Nova.Presentation.ViewModels"
+             x:Class="Nova.Presentation.Views.SystemSettingsView"
+             x:DataType="vm:SystemSettingsViewModel">
+  
+  <Border Background="#2D2D2D" Padding="20" CornerRadius="8">
+    <StackPanel Spacing="15">
+      <TextBlock Text="System Settings" FontSize="18" FontWeight="Bold" Foreground="#FFFFFF" />
+      
+      <Grid ColumnDefinitions="200,*" RowDefinitions="Auto,Auto,Auto,Auto" RowSpacing="10" ColumnSpacing="10">
+        <!-- MIDI Channel -->
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="MIDI Channel:" Foreground="#CCCCCC" />
+        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding MidiChannel}" Foreground="#FFFFFF" />
+        
+        <!-- Device ID -->
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Device ID:" Foreground="#CCCCCC" />
+        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding DeviceId}" Foreground="#FFFFFF" />
+        
+        <!-- MIDI Clock Enabled -->
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="MIDI Clock:" Foreground="#CCCCCC" />
+        <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding MidiClockEnabled}" Foreground="#FFFFFF" />
+        
+        <!-- MIDI Program Change Enabled -->
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="Program Change:" Foreground="#CCCCCC" />
+        <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding MidiProgramChangeEnabled}" Foreground="#FFFFFF" />
+      </Grid>
+      
+      <TextBlock Text="{Binding Version, StringFormat='Version: {0}'}" Foreground="#999999" />
+    </StackPanel>
+  </Border>
+  
+</UserControl>

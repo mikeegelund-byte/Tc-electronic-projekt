@@ -10,7 +10,9 @@ Modul 1: Connection + Bank       [✅ 100% COMPLETE]
   Phase 3: Use Cases             [✅ COMPLETE]
   Phase 4: Infrastructure        [✅ COMPLETE]
   Phase 5: Presentation          [✅ 100% COMPLETE] ✓ Hardware test SUCCESS
-Modul 2-10                       [⬜ NOT STARTED] ← NEXT: Modul 2 Preset Viewer
+Modul 2: Preset Viewer           [🔄 70% IN PROGRESS]
+Modul 3: System Viewer           [🔄 25% IN PROGRESS] ← Task 3.4 DONE
+Modul 4-10                       [⬜ NOT STARTED]
 ```
 
 ---
@@ -48,6 +50,12 @@ Modul 2-10                       [⬜ NOT STARTED] ← NEXT: Modul 2 Preset View
   - Auto-refresh MIDI ports on startup
 - MainWindow.axaml — Connection panel, Download Bank UI
 - MainWindow.axaml.cs — Code-behind (InitializeComponent)
+- ViewModels/PresetListViewModel.cs — Preset list display
+- ViewModels/PresetSummaryViewModel.cs — Preset summary
+- Views/PresetListView.axaml — Preset list UI
+- **NEW**: ViewModels/SystemSettingsViewModel.cs — System settings (stub)
+- **NEW**: Views/SystemSettingsView.axaml — Read-only system settings UI
+- **NEW**: Views/SystemSettingsView.axaml.cs — Code-behind (minimal)
 - **Hardware Test**: ✅ SUCCESS — Downloaded 60 presets from Nova System pedal
 
 ---
@@ -86,16 +94,17 @@ Hardware test: ✅ SUCCESS — Downloaded 60 presets from Nova System pedal via 
 
 ## 🎯 Next Steps
 
-**✅ Phase 5 COMPLETE** (100%):
-- All tasks completed including Task 5.8 hardware test
-- Bug fixed: Connect button now activates when port selected
-- End-to-end flow verified with physical Nova System pedal
-- Successfully downloaded 60 presets via USB MIDI Interface
+**✅ Task 3.4 COMPLETE**:
+- Created SystemSettingsView.axaml with read-only UI layout
+- Created SystemSettingsViewModel.cs (stub for compilation)
+- Created SystemSettingsView.axaml.cs with minimal code-behind
+- Build verified: 0 errors, 0 warnings
+- Dark theme applied (#2D2D2D) consistent with PresetListView
 
-**🎯 NEXT: Modul 2 - Preset Viewer**:
-- Display downloaded 60 presets in list view
-- Show preset names, categories, and basic info
-- File: tasks/07-modul2-preset-viewer.md
+**🎯 NEXT Tasks**:
+- Task 3.1-3.3: System dump request and ViewModel implementation
+- Modul 2: Preset Viewer (continue development)
+- File: tasks/08-modul3-system-viewer.md
 
 **Known Issues (Non-Blocking)**:
 - 3 Presentation tests failing (Moq sealed class issue)
@@ -104,4 +113,4 @@ Hardware test: ✅ SUCCESS — Downloaded 60 presets from Nova System pedal via 
 
 ---
 
-**Sidst opdateret**: 2025-02-01 (Phase 5 COMPLETE, ready for Modul 2)
+**Sidst opdateret**: 2026-02-01 (Task 3.4 COMPLETE - SystemSettingsView.axaml created)
