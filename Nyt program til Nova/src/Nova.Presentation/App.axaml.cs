@@ -38,9 +38,12 @@ public partial class App : global::Avalonia.Application
 
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
+            var mainViewModel = Services.GetRequiredService<MainViewModel>();
+            mainViewModel.Initialize(); // Auto-refresh MIDI ports on startup
+            
             desktop.MainWindow = new MainWindow
             {
-                DataContext = Services.GetRequiredService<MainViewModel>()
+                DataContext = mainViewModel
             };
         }
 

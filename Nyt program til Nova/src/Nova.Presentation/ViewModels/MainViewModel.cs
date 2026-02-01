@@ -46,6 +46,15 @@ public partial class MainViewModel : ObservableObject
         _downloadBankUseCase = downloadBankUseCase;
     }
 
+    /// <summary>
+    /// Initialize the ViewModel by refreshing available MIDI ports.
+    /// Call this after the ViewModel is created but before the UI is shown.
+    /// </summary>
+    public void Initialize()
+    {
+        RefreshPorts();
+    }
+
     [RelayCommand]
     private void RefreshPorts()
     {
