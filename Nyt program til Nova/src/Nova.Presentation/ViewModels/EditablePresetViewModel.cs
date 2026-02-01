@@ -15,6 +15,9 @@ namespace Nova.Presentation.ViewModels;
 /// </summary>
 public partial class EditablePresetViewModel : ObservableValidator
 {
+    private const int MaxPresetNameLength = 24;
+    private const int PresetNameOffset = 9;
+    
     private readonly UpdatePresetUseCase _updatePresetUseCase;
     private readonly IMidiPort _midiPort;
     private readonly ILogger<EditablePresetViewModel>? _logger;
@@ -27,7 +30,7 @@ public partial class EditablePresetViewModel : ObservableValidator
 
     [ObservableProperty]
     [Required(ErrorMessage = "Preset name is required")]
-    [StringLength(24, ErrorMessage = "Preset name cannot exceed 24 characters")]
+    [StringLength(MaxPresetNameLength, ErrorMessage = "Preset name cannot exceed 24 characters")]
     [MinLength(1, ErrorMessage = "Preset name cannot be empty")]
     [NotifyDataErrorInfo]
     [NotifyPropertyChangedFor(nameof(HasChanges))]
@@ -97,8 +100,7 @@ public partial class EditablePresetViewModel : ObservableValidator
     /// </summary>
     public void LoadPreset(Preset preset)
     {
-        if (preset == null)
-            throw new ArgumentNullException(nameof(preset));
+        ArgumentNullException.ThrowIfNull(preset);
 
         _isLoading = true;
         _originalPreset = preset;
@@ -214,8 +216,8 @@ public partial class EditablePresetViewModel : ObservableValidator
         var modifiedSysEx = (byte[])_originalPreset.RawSysEx.Clone();
 
         // Update preset name (bytes 9-32, 24 characters)
-        var nameBytes = System.Text.Encoding.ASCII.GetBytes(PresetName.PadRight(24));
-        Array.Copy(nameBytes, 0, modifiedSysEx, 9, Math.Min(nameBytes.Length, 24));
+        var nameBytes = System.Text.Encoding.ASCII.GetBytes(PresetName.PadRight(MaxPresetNameLength));
+        Array.Copy(nameBytes, 0, modifiedSysEx, PresetNameOffset, Math.Min(nameBytes.Length, MaxPresetNameLength));
 
         // Parse back to create new Preset
         var result = Preset.FromSysEx(modifiedSysEx);
