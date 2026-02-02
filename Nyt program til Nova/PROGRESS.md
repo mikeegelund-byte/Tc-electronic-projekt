@@ -13,6 +13,9 @@
 **Fil**: `tasks/10-modul5-preset-detail.md`  
 **Task**: Modul 5 - Preset Detail Viewer (Display all 7 effect blocks with parameters)  
 **Status**: 🔄 IN PROGRESS
+**Fil**: `tasks/08-modul3-system-viewer.md`  
+**Task**: Modul 3.1 - Extend SysExBuilder for System Dump Request  
+**Status**: ✅ COMPLETE (Tests pass, implementation complete)
 
 ---
 
@@ -34,6 +37,13 @@
 | 7 | Preset Management | ⬜ TODO | 0% |
 | 8 | File I/O | ⬜ TODO | 0% |
 | 9 | MIDI Mapping | ⬜ TODO | 0% |
+| 3 | System Viewer | 🔄 IN PROGRESS | 40% |
+| 4 | File I/O | ⬜ TODO | 0% |
+| 5 | Preset Editor | ⬜ TODO | 0% |
+| 6 | Bank Manager | ⬜ TODO | 0% |
+| 7 | MIDI CC Mapping | ⬜ TODO | 0% |
+| 8 | UI Dashboard | ⬜ TODO | 0% |
+| 9 | Advanced Features | ⬜ TODO | 0% |
 | 10 | Release | ⬜ TODO | 0% |
 
 ---
@@ -51,6 +61,8 @@
 | 7 | `07-modul2-preset-viewer.md` | ✅ COMPLETE |
 | 8 | `08-modul3-system-viewer.md` | ✅ COMPLETE |
 | 9 | `09-modul4-system-editor.md` | ✅ COMPLETE |
+| 8 | `08-modul3-system-viewer.md` | ⬜ TODO |
+| 9 | `09-modul4-system-editor.md` | ⬜ TODO |
 | 10 | `10-modul5-preset-detail.md` | ⬜ TODO |
 | 11 | `11-modul6-preset-editor-SONNET45.md` | ⬜ TODO |
 | 12 | `12-modul7-preset-management.md` | ⬜ TODO |
@@ -85,6 +97,8 @@ HARDWARE TEST: ✅ SUCCESS
 
 **Dato**: 2026-02-02  
 **Commit**: [MODUL-5][WIP] Create 6 additional effect ViewModels + PresetDetailViewModel (248 tests, XAML pending)
+**Dato**: 2025-02-01  
+**Commit**: [MODUL-2][TASK-2.6] Modul 2 Preset Viewer complete - ready for manual hardware test
 
 ---
 
@@ -99,6 +113,8 @@ HARDWARE TEST: ✅ SUCCESS
    - Task 5.1: ✅ 7 Effect Block ViewModels (Drive with 4 tests)
    - Task 5.2: ✅ PresetDetailViewModel composition
    - Task 5.3-5.5: ⏳ XAML views and wiring
+4. 🎯 **NEXT**: Modul 3 - System Viewer (Display global settings from pedal)
+5. Fix 3 failing Presentation tests (extract UseCase interfaces) - low priority
 
 ---
 

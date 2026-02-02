@@ -27,12 +27,10 @@ Kør disse kommandoer:
 ```powershell
 cd "c:\Users\mike_\Desktop\Tc electronic projekt\Nyt program til Nova"
 dotnet build --verbosity quiet
-dotnet test --verbosity diagnostic
+dotnet test --verbosity quiet
 ```
 
 **Krav**: 0 fejl, 0 warnings, alle tests grønne.
-
-⚠️ **VIGTIGT**: Brug ALTID `--verbosity diagnostic` på tests. Ikke `quiet`. Vi skal se PRÆCIS hvad der testes.
 
 Hvis ikke grøn: STOP. Løs problemet før du fortsætter.
 
@@ -75,10 +73,8 @@ Kør:
 
 ```powershell
 dotnet build --verbosity quiet
-dotnet test --verbosity diagnostic
+dotnet test --verbosity quiet
 ```
-
-⚠️ **TEST DISCIPLIN**: Læs HELE test outputtet. Verificer at ALLE tests kører og består.
 
 Opdater disse filer:
 
@@ -165,33 +161,13 @@ Eksempel:
 
 ## SCOPE (hvad må ændres)
 
-### Færdige moduler (kun bugfixes)
-
-| Mappe | Status | Modul |
-|-------|--------|-------|
-| `src/Nova.Domain/Models/` | 🔒 LÅST | Modul 1.2 - Domain modeller |
-| `src/Nova.Midi/` | 🔒 LÅST | Modul 1.1 - MIDI abstraktion |
-| `src/Nova.Domain/SysEx/` | 🔒 LÅST | Modul 1.2 - SysEx builders/parsers |
-
-**Regel**: Rør IKKE disse filer medmindre det er en kritisk bugfix. Spørg brugeren først.
-
-### Under udvikling
-
-| Mappe | Status | Bemærkning |
-|-------|--------|------------|
-| `src/Nova.Application/` | ✅ Aktiv | Nye use cases tilføjes løbende |
-| `src/Nova.Infrastructure/` | ✅ Aktiv | Nye implementationer tilføjes |
-| `src/Nova.Presentation/` | ✅ Aktiv | Nye views/viewmodels under udvikling |
-| `tasks/` | ✅ Opdater status | Status i task-filer opdateres |
-| `llm-build-system/memory/` | ✅ Opdater state | SESSION_MEMORY, BUILD_STATE opdateres |
-
-### Arkiverede/Read-only
-
 | Mappe | Status |
 |-------|--------|
+| `src/` | ✅ Skriv kode her |
+| `tasks/` | ✅ Opdater status |
+| `llm-build-system/memory/` | ✅ Opdater state |
 | `docs/` | ⛔ READ-ONLY |
 | `Nova manager Original/` | ⛔ READ-ONLY |
-| `archive/` | ⛔ READ-ONLY |
 | `Tc originalt materiale/` | ⛔ READ-ONLY |
 | `Arkiv/` | ⛔ READ-ONLY |
 
