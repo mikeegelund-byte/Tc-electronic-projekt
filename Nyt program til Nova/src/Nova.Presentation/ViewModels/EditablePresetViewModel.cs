@@ -243,17 +243,11 @@ public partial class EditablePresetViewModel : ObservableObject
     {
         _updatePresetUseCase = updatePresetUseCase ?? throw new ArgumentNullException(nameof(updatePresetUseCase));
         _logger = logger ?? new LoggerConfiguration().MinimumLevel.Warning().CreateLogger();
-        
-        // Create a minimal default SysEx preset (will be replaced when actual preset is loaded)
-        // Using System.Activator.CreateInstance with BindingFlags to invoke private constructor
-        var presetType = typeof(Preset);
-        var ctor = presetType.GetConstructor(
-            System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance,
-            null,
-            Type.EmptyTypes,
-            null);
-        
-        _originalPreset = (Preset)(ctor?.Invoke(null) ?? throw new InvalidOperationException("Cannot create Preset instance"));
+
+        // _originalPreset is intentionally left uninitialized here and must be set via LoadPreset().
+        // This avoids using reflection to invoke Preset's private constructor and respects its
+        // immutability and factory-based creation (e.g., Preset.FromSysEx()).
+        _originalPreset = null!;
     }
 
     /// <summary>
