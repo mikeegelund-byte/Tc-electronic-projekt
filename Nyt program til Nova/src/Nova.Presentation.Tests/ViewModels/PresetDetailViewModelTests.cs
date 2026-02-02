@@ -47,11 +47,11 @@ public class PresetDetailViewModelTests
         vm.PresetNumber.Should().Be(31);
         vm.PresetName.Should().Be("Test Preset");
         
-        // Assert - Global parameters
-        vm.TapTempo.Should().Be(preset.TapTempo);
-        vm.Routing.Should().Be(preset.Routing);
-        vm.LevelOutLeft.Should().Be(preset.LevelOutLeft);
-        vm.LevelOutRight.Should().Be(preset.LevelOutRight);
+        // Assert - Global parameters (should be clamped to valid ranges)
+        vm.TapTempo.Should().Be(Math.Clamp(preset.TapTempo, 0, 255));
+        vm.Routing.Should().Be(Math.Clamp(preset.Routing, 0, 7));
+        vm.LevelOutLeft.Should().Be(Math.Clamp(preset.LevelOutLeft, -20, 20));
+        vm.LevelOutRight.Should().Be(Math.Clamp(preset.LevelOutRight, -20, 20));
         
         // Assert - Effect switches
         vm.Compressor.IsEnabled.Should().Be(preset.CompressorEnabled);
