@@ -69,9 +69,9 @@ Domain:      144 tests ✅
 MIDI:        6 tests ✅
 Application: 36 tests ✅ (+2 Save, +4 Roundtrip)
 Infrastructure: 12 tests ✅
-Presentation: 46 tests ✅ (+3 MainViewModel commands)
-─────────────────────────
-TOTAL:       244/244 passing (100%)
+Presentation: 50 tests ✅ (+4 Drive, +3 MainVM)
+─────────────────────────────
+TOTAL:       248/248 passing (100%)
 
 HARDWARE TEST: ✅ SUCCESS
 - Connected to USB MIDI Interface
@@ -84,7 +84,7 @@ HARDWARE TEST: ✅ SUCCESS
 ## 📅 SIDST OPDATERET
 
 **Dato**: 2026-02-02  
-**Commit**: [MODUL-4][TASK-4.5] Wire Save/Cancel commands to System Settings UI (All 244 tests passing)
+**Commit**: [MODUL-5][WIP] Create 6 additional effect ViewModels + PresetDetailViewModel (248 tests, XAML pending)
 
 ---
 
@@ -95,7 +95,10 @@ HARDWARE TEST: ✅ SUCCESS
 3. ✅ Modul 2: Preset Viewer — **COMPLETE** (Tasks 2.1-2.6 done)
 4. ✅ Modul 3: System Viewer — **COMPLETE** (Display global settings from pedal)
 5. ✅ Modul 4: System Editor — **COMPLETE** (Edit and save system settings, all tasks done)
-6. 🔄 **CURRENT**: Modul 5 - Preset Detail Viewer (Display all 7 effect blocks with parameters)
+6. 🔄 **CURRENT**: Modul 5 - Preset Detail Viewer (70% - ViewModels done, XAML pending)
+   - Task 5.1: ✅ 7 Effect Block ViewModels (Drive with 4 tests)
+   - Task 5.2: ✅ PresetDetailViewModel composition
+   - Task 5.3-5.5: ⏳ XAML views and wiring
 
 ---
 
