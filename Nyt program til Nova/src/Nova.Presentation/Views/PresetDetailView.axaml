@@ -47,16 +47,40 @@
                                    Margin="0,0,0,4"/>
                         <Grid ColumnDefinitions="150,*" RowDefinitions="Auto,Auto,Auto,Auto">
                             <TextBlock Grid.Row="0" Grid.Column="0" Text="Tap Tempo:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding TapTempo, StringFormat='{}{0} ms'}" Foreground="#FFFFFF"/>
+                            <NumericUpDown Grid.Row="0" Grid.Column="1" 
+                                           Value="{Binding TapTempo}" 
+                                           Minimum="0" Maximum="255" 
+                                           Increment="1"
+                                           FormatString="N0"
+                                           Width="150"
+                                           HorizontalAlignment="Left"/>
                             
                             <TextBlock Grid.Row="1" Grid.Column="0" Text="Routing:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Routing}" Foreground="#FFFFFF"/>
+                            <NumericUpDown Grid.Row="1" Grid.Column="1" 
+                                           Value="{Binding Routing}" 
+                                           Minimum="0" Maximum="7" 
+                                           Increment="1"
+                                           FormatString="N0"
+                                           Width="150"
+                                           HorizontalAlignment="Left"/>
                             
-                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Level Out Left:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding LevelOutLeft, StringFormat='{}{0} dB'}" Foreground="#FFFFFF"/>
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Level Out Left (dB):" Foreground="#AAAAAA"/>
+                            <NumericUpDown Grid.Row="2" Grid.Column="1" 
+                                           Value="{Binding LevelOutLeft}" 
+                                           Minimum="-20" Maximum="20" 
+                                           Increment="1"
+                                           FormatString="N0"
+                                           Width="150"
+                                           HorizontalAlignment="Left"/>
                             
-                            <TextBlock Grid.Row="3" Grid.Column="0" Text="Level Out Right:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding LevelOutRight, StringFormat='{}{0} dB'}" Foreground="#FFFFFF"/>
+                            <TextBlock Grid.Row="3" Grid.Column="0" Text="Level Out Right (dB):" Foreground="#AAAAAA"/>
+                            <NumericUpDown Grid.Row="3" Grid.Column="1" 
+                                           Value="{Binding LevelOutRight}" 
+                                           Minimum="-20" Maximum="20" 
+                                           Increment="1"
+                                           FormatString="N0"
+                                           Width="150"
+                                           HorizontalAlignment="Left"/>
                         </Grid>
                     </StackPanel>
                 </Border>
@@ -71,15 +95,36 @@
                             <Ellipse Width="12" Height="12" Fill="{Binding Compressor.IsEnabled, Converter={StaticResource BoolToGreenGrayBrushConverter}}"/>
                             <TextBlock Text="Compressor" FontWeight="Bold" Foreground="#FFFFFF"/>
                         </StackPanel>
-                        <Grid ColumnDefinitions="150,*" RowDefinitions="Auto,Auto,Auto">
+                        <Grid ColumnDefinitions="150,*" RowDefinitions="Auto,Auto,Auto,Auto">
                             <TextBlock Grid.Row="0" Grid.Column="0" Text="Type:" Foreground="#AAAAAA"/>
                             <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Compressor.Type}" Foreground="#FFFFFF"/>
                             
                             <TextBlock Grid.Row="1" Grid.Column="0" Text="Drive:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Compressor.Drive}" Foreground="#FFFFFF"/>
+                            <NumericUpDown Grid.Row="1" Grid.Column="1" 
+                                           Value="{Binding Compressor.Drive}" 
+                                           Minimum="1" Maximum="20" 
+                                           Increment="1"
+                                           FormatString="N0"
+                                           Width="150"
+                                           HorizontalAlignment="Left"/>
                             
-                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Level:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Compressor.Level, StringFormat='{}{0} dB'}" Foreground="#FFFFFF"/>
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Response:" Foreground="#AAAAAA"/>
+                            <NumericUpDown Grid.Row="2" Grid.Column="1" 
+                                           Value="{Binding Compressor.Response}" 
+                                           Minimum="1" Maximum="10" 
+                                           Increment="1"
+                                           FormatString="N0"
+                                           Width="150"
+                                           HorizontalAlignment="Left"/>
+                            
+                            <TextBlock Grid.Row="3" Grid.Column="0" Text="Level (dB):" Foreground="#AAAAAA"/>
+                            <NumericUpDown Grid.Row="3" Grid.Column="1" 
+                                           Value="{Binding Compressor.Level}" 
+                                           Minimum="-12" Maximum="12" 
+                                           Increment="1"
+                                           FormatString="N0"
+                                           Width="150"
+                                           HorizontalAlignment="Left"/>
                         </Grid>
                     </StackPanel>
                 </Border>
@@ -99,10 +144,22 @@
                             <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Drive.Type}" Foreground="#FFFFFF"/>
                             
                             <TextBlock Grid.Row="1" Grid.Column="0" Text="Gain:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Drive.Gain}" Foreground="#FFFFFF"/>
+                            <NumericUpDown Grid.Row="1" Grid.Column="1" 
+                                           Value="{Binding Drive.Gain}" 
+                                           Minimum="0" Maximum="100" 
+                                           Increment="1"
+                                           FormatString="N0"
+                                           Width="150"
+                                           HorizontalAlignment="Left"/>
                             
-                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Level:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Drive.Level, StringFormat='{}{0} dB'}" Foreground="#FFFFFF"/>
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Level (dB):" Foreground="#AAAAAA"/>
+                            <NumericUpDown Grid.Row="2" Grid.Column="1" 
+                                           Value="{Binding Drive.Level}" 
+                                           Minimum="-30" Maximum="20" 
+                                           Increment="1"
+                                           FormatString="N0"
+                                           Width="150"
+                                           HorizontalAlignment="Left"/>
                         </Grid>
                     </StackPanel>
                 </Border>
@@ -122,13 +179,31 @@
                             <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Modulation.Type}" Foreground="#FFFFFF"/>
                             
                             <TextBlock Grid.Row="1" Grid.Column="0" Text="Speed:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Modulation.Speed}" Foreground="#FFFFFF"/>
+                            <NumericUpDown Grid.Row="1" Grid.Column="1" 
+                                           Value="{Binding Modulation.Speed}" 
+                                           Minimum="0" Maximum="81" 
+                                           Increment="1"
+                                           FormatString="N0"
+                                           Width="150"
+                                           HorizontalAlignment="Left"/>
                             
                             <TextBlock Grid.Row="2" Grid.Column="0" Text="Depth:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Modulation.Depth, StringFormat='{}{0}%'}" Foreground="#FFFFFF"/>
+                            <NumericUpDown Grid.Row="2" Grid.Column="1" 
+                                           Value="{Binding Modulation.Depth}" 
+                                           Minimum="0" Maximum="100" 
+                                           Increment="1"
+                                           FormatString="N0"
+                                           Width="150"
+                                           HorizontalAlignment="Left"/>
                             
-                            <TextBlock Grid.Row="3" Grid.Column="0" Text="Mix:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Modulation.Mix, StringFormat='{}{0}%'}" Foreground="#FFFFFF"/>
+                            <TextBlock Grid.Row="3" Grid.Column="0" Text="Mix (%):" Foreground="#AAAAAA"/>
+                            <NumericUpDown Grid.Row="3" Grid.Column="1" 
+                                           Value="{Binding Modulation.Mix}" 
+                                           Minimum="0" Maximum="100" 
+                                           Increment="1"
+                                           FormatString="N0"
+                                           Width="150"
+                                           HorizontalAlignment="Left"/>
                         </Grid>
                     </StackPanel>
                 </Border>
@@ -147,14 +222,32 @@
                             <TextBlock Grid.Row="0" Grid.Column="0" Text="Type:" Foreground="#AAAAAA"/>
                             <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Delay.Type}" Foreground="#FFFFFF"/>
                             
-                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Time:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Delay.Time, StringFormat='{}{0} ms'}" Foreground="#FFFFFF"/>
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Time (ms):" Foreground="#AAAAAA"/>
+                            <NumericUpDown Grid.Row="1" Grid.Column="1" 
+                                           Value="{Binding Delay.Time}" 
+                                           Minimum="0" Maximum="2000" 
+                                           Increment="1"
+                                           FormatString="N0"
+                                           Width="150"
+                                           HorizontalAlignment="Left"/>
                             
-                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Feedback:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Delay.Feedback, StringFormat='{}{0}%'}" Foreground="#FFFFFF"/>
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Feedback (%):" Foreground="#AAAAAA"/>
+                            <NumericUpDown Grid.Row="2" Grid.Column="1" 
+                                           Value="{Binding Delay.Feedback}" 
+                                           Minimum="0" Maximum="100" 
+                                           Increment="1"
+                                           FormatString="N0"
+                                           Width="150"
+                                           HorizontalAlignment="Left"/>
                             
-                            <TextBlock Grid.Row="3" Grid.Column="0" Text="Mix:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Delay.Mix, StringFormat='{}{0}%'}" Foreground="#FFFFFF"/>
+                            <TextBlock Grid.Row="3" Grid.Column="0" Text="Mix (%):" Foreground="#AAAAAA"/>
+                            <NumericUpDown Grid.Row="3" Grid.Column="1" 
+                                           Value="{Binding Delay.Mix}" 
+                                           Minimum="0" Maximum="100" 
+                                           Increment="1"
+                                           FormatString="N0"
+                                           Width="150"
+                                           HorizontalAlignment="Left"/>
                         </Grid>
                     </StackPanel>
                 </Border>
@@ -169,15 +262,133 @@
                             <Ellipse Width="12" Height="12" Fill="{Binding Reverb.IsEnabled, Converter={StaticResource BoolToGreenGrayBrushConverter}}"/>
                             <TextBlock Text="Reverb" FontWeight="Bold" Foreground="#FFFFFF"/>
                         </StackPanel>
-                        <Grid ColumnDefinitions="150,*" RowDefinitions="Auto,Auto,Auto">
+                        <Grid ColumnDefinitions="150,*" RowDefinitions="Auto,Auto,Auto,Auto">
                             <TextBlock Grid.Row="0" Grid.Column="0" Text="Type:" Foreground="#AAAAAA"/>
                             <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Reverb.Type}" Foreground="#FFFFFF"/>
                             
-                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Decay:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Reverb.Decay}" Foreground="#FFFFFF"/>
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Decay (%):" Foreground="#AAAAAA"/>
+                            <NumericUpDown Grid.Row="1" Grid.Column="1" 
+                                           Value="{Binding Reverb.Decay}" 
+                                           Minimum="0" Maximum="100" 
+                                           Increment="1"
+                                           FormatString="N0"
+                                           Width="150"
+                                           HorizontalAlignment="Left"/>
                             
-                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Level:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Reverb.Level, StringFormat='{}{0}%'}" Foreground="#FFFFFF"/>
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="PreDelay (ms):" Foreground="#AAAAAA"/>
+                            <NumericUpDown Grid.Row="2" Grid.Column="1" 
+                                           Value="{Binding Reverb.PreDelay}" 
+                                           Minimum="0" Maximum="200" 
+                                           Increment="1"
+                                           FormatString="N0"
+                                           Width="150"
+                                           HorizontalAlignment="Left"/>
+                            
+                            <TextBlock Grid.Row="3" Grid.Column="0" Text="Level (%):" Foreground="#AAAAAA"/>
+                            <NumericUpDown Grid.Row="3" Grid.Column="1" 
+                                           Value="{Binding Reverb.Level}" 
+                                           Minimum="0" Maximum="100" 
+                                           Increment="1"
+                                           FormatString="N0"
+                                           Width="150"
+                                           HorizontalAlignment="Left"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- EQ/Gate Section -->
+                <Border Background="#1E1E1E" 
+                        Padding="12" 
+                        CornerRadius="4"
+                        IsVisible="{Binding HasPreset}">
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="EQ / Gate" FontWeight="Bold" Foreground="#FFFFFF"/>
+                        <Grid ColumnDefinitions="150,*" RowDefinitions="Auto,Auto,Auto,Auto">
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Band 1 Gain (dB):" Foreground="#AAAAAA"/>
+                            <NumericUpDown Grid.Row="0" Grid.Column="1" 
+                                           Value="{Binding EqGate.EqBand1Gain}" 
+                                           Minimum="-12" Maximum="12" 
+                                           Increment="1"
+                                           FormatString="N0"
+                                           Width="150"
+                                           HorizontalAlignment="Left"/>
+                            
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Band 2 Gain (dB):" Foreground="#AAAAAA"/>
+                            <NumericUpDown Grid.Row="1" Grid.Column="1" 
+                                           Value="{Binding EqGate.EqBand2Gain}" 
+                                           Minimum="-12" Maximum="12" 
+                                           Increment="1"
+                                           FormatString="N0"
+                                           Width="150"
+                                           HorizontalAlignment="Left"/>
+                            
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Band 3 Gain (dB):" Foreground="#AAAAAA"/>
+                            <NumericUpDown Grid.Row="2" Grid.Column="1" 
+                                           Value="{Binding EqGate.EqBand3Gain}" 
+                                           Minimum="-12" Maximum="12" 
+                                           Increment="1"
+                                           FormatString="N0"
+                                           Width="150"
+                                           HorizontalAlignment="Left"/>
+                            
+                            <TextBlock Grid.Row="3" Grid.Column="0" Text="Gate Threshold (dB):" Foreground="#AAAAAA"/>
+                            <NumericUpDown Grid.Row="3" Grid.Column="1" 
+                                           Value="{Binding EqGate.GateThreshold}" 
+                                           Minimum="-60" Maximum="0" 
+                                           Increment="1"
+                                           FormatString="N0"
+                                           Width="150"
+                                           HorizontalAlignment="Left"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Pitch Section -->
+                <Border Background="#1E1E1E" 
+                        Padding="12" 
+                        CornerRadius="4"
+                        IsVisible="{Binding HasPreset}">
+                    <StackPanel Spacing="8">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Ellipse Width="12" Height="12" Fill="{Binding Pitch.IsEnabled, Converter={StaticResource BoolToGreenGrayBrushConverter}}"/>
+                            <TextBlock Text="Pitch" FontWeight="Bold" Foreground="#FFFFFF"/>
+                        </StackPanel>
+                        <Grid ColumnDefinitions="150,*" RowDefinitions="Auto,Auto,Auto,Auto">
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Type:" Foreground="#AAAAAA"/>
+                            <NumericUpDown Grid.Row="0" Grid.Column="1" 
+                                           Value="{Binding Pitch.Type}" 
+                                           Minimum="0" Maximum="4" 
+                                           Increment="1"
+                                           FormatString="N0"
+                                           Width="150"
+                                           HorizontalAlignment="Left"/>
+                            
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Voice 1 (cents):" Foreground="#AAAAAA"/>
+                            <NumericUpDown Grid.Row="1" Grid.Column="1" 
+                                           Value="{Binding Pitch.Voice1}" 
+                                           Minimum="-100" Maximum="100" 
+                                           Increment="1"
+                                           FormatString="N0"
+                                           Width="150"
+                                           HorizontalAlignment="Left"/>
+                            
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Voice 2 (cents):" Foreground="#AAAAAA"/>
+                            <NumericUpDown Grid.Row="2" Grid.Column="1" 
+                                           Value="{Binding Pitch.Voice2}" 
+                                           Minimum="-100" Maximum="100" 
+                                           Increment="1"
+                                           FormatString="N0"
+                                           Width="150"
+                                           HorizontalAlignment="Left"/>
+                            
+                            <TextBlock Grid.Row="3" Grid.Column="0" Text="Mix (%):" Foreground="#AAAAAA"/>
+                            <NumericUpDown Grid.Row="3" Grid.Column="1" 
+                                           Value="{Binding Pitch.Mix}" 
+                                           Minimum="0" Maximum="100" 
+                                           Increment="1"
+                                           FormatString="N0"
+                                           Width="150"
+                                           HorizontalAlignment="Left"/>
                         </Grid>
                     </StackPanel>
                 </Border>
