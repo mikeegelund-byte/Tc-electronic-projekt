@@ -4,7 +4,7 @@
 **Duration**: 1 week  
 **Prerequisite**: Modul 7 complete  
 **Output**: Import/export .syx files compatible with NovaManager  
-
+**********Noget af dette modul er allerede lavet, men ikke dokumenteret i opgavelisten.**********
 ---
 
 ## Exit Criteria

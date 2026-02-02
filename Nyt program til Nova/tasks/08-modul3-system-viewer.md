@@ -119,10 +119,10 @@ public partial class SystemSettingsViewModel : ObservableObject
 
 ## Completion Checklist
 
-- [ ] All tests pass
-- [ ] System settings display correctly
-- [ ] Update task index and BUILD_STATE.md
-- [ ] Commit: `[MODUL-3] Implement System Dump Viewer`
+- [x] All tests pass
+- [x] System settings display correctly
+- [x] Update task index and BUILD_STATE.md
+- [x] Commit: `[MODUL-3] Implement System Dump Viewer`
 
 ---
 
