@@ -10,9 +10,9 @@
 
 ## 🎯 NUVÆRENDE TASK
 
-**Fil**: `tasks/08-modul3-system-viewer.md`  
-**Task**: Modul 3.1 - Extend SysExBuilder for System Dump Request  
-**Status**: ✅ COMPLETE (Tests pass, implementation complete)
+**Fil**: `tasks/09-modul4-system-editor.md`  
+**Task**: Modul 4 - System Editor (Edit and save system settings to pedal)  
+**Status**: 🔄 IN PROGRESS (Tasks 4.1-4.2-4.5 done, 4.3-4.4 require SONNET 4.5+)
 
 ---
 
@@ -27,13 +27,13 @@
 | 1.4 | Infrastructure | ✅ DONE | 100% |
 | 1.5 | Presentation | ✅ DONE | 100% |
 | 2 | Preset Viewer | ✅ COMPLETE | 100% |
-| 3 | System Viewer | 🔄 IN PROGRESS | 40% |
-| 4 | File I/O | ⬜ TODO | 0% |
-| 5 | Preset Editor | ⬜ TODO | 0% |
-| 6 | Bank Manager | ⬜ TODO | 0% |
-| 7 | MIDI CC Mapping | ⬜ TODO | 0% |
-| 8 | UI Dashboard | ⬜ TODO | 0% |
-| 9 | Advanced Features | ⬜ TODO | 0% |
+| 3 | System Viewer | ✅ DONE | 100% |
+| 4 | System Editor | 🔄 IN PROGRESS | 60% |
+| 5 | Preset Detail | ⬜ TODO | 0% |
+| 6 | Preset Editor | ⬜ TODO | 0% |
+| 7 | Preset Management | ⬜ TODO | 0% |
+| 8 | File I/O | ⬜ TODO | 0% |
+| 9 | MIDI Mapping | ⬜ TODO | 0% |
 | 10 | Release | ⬜ TODO | 0% |
 
 ---
@@ -49,7 +49,7 @@
 | 5 | `05-modul1-phase4-infrastructure.md` | ✅ DONE |
 | 6 | `06-modul1-phase5-presentation-SONNET45.md` | ✅ DONE |
 | 7 | `07-modul2-preset-viewer.md` | ✅ COMPLETE |
-| 8 | `08-modul3-system-viewer.md` | ⬜ TODO |
+| 8 | `08-modul3-system-viewer.md` | ✅ DONE |
 | 9 | `09-modul4-system-editor.md` | ⬜ TODO |
 | 10 | `10-modul5-preset-detail.md` | ⬜ TODO |
 | 11 | `11-modul6-preset-editor-SONNET45.md` | ⬜ TODO |
@@ -67,11 +67,11 @@
 ```
 Domain:      144 tests ✅
 MIDI:        6 tests ✅
-Application: 6 tests ✅ (includes RequestSystemDumpUseCase)
+Application: 13 tests ✅
 Infrastructure: 12 tests ✅
-Presentation: 21 tests ✅ (MainViewModel tests fixed!)
+Presentation: 41 tests ✅ (+7 dirty tracking tests)
 ─────────────────────────
-TOTAL:       189/189 passing (100%)
+TOTAL:       216/216 passing (100%)
 
 HARDWARE TEST: ✅ SUCCESS
 - Connected to USB MIDI Interface
@@ -83,8 +83,8 @@ HARDWARE TEST: ✅ SUCCESS
 
 ## 📅 SIDST OPDATERET
 
-**Dato**: 2025-02-01  
-**Commit**: [MODUL-2][TASK-2.6] Modul 2 Preset Viewer complete - ready for manual hardware test
+**Dato**: 2026-02-02  
+**Commit**: [MODUL-4][TASK-4.1-4.2-4.5] Make SystemSettings editable with dirty tracking
 
 ---
 
@@ -93,8 +93,8 @@ HARDWARE TEST: ✅ SUCCESS
 1. ✅ Phase 5: Avalonia Presentation — **COMPLETE**
 2. ✅ Hardware Test: E2E flow verified with physical Nova System pedal
 3. ✅ Modul 2: Preset Viewer — **COMPLETE** (Tasks 2.1-2.6 done)
-4. 🎯 **NEXT**: Modul 3 - System Viewer (Display global settings from pedal)
-5. Fix 3 failing Presentation tests (extract UseCase interfaces) - low priority
+4. ✅ Modul 3: System Viewer — **COMPLETE** (Display global settings from pedal)
+5. 🔄 **CURRENT**: Modul 4 - System Editor (60% - Tasks 4.1-4.2-4.5 done, 4.3-4.4 require SONNET 4.5+)
 
 ---
 
