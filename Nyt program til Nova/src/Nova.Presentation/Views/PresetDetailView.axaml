@@ -47,16 +47,34 @@
                                    Margin="0,0,0,4"/>
                         <Grid ColumnDefinitions="150,*" RowDefinitions="Auto,Auto,Auto,Auto">
                             <TextBlock Grid.Row="0" Grid.Column="0" Text="Tap Tempo:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding TapTempo, StringFormat='{}{0} ms'}" Foreground="#FFFFFF"/>
+                            <NumericUpDown Grid.Row="0" Grid.Column="1" 
+                                           Value="{Binding TapTempo}" 
+                                           Minimum="0" Maximum="255" 
+                                           Increment="1" FormatString="N0"
+                                           Width="150" HorizontalAlignment="Left"/>
                             
                             <TextBlock Grid.Row="1" Grid.Column="0" Text="Routing:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Routing}" Foreground="#FFFFFF"/>
+                            <NumericUpDown Grid.Row="1" Grid.Column="1" 
+                                           Value="{Binding Routing}" 
+                                           Minimum="0" Maximum="7" 
+                                           Increment="1" FormatString="N0"
+                                           Width="150" HorizontalAlignment="Left"/>
                             
                             <TextBlock Grid.Row="2" Grid.Column="0" Text="Level Out Left:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding LevelOutLeft, StringFormat='{}{0} dB'}" Foreground="#FFFFFF"/>
+                            <NumericUpDown Grid.Row="2" Grid.Column="1" 
+                                           Value="{Binding LevelOutLeft}" 
+                                           Minimum="-20" Maximum="20" 
+                                           Increment="1" FormatString="N0"
+                                           Suffix=" dB"
+                                           Width="150" HorizontalAlignment="Left"/>
                             
                             <TextBlock Grid.Row="3" Grid.Column="0" Text="Level Out Right:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding LevelOutRight, StringFormat='{}{0} dB'}" Foreground="#FFFFFF"/>
+                            <NumericUpDown Grid.Row="3" Grid.Column="1" 
+                                           Value="{Binding LevelOutRight}" 
+                                           Minimum="-20" Maximum="20" 
+                                           Increment="1" FormatString="N0"
+                                           Suffix=" dB"
+                                           Width="150" HorizontalAlignment="Left"/>
                         </Grid>
                     </StackPanel>
                 </Border>
@@ -76,10 +94,19 @@
                             <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Compressor.Type}" Foreground="#FFFFFF"/>
                             
                             <TextBlock Grid.Row="1" Grid.Column="0" Text="Drive:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Compressor.Drive}" Foreground="#FFFFFF"/>
+                            <NumericUpDown Grid.Row="1" Grid.Column="1" 
+                                           Value="{Binding Compressor.Drive}" 
+                                           Minimum="1" Maximum="20" 
+                                           Increment="1" FormatString="N0"
+                                           Width="150" HorizontalAlignment="Left"/>
                             
                             <TextBlock Grid.Row="2" Grid.Column="0" Text="Level:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Compressor.Level, StringFormat='{}{0} dB'}" Foreground="#FFFFFF"/>
+                            <NumericUpDown Grid.Row="2" Grid.Column="1" 
+                                           Value="{Binding Compressor.Level}" 
+                                           Minimum="-12" Maximum="12" 
+                                           Increment="1" FormatString="N0"
+                                           Suffix=" dB"
+                                           Width="150" HorizontalAlignment="Left"/>
                         </Grid>
                     </StackPanel>
                 </Border>
@@ -99,10 +126,19 @@
                             <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Drive.Type}" Foreground="#FFFFFF"/>
                             
                             <TextBlock Grid.Row="1" Grid.Column="0" Text="Gain:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Drive.Gain}" Foreground="#FFFFFF"/>
+                            <NumericUpDown Grid.Row="1" Grid.Column="1" 
+                                           Value="{Binding Drive.Gain}" 
+                                           Minimum="0" Maximum="100" 
+                                           Increment="1" FormatString="N0"
+                                           Width="150" HorizontalAlignment="Left"/>
                             
                             <TextBlock Grid.Row="2" Grid.Column="0" Text="Level:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Drive.Level, StringFormat='{}{0} dB'}" Foreground="#FFFFFF"/>
+                            <NumericUpDown Grid.Row="2" Grid.Column="1" 
+                                           Value="{Binding Drive.Level}" 
+                                           Minimum="-30" Maximum="20" 
+                                           Increment="1" FormatString="N0"
+                                           Suffix=" dB"
+                                           Width="150" HorizontalAlignment="Left"/>
                         </Grid>
                     </StackPanel>
                 </Border>
