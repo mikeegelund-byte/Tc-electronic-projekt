@@ -1,9 +1,9 @@
 # PROGRESS.md — Projekt Fremskridt
 
-## 📊 TOTAL FREMSKRIDT: 70%
+## 📊 TOTAL FREMSKRIDT: 72%
 
 ```
-█████████████████████░░░░░░░░░ 70%
+█████████████████████░░░░░░░░░ 72%
 ```
 
 ---
@@ -29,7 +29,7 @@
 | 2 | Preset Viewer | ✅ COMPLETE | 100% |
 | 3 | System Viewer | ✅ COMPLETE | 100% |
 | 4 | System Editor | ✅ COMPLETE | 100% |
-| 5 | Preset Detail | 🔄 IN PROGRESS | 0% |
+| 5 | Preset Detail | 🔄 IN PROGRESS | 70% |
 | 6 | Preset Editor | ⬜ TODO | 0% |
 | 7 | Preset Management | ⬜ TODO | 0% |
 | 8 | File I/O | ⬜ TODO | 0% |
