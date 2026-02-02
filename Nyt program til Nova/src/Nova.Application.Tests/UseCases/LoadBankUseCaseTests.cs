@@ -44,6 +44,9 @@ public class LoadBankUseCaseTests
         // Act
         var result = await _useCase.ExecuteAsync(_testFilePath, progress, CancellationToken.None);
 
+        // Give Progress<T> time to complete callbacks (it posts to SynchronizationContext)
+        await Task.Delay(100);
+
         // Assert
         result.IsSuccess.Should().BeTrue();
         result.Value.Should().Be(60);
