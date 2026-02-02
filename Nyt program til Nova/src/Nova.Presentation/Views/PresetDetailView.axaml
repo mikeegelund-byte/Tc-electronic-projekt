@@ -68,18 +68,18 @@
                         IsVisible="{Binding HasPreset}">
                     <StackPanel Spacing="8">
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Ellipse Width="12" Height="12" Fill="{Binding CompressorEnabled, Converter={StaticResource BoolToGreenGrayBrushConverter}}"/>
+                            <Ellipse Width="12" Height="12" Fill="{Binding Compressor.IsEnabled, Converter={StaticResource BoolToGreenGrayBrushConverter}}"/>
                             <TextBlock Text="Compressor" FontWeight="Bold" Foreground="#FFFFFF"/>
                         </StackPanel>
                         <Grid ColumnDefinitions="150,*" RowDefinitions="Auto,Auto,Auto">
                             <TextBlock Grid.Row="0" Grid.Column="0" Text="Type:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding CompType}" Foreground="#FFFFFF"/>
+                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Compressor.Type}" Foreground="#FFFFFF"/>
                             
-                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Threshold:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding CompThreshold, StringFormat='{}{0} dB'}" Foreground="#FFFFFF"/>
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Drive:" Foreground="#AAAAAA"/>
+                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Compressor.Drive}" Foreground="#FFFFFF"/>
                             
-                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Ratio:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding CompRatio}" Foreground="#FFFFFF"/>
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Level:" Foreground="#AAAAAA"/>
+                            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Compressor.Level, StringFormat='{}{0} dB'}" Foreground="#FFFFFF"/>
                         </Grid>
                     </StackPanel>
                 </Border>
@@ -91,18 +91,18 @@
                         IsVisible="{Binding HasPreset}">
                     <StackPanel Spacing="8">
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Ellipse Width="12" Height="12" Fill="{Binding DriveEnabled, Converter={StaticResource BoolToGreenGrayBrushConverter}}"/>
+                            <Ellipse Width="12" Height="12" Fill="{Binding Drive.IsEnabled, Converter={StaticResource BoolToGreenGrayBrushConverter}}"/>
                             <TextBlock Text="Drive" FontWeight="Bold" Foreground="#FFFFFF"/>
                         </StackPanel>
                         <Grid ColumnDefinitions="150,*" RowDefinitions="Auto,Auto,Auto">
                             <TextBlock Grid.Row="0" Grid.Column="0" Text="Type:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding DriveType}" Foreground="#FFFFFF"/>
+                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Drive.Type}" Foreground="#FFFFFF"/>
                             
                             <TextBlock Grid.Row="1" Grid.Column="0" Text="Gain:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding DriveGain}" Foreground="#FFFFFF"/>
+                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Drive.Gain}" Foreground="#FFFFFF"/>
                             
                             <TextBlock Grid.Row="2" Grid.Column="0" Text="Level:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding DriveLevel, StringFormat='{}{0} dB'}" Foreground="#FFFFFF"/>
+                            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Drive.Level, StringFormat='{}{0} dB'}" Foreground="#FFFFFF"/>
                         </Grid>
                     </StackPanel>
                 </Border>
@@ -114,21 +114,21 @@
                         IsVisible="{Binding HasPreset}">
                     <StackPanel Spacing="8">
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Ellipse Width="12" Height="12" Fill="{Binding ModulationEnabled, Converter={StaticResource BoolToGreenGrayBrushConverter}}"/>
+                            <Ellipse Width="12" Height="12" Fill="{Binding Modulation.IsEnabled, Converter={StaticResource BoolToGreenGrayBrushConverter}}"/>
                             <TextBlock Text="Modulation" FontWeight="Bold" Foreground="#FFFFFF"/>
                         </StackPanel>
                         <Grid ColumnDefinitions="150,*" RowDefinitions="Auto,Auto,Auto,Auto">
                             <TextBlock Grid.Row="0" Grid.Column="0" Text="Type:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding ModType}" Foreground="#FFFFFF"/>
+                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Modulation.Type}" Foreground="#FFFFFF"/>
                             
                             <TextBlock Grid.Row="1" Grid.Column="0" Text="Speed:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding ModSpeed}" Foreground="#FFFFFF"/>
+                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Modulation.Speed}" Foreground="#FFFFFF"/>
                             
                             <TextBlock Grid.Row="2" Grid.Column="0" Text="Depth:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding ModDepth, StringFormat='{}{0}%'}" Foreground="#FFFFFF"/>
+                            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Modulation.Depth, StringFormat='{}{0}%'}" Foreground="#FFFFFF"/>
                             
                             <TextBlock Grid.Row="3" Grid.Column="0" Text="Mix:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding ModMix, StringFormat='{}{0}%'}" Foreground="#FFFFFF"/>
+                            <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Modulation.Mix, StringFormat='{}{0}%'}" Foreground="#FFFFFF"/>
                         </Grid>
                     </StackPanel>
                 </Border>
@@ -140,21 +140,21 @@
                         IsVisible="{Binding HasPreset}">
                     <StackPanel Spacing="8">
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Ellipse Width="12" Height="12" Fill="{Binding DelayEnabled, Converter={StaticResource BoolToGreenGrayBrushConverter}}"/>
+                            <Ellipse Width="12" Height="12" Fill="{Binding Delay.IsEnabled, Converter={StaticResource BoolToGreenGrayBrushConverter}}"/>
                             <TextBlock Text="Delay" FontWeight="Bold" Foreground="#FFFFFF"/>
                         </StackPanel>
                         <Grid ColumnDefinitions="150,*" RowDefinitions="Auto,Auto,Auto,Auto">
                             <TextBlock Grid.Row="0" Grid.Column="0" Text="Type:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding DelayType}" Foreground="#FFFFFF"/>
+                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Delay.Type}" Foreground="#FFFFFF"/>
                             
                             <TextBlock Grid.Row="1" Grid.Column="0" Text="Time:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding DelayTime, StringFormat='{}{0} ms'}" Foreground="#FFFFFF"/>
+                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Delay.Time, StringFormat='{}{0} ms'}" Foreground="#FFFFFF"/>
                             
                             <TextBlock Grid.Row="2" Grid.Column="0" Text="Feedback:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding DelayFeedback, StringFormat='{}{0}%'}" Foreground="#FFFFFF"/>
+                            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Delay.Feedback, StringFormat='{}{0}%'}" Foreground="#FFFFFF"/>
                             
                             <TextBlock Grid.Row="3" Grid.Column="0" Text="Mix:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding DelayMix, StringFormat='{}{0}%'}" Foreground="#FFFFFF"/>
+                            <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Delay.Mix, StringFormat='{}{0}%'}" Foreground="#FFFFFF"/>
                         </Grid>
                     </StackPanel>
                 </Border>
@@ -166,18 +166,18 @@
                         IsVisible="{Binding HasPreset}">
                     <StackPanel Spacing="8">
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Ellipse Width="12" Height="12" Fill="{Binding ReverbEnabled, Converter={StaticResource BoolToGreenGrayBrushConverter}}"/>
+                            <Ellipse Width="12" Height="12" Fill="{Binding Reverb.IsEnabled, Converter={StaticResource BoolToGreenGrayBrushConverter}}"/>
                             <TextBlock Text="Reverb" FontWeight="Bold" Foreground="#FFFFFF"/>
                         </StackPanel>
                         <Grid ColumnDefinitions="150,*" RowDefinitions="Auto,Auto,Auto">
                             <TextBlock Grid.Row="0" Grid.Column="0" Text="Type:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding ReverbType}" Foreground="#FFFFFF"/>
+                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Reverb.Type}" Foreground="#FFFFFF"/>
                             
                             <TextBlock Grid.Row="1" Grid.Column="0" Text="Decay:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding ReverbDecay}" Foreground="#FFFFFF"/>
+                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Reverb.Decay}" Foreground="#FFFFFF"/>
                             
-                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Mix:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding ReverbMix, StringFormat='{}{0}%'}" Foreground="#FFFFFF"/>
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Level:" Foreground="#AAAAAA"/>
+                            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Reverb.Level, StringFormat='{}{0}%'}" Foreground="#FFFFFF"/>
                         </Grid>
                     </StackPanel>
                 </Border>
