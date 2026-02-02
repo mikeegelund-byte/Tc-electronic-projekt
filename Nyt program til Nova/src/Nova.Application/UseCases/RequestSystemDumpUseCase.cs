@@ -6,7 +6,7 @@ using Serilog;
 
 namespace Nova.Application.UseCases;
 
-public sealed class RequestSystemDumpUseCase
+public sealed class RequestSystemDumpUseCase : IRequestSystemDumpUseCase
 {
     private readonly IMidiPort _midiPort;
 

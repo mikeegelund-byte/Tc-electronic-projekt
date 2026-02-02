@@ -1,23 +1,71 @@
 # SESSION_MEMORY.md — Current Session State
 
-## 📅 Session: 2026-02-01 (Modul 3 - System Dump Viewer)
+## 📅 Session: 2026-02-02 (Continued)
 
 ### 🎯 Mål
-[MODUL-3][TASK-3.1] Extend SysExBuilder for System Dump Request - ✅ COMPLETE
-- Added BuildSystemDumpRequest() method to SysExBuilder following existing pattern
-- Implemented TDD approach (RED -> GREEN -> REFACTOR)
-- Method builds 9-byte SysEx message for requesting system dump from Nova System pedal
+[MODUL-4] Start System Editor - Make system settings editable in UI
+
+**Objectives**:
+1. ✅ Task 4.1: Convert read-only TextBlocks to editable controls (ComboBox, NumericUpDown, ToggleSwitch)
+2. ✅ Task 4.2: Implement dirty tracking for unsaved changes
+3. ⬜ Task 4.3: Create SaveSystemDumpUseCase (REQUIRES SONNET 4.5+)
+4. ⬜ Task 4.4: Implement roundtrip verification (REQUIRES SONNET 4.5+)
+5. ✅ Task 4.5: Add Save/Cancel buttons
 
 ### Nuværende task
-**Fil**: tasks/08-modul3-system-viewer.md  
-**Task**: 3.1 - Extend SysExBuilder for System Dump Request  
-**Status**: ✅ COMPLETE
+**Fil**: tasks/09-modul4-system-editor.md
+**Task**: 4.1-4.5 partially complete (4.3-4.4 require higher model)
+**Status**: ✅ 60% DONE (Tasks 4.1, 4.2, 4.5 complete)
 
-### 🔧 Status Update
-**Latest Commit**: [MODUL-3][TASK-3.1] Add System Dump request builder  
-**Build Status**: ✅ GREEN (0 errors, 0 warnings)  
-**Tests**: 164/167 passing (3 Presentation tests failing due to known Moq issue - non-blocking)  
-**New Tests**: 2 new tests added (1 Fact + 1 Theory with 3 test cases)
+### 🔧 Session Summary
+**Commit**: ab6e882 — [MODUL-4][TASK-4.1-4.2-4.5] Make SystemSettings editable with dirty tracking
+- Converted SystemSettingsView to use editable controls
+- Implemented dirty tracking with HasUnsavedChanges property
+- Added RevertChanges() method
+- Added 7 new unit tests for dirty tracking
+- Tests: 216/216 passing ✅
+- Tasks 4.3-4.4 require SONNET 4.5+ for complex SysEx serialization
+
+### 🔧 Previous Session Summary
+**Last Session**: Completed Modul 3
+- Fixed MainViewModelTests by extracting IGetAvailablePortsUseCase
+- Integrated IRequestSystemDumpUseCase into MainViewModel
+- Added "Refresh Settings" button to SystemSettingsView
+- All 209 tests passing ✅
+- Commit: 7f0f042 — [MODUL-3] Complete System Viewer
+
+---
+
+## ✅ Implementation Details (This Session)
+
+### Changes Made
+1. **src/Nova.Application/UseCases/IGetAvailablePortsUseCase.cs**
+   - Created interface for port enumeration.
+2. **src/Nova.Infrastructure/Midi/GetAvailablePortsUseCase.cs**
+   - Implemented port enumeration using DryWetMidiPort.
+3. **src/Nova.Presentation/ViewModels/MainViewModel.cs**
+   - Injected IGetAvailablePortsUseCase.
+   - Removed direct dependency on DryWetMidiPort.
+   - Injected IRequestSystemDumpUseCase.
+   - Added DownloadSystemSettingsCommand.
+4. **src/Nova.Presentation/App.axaml.cs**
+   - Registered GetAvailablePortsUseCase and RequestSystemDumpUseCase in DI container.
+5. **src/Nova.Presentation.Tests/ViewModels/MainViewModelTests.cs**
+   - Mocked IGetAvailablePortsUseCase and IRequestSystemDumpUseCase.
+   - Tests now pass reliably.
+6. **src/Nova.Infrastructure/Nova.Infrastructure.csproj**
+   - Added reference to Nova.Application.
+7. **src/Nova.Presentation/Views/SystemSettingsView.axaml**
+   - Added "Refresh Settings" button.
+8. **src/Nova.Application/UseCases/IRequestSystemDumpUseCase.cs**
+   - Extracted interface for consistency.
+9. **src/Nova.Application/UseCases/RequestSystemDumpUseCase.cs**
+   - Implemented the interface.
+
+### Test Results
+- Total tests: 209 ✅
+- Presentation tests: 34/34 ✅
+- Build: 0 warnings, 0 errors
 
 ---
 
