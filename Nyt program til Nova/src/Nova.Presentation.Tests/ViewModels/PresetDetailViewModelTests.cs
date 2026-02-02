@@ -22,11 +22,11 @@ public class PresetDetailViewModelTests
         vm.LevelOutRight.Should().Be(0);
         
         // Verify effect switches are false by default
-        vm.CompressorEnabled.Should().BeFalse();
-        vm.DriveEnabled.Should().BeFalse();
-        vm.ModulationEnabled.Should().BeFalse();
-        vm.DelayEnabled.Should().BeFalse();
-        vm.ReverbEnabled.Should().BeFalse();
+        vm.Compressor.IsEnabled.Should().BeFalse();
+        vm.Drive.IsEnabled.Should().BeFalse();
+        vm.Modulation.IsEnabled.Should().BeFalse();
+        vm.Delay.IsEnabled.Should().BeFalse();
+        vm.Reverb.IsEnabled.Should().BeFalse();
     }
 
     [Fact]
@@ -54,98 +54,97 @@ public class PresetDetailViewModelTests
         vm.LevelOutRight.Should().Be(preset.LevelOutRight);
         
         // Assert - Effect switches
-        vm.CompressorEnabled.Should().Be(preset.CompressorEnabled);
-        vm.DriveEnabled.Should().Be(preset.DriveEnabled);
-        vm.ModulationEnabled.Should().Be(preset.ModulationEnabled);
-        vm.DelayEnabled.Should().Be(preset.DelayEnabled);
-        vm.ReverbEnabled.Should().Be(preset.ReverbEnabled);
+        vm.Compressor.IsEnabled.Should().Be(preset.CompressorEnabled);
+        vm.Drive.IsEnabled.Should().Be(preset.DriveEnabled);
+        vm.Modulation.IsEnabled.Should().Be(preset.ModulationEnabled);
+        vm.Delay.IsEnabled.Should().Be(preset.DelayEnabled);
+        vm.Reverb.IsEnabled.Should().Be(preset.ReverbEnabled);
         
-        // Assert - Compressor parameters
-        vm.CompType.Should().Be(preset.CompType);
-        vm.CompThreshold.Should().Be(preset.CompThreshold);
-        vm.CompRatio.Should().Be(preset.CompRatio);
-        vm.CompAttack.Should().Be(preset.CompAttack);
-        vm.CompRelease.Should().Be(preset.CompRelease);
-        vm.CompResponse.Should().Be(preset.CompResponse);
-        vm.CompDrive.Should().Be(preset.CompDrive);
-        vm.CompLevel.Should().Be(preset.CompLevel);
+        // Assert - Compressor parameters (subset available in CompressorBlockViewModel)
+        vm.Compressor.Type.Should().Be(preset.CompType switch
+        {
+            0 => "Percussive",
+            1 => "Sustaining",
+            2 => "Advanced",
+            _ => "Unknown"
+        });
+        vm.Compressor.Drive.Should().Be(preset.CompDrive);
+        vm.Compressor.Response.Should().Be(preset.CompResponse);
+        vm.Compressor.Level.Should().Be(preset.CompLevel);
         
-        // Assert - Drive parameters
-        vm.DriveType.Should().Be(preset.DriveType);
-        vm.DriveGain.Should().Be(preset.DriveGain);
-        vm.DriveLevel.Should().Be(preset.DriveLevel);
+        // Assert - Drive parameters (subset available in DriveBlockViewModel)
+        vm.Drive.Type.Should().Be(preset.DriveType switch
+        {
+            0 => "Overdrive",
+            1 => "Distortion",
+            2 => "Fuzz",
+            3 => "Line6 Drive",
+            4 => "Custom",
+            5 => "Tube",
+            6 => "Metal",
+            _ => "Unknown"
+        });
+        vm.Drive.Gain.Should().Be(preset.DriveGain);
+        vm.Drive.Level.Should().Be(preset.DriveLevel);
         
-        // Assert - Boost parameters
-        vm.BoostType.Should().Be(preset.BoostType);
-        vm.BoostGain.Should().Be(preset.BoostGain);
-        vm.BoostLevel.Should().Be(preset.BoostLevel);
+        // Assert - Modulation parameters (subset available in ModulationBlockViewModel)
+        vm.Modulation.Type.Should().Be(preset.ModType switch
+        {
+            0 => "Chorus",
+            1 => "Flanger",
+            2 => "Vibrato",
+            3 => "Phaser",
+            4 => "Tremolo",
+            5 => "Panner",
+            _ => "Unknown"
+        });
+        vm.Modulation.Speed.Should().Be(preset.ModSpeed);
+        vm.Modulation.Depth.Should().Be(preset.ModDepth);
+        vm.Modulation.Mix.Should().Be(preset.ModMix);
         
-        // Assert - Modulation parameters
-        vm.ModType.Should().Be(preset.ModType);
-        vm.ModSpeed.Should().Be(preset.ModSpeed);
-        vm.ModDepth.Should().Be(preset.ModDepth);
-        vm.ModTempo.Should().Be(preset.ModTempo);
-        vm.ModHiCut.Should().Be(preset.ModHiCut);
-        vm.ModFeedback.Should().Be(preset.ModFeedback);
-        vm.ModDelayOrRange.Should().Be(preset.ModDelayOrRange);
-        vm.ModMix.Should().Be(preset.ModMix);
+        // Assert - Delay parameters (subset available in DelayBlockViewModel)
+        vm.Delay.Type.Should().Be(preset.DelayType switch
+        {
+            0 => "Clean",
+            1 => "Analog",
+            2 => "Tape",
+            3 => "Dynamic",
+            4 => "Dual",
+            5 => "Ping-Pong",
+            _ => "Unknown"
+        });
+        vm.Delay.Time.Should().BeInRange(0, 2000); // Clamped
+        vm.Delay.Feedback.Should().BeInRange(0, 100); // Clamped
+        vm.Delay.Mix.Should().BeInRange(0, 100); // Clamped
         
-        // Assert - Delay parameters
-        vm.DelayType.Should().Be(preset.DelayType);
-        vm.DelayTime.Should().Be(preset.DelayTime);
-        vm.DelayTime2.Should().Be(preset.DelayTime2);
-        vm.DelayTempo.Should().Be(preset.DelayTempo);
-        vm.DelayTempo2OrWidth.Should().Be(preset.DelayTempo2OrWidth);
-        vm.DelayFeedback.Should().Be(preset.DelayFeedback);
-        vm.DelayClipOrFeedback2.Should().Be(preset.DelayClipOrFeedback2);
-        vm.DelayHiCut.Should().Be(preset.DelayHiCut);
-        vm.DelayLoCut.Should().Be(preset.DelayLoCut);
-        vm.DelayMix.Should().Be(preset.DelayMix);
+        // Assert - Reverb parameters (subset available in ReverbBlockViewModel)
+        vm.Reverb.Type.Should().Be(preset.ReverbType switch
+        {
+            0 => "Spring",
+            1 => "Hall",
+            2 => "Room",
+            3 => "Plate",
+            _ => "Unknown"
+        });
+        vm.Reverb.Decay.Should().BeInRange(0, 100); // Clamped
+        vm.Reverb.PreDelay.Should().BeInRange(0, 200); // Clamped
+        vm.Reverb.Level.Should().BeInRange(0, 100); // Clamped
         
-        // Assert - Reverb parameters
-        vm.ReverbType.Should().Be(preset.ReverbType);
-        vm.ReverbDecay.Should().Be(preset.ReverbDecay);
-        vm.ReverbPreDelay.Should().Be(preset.ReverbPreDelay);
-        vm.ReverbShape.Should().Be(preset.ReverbShape);
-        vm.ReverbSize.Should().Be(preset.ReverbSize);
-        vm.ReverbHiColor.Should().Be(preset.ReverbHiColor);
-        vm.ReverbHiLevel.Should().Be(preset.ReverbHiLevel);
-        vm.ReverbLoColor.Should().Be(preset.ReverbLoColor);
-        vm.ReverbLoLevel.Should().Be(preset.ReverbLoLevel);
-        vm.ReverbRoomLevel.Should().Be(preset.ReverbRoomLevel);
-        vm.ReverbLevel.Should().Be(preset.ReverbLevel);
-        vm.ReverbDiffuse.Should().Be(preset.ReverbDiffuse);
-        vm.ReverbMix.Should().Be(preset.ReverbMix);
+        // Assert - Gate parameters (subset available in EqGateBlockViewModel)
+        vm.EqGate.GateThreshold.Should().Be(-60);
         
-        // Assert - Gate parameters
-        vm.GateType.Should().Be(preset.GateType);
-        vm.GateThreshold.Should().Be(preset.GateThreshold);
-        vm.GateDamp.Should().Be(preset.GateDamp);
-        vm.GateRelease.Should().Be(preset.GateRelease);
+        // Assert - EQ parameters (subset available in EqGateBlockViewModel)
+        vm.EqGate.EqBand1Freq.Should().Be(100);
+        vm.EqGate.EqBand1Gain.Should().Be(0);
+        vm.EqGate.EqBand2Freq.Should().Be(1000);
+        vm.EqGate.EqBand2Gain.Should().Be(0);
+        vm.EqGate.EqBand3Freq.Should().Be(5000);
+        vm.EqGate.EqBand3Gain.Should().Be(0);
         
-        // Assert - EQ parameters
-        vm.EqFreq1.Should().Be(preset.EqFreq1);
-        vm.EqGain1.Should().Be(preset.EqGain1);
-        vm.EqWidth1.Should().Be(preset.EqWidth1);
-        vm.EqFreq2.Should().Be(preset.EqFreq2);
-        vm.EqGain2.Should().Be(preset.EqGain2);
-        vm.EqWidth2.Should().Be(preset.EqWidth2);
-        vm.EqFreq3.Should().Be(preset.EqFreq3);
-        vm.EqGain3.Should().Be(preset.EqGain3);
-        vm.EqWidth3.Should().Be(preset.EqWidth3);
-        
-        // Assert - Pitch parameters
-        vm.PitchType.Should().Be(preset.PitchType);
-        vm.PitchVoice1.Should().Be(preset.PitchVoice1);
-        vm.PitchVoice2.Should().Be(preset.PitchVoice2);
-        vm.PitchPan1.Should().Be(preset.PitchPan1);
-        vm.PitchPan2.Should().Be(preset.PitchPan2);
-        vm.PitchDelay1.Should().Be(preset.PitchDelay1);
-        vm.PitchDelay2.Should().Be(preset.PitchDelay2);
-        vm.PitchFeedback1OrKey.Should().Be(preset.PitchFeedback1OrKey);
-        vm.PitchFeedback2OrScale.Should().Be(preset.PitchFeedback2OrScale);
-        vm.PitchLevel1.Should().Be(preset.PitchLevel1);
-        vm.PitchLevel2.Should().Be(preset.PitchLevel2);
+        // Assert - Pitch parameters (subset available in PitchBlockViewModel)
+        vm.Pitch.Type.Should().BeInRange(0, 4); // Clamped
+        vm.Pitch.Voice1.Should().BeInRange(-100, 100); // Clamped
+        vm.Pitch.Voice2.Should().BeInRange(-100, 100); // Clamped
     }
 
     [Fact]

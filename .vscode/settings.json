@@ -3,15 +3,13 @@
         "&": true
     },
     "chat.mcp.serverSampling": {
-        
-        
         "Tc electronic projekt/.vscode/mcp.json: io.github.github/github-mcp-server": {
             "allowedModels": [
                 "copilot/auto"
             ]
         }
     },
-    "axaml.selectedSolution": "c:\\users\\mike_\\Desktop\\Tc electronic projekt\\Nyt program til Nova\\NovaApp.sln",
+    "axaml.selectedSolution": "d:\\Tc electronic projekt\\Nyt program til Nova\\NovaApp.sln",
     "chat.mcp.assisted.nuget.enabled": true,
     "chat.agent.thinkingStyle": "collapsedPreview",
     "chat.allowAnonymousAccess": true,
@@ -19,10 +17,7 @@
     "chat.customAgentInSubagent.enabled": true,
     "chat.edits2.enabled": true,
     "chat.mcp.discovery.enabled": {
-        "claude-desktop": true,
-        "cursor-global": true,
-        "cursor-workspace": true,
-        "windsurf": true
+        "claude-desktop": true
     },
     "chat.mcp.gallery.enabled": true,
     "chat.restoreLastPanelSession": true,
@@ -34,9 +29,5 @@
     "chat.useAgentSkills": true,
     "chat.useNestedAgentsMdFiles": true,
     "inlineChat.enableV2": true,
-    "inlineChat.notebookAgent": true,
-    "github.copilot.chat.githubMcpServer.enabled": true,
-    "github.copilot.chat.githubMcpServer.lockdown": true,
-    "github.copilot.chat.githubMcpServer.readonly": true,
-    "github.copilot.chat.newWorkspace.useContext7": true
+    "inlineChat.notebookAgent": true
 }

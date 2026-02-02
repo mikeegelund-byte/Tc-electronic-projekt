@@ -50,6 +50,11 @@ public class MainViewModelTests
     public void AvailablePorts_InitiallyEmpty()
     {
         var vm = CreateViewModel();
+        var mockMidi = new Mock<IMidiPort>();
+        var mockConnect = new Mock<IConnectUseCase>();
+        var mockDownload = new Mock<IDownloadBankUseCase>();
+        
+        var vm = new MainViewModel(mockMidi.Object, mockConnect.Object, mockDownload.Object);
         
         vm.AvailablePorts.Should().BeEmpty();
     }
@@ -58,6 +63,11 @@ public class MainViewModelTests
     public void IsConnected_InitiallyFalse()
     {
         var vm = CreateViewModel();
+        var mockMidi = new Mock<IMidiPort>();
+        var mockConnect = new Mock<IConnectUseCase>();
+        var mockDownload = new Mock<IDownloadBankUseCase>();
+        
+        var vm = new MainViewModel(mockMidi.Object, mockConnect.Object, mockDownload.Object);
         
         vm.IsConnected.Should().BeFalse();
     }
@@ -66,8 +76,13 @@ public class MainViewModelTests
     public void StatusMessage_InitiallyReady()
     {
         var vm = CreateViewModel();
+        var mockMidi = new Mock<IMidiPort>();
+        var mockConnect = new Mock<IConnectUseCase>();
+        var mockDownload = new Mock<IDownloadBankUseCase>();
         
-        vm.StatusMessage.Should().Be("Found 0 MIDI port(s)");
+        var vm = new MainViewModel(mockMidi.Object, mockConnect.Object, mockDownload.Object);
+        
+        vm.StatusMessage.Should().Be("Ready");
     }
 
     [Fact]
