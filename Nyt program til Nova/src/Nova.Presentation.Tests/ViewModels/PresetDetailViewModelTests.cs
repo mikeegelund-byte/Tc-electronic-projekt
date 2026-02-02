@@ -68,9 +68,9 @@ public class PresetDetailViewModelTests
             2 => "Advanced",
             _ => "Unknown"
         });
-        vm.Compressor.Drive.Should().Be(preset.CompDrive);
-        vm.Compressor.Response.Should().Be(preset.CompResponse);
-        vm.Compressor.Level.Should().Be(preset.CompLevel);
+        vm.Compressor.Drive.Should().Be(Math.Clamp(preset.CompDrive, 1, 20));
+        vm.Compressor.Response.Should().Be(Math.Clamp(preset.CompResponse, 1, 10));
+        vm.Compressor.Level.Should().Be(Math.Clamp(preset.CompLevel, -12, 12));
         
         // Assert - Drive parameters (subset available in DriveBlockViewModel)
         vm.Drive.Type.Should().Be(preset.DriveType switch
@@ -84,8 +84,8 @@ public class PresetDetailViewModelTests
             6 => "Metal",
             _ => "Unknown"
         });
-        vm.Drive.Gain.Should().Be(preset.DriveGain);
-        vm.Drive.Level.Should().Be(preset.DriveLevel);
+        vm.Drive.Gain.Should().Be(Math.Clamp(preset.DriveGain, 0, 100));
+        vm.Drive.Level.Should().Be(Math.Clamp(preset.DriveLevel, -30, 20));
         
         // Assert - Modulation parameters (subset available in ModulationBlockViewModel)
         vm.Modulation.Type.Should().Be(preset.ModType switch
@@ -98,9 +98,9 @@ public class PresetDetailViewModelTests
             5 => "Panner",
             _ => "Unknown"
         });
-        vm.Modulation.Speed.Should().Be(preset.ModSpeed);
-        vm.Modulation.Depth.Should().Be(preset.ModDepth);
-        vm.Modulation.Mix.Should().Be(preset.ModMix);
+        vm.Modulation.Speed.Should().Be(Math.Clamp(preset.ModSpeed, 0, 81));
+        vm.Modulation.Depth.Should().Be(Math.Clamp(preset.ModDepth, 0, 100));
+        vm.Modulation.Mix.Should().Be(Math.Clamp(preset.ModMix, 0, 100));
         
         // Assert - Delay parameters (subset available in DelayBlockViewModel)
         vm.Delay.Type.Should().Be(preset.DelayType switch
@@ -131,15 +131,15 @@ public class PresetDetailViewModelTests
         vm.Reverb.Level.Should().BeInRange(0, 100); // Clamped
         
         // Assert - Gate parameters (subset available in EqGateBlockViewModel)
-        vm.EqGate.GateThreshold.Should().Be(-60);
+        vm.EqGate.GateThreshold.Should().Be(Math.Clamp(-60, -60, 0));
         
         // Assert - EQ parameters (subset available in EqGateBlockViewModel)
         vm.EqGate.EqBand1Freq.Should().Be(100);
-        vm.EqGate.EqBand1Gain.Should().Be(0);
+        vm.EqGate.EqBand1Gain.Should().Be(Math.Clamp(0, -12, 12));
         vm.EqGate.EqBand2Freq.Should().Be(1000);
-        vm.EqGate.EqBand2Gain.Should().Be(0);
+        vm.EqGate.EqBand2Gain.Should().Be(Math.Clamp(0, -12, 12));
         vm.EqGate.EqBand3Freq.Should().Be(5000);
-        vm.EqGate.EqBand3Gain.Should().Be(0);
+        vm.EqGate.EqBand3Gain.Should().Be(Math.Clamp(0, -12, 12));
         
         // Assert - Pitch parameters (subset available in PitchBlockViewModel)
         vm.Pitch.Type.Should().BeInRange(0, 4); // Clamped
