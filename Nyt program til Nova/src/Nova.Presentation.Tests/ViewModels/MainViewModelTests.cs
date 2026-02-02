@@ -17,9 +17,11 @@ public class MainViewModelTests
         var mockDownload = new Mock<IDownloadBankUseCase>();
         var mockGetPorts = new Mock<IGetAvailablePortsUseCase>();
         var mockRequestDump = new Mock<IRequestSystemDumpUseCase>();
+        var mockExportBank = new Mock<IExportBankUseCase>();
+        var mockImportSysEx = new Mock<IImportSysExUseCase>();
         mockGetPorts.Setup(x => x.Execute()).Returns(new List<string>());
         
-        var vm = new MainViewModel(mockMidi.Object, mockConnect.Object, mockDownload.Object, mockGetPorts.Object, mockRequestDump.Object);
+        var vm = new MainViewModel(mockMidi.Object, mockConnect.Object, mockDownload.Object, mockGetPorts.Object, mockRequestDump.Object, mockExportBank.Object, mockImportSysEx.Object);
         
         vm.AvailablePorts.Should().BeEmpty();
     }
@@ -32,9 +34,11 @@ public class MainViewModelTests
         var mockDownload = new Mock<IDownloadBankUseCase>();
         var mockGetPorts = new Mock<IGetAvailablePortsUseCase>();
         var mockRequestDump = new Mock<IRequestSystemDumpUseCase>();
+        var mockExportBank = new Mock<IExportBankUseCase>();
+        var mockImportSysEx = new Mock<IImportSysExUseCase>();
         mockGetPorts.Setup(x => x.Execute()).Returns(new List<string>());
         
-        var vm = new MainViewModel(mockMidi.Object, mockConnect.Object, mockDownload.Object, mockGetPorts.Object, mockRequestDump.Object);
+        var vm = new MainViewModel(mockMidi.Object, mockConnect.Object, mockDownload.Object, mockGetPorts.Object, mockRequestDump.Object, mockExportBank.Object, mockImportSysEx.Object);
         
         vm.IsConnected.Should().BeFalse();
     }
@@ -47,9 +51,11 @@ public class MainViewModelTests
         var mockDownload = new Mock<IDownloadBankUseCase>();
         var mockGetPorts = new Mock<IGetAvailablePortsUseCase>();
         var mockRequestDump = new Mock<IRequestSystemDumpUseCase>();
+        var mockExportBank = new Mock<IExportBankUseCase>();
+        var mockImportSysEx = new Mock<IImportSysExUseCase>();
         mockGetPorts.Setup(x => x.Execute()).Returns(new List<string>());
         
-        var vm = new MainViewModel(mockMidi.Object, mockConnect.Object, mockDownload.Object, mockGetPorts.Object, mockRequestDump.Object);
+        var vm = new MainViewModel(mockMidi.Object, mockConnect.Object, mockDownload.Object, mockGetPorts.Object, mockRequestDump.Object, mockExportBank.Object, mockImportSysEx.Object);
         
         vm.StatusMessage.Should().Be("Found 0 MIDI port(s)");
     }
