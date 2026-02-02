@@ -386,12 +386,32 @@ public partial class EditablePresetViewModel : ObservableObject
 
         StatusMessage = "Saving to device...";
 
-        // Use the original preset (immutable) with UpdatePresetUseCase
+        // Build an updated immutable Preset instance from the current edited values
+        Preset BuildUpdatedPreset()
+        {
+            if (_originalPreset == null)
+            {
+                throw new InvalidOperationException("Cannot build updated preset without an original preset.");
+            }
+
+            // Copy the original preset and override fields that are editable in this view model
+            // NOTE: This assumes Preset is an immutable record with a Name property.
+            return _originalPreset with
+            {
+                Name = PresetName
+            };
+        }
+
+        var updatedPreset = BuildUpdatedPreset();
+
         // The use case will handle MIDI serialization
-        var result = await _updatePresetUseCase.ExecuteAsync(_originalPreset, cancellationToken);
+        var result = await _updatePresetUseCase.ExecuteAsync(updatedPreset, cancellationToken);
 
         if (result.IsSuccess)
         {
+            // Update the original/current preset baseline to the saved version
+            _originalPreset = updatedPreset;
+            CurrentPreset = updatedPreset;
             HasChanges = false;
             StatusMessage = $"Saved preset: {PresetName}";
             _logger.Information("EditablePresetViewModel: Preset saved successfully");
