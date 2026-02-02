@@ -1,13 +1,9 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:vm="using:Nova.Presentation.ViewModels"
-             xmlns:converters="using:Nova.Presentation.Converters"
+             xmlns:controls="using:Nova.Presentation.Views.Controls"
              x:Class="Nova.Presentation.Views.PresetDetailView"
              x:DataType="vm:PresetDetailViewModel">
-
-    <UserControl.Resources>
-        <converters:BoolToGreenGrayBrushConverter x:Key="BoolToGreenGrayBrushConverter"/>
-    </UserControl.Resources>
 
     <Border Background="#2D2D2D" Padding="16" CornerRadius="8">
         <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -19,167 +15,206 @@
                                FontSize="16"
                                Foreground="#FFFFFF"/>
                     
-                    <StackPanel Spacing="4" IsVisible="{Binding HasPreset}">
+                    <StackPanel Spacing="4" IsVisible="{Binding PresetName, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
                         <TextBlock FontSize="20" FontWeight="Bold" Foreground="#FFFFFF">
                             <Run Text="{Binding Position}"/> - <Run Text="{Binding PresetName}"/>
                         </TextBlock>
-                        <TextBlock Text="{Binding PresetNumber, StringFormat='Preset #{0}'}" 
-                                   Foreground="#AAAAAA"
-                                   FontFamily="Consolas"/>
                     </StackPanel>
                     
                     <TextBlock Text="Select a preset from the list to view details"
-                               IsVisible="{Binding !HasPreset}"
+                               IsVisible="{Binding PresetName, Converter={x:Static StringConverters.IsNullOrEmpty}}"
                                Foreground="#999999"
                                FontStyle="Italic"
                                Margin="0,8"/>
                 </StackPanel>
 
-                <!-- Global Parameters Section -->
+                <!-- Drive Section -->
                 <Border Background="#1E1E1E" 
                         Padding="12" 
                         CornerRadius="4"
-                        IsVisible="{Binding HasPreset}">
-                    <StackPanel Spacing="8">
-                        <TextBlock Text="Global Parameters" 
-                                   FontWeight="Bold" 
-                                   Foreground="#FFFFFF"
-                                   Margin="0,0,0,4"/>
-                        <Grid ColumnDefinitions="150,*" RowDefinitions="Auto,Auto,Auto,Auto">
-                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Tap Tempo:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding TapTempo, StringFormat='{}{0} ms'}" Foreground="#FFFFFF"/>
-                            
-                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Routing:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Routing}" Foreground="#FFFFFF"/>
-                            
-                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Level Out Left:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding LevelOutLeft, StringFormat='{}{0} dB'}" Foreground="#FFFFFF"/>
-                            
-                            <TextBlock Grid.Row="3" Grid.Column="0" Text="Level Out Right:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding LevelOutRight, StringFormat='{}{0} dB'}" Foreground="#FFFFFF"/>
-                        </Grid>
-                    </StackPanel>
+                        IsVisible="{Binding PresetName, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+                    <controls:EffectBlockView 
+                        Header="Drive"
+                        DataContext="{Binding Drive}"
+                        IsEnabledIndicator="{Binding IsEnabled}">
+                        <controls:EffectBlockView.ParametersContent>
+                            <Grid ColumnDefinitions="150,*" RowDefinitions="Auto,Auto,Auto">
+                                <TextBlock Grid.Row="0" Grid.Column="0" Text="Type:" Foreground="#AAAAAA"/>
+                                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Type}" Foreground="#FFFFFF"/>
+                                
+                                <TextBlock Grid.Row="1" Grid.Column="0" Text="Gain:" Foreground="#AAAAAA"/>
+                                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Gain}" Foreground="#FFFFFF"/>
+                                
+                                <TextBlock Grid.Row="2" Grid.Column="0" Text="Level:" Foreground="#AAAAAA"/>
+                                <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Level}" Foreground="#FFFFFF"/>
+                            </Grid>
+                        </controls:EffectBlockView.ParametersContent>
+                    </controls:EffectBlockView>
                 </Border>
 
                 <!-- Compressor Section -->
                 <Border Background="#1E1E1E" 
                         Padding="12" 
                         CornerRadius="4"
-                        IsVisible="{Binding HasPreset}">
-                    <StackPanel Spacing="8">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Ellipse Width="12" Height="12" Fill="{Binding CompressorEnabled, Converter={StaticResource BoolToGreenGrayBrushConverter}}"/>
-                            <TextBlock Text="Compressor" FontWeight="Bold" Foreground="#FFFFFF"/>
-                        </StackPanel>
-                        <Grid ColumnDefinitions="150,*" RowDefinitions="Auto,Auto,Auto">
-                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Type:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding CompType}" Foreground="#FFFFFF"/>
-                            
-                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Threshold:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding CompThreshold, StringFormat='{}{0} dB'}" Foreground="#FFFFFF"/>
-                            
-                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Ratio:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding CompRatio}" Foreground="#FFFFFF"/>
-                        </Grid>
-                    </StackPanel>
+                        IsVisible="{Binding PresetName, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+                    <controls:EffectBlockView 
+                        Header="Compressor"
+                        DataContext="{Binding Compressor}"
+                        IsEnabledIndicator="{Binding IsEnabled}">
+                        <controls:EffectBlockView.ParametersContent>
+                            <Grid ColumnDefinitions="150,*" RowDefinitions="Auto,Auto,Auto,Auto">
+                                <TextBlock Grid.Row="0" Grid.Column="0" Text="Type:" Foreground="#AAAAAA"/>
+                                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Type}" Foreground="#FFFFFF"/>
+                                
+                                <TextBlock Grid.Row="1" Grid.Column="0" Text="Drive:" Foreground="#AAAAAA"/>
+                                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Drive}" Foreground="#FFFFFF"/>
+                                
+                                <TextBlock Grid.Row="2" Grid.Column="0" Text="Response:" Foreground="#AAAAAA"/>
+                                <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Response}" Foreground="#FFFFFF"/>
+                                
+                                <TextBlock Grid.Row="3" Grid.Column="0" Text="Level:" Foreground="#AAAAAA"/>
+                                <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Level}" Foreground="#FFFFFF"/>
+                            </Grid>
+                        </controls:EffectBlockView.ParametersContent>
+                    </controls:EffectBlockView>
                 </Border>
 
-                <!-- Drive Section -->
+                <!-- EQ & Gate Section -->
                 <Border Background="#1E1E1E" 
                         Padding="12" 
                         CornerRadius="4"
-                        IsVisible="{Binding HasPreset}">
-                    <StackPanel Spacing="8">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Ellipse Width="12" Height="12" Fill="{Binding DriveEnabled, Converter={StaticResource BoolToGreenGrayBrushConverter}}"/>
-                            <TextBlock Text="Drive" FontWeight="Bold" Foreground="#FFFFFF"/>
-                        </StackPanel>
-                        <Grid ColumnDefinitions="150,*" RowDefinitions="Auto,Auto,Auto">
-                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Type:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding DriveType}" Foreground="#FFFFFF"/>
-                            
-                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Gain:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding DriveGain}" Foreground="#FFFFFF"/>
-                            
-                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Level:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding DriveLevel, StringFormat='{}{0} dB'}" Foreground="#FFFFFF"/>
-                        </Grid>
-                    </StackPanel>
+                        IsVisible="{Binding PresetName, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+                    <controls:EffectBlockView 
+                        Header="EQ &amp; Gate"
+                        DataContext="{Binding EqGate}"
+                        IsEnabledIndicator="{Binding GateEnabled}">
+                        <controls:EffectBlockView.ParametersContent>
+                            <Grid ColumnDefinitions="150,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
+                                <TextBlock Grid.Row="0" Grid.Column="0" Text="EQ Band 1 Freq:" Foreground="#AAAAAA"/>
+                                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding EqBand1Freq, StringFormat='{}{0} Hz'}" Foreground="#FFFFFF"/>
+                                
+                                <TextBlock Grid.Row="1" Grid.Column="0" Text="EQ Band 1 Gain:" Foreground="#AAAAAA"/>
+                                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding EqBand1Gain, StringFormat='{}{0} dB'}" Foreground="#FFFFFF"/>
+                                
+                                <TextBlock Grid.Row="2" Grid.Column="0" Text="EQ Band 2 Freq:" Foreground="#AAAAAA"/>
+                                <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding EqBand2Freq, StringFormat='{}{0} Hz'}" Foreground="#FFFFFF"/>
+                                
+                                <TextBlock Grid.Row="3" Grid.Column="0" Text="EQ Band 2 Gain:" Foreground="#AAAAAA"/>
+                                <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding EqBand2Gain, StringFormat='{}{0} dB'}" Foreground="#FFFFFF"/>
+                                
+                                <TextBlock Grid.Row="4" Grid.Column="0" Text="EQ Band 3 Freq:" Foreground="#AAAAAA"/>
+                                <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding EqBand3Freq, StringFormat='{}{0} Hz'}" Foreground="#FFFFFF"/>
+                                
+                                <TextBlock Grid.Row="5" Grid.Column="0" Text="EQ Band 3 Gain:" Foreground="#AAAAAA"/>
+                                <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding EqBand3Gain, StringFormat='{}{0} dB'}" Foreground="#FFFFFF"/>
+                                
+                                <TextBlock Grid.Row="6" Grid.Column="0" Text="Gate Threshold:" Foreground="#AAAAAA"/>
+                                <TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding GateThreshold, StringFormat='{}{0} dB'}" Foreground="#FFFFFF"/>
+                                
+                                <TextBlock Grid.Row="7" Grid.Column="0" Text="Gate Enabled:" Foreground="#AAAAAA"/>
+                                <TextBlock Grid.Row="7" Grid.Column="1" Text="{Binding GateEnabled}" Foreground="#FFFFFF"/>
+                            </Grid>
+                        </controls:EffectBlockView.ParametersContent>
+                    </controls:EffectBlockView>
                 </Border>
 
                 <!-- Modulation Section -->
                 <Border Background="#1E1E1E" 
                         Padding="12" 
                         CornerRadius="4"
-                        IsVisible="{Binding HasPreset}">
-                    <StackPanel Spacing="8">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Ellipse Width="12" Height="12" Fill="{Binding ModulationEnabled, Converter={StaticResource BoolToGreenGrayBrushConverter}}"/>
-                            <TextBlock Text="Modulation" FontWeight="Bold" Foreground="#FFFFFF"/>
-                        </StackPanel>
-                        <Grid ColumnDefinitions="150,*" RowDefinitions="Auto,Auto,Auto,Auto">
-                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Type:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding ModType}" Foreground="#FFFFFF"/>
-                            
-                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Speed:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding ModSpeed}" Foreground="#FFFFFF"/>
-                            
-                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Depth:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding ModDepth, StringFormat='{}{0}%'}" Foreground="#FFFFFF"/>
-                            
-                            <TextBlock Grid.Row="3" Grid.Column="0" Text="Mix:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding ModMix, StringFormat='{}{0}%'}" Foreground="#FFFFFF"/>
-                        </Grid>
-                    </StackPanel>
+                        IsVisible="{Binding PresetName, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+                    <controls:EffectBlockView 
+                        Header="Modulation"
+                        DataContext="{Binding Modulation}"
+                        IsEnabledIndicator="{Binding IsEnabled}">
+                        <controls:EffectBlockView.ParametersContent>
+                            <Grid ColumnDefinitions="150,*" RowDefinitions="Auto,Auto,Auto,Auto">
+                                <TextBlock Grid.Row="0" Grid.Column="0" Text="Type:" Foreground="#AAAAAA"/>
+                                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Type}" Foreground="#FFFFFF"/>
+                                
+                                <TextBlock Grid.Row="1" Grid.Column="0" Text="Speed:" Foreground="#AAAAAA"/>
+                                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Speed}" Foreground="#FFFFFF"/>
+                                
+                                <TextBlock Grid.Row="2" Grid.Column="0" Text="Depth:" Foreground="#AAAAAA"/>
+                                <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Depth}" Foreground="#FFFFFF"/>
+                                
+                                <TextBlock Grid.Row="3" Grid.Column="0" Text="Mix:" Foreground="#AAAAAA"/>
+                                <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Mix}" Foreground="#FFFFFF"/>
+                            </Grid>
+                        </controls:EffectBlockView.ParametersContent>
+                    </controls:EffectBlockView>
+                </Border>
+
+                <!-- Pitch Section -->
+                <Border Background="#1E1E1E" 
+                        Padding="12" 
+                        CornerRadius="4"
+                        IsVisible="{Binding PresetName, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+                    <controls:EffectBlockView 
+                        Header="Pitch"
+                        DataContext="{Binding Pitch}"
+                        IsEnabledIndicator="{Binding IsEnabled}">
+                        <controls:EffectBlockView.ParametersContent>
+                            <Grid ColumnDefinitions="150,*" RowDefinitions="Auto">
+                                <TextBlock Grid.Row="0" Grid.Column="0" Text="Type:" Foreground="#AAAAAA"/>
+                                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Type}" Foreground="#FFFFFF"/>
+                            </Grid>
+                        </controls:EffectBlockView.ParametersContent>
+                    </controls:EffectBlockView>
                 </Border>
 
                 <!-- Delay Section -->
                 <Border Background="#1E1E1E" 
                         Padding="12" 
                         CornerRadius="4"
-                        IsVisible="{Binding HasPreset}">
-                    <StackPanel Spacing="8">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Ellipse Width="12" Height="12" Fill="{Binding DelayEnabled, Converter={StaticResource BoolToGreenGrayBrushConverter}}"/>
-                            <TextBlock Text="Delay" FontWeight="Bold" Foreground="#FFFFFF"/>
-                        </StackPanel>
-                        <Grid ColumnDefinitions="150,*" RowDefinitions="Auto,Auto,Auto,Auto">
-                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Type:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding DelayType}" Foreground="#FFFFFF"/>
-                            
-                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Time:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding DelayTime, StringFormat='{}{0} ms'}" Foreground="#FFFFFF"/>
-                            
-                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Feedback:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding DelayFeedback, StringFormat='{}{0}%'}" Foreground="#FFFFFF"/>
-                            
-                            <TextBlock Grid.Row="3" Grid.Column="0" Text="Mix:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding DelayMix, StringFormat='{}{0}%'}" Foreground="#FFFFFF"/>
-                        </Grid>
-                    </StackPanel>
+                        IsVisible="{Binding PresetName, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+                    <controls:EffectBlockView 
+                        Header="Delay"
+                        DataContext="{Binding Delay}"
+                        IsEnabledIndicator="{Binding IsEnabled}">
+                        <controls:EffectBlockView.ParametersContent>
+                            <Grid ColumnDefinitions="150,*" RowDefinitions="Auto,Auto,Auto,Auto">
+                                <TextBlock Grid.Row="0" Grid.Column="0" Text="Type:" Foreground="#AAAAAA"/>
+                                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Type}" Foreground="#FFFFFF"/>
+                                
+                                <TextBlock Grid.Row="1" Grid.Column="0" Text="Time:" Foreground="#AAAAAA"/>
+                                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Time, StringFormat='{}{0} ms'}" Foreground="#FFFFFF"/>
+                                
+                                <TextBlock Grid.Row="2" Grid.Column="0" Text="Feedback:" Foreground="#AAAAAA"/>
+                                <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Feedback}" Foreground="#FFFFFF"/>
+                                
+                                <TextBlock Grid.Row="3" Grid.Column="0" Text="Mix:" Foreground="#AAAAAA"/>
+                                <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Mix}" Foreground="#FFFFFF"/>
+                            </Grid>
+                        </controls:EffectBlockView.ParametersContent>
+                    </controls:EffectBlockView>
                 </Border>
 
                 <!-- Reverb Section -->
                 <Border Background="#1E1E1E" 
                         Padding="12" 
                         CornerRadius="4"
-                        IsVisible="{Binding HasPreset}">
-                    <StackPanel Spacing="8">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Ellipse Width="12" Height="12" Fill="{Binding ReverbEnabled, Converter={StaticResource BoolToGreenGrayBrushConverter}}"/>
-                            <TextBlock Text="Reverb" FontWeight="Bold" Foreground="#FFFFFF"/>
-                        </StackPanel>
-                        <Grid ColumnDefinitions="150,*" RowDefinitions="Auto,Auto,Auto">
-                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Type:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding ReverbType}" Foreground="#FFFFFF"/>
-                            
-                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Decay:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding ReverbDecay}" Foreground="#FFFFFF"/>
-                            
-                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Mix:" Foreground="#AAAAAA"/>
-                            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding ReverbMix, StringFormat='{}{0}%'}" Foreground="#FFFFFF"/>
-                        </Grid>
-                    </StackPanel>
+                        IsVisible="{Binding PresetName, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+                    <controls:EffectBlockView 
+                        Header="Reverb"
+                        DataContext="{Binding Reverb}"
+                        IsEnabledIndicator="{Binding IsEnabled}">
+                        <controls:EffectBlockView.ParametersContent>
+                            <Grid ColumnDefinitions="150,*" RowDefinitions="Auto,Auto,Auto,Auto">
+                                <TextBlock Grid.Row="0" Grid.Column="0" Text="Type:" Foreground="#AAAAAA"/>
+                                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Type}" Foreground="#FFFFFF"/>
+                                
+                                <TextBlock Grid.Row="1" Grid.Column="0" Text="Decay:" Foreground="#AAAAAA"/>
+                                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Decay}" Foreground="#FFFFFF"/>
+                                
+                                <TextBlock Grid.Row="2" Grid.Column="0" Text="Pre-Delay:" Foreground="#AAAAAA"/>
+                                <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding PreDelay, StringFormat='{}{0} ms'}" Foreground="#FFFFFF"/>
+                                
+                                <TextBlock Grid.Row="3" Grid.Column="0" Text="Level:" Foreground="#AAAAAA"/>
+                                <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Level}" Foreground="#FFFFFF"/>
+                            </Grid>
+                        </controls:EffectBlockView.ParametersContent>
+                    </controls:EffectBlockView>
                 </Border>
             </StackPanel>
         </ScrollViewer>
