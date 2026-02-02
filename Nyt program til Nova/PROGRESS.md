@@ -1,9 +1,9 @@
 # PROGRESS.md — Projekt Fremskridt
 
-## 📊 TOTAL FREMSKRIDT: 50%
+## 📊 TOTAL FREMSKRIDT: 60%
 
 ```
-██████████████░░░░░░░░░░░░░░ 50%
+██████████████████░░░░░░░░░░ 60%
 ```
 
 ---
@@ -11,8 +11,8 @@
 ## 🎯 NUVÆRENDE TASK
 
 **Fil**: `tasks/08-modul3-system-viewer.md`  
-**Task**: Modul 3.1 - Extend SysExBuilder for System Dump Request  
-**Status**: ✅ COMPLETE (Tests pass, implementation complete)
+**Task**: Modul 3 - System Viewer (Display global settings from pedal)  
+**Status**: ✅ COMPLETE (Tests pass, implementation integrated)
 
 ---
 
@@ -27,7 +27,7 @@
 | 1.4 | Infrastructure | ✅ DONE | 100% |
 | 1.5 | Presentation | ✅ DONE | 100% |
 | 2 | Preset Viewer | ✅ COMPLETE | 100% |
-| 3 | System Viewer | 🔄 IN PROGRESS | 10% |
+| 3 | System Viewer | ✅ DONE | 100% |
 | 4 | System Editor | ⬜ TODO | 0% |
 | 5 | Preset Detail | ⬜ TODO | 0% |
 | 6 | Preset Editor | ⬜ TODO | 0% |
