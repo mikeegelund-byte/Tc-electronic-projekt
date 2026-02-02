@@ -6,16 +6,25 @@
 [MODUL-4] Start System Editor - Make system settings editable in UI
 
 **Objectives**:
-1. 🔄 Task 4.1: Convert read-only TextBlocks to editable controls (ComboBox, NumericUpDown, ToggleSwitch)
-2. ⬜ Task 4.2: Implement dirty tracking for unsaved changes
+1. ✅ Task 4.1: Convert read-only TextBlocks to editable controls (ComboBox, NumericUpDown, ToggleSwitch)
+2. ✅ Task 4.2: Implement dirty tracking for unsaved changes
 3. ⬜ Task 4.3: Create SaveSystemDumpUseCase (REQUIRES SONNET 4.5+)
 4. ⬜ Task 4.4: Implement roundtrip verification (REQUIRES SONNET 4.5+)
-5. ⬜ Task 4.5: Add Save/Cancel buttons
+5. ✅ Task 4.5: Add Save/Cancel buttons
 
 ### Nuværende task
 **Fil**: tasks/09-modul4-system-editor.md
-**Task**: 4.1 - Make Controls Editable
-**Status**: 🔄 STARTING
+**Task**: 4.1-4.5 partially complete (4.3-4.4 require higher model)
+**Status**: ✅ 60% DONE (Tasks 4.1, 4.2, 4.5 complete)
+
+### 🔧 Session Summary
+**Commit**: ab6e882 — [MODUL-4][TASK-4.1-4.2-4.5] Make SystemSettings editable with dirty tracking
+- Converted SystemSettingsView to use editable controls
+- Implemented dirty tracking with HasUnsavedChanges property
+- Added RevertChanges() method
+- Added 7 new unit tests for dirty tracking
+- Tests: 216/216 passing ✅
+- Tasks 4.3-4.4 require SONNET 4.5+ for complex SysEx serialization
 
 ### 🔧 Previous Session Summary
 **Last Session**: Completed Modul 3
