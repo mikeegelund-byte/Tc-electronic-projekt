@@ -11,7 +11,7 @@
 
 Dette modul indeholder den mest komplekse logik i hele projektet:
 - 78+ parametre der skal kunne redigeres
-- Live CC updates til pedal (optional)
+- Live CC updates til pedal 
 - SysEx serialization med korrekt checksum
 - Roundtrip verification
 
