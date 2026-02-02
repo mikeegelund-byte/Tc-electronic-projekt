@@ -72,4 +72,75 @@
             </Border>
         </StackPanel>
     </ScrollViewer>
+             x:DataType="vm:FileManagerViewModel">
+
+    <Design.DataContext>
+        <vm:FileManagerViewModel />
+    </Design.DataContext>
+
+    <StackPanel Spacing="16">
+        <!-- Bank Operations -->
+        <Border Background="#2D2D2D" Padding="16" CornerRadius="8">
+            <StackPanel Spacing="12">
+                <TextBlock Text="Bank File Operations" 
+                           FontWeight="Bold" 
+                           FontSize="16"/>
+                
+                <Grid ColumnDefinitions="*,16,*" RowDefinitions="Auto">
+                    <Button Grid.Column="0"
+                            Content="💾 Save Bank to File"
+                            Command="{Binding SaveBankCommand}"
+                            HorizontalAlignment="Stretch"
+                            Padding="16,8"/>
+                    
+                    <Button Grid.Column="2"
+                            Content="📂 Load Bank from File"
+                            Command="{Binding LoadBankCommand}"
+                            HorizontalAlignment="Stretch"
+                            Padding="16,8"/>
+                </Grid>
+            </StackPanel>
+        </Border>
+
+        <!-- Preset Operations -->
+        <Border Background="#2D2D2D" Padding="16" CornerRadius="8">
+            <StackPanel Spacing="12">
+                <TextBlock Text="Preset File Operations" 
+                           FontWeight="Bold" 
+                           FontSize="16"/>
+                
+                <Grid ColumnDefinitions="*,16,*" RowDefinitions="Auto">
+                    <Button Grid.Column="0"
+                            Content="📤 Export Preset"
+                            Command="{Binding ExportPresetCommand}"
+                            HorizontalAlignment="Stretch"
+                            Padding="16,8"/>
+                    
+                    <Button Grid.Column="2"
+                            Content="📥 Import Preset"
+                            Command="{Binding ImportPresetCommand}"
+                            HorizontalAlignment="Stretch"
+                            Padding="16,8"/>
+                </Grid>
+            </StackPanel>
+        </Border>
+
+        <!-- Status Display -->
+        <Border Background="#2D2D2D" Padding="16" CornerRadius="8">
+            <StackPanel Spacing="8">
+                <TextBlock Text="File Status" 
+                           FontWeight="Bold" 
+                           FontSize="16"/>
+                
+                <TextBlock Text="{Binding StatusMessage}"
+                           Foreground="#AAAAAA"
+                           TextWrapping="Wrap"/>
+                
+                <TextBlock Text="{Binding CurrentFilePath, StringFormat='Current file: {0}'}"
+                           Foreground="#888888"
+                           TextWrapping="Wrap"
+                           IsVisible="{Binding CurrentFilePath, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
+            </StackPanel>
+        </Border>
+    </StackPanel>
 </UserControl>
