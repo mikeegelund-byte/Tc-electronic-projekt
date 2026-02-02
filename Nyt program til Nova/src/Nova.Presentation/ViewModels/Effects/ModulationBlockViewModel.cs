@@ -10,10 +10,43 @@ namespace Nova.Presentation.ViewModels.Effects;
 public partial class ModulationBlockViewModel : ObservableObject
 {
     [ObservableProperty] private string _type = "Chorus";
-    [ObservableProperty] private int _speed;
-    [ObservableProperty] private int _depth;
-    [ObservableProperty] private int _mix;
     [ObservableProperty] private bool _isEnabled;
+
+    private int _speed;
+    public int Speed
+    {
+        get => _speed;
+        set
+        {
+            if (value < 0 || value > 81)
+                throw new ArgumentOutOfRangeException(nameof(value), "Speed must be between 0 and 81");
+            SetProperty(ref _speed, value);
+        }
+    }
+
+    private int _depth;
+    public int Depth
+    {
+        get => _depth;
+        set
+        {
+            if (value < 0 || value > 100)
+                throw new ArgumentOutOfRangeException(nameof(value), "Depth must be between 0 and 100%");
+            SetProperty(ref _depth, value);
+        }
+    }
+
+    private int _mix;
+    public int Mix
+    {
+        get => _mix;
+        set
+        {
+            if (value < 0 || value > 100)
+                throw new ArgumentOutOfRangeException(nameof(value), "Mix must be between 0 and 100%");
+            SetProperty(ref _mix, value);
+        }
+    }
 
     public void LoadFromPreset(Preset? preset)
     {
@@ -30,9 +63,9 @@ public partial class ModulationBlockViewModel : ObservableObject
             _ => "Unknown"
         };
         
-        Speed = preset.ModSpeed;
-        Depth = preset.ModDepth;
-        Mix = preset.ModMix;
+        Speed = Math.Clamp(preset.ModSpeed, 0, 81);
+        Depth = Math.Clamp(preset.ModDepth, 0, 100);
+        Mix = Math.Clamp(preset.ModMix, 0, 100);
         IsEnabled = preset.ModulationEnabled;
     }
 }
