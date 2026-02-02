@@ -15,10 +15,10 @@
 
 ## Exit Criteria
 
-- [ ] Can request system dump from pedal
-- [ ] All global settings parsed correctly
-- [ ] Settings displayed in read-only UI
-- [ ] All tests pass
+- [x] Can request system dump from pedal
+- [x] All global settings parsed correctly
+- [x] Settings displayed in read-only UI
+- [x] All tests pass
 
 ---
 
@@ -119,11 +119,11 @@ public partial class SystemSettingsViewModel : ObservableObject
 
 ## Completion Checklist
 
-- [ ] All tests pass
-- [ ] System settings display correctly
-- [ ] Update task index and BUILD_STATE.md
-- [ ] Commit: `[MODUL-3] Implement System Dump Viewer`
+- [x] All tests pass
+- [x] System settings display correctly
+- [x] Update task index and BUILD_STATE.md
+- [x] Commit: `[MODUL-3] Implement System Dump Viewer`
 
 ---
 
-**Status**: READY (after Modul 2)
+**Status**: ✅ COMPLETE (All tasks done, all tests passing)

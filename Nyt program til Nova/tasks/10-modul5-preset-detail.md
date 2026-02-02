@@ -29,8 +29,9 @@
 
 **🟡 COMPLEXITY: MEDIUM** — Repetitive men kræver domain-forståelse
 
-**Status**: Not started  
-**Estimated**: 2 hours  
+**Status**: ✅ COMPLETE  
+**Estimated**: 2 hours
+**Actual**: DriveBlockViewModel (4 tests), Compressor, Modulation, Delay, Reverb, Pitch, EqGate created  
 **Files**:
 - `src/Nova.Presentation/ViewModels/Effects/DriveBlockViewModel.cs`
 - `src/Nova.Presentation/ViewModels/Effects/CompressorBlockViewModel.cs`
@@ -70,8 +71,9 @@ public partial class DriveBlockViewModel : ObservableObject
 
 **🟡 COMPLEXITY: MEDIUM** — Composition af effect VMs
 
-**Status**: Not started  
-**Estimated**: 30 min  
+**Status**: ✅ COMPLETE  
+**Estimated**: 30 min
+**Actual**: Composes all 7 effect blocks, orchestrates LoadFromPreset()  
 **Files**:
 - `src/Nova.Presentation/ViewModels/PresetDetailViewModel.cs`
 

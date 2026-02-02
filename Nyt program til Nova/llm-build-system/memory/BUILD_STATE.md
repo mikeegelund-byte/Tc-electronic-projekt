@@ -8,6 +8,21 @@ Modul 1: Connection + Bank       [✅ 100% COMPLETE]
 Modul 2: Preset Viewer           [✅ 100% COMPLETE]
 Modul 3: System Viewer           [✅ 80% - DetailView merged]
   Task 3.1-3.4: Core components  [✅ COMPLETE]
+  Task 3.5: UseCase Integration  [✅ COMPLETE]
+  Task 3.6: MainViewModel Wiring [✅ COMPLETE]
+  Task 3.7: Button in UI         [✅ COMPLETE]
+Modul 4: System Editor           [✅ 100% COMPLETE]
+  Task 4.1: Editable Controls    [✅ COMPLETE]
+  Task 4.2: Dirty Tracking       [✅ COMPLETE]
+  Task 4.3: SaveSystemDump UC    [✅ COMPLETE - 2 tests]
+  Task 4.4: Roundtrip Verify     [✅ COMPLETE - 4 tests]
+  Task 4.5: Save/Cancel Buttons  [✅ COMPLETE - 3 tests]
+Modul 5: Preset Detail Viewer    [🔄 70% IN PROGRESS]
+  Task 5.1: 7 Effect ViewModels  [✅ COMPLETE - Drive has 4 tests]
+  Task 5.2: PresetDetailViewModel[✅ COMPLETE]
+  Task 5.3: EffectBlockView      [⬜ TODO - XAML UserControl]
+  Task 5.4: PresetDetailView     [⬜ TODO - Update XAML]
+  Task 5.5: Wire Selection       [⬜ TODO - Already wired, needs test]
   Task 3.5-3.6: DetailView UI    [✅ COMPLETE - agent merged]
   Task 3.7: MainView integration [✅ COMPLETE - agent merged]
 Modul 4: File I/O & Bank Mgmt    [✅ 50% - Agents merged]
@@ -74,6 +89,12 @@ Modul 7-10: Advanced             [⬜ NOT STARTED]
 ## 📊 Test Status
 
 ```
+Total tests: 248 ✅ (100% PASSING)
+  Nova.Domain.Tests:        144 tests ✅
+  Nova.Midi.Tests:          6 tests ✅
+  Nova.Application.Tests:   36 tests ✅ (+6 System Editor)
+  Nova.Infrastructure.Tests: 12 tests ✅
+  Nova.Presentation.Tests:  50 tests ✅ (+4 Drive, +3 MainVM, +2 SystemSettings)
 Total tests: 189 ✅ (100% PASSING)
   Nova.Domain.Tests:        144 tests ✅
   Nova.Midi.Tests:          6 tests ✅

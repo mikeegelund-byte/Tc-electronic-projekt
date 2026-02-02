@@ -67,6 +67,24 @@
                    Text="{Binding Version}"
                    Foreground="#E0E0E0" />
       </Grid>
+
+      <!-- Action Buttons -->
+      <StackPanel Orientation="Horizontal" 
+                  Spacing="12" 
+                  Margin="0,20,0,0"
+                  HorizontalAlignment="Left">
+        <Button Content="💾 Save to Pedal"
+                Command="{Binding $parent[Window].((vm:MainViewModel)DataContext).SaveSystemSettingsCommand}"
+                IsEnabled="{Binding HasUnsavedChanges}"
+                Padding="16,8"
+                Background="#4CAF50"
+                Foreground="White" />
+        
+        <Button Content="↩️ Cancel"
+                Command="{Binding $parent[Window].((vm:MainViewModel)DataContext).CancelSystemChangesCommand}"
+                IsEnabled="{Binding HasUnsavedChanges}"
+                Padding="16,8" />
+      </StackPanel>
     </StackPanel>
   </ScrollViewer>
   
