@@ -6,10 +6,11 @@
 Modul 0: Environment Setup       [✅ COMPLETE]
 Modul 1: Connection + Bank       [✅ 100% COMPLETE]
 Modul 2: Preset Viewer           [✅ 100% COMPLETE]
-Modul 3: System Viewer           [✅ 80% - DetailView merged]
+Modul 3: System Viewer           [✅ 100% COMPLETE]
   Task 3.1-3.4: Core components  [✅ COMPLETE]
-  Task 3.5-3.6: DetailView UI    [✅ COMPLETE - agent merged]
-  Task 3.7: MainView integration [✅ COMPLETE - agent merged]
+  Task 3.5: UseCase Integration  [✅ COMPLETE]
+  Task 3.6: MainViewModel Wiring [✅ COMPLETE]
+  Task 3.7: Button in UI         [✅ COMPLETE]
 Modul 4: File I/O & Bank Mgmt    [✅ 50% - Agents merged]
   Export/Import UseCases         [✅ COMPLETE]
   SaveBank/LoadBank UseCases     [✅ COMPLETE]
@@ -73,12 +74,12 @@ Modul 7-10: Advanced             [⬜ NOT STARTED]
 ## 📊 Test Status
 
 ```
-Total tests: 189 ✅ (100% PASSING)
+Total tests: 209 ✅ (100% PASSING)
   Nova.Domain.Tests:        144 tests ✅
   Nova.Midi.Tests:          6 tests ✅
-  Nova.Application.Tests:   13 tests ✅ (includes RequestSystemDumpUseCase + File I/O + Bank Manager + UpdatePresetUseCase)
+  Nova.Application.Tests:   13 tests ✅
   Nova.Infrastructure.Tests: 12 tests ✅
-  Nova.Presentation.Tests:  32 tests ✅ (includes PresetDetail, SystemSettings, EditablePreset: 13/13 tests passing)
+  Nova.Presentation.Tests:  34 tests ✅
 
 Build: 0 warnings, 0 errors ✅ GREEN
 Framework: .NET 8.0 LTS

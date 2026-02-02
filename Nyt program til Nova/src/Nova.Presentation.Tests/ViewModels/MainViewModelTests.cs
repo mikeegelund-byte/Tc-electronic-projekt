@@ -15,8 +15,11 @@ public class MainViewModelTests
         var mockMidi = new Mock<IMidiPort>();
         var mockConnect = new Mock<IConnectUseCase>();
         var mockDownload = new Mock<IDownloadBankUseCase>();
+        var mockGetPorts = new Mock<IGetAvailablePortsUseCase>();
+        var mockRequestDump = new Mock<IRequestSystemDumpUseCase>();
+        mockGetPorts.Setup(x => x.Execute()).Returns(new List<string>());
         
-        var vm = new MainViewModel(mockMidi.Object, mockConnect.Object, mockDownload.Object);
+        var vm = new MainViewModel(mockMidi.Object, mockConnect.Object, mockDownload.Object, mockGetPorts.Object, mockRequestDump.Object);
         
         vm.AvailablePorts.Should().BeEmpty();
     }
@@ -27,8 +30,11 @@ public class MainViewModelTests
         var mockMidi = new Mock<IMidiPort>();
         var mockConnect = new Mock<IConnectUseCase>();
         var mockDownload = new Mock<IDownloadBankUseCase>();
+        var mockGetPorts = new Mock<IGetAvailablePortsUseCase>();
+        var mockRequestDump = new Mock<IRequestSystemDumpUseCase>();
+        mockGetPorts.Setup(x => x.Execute()).Returns(new List<string>());
         
-        var vm = new MainViewModel(mockMidi.Object, mockConnect.Object, mockDownload.Object);
+        var vm = new MainViewModel(mockMidi.Object, mockConnect.Object, mockDownload.Object, mockGetPorts.Object, mockRequestDump.Object);
         
         vm.IsConnected.Should().BeFalse();
     }
@@ -39,9 +45,12 @@ public class MainViewModelTests
         var mockMidi = new Mock<IMidiPort>();
         var mockConnect = new Mock<IConnectUseCase>();
         var mockDownload = new Mock<IDownloadBankUseCase>();
+        var mockGetPorts = new Mock<IGetAvailablePortsUseCase>();
+        var mockRequestDump = new Mock<IRequestSystemDumpUseCase>();
+        mockGetPorts.Setup(x => x.Execute()).Returns(new List<string>());
         
-        var vm = new MainViewModel(mockMidi.Object, mockConnect.Object, mockDownload.Object);
+        var vm = new MainViewModel(mockMidi.Object, mockConnect.Object, mockDownload.Object, mockGetPorts.Object, mockRequestDump.Object);
         
-        vm.StatusMessage.Should().Be("Ready");
+        vm.StatusMessage.Should().Be("Found 0 MIDI port(s)");
     }
 }

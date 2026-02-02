@@ -19,7 +19,7 @@
 |-------|------|--------|-------|
 | 1 | Foundation | ✅ 100% | Fase 1-5 COMPLETE — Hardware test SUCCESS |
 | 2 | Preset Viewer | ✅ 100% | Tasks 2.1-2.6 COMPLETE — Ready for manual test |
-| 3 | System Viewer | ⬜ TODO | See tasks/08-modul3-system-viewer.md |
+| 3 | System Viewer | ✅ 100% | Tasks 3.1-3.4 COMPLETE — Integrated into UI |
 | 4 | File I/O & Bank | ✅ 50% | Export/Import and SaveBank/LoadBank COMPLETE |
 | 5 | Preset Editor | ✅ 100% | EditablePresetViewModel complete — 13/13 tests passing |
 | 6-10 | Advanced Features | ⬜ TODO | See tasks/ folder |

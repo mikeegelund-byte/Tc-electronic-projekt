@@ -9,10 +9,21 @@
   <ScrollViewer>
     <StackPanel Margin="20">
       <!-- Title -->
-      <TextBlock Text="System Settings" 
-                 FontSize="18" 
-                 FontWeight="Bold"
-                 Foreground="#FFFFFF"
+      <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,20">
+        <TextBlock Text="System Settings" 
+                   FontSize="18" 
+                   FontWeight="Bold"
+                   Foreground="#FFFFFF" />
+        
+        <Button Grid.Column="1" 
+                Content="📥 Refresh Settings"
+                Command="{Binding $parent[Window].((vm:MainViewModel)DataContext).DownloadSystemSettingsCommand}"
+                Padding="12,6"/>
+      </Grid>
+
+      <TextBlock Text="Tip: System settings are also included in the 'Send Dump' from the pedal."
+                 Foreground="#888888"
+                 FontSize="12"
                  Margin="0,0,0,20" />
       
       <!-- Settings Grid -->

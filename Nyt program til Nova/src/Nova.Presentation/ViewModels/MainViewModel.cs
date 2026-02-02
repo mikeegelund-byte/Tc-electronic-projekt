@@ -13,6 +13,8 @@ public partial class MainViewModel : ObservableObject
     private readonly IMidiPort _midiPort;
     private readonly IConnectUseCase _connectUseCase;
     private readonly IDownloadBankUseCase _downloadBankUseCase;
+    private readonly IGetAvailablePortsUseCase _getAvailablePortsUseCase;
+    private readonly IRequestSystemDumpUseCase _requestSystemDumpUseCase;
     private UserBankDump? _currentBank;
 
     [ObservableProperty]
@@ -50,11 +52,15 @@ public partial class MainViewModel : ObservableObject
     public MainViewModel(
         IMidiPort midiPort,
         IConnectUseCase connectUseCase,
-        IDownloadBankUseCase downloadBankUseCase)
+        IDownloadBankUseCase downloadBankUseCase,
+        IGetAvailablePortsUseCase getAvailablePortsUseCase,
+        IRequestSystemDumpUseCase requestSystemDumpUseCase)
     {
         _midiPort = midiPort;
         _connectUseCase = connectUseCase;
         _downloadBankUseCase = downloadBankUseCase;
+        _getAvailablePortsUseCase = getAvailablePortsUseCase;
+        _requestSystemDumpUseCase = requestSystemDumpUseCase;
         
         // Auto-refresh ports on startup
         RefreshPorts();
@@ -73,7 +79,7 @@ public partial class MainViewModel : ObservableObject
     private void RefreshPorts()
     {
         AvailablePorts.Clear();
-        var ports = DryWetMidiPort.GetAvailablePorts();
+        var ports = _getAvailablePortsUseCase.Execute();
         foreach (var port in ports)
         {
             AvailablePorts.Add(port);
@@ -144,6 +150,37 @@ public partial class MainViewModel : ObservableObject
     }
 
     private bool CanDownload() => IsConnected && !IsDownloading;
+
+    [RelayCommand(CanExecute = nameof(CanDownload))]
+    private async Task DownloadSystemSettingsAsync()
+    {
+        IsDownloading = true;
+        StatusMessage = "Requesting System Settings dump from pedal...";
+        
+        try
+        {
+            var cts = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            var result = await _requestSystemDumpUseCase.ExecuteAsync(10000, cts.Token);
+
+            if (result.IsSuccess)
+            {
+                StatusMessage = "System settings downloaded successfully";
+                SystemSettings.LoadFromDump(result.Value);
+            }
+            else
+            {
+                StatusMessage = $"Error: {result.Errors.First().Message}";
+            }
+        }
+        catch (Exception ex)
+        {
+            StatusMessage = $"Error: {ex.Message}";
+        }
+        finally
+        {
+            IsDownloading = false;
+        }
+    }
 
     /// <summary>
     /// Handles preset selection changes and loads the full preset details.
