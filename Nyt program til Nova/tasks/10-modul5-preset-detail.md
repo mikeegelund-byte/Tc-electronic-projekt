@@ -17,11 +17,11 @@
 
 ## Exit Criteria
 
-- [ ] Click preset → show all 7 effect blocks
-- [ ] Each block shows type + all parameters
-- [ ] Collapsible sections for each effect
-- [ ] All parameter values match hardware
-- [ ] All tests pass
+- [x] Click preset → show all 7 effect blocks
+- [x] Each block shows type + all parameters
+- [x] Collapsible sections for each effect
+- [x] All parameter values match hardware
+- [x] All tests pass
 
 ---
 
@@ -105,8 +105,9 @@ public partial class PresetDetailViewModel : ObservableObject
 
 **🟡 COMPLEXITY: MEDIUM** — Avalonia UserControl
 
-**Status**: Not started  
+**Status**: ✅ COMPLETE  
 **Estimated**: 45 min  
+**Actual**: Reusable XAML control created
 **Files**:
 - `src/Nova.Presentation/Views/Controls/EffectBlockView.axaml`
 
@@ -122,8 +123,9 @@ public partial class PresetDetailViewModel : ObservableObject
 
 **🟡 COMPLEXITY: MEDIUM** — Layout composition
 
-**Status**: Not started  
+**Status**: ✅ COMPLETE  
 **Estimated**: 60 min  
+**Actual**: Full XAML layout with all 7 effect blocks
 **Files**:
 - `src/Nova.Presentation/Views/PresetDetailView.axaml`
 
@@ -147,8 +149,9 @@ public partial class PresetDetailViewModel : ObservableObject
 
 **🟢 COMPLEXITY: SIMPLE** — Property binding
 
-**Status**: Not started  
+**Status**: ✅ COMPLETE  
 **Estimated**: 20 min  
+**Actual**: Selection wired in MainViewModel  
 
 ### In MainViewModel:
 ```csharp
@@ -169,10 +172,10 @@ partial void OnSelectedPresetChanged(PresetSummaryViewModel? value)
 
 ## Completion Checklist
 
-- [ ] All 7 effect blocks display
-- [ ] Parameter values correct
-- [ ] All tests pass
-- [ ] Commit: `[MODUL-5] Implement Preset Detail Viewer`
+- [x] All 7 effect blocks display
+- [x] Parameter values correct
+- [x] All tests pass
+- [x] Commit: `[MODUL-5] Implement Preset Detail Viewer`
 
 ---
 
@@ -186,4 +189,4 @@ partial void OnSelectedPresetChanged(PresetSummaryViewModel? value)
 
 ---
 
-**Status**: READY (after Modul 4)
+**Status**: ✅ COMPLETE
