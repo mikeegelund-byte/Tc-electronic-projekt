@@ -10,9 +10,9 @@
 
 ## 🎯 NUVÆRENDE TASK
 
-**Fil**: `tasks/08-modul3-system-viewer.md`  
-**Task**: Modul 3 - System Viewer (Display global settings from pedal)  
-**Status**: ✅ COMPLETE (Tests pass, implementation integrated)
+**Fil**: `tasks/09-modul4-system-editor.md`  
+**Task**: Modul 4 - System Editor (Edit and save system settings to pedal)  
+**Status**: ⬜ STARTING (Next task to begin)
 
 ---
 
@@ -49,7 +49,7 @@
 | 5 | `05-modul1-phase4-infrastructure.md` | ✅ DONE |
 | 6 | `06-modul1-phase5-presentation-SONNET45.md` | ✅ DONE |
 | 7 | `07-modul2-preset-viewer.md` | ✅ COMPLETE |
-| 8 | `08-modul3-system-viewer.md` | ⬜ TODO |
+| 8 | `08-modul3-system-viewer.md` | ✅ DONE |
 | 9 | `09-modul4-system-editor.md` | ⬜ TODO |
 | 10 | `10-modul5-preset-detail.md` | ⬜ TODO |
 | 11 | `11-modul6-preset-editor-SONNET45.md` | ⬜ TODO |
@@ -65,13 +65,13 @@
 ## 🧪 TEST STATUS
 
 ```
-Domain:      140 tests ✅
+Domain:      144 tests ✅
 MIDI:        6 tests ✅
-Application: 3 tests ✅
+Application: 13 tests ✅
 Infrastructure: 12 tests ✅
-Presentation: 3 tests ❌ (Moq sealed class issue - non-blocking)
+Presentation: 34 tests ✅
 ─────────────────────────
-TOTAL:       164/167 passing (98%)
+TOTAL:       209/209 passing (100%)
 
 HARDWARE TEST: ✅ SUCCESS
 - Connected to USB MIDI Interface
@@ -83,8 +83,8 @@ HARDWARE TEST: ✅ SUCCESS
 
 ## 📅 SIDST OPDATERET
 
-**Dato**: 2025-02-01  
-**Commit**: [MODUL-2][TASK-2.6] Modul 2 Preset Viewer complete - ready for manual hardware test
+**Dato**: 2026-02-02  
+**Commit**: [MODUL-3] Complete System Viewer - extract IGetAvailablePortsUseCase, integrate RequestSystemDump, add UI button
 
 ---
 
@@ -93,8 +93,8 @@ HARDWARE TEST: ✅ SUCCESS
 1. ✅ Phase 5: Avalonia Presentation — **COMPLETE**
 2. ✅ Hardware Test: E2E flow verified with physical Nova System pedal
 3. ✅ Modul 2: Preset Viewer — **COMPLETE** (Tasks 2.1-2.6 done)
-4. 🎯 **NEXT**: Modul 3 - System Viewer (Display global settings from pedal)
-5. Fix 3 failing Presentation tests (extract UseCase interfaces) - low priority
+4. ✅ Modul 3: System Viewer — **COMPLETE** (Display global settings from pedal)
+5. 🎯 **NEXT**: Modul 4 - System Editor (Edit and save system settings to pedal)
 
 ---
 

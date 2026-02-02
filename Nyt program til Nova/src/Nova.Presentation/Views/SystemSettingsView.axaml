@@ -25,6 +25,21 @@
                  Foreground="#888888"
                  FontSize="12"
                  Margin="0,0,0,20" />
+
+      <!-- Unsaved Changes Indicator -->
+      <Border Background="#FF6B35" 
+              Padding="12,8" 
+              CornerRadius="4"
+              IsVisible="{Binding HasUnsavedChanges}"
+              Margin="0,0,0,16">
+        <StackPanel Orientation="Horizontal" Spacing="8">
+          <TextBlock Text="⚠️" FontSize="16" VerticalAlignment="Center"/>
+          <TextBlock Text="You have unsaved changes" 
+                     Foreground="White" 
+                     FontWeight="SemiBold"
+                     VerticalAlignment="Center"/>
+        </StackPanel>
+      </Border>
       
       <!-- Settings Grid -->
       <Grid ColumnDefinitions="200,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto">
@@ -33,41 +48,68 @@
         <TextBlock Grid.Row="0" Grid.Column="0" 
                    Text="MIDI Channel:" 
                    Foreground="#CCCCCC"
+                   VerticalAlignment="Center"
                    Margin="0,0,10,10" />
-        <TextBlock Grid.Row="0" Grid.Column="1" 
-                   Text="{Binding MidiChannel}"
-                   Foreground="#E0E0E0"
-                   Margin="0,0,0,10" />
+        <ComboBox Grid.Row="0" Grid.Column="1"
+                  SelectedIndex="{Binding MidiChannel}"
+                  HorizontalAlignment="Left"
+                  MinWidth="120"
+                  Margin="0,0,0,10">
+          <ComboBoxItem Content="Channel 1 (0)" />
+          <ComboBoxItem Content="Channel 2 (1)" />
+          <ComboBoxItem Content="Channel 3 (2)" />
+          <ComboBoxItem Content="Channel 4 (3)" />
+          <ComboBoxItem Content="Channel 5 (4)" />
+          <ComboBoxItem Content="Channel 6 (5)" />
+          <ComboBoxItem Content="Channel 7 (6)" />
+          <ComboBoxItem Content="Channel 8 (7)" />
+          <ComboBoxItem Content="Channel 9 (8)" />
+          <ComboBoxItem Content="Channel 10 (9)" />
+          <ComboBoxItem Content="Channel 11 (10)" />
+          <ComboBoxItem Content="Channel 12 (11)" />
+          <ComboBoxItem Content="Channel 13 (12)" />
+          <ComboBoxItem Content="Channel 14 (13)" />
+          <ComboBoxItem Content="Channel 15 (14)" />
+          <ComboBoxItem Content="Channel 16 (15)" />
+        </ComboBox>
         
         <!-- Device ID -->
         <TextBlock Grid.Row="1" Grid.Column="0" 
                    Text="Device ID:" 
                    Foreground="#CCCCCC"
+                   VerticalAlignment="Center"
                    Margin="0,0,10,10" />
-        <TextBlock Grid.Row="1" Grid.Column="1" 
-                   Text="{Binding DeviceId}"
-                   Foreground="#E0E0E0"
-                   Margin="0,0,0,10" />
+        <NumericUpDown Grid.Row="1" Grid.Column="1"
+                       Value="{Binding DeviceId}"
+                       Minimum="0"
+                       Maximum="126"
+                       HorizontalAlignment="Left"
+                       MinWidth="120"
+                       Margin="0,0,0,10" />
         
         <!-- MIDI Clock Enabled -->
         <TextBlock Grid.Row="2" Grid.Column="0" 
                    Text="MIDI Clock:" 
                    Foreground="#CCCCCC"
+                   VerticalAlignment="Center"
                    Margin="0,0,10,10" />
-        <TextBlock Grid.Row="2" Grid.Column="1" 
-                   Text="{Binding MidiClockEnabled}"
-                   Foreground="#E0E0E0"
-                   Margin="0,0,0,10" />
+        <ToggleSwitch Grid.Row="2" Grid.Column="1"
+                      IsChecked="{Binding MidiClockEnabled}"
+                      OnContent="Enabled"
+                      OffContent="Disabled"
+                      Margin="0,0,0,10" />
         
         <!-- MIDI Program Change Enabled -->
         <TextBlock Grid.Row="3" Grid.Column="0" 
                    Text="Program Change:" 
                    Foreground="#CCCCCC"
+                   VerticalAlignment="Center"
                    Margin="0,0,10,10" />
-        <TextBlock Grid.Row="3" Grid.Column="1" 
-                   Text="{Binding MidiProgramChangeEnabled}"
-                   Foreground="#E0E0E0"
-                   Margin="0,0,0,10" />
+        <ToggleSwitch Grid.Row="3" Grid.Column="1"
+                      IsChecked="{Binding MidiProgramChangeEnabled}"
+                      OnContent="Enabled"
+                      OffContent="Disabled"
+                      Margin="0,0,0,10" />
         
         <!-- Version -->
         <TextBlock Grid.Row="4" Grid.Column="0" 
@@ -78,6 +120,22 @@
                    Text="{Binding Version}"
                    Foreground="#E0E0E0" />
       </Grid>
+
+      <!-- Action Buttons -->
+      <StackPanel Orientation="Horizontal" 
+                  Spacing="12" 
+                  Margin="0,20,0,0"
+                  HorizontalAlignment="Left">
+        <Button Content="💾 Save to Pedal"
+                IsEnabled="{Binding HasUnsavedChanges}"
+                Padding="16,8"
+                Background="#4CAF50"
+                Foreground="White" />
+        
+        <Button Content="↩️ Cancel"
+                IsEnabled="{Binding HasUnsavedChanges}"
+                Padding="16,8" />
+      </StackPanel>
     </StackPanel>
   </ScrollViewer>
   

@@ -1,26 +1,29 @@
 # SESSION_MEMORY.md — Current Session State
 
-## 📅 Session: 2026-02-02
+## 📅 Session: 2026-02-02 (Continued)
 
 ### 🎯 Mål
-[MODUL-3] Complete System Viewer integration and fix Presentation layer test regressions.
+[MODUL-4] Start System Editor - Make system settings editable in UI
 
 **Objectives**:
-1. ✅ Fix failing Presentation tests (MainViewModelTests) by extracting IGetAvailablePortsUseCase.
-2. 🔄 Integrate IRequestSystemDumpUseCase into MainViewModel.
-3. 🔄 Add "Download System Settings" button to the UI.
-4. 🔄 Verify end-to-end flow for System Dump.
+1. 🔄 Task 4.1: Convert read-only TextBlocks to editable controls (ComboBox, NumericUpDown, ToggleSwitch)
+2. ⬜ Task 4.2: Implement dirty tracking for unsaved changes
+3. ⬜ Task 4.3: Create SaveSystemDumpUseCase (REQUIRES SONNET 4.5+)
+4. ⬜ Task 4.4: Implement roundtrip verification (REQUIRES SONNET 4.5+)
+5. ⬜ Task 4.5: Add Save/Cancel buttons
 
 ### Nuværende task
-**Status**: ✅ COMPLETE - Tests fixed, System Viewer integrated.
+**Fil**: tasks/09-modul4-system-editor.md
+**Task**: 4.1 - Make Controls Editable
+**Status**: 🔄 STARTING
 
-**Commits**:
-- `fixed-tests` — [MODUL-1][TASK-1.5] Fix MainViewModel tests by extracting IGetAvailablePortsUseCase
-- `modul3-done` — [MODUL-3][TASK-3.5] Integrate IRequestSystemDumpUseCase into MainViewModel and UI
-
-### 🔧 Status Update
-**Build Status**: ✅ GREEN (0 errors, 0 warnings)
-**Tests**: 209/209 passing (100%) 🎉
+### 🔧 Previous Session Summary
+**Last Session**: Completed Modul 3
+- Fixed MainViewModelTests by extracting IGetAvailablePortsUseCase
+- Integrated IRequestSystemDumpUseCase into MainViewModel
+- Added "Refresh Settings" button to SystemSettingsView
+- All 209 tests passing ✅
+- Commit: 7f0f042 — [MODUL-3] Complete System Viewer
 
 ---
 
