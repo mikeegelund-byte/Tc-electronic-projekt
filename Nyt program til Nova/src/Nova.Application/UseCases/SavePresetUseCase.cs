@@ -11,11 +11,13 @@ namespace Nova.Application.UseCases;
 public sealed class SavePresetUseCase : ISavePresetUseCase
 {
     private readonly IMidiPort _midiPort;
+    private readonly IRequestPresetUseCase _requestPresetUseCase;
     private readonly ILogger _logger;
 
-    public SavePresetUseCase(IMidiPort midiPort, ILogger logger)
+    public SavePresetUseCase(IMidiPort midiPort, IRequestPresetUseCase requestPresetUseCase, ILogger logger)
     {
         _midiPort = midiPort;
+        _requestPresetUseCase = requestPresetUseCase;
         _logger = logger;
     }
 
@@ -24,8 +26,9 @@ public sealed class SavePresetUseCase : ISavePresetUseCase
     /// </summary>
     /// <param name="preset">The preset to save</param>
     /// <param name="slotNumber">Target slot number (1-60)</param>
+    /// <param name="verify">If true, requests the preset back after saving to verify it was saved correctly (default: false)</param>
     /// <returns>Result indicating success or failure</returns>
-    public async Task<Result> ExecuteAsync(Preset preset, int slotNumber)
+    public async Task<Result> ExecuteAsync(Preset preset, int slotNumber, bool verify = false)
     {
         try
         {
@@ -87,6 +90,51 @@ public sealed class SavePresetUseCase : ISavePresetUseCase
             {
                 _logger.Error("Failed to send preset to hardware: {Errors}", string.Join(", ", sendResult.Errors));
                 return Result.Fail($"Failed to send preset to hardware: {sendResult.Errors.First().Message}");
+            }
+
+            _logger.Information("Successfully sent preset '{PresetName}' to slot {SlotNumber}", preset.Name, slotNumber);
+
+            // Step 7: Verify save if requested
+            if (verify)
+            {
+                _logger.Information("Verifying preset save by requesting it back from hardware");
+                
+                // Wait a moment for hardware to process the save (typically < 100ms)
+                await Task.Delay(200);
+                
+                var verifyResult = await _requestPresetUseCase.ExecuteAsync(slotNumber, timeout: 3000);
+                if (verifyResult.IsFailed)
+                {
+                    _logger.Error("Verification failed: could not read preset back from hardware: {Errors}", 
+                        string.Join(", ", verifyResult.Errors));
+                    return Result.Fail($"Save succeeded but verification failed: {verifyResult.Errors.First().Message}");
+                }
+
+                // Compare the saved SysEx with the retrieved SysEx
+                var retrievedSysEx = verifyResult.Value.ToSysEx().Value;
+                
+                // Compare all bytes except the checksum (bytes 518-519 might vary slightly due to rounding)
+                // Actually, compare everything - if it doesn't match exactly, something went wrong
+                bool matches = sysexData.SequenceEqual(retrievedSysEx);
+                
+                if (!matches)
+                {
+                    _logger.Error("Verification failed: saved preset does not match retrieved preset");
+                    // Log first difference for debugging
+                    for (int i = 0; i < Math.Min(sysexData.Length, retrievedSysEx.Length); i++)
+                    {
+                        if (sysexData[i] != retrievedSysEx[i])
+                        {
+                            _logger.Error("First difference at byte {Index}: sent={Sent:X2}, received={Received:X2}", 
+                                i, sysexData[i], retrievedSysEx[i]);
+                            break;
+                        }
+                    }
+                    return Result.Fail("Save succeeded but verification failed: preset data mismatch. " +
+                        "The preset may not have been saved correctly to hardware.");
+                }
+
+                _logger.Information("Verification successful: preset matches hardware");
             }
 
             _logger.Information("Successfully saved preset '{PresetName}' to slot {SlotNumber}", preset.Name, slotNumber);

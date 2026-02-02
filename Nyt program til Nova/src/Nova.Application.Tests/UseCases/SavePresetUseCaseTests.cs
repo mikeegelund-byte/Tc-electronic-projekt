@@ -11,14 +11,16 @@ namespace Nova.Application.Tests.UseCases;
 public sealed class SavePresetUseCaseTests
 {
     private readonly Mock<IMidiPort> _mockMidiPort;
+    private readonly Mock<IRequestPresetUseCase> _mockRequestPresetUseCase;
     private readonly Mock<ILogger> _mockLogger;
     private readonly SavePresetUseCase _useCase;
 
     public SavePresetUseCaseTests()
     {
         _mockMidiPort = new Mock<IMidiPort>();
+        _mockRequestPresetUseCase = new Mock<IRequestPresetUseCase>();
         _mockLogger = new Mock<ILogger>();
-        _useCase = new SavePresetUseCase(_mockMidiPort.Object, _mockLogger.Object);
+        _useCase = new SavePresetUseCase(_mockMidiPort.Object, _mockRequestPresetUseCase.Object, _mockLogger.Object);
     }
 
     [Fact]
