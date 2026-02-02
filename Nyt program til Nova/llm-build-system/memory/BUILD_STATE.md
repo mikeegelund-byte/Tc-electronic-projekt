@@ -42,9 +42,11 @@ Modul 7-10: Advanced             [⬜ NOT STARTED]
 - SysEx/SysExBuilder.cs — Request builders
 - SysEx/SysExValidator.cs — Checksum validation
 
-### Nova.Application ✅ 100%
-- UseCases/ConnectUseCase.cs — Port listing, connection
-- UseCases/DownloadBankUseCase.cs — Bank retrieval
+### Nova.Application ✅ Core Complete
+- UseCases/ConnectUseCase.cs — Port listing, connection (with IConnectUseCase interface)
+- UseCases/DownloadBankUseCase.cs — Bank retrieval (with IDownloadBankUseCase interface)
+- UseCases/RequestSystemDumpUseCase.cs — System dump request with async enumeration
+- Interfaces extracted for mockability in tests
 
 ### Nova.Midi ✅ 100%
 - IMidiPort.cs — Interface with FluentResults

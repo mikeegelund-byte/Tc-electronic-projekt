@@ -100,6 +100,10 @@
                                             Command="{Binding ImportBankCommand}"
                                             Padding="16,8"/>
                                 </StackPanel>
+                                <Button Content="📥 Download User Bank"
+                                        Command="{Binding DownloadBankCommand}"
+                                        HorizontalAlignment="Left"
+                                        Padding="16,8"/>
                             </StackPanel>
                         </Border>
                         
