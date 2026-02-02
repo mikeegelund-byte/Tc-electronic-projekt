@@ -243,17 +243,11 @@ public partial class EditablePresetViewModel : ObservableObject
     {
         _updatePresetUseCase = updatePresetUseCase ?? throw new ArgumentNullException(nameof(updatePresetUseCase));
         _logger = logger ?? new LoggerConfiguration().MinimumLevel.Warning().CreateLogger();
-        
-        // Create a minimal default SysEx preset (will be replaced when actual preset is loaded)
-        // Using System.Activator.CreateInstance with BindingFlags to invoke private constructor
-        var presetType = typeof(Preset);
-        var ctor = presetType.GetConstructor(
-            System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance,
-            null,
-            Type.EmptyTypes,
-            null);
-        
-        _originalPreset = (Preset)(ctor?.Invoke(null) ?? throw new InvalidOperationException("Cannot create Preset instance"));
+
+        // _originalPreset is intentionally left uninitialized here and must be set via LoadPreset().
+        // This avoids using reflection to invoke Preset's private constructor and respects its
+        // immutability and factory-based creation (e.g., Preset.FromSysEx()).
+        _originalPreset = null!;
     }
 
     /// <summary>
@@ -390,17 +384,38 @@ public partial class EditablePresetViewModel : ObservableObject
             return;
         }
 
-        StatusMessage = "Saving to device...";
+        StatusMessage = "Validating and sending to device...";
 
-        // Use the original preset (immutable) with UpdatePresetUseCase
-        // The use case will handle MIDI serialization
+        // IMPORTANT ARCHITECTURE NOTE:
+        // The Preset domain model is immutable by design (private setters, FromSysEx factory).
+        // This means we cannot create a modified Preset with edited values from the UI.
+        // 
+        // The current implementation:
+        // 1. Validates user edits in the UI (name length, value ranges)
+        // 2. Sends the ORIGINAL preset's SysEx to the device (not the edited values)
+        // 
+        // This makes the editor useful for:
+        // - Viewing all preset parameters
+        // - Validating parameter values
+        // - Re-sending an existing preset to the device
+        //
+        // It does NOT currently support modifying preset values on the device.
+        // To enable full edit functionality, the Preset class architecture needs enhancement.
+        
+        if (_originalPreset == null)
+        {
+            StatusMessage = "Error: No preset loaded";
+            return;
+        }
+
+        // Send the original preset's SysEx (UI edits are validated but not encoded into SysEx)
         var result = await _updatePresetUseCase.ExecuteAsync(_originalPreset, cancellationToken);
 
         if (result.IsSuccess)
         {
             HasChanges = false;
-            StatusMessage = $"Saved preset: {PresetName}";
-            _logger.Information("EditablePresetViewModel: Preset saved successfully");
+            StatusMessage = $"Preset sent: {_originalPreset.Name}";
+            _logger.Information("EditablePresetViewModel: Preset sent to device");
         }
         else
         {

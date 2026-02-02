@@ -20,7 +20,7 @@
                     
                     <StackPanel Orientation="Horizontal" Spacing="8">
                         <TextBlock Text="Name:" Width="120" VerticalAlignment="Center" />
-                        <TextBox Text="{Binding PresetName}" Width="200" />
+                        <TextBox Text="{Binding PresetName}" Width="200" MaxLength="24" />
                     </StackPanel>
 
                     <StackPanel Orientation="Horizontal" Spacing="8">

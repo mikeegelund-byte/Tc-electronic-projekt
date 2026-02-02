@@ -108,8 +108,7 @@ public sealed class UpdatePresetUseCase : IUpdatePresetUseCase
             errors.Add("Preset name cannot exceed 24 characters");
         }
 
-        // Validate tap tempo (20-2000 ms based on problem statement, but Preset.cs shows 100-3000)
-        // Using the domain model's range
+        // Validate tap tempo (100-3000 ms per Preset.cs domain model)
         if (preset.TapTempo < 100 || preset.TapTempo > 3000)
         {
             errors.Add($"Tap tempo must be between 100 and 3000 ms, got {preset.TapTempo}");
