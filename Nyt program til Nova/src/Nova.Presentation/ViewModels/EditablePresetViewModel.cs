@@ -386,32 +386,28 @@ public partial class EditablePresetViewModel : ObservableObject
 
         StatusMessage = "Saving to device...";
 
-        // Build an updated immutable Preset instance from the current edited values
-        Preset BuildUpdatedPreset()
+        // NOTE: Since Preset is immutable and can only be created from SysEx via FromSysEx(),
+        // we cannot create a modified Preset with the edited values. The current implementation
+        // sends the original preset's SysEx to the device.
+        // 
+        // For a full bidirectional edit implementation, one of these approaches would be needed:
+        // 1. Add encoding methods to Preset to rebuild SysEx from modified properties
+        // 2. Convert Preset to a record type with public setters
+        // 3. Add a factory method that accepts individual property values
+        //
+        // For now, we use the original preset since ToSysEx() returns the stored RawSysEx.
+        if (_originalPreset == null)
         {
-            if (_originalPreset == null)
-            {
-                throw new InvalidOperationException("Cannot build updated preset without an original preset.");
-            }
-
-            // Copy the original preset and override fields that are editable in this view model
-            // NOTE: This assumes Preset is an immutable record with a Name property.
-            return _originalPreset with
-            {
-                Name = PresetName
-            };
+            StatusMessage = "Error: No preset loaded";
+            return;
         }
 
-        var updatedPreset = BuildUpdatedPreset();
-
-        // The use case will handle MIDI serialization
-        var result = await _updatePresetUseCase.ExecuteAsync(updatedPreset, cancellationToken);
+        // The use case will handle MIDI serialization using the original preset's SysEx
+        var result = await _updatePresetUseCase.ExecuteAsync(_originalPreset, cancellationToken);
 
         if (result.IsSuccess)
         {
-            // Update the original/current preset baseline to the saved version
-            _originalPreset = updatedPreset;
-            CurrentPreset = updatedPreset;
+            // Reset change tracking since we've saved
             HasChanges = false;
             StatusMessage = $"Saved preset: {PresetName}";
             _logger.Information("EditablePresetViewModel: Preset saved successfully");

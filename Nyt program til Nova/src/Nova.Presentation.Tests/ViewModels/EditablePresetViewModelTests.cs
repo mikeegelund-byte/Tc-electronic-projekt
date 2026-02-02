@@ -192,6 +192,40 @@ public class EditablePresetViewModelTests
     }
 
     [Fact]
+    public async Task SaveCommand_WithEmptyName_ShowsError()
+    {
+        // Arrange
+        var testSysEx = CreateValidSysEx();
+        var preset = Preset.FromSysEx(testSysEx).Value;
+        _viewModel.LoadPreset(preset);
+        _viewModel.PresetName = string.Empty; // Empty name
+
+        // Act
+        await _viewModel.SaveCommand.ExecuteAsync(null);
+
+        // Assert
+        _viewModel.StatusMessage.Should().Contain("Error");
+        _viewModel.StatusMessage.Should().Contain("1-24 characters");
+    }
+
+    [Fact]
+    public async Task SaveCommand_WithWhitespaceName_ShowsError()
+    {
+        // Arrange
+        var testSysEx = CreateValidSysEx();
+        var preset = Preset.FromSysEx(testSysEx).Value;
+        _viewModel.LoadPreset(preset);
+        _viewModel.PresetName = "   "; // Whitespace-only name
+
+        // Act
+        await _viewModel.SaveCommand.ExecuteAsync(null);
+
+        // Assert
+        _viewModel.StatusMessage.Should().Contain("Error");
+        _viewModel.StatusMessage.Should().Contain("1-24 characters");
+    }
+
+    [Fact]
     public void RevertCommand_ReloadsOriginalPreset()
     {
         // Arrange
