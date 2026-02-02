@@ -13,7 +13,6 @@
         "ms-dotnettools.vscode-dotnet-modernize",
         "tobysmith568.run-in-powershell",
         "ms-dotnettools.csharp",
-        "ms-dotnettools.csdevkit",
-        "github.copilot-chat"
+        "ms-dotnettools.csdevkit"
     ]
 }
