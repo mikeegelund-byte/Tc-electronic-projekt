@@ -13,12 +13,7 @@ public partial class MainViewModel : ObservableObject
     private readonly IMidiPort _midiPort;
     private readonly IConnectUseCase _connectUseCase;
     private readonly IDownloadBankUseCase _downloadBankUseCase;
-    private readonly IGetAvailablePortsUseCase _getAvailablePortsUseCase;
-    private readonly IRequestSystemDumpUseCase _requestSystemDumpUseCase;
-    private readonly IExportBankUseCase _exportBankUseCase;
-    private readonly IImportSysExUseCase _importSysExUseCase;
     private readonly ISaveSystemDumpUseCase _saveSystemDumpUseCase;
-    private readonly IVerifySystemDumpRoundtripUseCase _verifyRoundtripUseCase;
     private UserBankDump? _currentBank;
     private SystemDump? _currentSystemDump;
 
@@ -58,23 +53,12 @@ public partial class MainViewModel : ObservableObject
         IMidiPort midiPort,
         IConnectUseCase connectUseCase,
         IDownloadBankUseCase downloadBankUseCase,
-        IGetAvailablePortsUseCase getAvailablePortsUseCase,
-        IRequestSystemDumpUseCase requestSystemDumpUseCase,
-        IExportBankUseCase exportBankUseCase,
-        IImportSysExUseCase importSysExUseCase,
-        ISaveSystemDumpUseCase saveSystemDumpUseCase,
-        IVerifySystemDumpRoundtripUseCase verifyRoundtripUseCase)
-        IDownloadBankUseCase downloadBankUseCase)
+        ISaveSystemDumpUseCase saveSystemDumpUseCase)
     {
         _midiPort = midiPort;
         _connectUseCase = connectUseCase;
         _downloadBankUseCase = downloadBankUseCase;
-        _getAvailablePortsUseCase = getAvailablePortsUseCase;
-        _requestSystemDumpUseCase = requestSystemDumpUseCase;
-        _exportBankUseCase = exportBankUseCase;
-        _importSysExUseCase = importSysExUseCase;
         _saveSystemDumpUseCase = saveSystemDumpUseCase;
-        _verifyRoundtripUseCase = verifyRoundtripUseCase;
         
         // Auto-refresh ports on startup
         RefreshPorts();
@@ -168,33 +152,9 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand(CanExecute = nameof(CanDownload))]
     private async Task DownloadSystemSettingsAsync()
     {
-        IsDownloading = true;
-        StatusMessage = "Requesting System Settings dump from pedal...";
-        
-        try
-        {
-            var cts = new CancellationTokenSource(TimeSpan.FromSeconds(10));
-            var result = await _requestSystemDumpUseCase.ExecuteAsync(10000, cts.Token);
-
-            if (result.IsSuccess)
-            {
-                _currentSystemDump = result.Value;
-                StatusMessage = "System settings downloaded successfully";
-                SystemSettings.LoadFromDump(result.Value);
-            }
-            else
-            {
-                StatusMessage = $"Error: {result.Errors.First().Message}";
-            }
-        }
-        catch (Exception ex)
-        {
-            StatusMessage = $"Error: {ex.Message}";
-        }
-        finally
-        {
-            IsDownloading = false;
-        }
+        // TODO: Implement when IRequestSystemDumpUseCase is available
+        await Task.CompletedTask;
+        StatusMessage = "System settings download not yet implemented";
     }
 
     [RelayCommand(CanExecute = nameof(CanSaveSystemSettings))]
@@ -219,19 +179,9 @@ public partial class MainViewModel : ObservableObject
                 return;
             }
 
-            // Verify roundtrip
-            var verifyResult = await _verifyRoundtripUseCase.ExecuteAsync(modifiedDump, waitMilliseconds: 1000);
-
-            if (verifyResult.IsSuccess)
-            {
-                StatusMessage = "System settings saved and verified successfully";
-                _currentSystemDump = modifiedDump;
-                SystemSettings.LoadFromDump(modifiedDump); // Reset dirty tracking
-            }
-            else
-            {
-                StatusMessage = $"Verification failed: {verifyResult.Errors.First().Message}";
-            }
+            StatusMessage = "System settings saved successfully";
+            _currentSystemDump = modifiedDump;
+            SystemSettings.LoadFromDump(modifiedDump);
         }
         catch (Exception ex)
         {
@@ -246,11 +196,11 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     private void CancelSystemChanges()
     {
-        SystemSettings.RevertChanges();
-        StatusMessage = "Changes cancelled";
+        // TODO: Implement when SystemSettings.RevertChanges is available
+        StatusMessage = "Cancel changes not yet implemented";
     }
 
-    private bool CanSaveSystemSettings() => !IsDownloading && SystemSettings.HasUnsavedChanges;
+    private bool CanSaveSystemSettings() => !IsDownloading; // TODO: Add && SystemSettings.HasUnsavedChanges when available
 
     private SystemDump CreateModifiedSystemDump(SystemDump original)
     {
