@@ -30,6 +30,8 @@ public partial class App : global::Avalonia.Application
         services.AddTransient<IDownloadBankUseCase, DownloadBankUseCase>();
         services.AddTransient<IGetAvailablePortsUseCase, GetAvailablePortsUseCase>();
         services.AddTransient<IRequestSystemDumpUseCase, RequestSystemDumpUseCase>();
+        services.AddTransient<IExportBankUseCase, ExportBankUseCase>();
+        services.AddTransient<IImportSysExUseCase, ImportSysExUseCase>();
         
         // ViewModels
         services.AddTransient<MainViewModel>();
