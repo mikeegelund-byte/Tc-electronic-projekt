@@ -1,15 +1,18 @@
 # PROGRESS.md — Projekt Fremskridt
 
-## 📊 TOTAL FREMSKRIDT: 35%
+## 📊 TOTAL FREMSKRIDT: 72%
 
 ```
-█████████░░░░░░░░░░░░░░░░░░ 35%
+█████████████████████░░░░░░░░░ 72%
 ```
 
 ---
 
 ## 🎯 NUVÆRENDE TASK
 
+**Fil**: `tasks/10-modul5-preset-detail.md`  
+**Task**: Modul 5 - Preset Detail Viewer (Display all 7 effect blocks with parameters)  
+**Status**: 🔄 IN PROGRESS
 **Fil**: `tasks/08-modul3-system-viewer.md`  
 **Task**: Modul 3.1 - Extend SysExBuilder for System Dump Request  
 **Status**: ✅ COMPLETE (Tests pass, implementation complete)
@@ -27,6 +30,13 @@
 | 1.4 | Infrastructure | ✅ DONE | 100% |
 | 1.5 | Presentation | ✅ DONE | 100% |
 | 2 | Preset Viewer | ✅ COMPLETE | 100% |
+| 3 | System Viewer | ✅ COMPLETE | 100% |
+| 4 | System Editor | ✅ COMPLETE | 100% |
+| 5 | Preset Detail | 🔄 IN PROGRESS | 70% |
+| 6 | Preset Editor | ⬜ TODO | 0% |
+| 7 | Preset Management | ⬜ TODO | 0% |
+| 8 | File I/O | ⬜ TODO | 0% |
+| 9 | MIDI Mapping | ⬜ TODO | 0% |
 | 3 | System Viewer | 🔄 IN PROGRESS | 40% |
 | 4 | File I/O | ⬜ TODO | 0% |
 | 5 | Preset Editor | ⬜ TODO | 0% |
@@ -49,6 +59,8 @@
 | 5 | `05-modul1-phase4-infrastructure.md` | ✅ DONE |
 | 6 | `06-modul1-phase5-presentation-SONNET45.md` | ✅ DONE |
 | 7 | `07-modul2-preset-viewer.md` | ✅ COMPLETE |
+| 8 | `08-modul3-system-viewer.md` | ✅ COMPLETE |
+| 9 | `09-modul4-system-editor.md` | ✅ COMPLETE |
 | 8 | `08-modul3-system-viewer.md` | ⬜ TODO |
 | 9 | `09-modul4-system-editor.md` | ⬜ TODO |
 | 10 | `10-modul5-preset-detail.md` | ⬜ TODO |
@@ -67,11 +79,11 @@
 ```
 Domain:      144 tests ✅
 MIDI:        6 tests ✅
-Application: 6 tests ✅ (includes RequestSystemDumpUseCase)
+Application: 36 tests ✅ (+2 Save, +4 Roundtrip)
 Infrastructure: 12 tests ✅
-Presentation: 21 tests ✅ (MainViewModel tests fixed!)
-─────────────────────────
-TOTAL:       189/189 passing (100%)
+Presentation: 50 tests ✅ (+4 Drive, +3 MainVM)
+─────────────────────────────
+TOTAL:       248/248 passing (100%)
 
 HARDWARE TEST: ✅ SUCCESS
 - Connected to USB MIDI Interface
@@ -83,6 +95,8 @@ HARDWARE TEST: ✅ SUCCESS
 
 ## 📅 SIDST OPDATERET
 
+**Dato**: 2026-02-02  
+**Commit**: [MODUL-5][WIP] Create 6 additional effect ViewModels + PresetDetailViewModel (248 tests, XAML pending)
 **Dato**: 2025-02-01  
 **Commit**: [MODUL-2][TASK-2.6] Modul 2 Preset Viewer complete - ready for manual hardware test
 
@@ -93,6 +107,12 @@ HARDWARE TEST: ✅ SUCCESS
 1. ✅ Phase 5: Avalonia Presentation — **COMPLETE**
 2. ✅ Hardware Test: E2E flow verified with physical Nova System pedal
 3. ✅ Modul 2: Preset Viewer — **COMPLETE** (Tasks 2.1-2.6 done)
+4. ✅ Modul 3: System Viewer — **COMPLETE** (Display global settings from pedal)
+5. ✅ Modul 4: System Editor — **COMPLETE** (Edit and save system settings, all tasks done)
+6. 🔄 **CURRENT**: Modul 5 - Preset Detail Viewer (70% - ViewModels done, XAML pending)
+   - Task 5.1: ✅ 7 Effect Block ViewModels (Drive with 4 tests)
+   - Task 5.2: ✅ PresetDetailViewModel composition
+   - Task 5.3-5.5: ⏳ XAML views and wiring
 4. 🎯 **NEXT**: Modul 3 - System Viewer (Display global settings from pedal)
 5. Fix 3 failing Presentation tests (extract UseCase interfaces) - low priority
 

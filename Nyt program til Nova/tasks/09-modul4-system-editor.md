@@ -15,11 +15,11 @@
 
 ## Exit Criteria
 
-- [ ] All settings editable via UI controls
-- [ ] Dirty tracking shows unsaved changes
-- [ ] Save sends valid SysEx to pedal
-- [ ] Roundtrip verification (save → re-read → compare)
-- [ ] All tests pass
+- [x] All settings editable via UI controls
+- [x] Dirty tracking shows unsaved changes
+- [x] Save sends valid SysEx to pedal
+- [x] Roundtrip verification (save → re-read → compare)
+- [x] All tests pass
 
 ---
 
@@ -27,7 +27,7 @@
 
 **🟡 COMPLEXITY: MEDIUM** — Two-way binding
 
-**Status**: Not started  
+**Status**: ✅ COMPLETE  
 **Estimated**: 45 min  
 
 ### Convert read-only TextBlocks to:
@@ -41,7 +41,7 @@
 
 **🟡 COMPLEXITY: MEDIUM** — State comparison
 
-**Status**: Not started  
+**Status**: ✅ COMPLETE  
 **Estimated**: 30 min  
 
 ### Add to SystemSettingsViewModel:
@@ -66,7 +66,7 @@ partial void OnMidiChannelChanged(int value)
 
 **Årsag**: SysEx serialization med korrekt checksum, async flow, error handling
 
-**Status**: Not started  
+**Status**: ✅ COMPLETE  
 **Estimated**: 60 min  
 **Files**:
 - `src/Nova.Application/UseCases/SaveSystemDumpUseCase.cs`
@@ -79,7 +79,7 @@ partial void OnMidiChannelChanged(int value)
 
 **Årsag**: Kompleks async flow: Save → Wait → Request → Compare → Report
 
-**Status**: Not started  
+**Status**: ✅ COMPLETE  
 **Estimated**: 45 min  
 
 ---
@@ -88,18 +88,18 @@ partial void OnMidiChannelChanged(int value)
 
 **🟢 COMPLEXITY: SIMPLE** — XAML + commands
 
-**Status**: Not started  
+**Status**: ✅ COMPLETE  
 **Estimated**: 20 min  
 
 ---
 
 ## Completion Checklist
 
-- [ ] All tests pass
-- [ ] Settings persist on hardware
-- [ ] Roundtrip verification works
-- [ ] Commit: `[MODUL-4] Implement System Editor`
+- [x] All tests pass
+- [x] Settings persist on hardware
+- [x] Roundtrip verification works
+- [x] Commit: `[MODUL-4][TASK-4.5] Wire Save/Cancel commands to System Settings UI`
 
 ---
 
-**Status**: READY (after Modul 3)
+**Status**: ✅ COMPLETE (All tasks done, 244 tests passing)
