@@ -32,6 +32,8 @@ public partial class App : global::Avalonia.Application
         services.AddTransient<IRequestSystemDumpUseCase, RequestSystemDumpUseCase>();
         services.AddTransient<IExportBankUseCase, ExportBankUseCase>();
         services.AddTransient<IImportSysExUseCase, ImportSysExUseCase>();
+        services.AddTransient<ISaveSystemDumpUseCase, SaveSystemDumpUseCase>();
+        services.AddTransient<IVerifySystemDumpRoundtripUseCase, VerifySystemDumpRoundtripUseCase>();
         
         // ViewModels
         services.AddTransient<MainViewModel>();
