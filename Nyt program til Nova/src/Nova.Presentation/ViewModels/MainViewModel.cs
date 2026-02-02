@@ -13,10 +13,6 @@ public partial class MainViewModel : ObservableObject
     private readonly IMidiPort _midiPort;
     private readonly IConnectUseCase _connectUseCase;
     private readonly IDownloadBankUseCase _downloadBankUseCase;
-    private readonly IGetAvailablePortsUseCase _getAvailablePortsUseCase;
-    private readonly IRequestSystemDumpUseCase _requestSystemDumpUseCase;
-    private readonly IExportBankUseCase _exportBankUseCase;
-    private readonly IImportSysExUseCase _importSysExUseCase;
     private UserBankDump? _currentBank;
 
     [ObservableProperty]
@@ -54,19 +50,11 @@ public partial class MainViewModel : ObservableObject
     public MainViewModel(
         IMidiPort midiPort,
         IConnectUseCase connectUseCase,
-        IDownloadBankUseCase downloadBankUseCase,
-        IGetAvailablePortsUseCase getAvailablePortsUseCase,
-        IRequestSystemDumpUseCase requestSystemDumpUseCase,
-        IExportBankUseCase exportBankUseCase,
-        IImportSysExUseCase importSysExUseCase)
+        IDownloadBankUseCase downloadBankUseCase)
     {
         _midiPort = midiPort;
         _connectUseCase = connectUseCase;
         _downloadBankUseCase = downloadBankUseCase;
-        _getAvailablePortsUseCase = getAvailablePortsUseCase;
-        _requestSystemDumpUseCase = requestSystemDumpUseCase;
-        _exportBankUseCase = exportBankUseCase;
-        _importSysExUseCase = importSysExUseCase;
         
         // Auto-refresh ports on startup
         RefreshPorts();
@@ -85,7 +73,7 @@ public partial class MainViewModel : ObservableObject
     private void RefreshPorts()
     {
         AvailablePorts.Clear();
-        var ports = _getAvailablePortsUseCase.Execute();
+        var ports = DryWetMidiPort.GetAvailablePorts();
         foreach (var port in ports)
         {
             AvailablePorts.Add(port);
@@ -157,37 +145,6 @@ public partial class MainViewModel : ObservableObject
 
     private bool CanDownload() => IsConnected && !IsDownloading;
 
-    [RelayCommand(CanExecute = nameof(CanDownload))]
-    private async Task DownloadSystemSettingsAsync()
-    {
-        IsDownloading = true;
-        StatusMessage = "Requesting System Settings dump from pedal...";
-        
-        try
-        {
-            var cts = new CancellationTokenSource(TimeSpan.FromSeconds(10));
-            var result = await _requestSystemDumpUseCase.ExecuteAsync(10000, cts.Token);
-
-            if (result.IsSuccess)
-            {
-                StatusMessage = "System settings downloaded successfully";
-                SystemSettings.LoadFromDump(result.Value);
-            }
-            else
-            {
-                StatusMessage = $"Error: {result.Errors.First().Message}";
-            }
-        }
-        catch (Exception ex)
-        {
-            StatusMessage = $"Error: {ex.Message}";
-        }
-        finally
-        {
-            IsDownloading = false;
-        }
-    }
-
     /// <summary>
     /// Handles preset selection changes and loads the full preset details.
     /// </summary>
@@ -210,105 +167,4 @@ public partial class MainViewModel : ObservableObject
             PresetDetail.LoadFromPreset(null);
         }
     }
-
-    [RelayCommand(CanExecute = nameof(HasBank))]
-    private async Task ExportBankAsync()
-    {
-        if (_currentBank == null) return;
-
-        try
-        {
-            var dialog = new Avalonia.Platform.Storage.FilePickerSaveOptions
-            {
-                Title = "Export User Bank",
-                SuggestedFileName = $"NovaBank_{DateTime.Now:yyyyMMdd_HHmmss}.syx",
-                FileTypeChoices = new[]
-                {
-                    new Avalonia.Platform.Storage.FilePickerFileType("SysEx Files")
-                    {
-                        Patterns = new[] { "*.syx" }
-                    }
-                }
-            };
-
-            var topLevel = Avalonia.Application.Current?.ApplicationLifetime is Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime desktop
-                ? desktop.MainWindow
-                : null;
-
-            if (topLevel == null) return;
-
-            var file = await topLevel.StorageProvider.SaveFilePickerAsync(dialog);
-            if (file != null)
-            {
-                var result = await _exportBankUseCase.ExecuteAsync(_currentBank, file.Path.LocalPath);
-                StatusMessage = result.IsSuccess
-                    ? $"Bank exported to {System.IO.Path.GetFileName(file.Path.LocalPath)}"
-                    : $"Export failed: {result.Errors.First().Message}";
-            }
-        }
-        catch (Exception ex)
-        {
-            StatusMessage = $"Export error: {ex.Message}";
-        }
-    }
-
-    [RelayCommand]
-    private async Task ImportBankAsync()
-    {
-        try
-        {
-            var dialog = new Avalonia.Platform.Storage.FilePickerOpenOptions
-            {
-                Title = "Import SysEx File",
-                AllowMultiple = false,
-                FileTypeFilter = new[]
-                {
-                    new Avalonia.Platform.Storage.FilePickerFileType("SysEx Files")
-                    {
-                        Patterns = new[] { "*.syx" }
-                    }
-                }
-            };
-
-            var topLevel = Avalonia.Application.Current?.ApplicationLifetime is Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime desktop
-                ? desktop.MainWindow
-                : null;
-
-            if (topLevel == null) return;
-
-            var files = await topLevel.StorageProvider.OpenFilePickerAsync(dialog);
-            if (files.Count > 0)
-            {
-                var result = await _importSysExUseCase.ExecuteAsync(files[0].Path.LocalPath);
-                
-                if (result.IsSuccess)
-                {
-                    if (result.Value is UserBankDump bank)
-                    {
-                        _currentBank = bank;
-                        PresetList.LoadFromBank(bank);
-                        StatusMessage = $"Imported User Bank with {bank.Presets.Count(p => p != null)} presets";
-                    }
-                    else if (result.Value is Preset preset)
-                    {
-                        StatusMessage = $"Imported single preset #{preset.Number}";
-                    }
-                    else if (result.Value is SystemDump)
-                    {
-                        StatusMessage = "Imported System Dump (not yet applied)";
-                    }
-                }
-                else
-                {
-                    StatusMessage = $"Import failed: {result.Errors.First().Message}";
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            StatusMessage = $"Import error: {ex.Message}";
-        }
-    }
-
-    private bool HasBank() => _currentBank != null;
 }
