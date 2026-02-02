@@ -1,18 +1,18 @@
 # PROGRESS.md — Projekt Fremskridt
 
-## 📊 TOTAL FREMSKRIDT: 65%
+## 📊 TOTAL FREMSKRIDT: 70%
 
 ```
-████████████████████░░░░░░░░░░ 65%
+█████████████████████░░░░░░░░░ 70%
 ```
 
 ---
 
 ## 🎯 NUVÆRENDE TASK
 
-**Fil**: `tasks/09-modul4-system-editor.md`  
-**Task**: Modul 4 - System Editor (Edit and save system settings to pedal)  
-**Status**: 🔄 IN PROGRESS (Tasks 4.1-4.2-4.5 done, 4.3-4.4 require SONNET 4.5+)
+**Fil**: `tasks/10-modul5-preset-detail.md`  
+**Task**: Modul 5 - Preset Detail Viewer (Display all 7 effect blocks with parameters)  
+**Status**: 🔄 IN PROGRESS
 
 ---
 
@@ -27,9 +27,9 @@
 | 1.4 | Infrastructure | ✅ DONE | 100% |
 | 1.5 | Presentation | ✅ DONE | 100% |
 | 2 | Preset Viewer | ✅ COMPLETE | 100% |
-| 3 | System Viewer | ✅ DONE | 100% |
-| 4 | System Editor | 🔄 IN PROGRESS | 60% |
-| 5 | Preset Detail | ⬜ TODO | 0% |
+| 3 | System Viewer | ✅ COMPLETE | 100% |
+| 4 | System Editor | ✅ COMPLETE | 100% |
+| 5 | Preset Detail | 🔄 IN PROGRESS | 0% |
 | 6 | Preset Editor | ⬜ TODO | 0% |
 | 7 | Preset Management | ⬜ TODO | 0% |
 | 8 | File I/O | ⬜ TODO | 0% |
@@ -49,8 +49,8 @@
 | 5 | `05-modul1-phase4-infrastructure.md` | ✅ DONE |
 | 6 | `06-modul1-phase5-presentation-SONNET45.md` | ✅ DONE |
 | 7 | `07-modul2-preset-viewer.md` | ✅ COMPLETE |
-| 8 | `08-modul3-system-viewer.md` | ✅ DONE |
-| 9 | `09-modul4-system-editor.md` | ⬜ TODO |
+| 8 | `08-modul3-system-viewer.md` | ✅ COMPLETE |
+| 9 | `09-modul4-system-editor.md` | ✅ COMPLETE |
 | 10 | `10-modul5-preset-detail.md` | ⬜ TODO |
 | 11 | `11-modul6-preset-editor-SONNET45.md` | ⬜ TODO |
 | 12 | `12-modul7-preset-management.md` | ⬜ TODO |
@@ -67,11 +67,11 @@
 ```
 Domain:      144 tests ✅
 MIDI:        6 tests ✅
-Application: 13 tests ✅
+Application: 36 tests ✅ (+2 Save, +4 Roundtrip)
 Infrastructure: 12 tests ✅
-Presentation: 41 tests ✅ (+7 dirty tracking tests)
+Presentation: 46 tests ✅ (+3 MainViewModel commands)
 ─────────────────────────
-TOTAL:       216/216 passing (100%)
+TOTAL:       244/244 passing (100%)
 
 HARDWARE TEST: ✅ SUCCESS
 - Connected to USB MIDI Interface
@@ -84,7 +84,7 @@ HARDWARE TEST: ✅ SUCCESS
 ## 📅 SIDST OPDATERET
 
 **Dato**: 2026-02-02  
-**Commit**: [MODUL-4][TASK-4.1-4.2-4.5] Make SystemSettings editable with dirty tracking
+**Commit**: [MODUL-4][TASK-4.5] Wire Save/Cancel commands to System Settings UI (All 244 tests passing)
 
 ---
 
@@ -94,7 +94,8 @@ HARDWARE TEST: ✅ SUCCESS
 2. ✅ Hardware Test: E2E flow verified with physical Nova System pedal
 3. ✅ Modul 2: Preset Viewer — **COMPLETE** (Tasks 2.1-2.6 done)
 4. ✅ Modul 3: System Viewer — **COMPLETE** (Display global settings from pedal)
-5. 🔄 **CURRENT**: Modul 4 - System Editor (60% - Tasks 4.1-4.2-4.5 done, 4.3-4.4 require SONNET 4.5+)
+5. ✅ Modul 4: System Editor — **COMPLETE** (Edit and save system settings, all tasks done)
+6. 🔄 **CURRENT**: Modul 5 - Preset Detail Viewer (Display all 7 effect blocks with parameters)
 
 ---
 
