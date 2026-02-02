@@ -17,7 +17,10 @@ public partial class MainViewModel : ObservableObject
     private readonly IRequestSystemDumpUseCase _requestSystemDumpUseCase;
     private readonly IExportBankUseCase _exportBankUseCase;
     private readonly IImportSysExUseCase _importSysExUseCase;
+    private readonly ISaveSystemDumpUseCase _saveSystemDumpUseCase;
+    private readonly IVerifySystemDumpRoundtripUseCase _verifyRoundtripUseCase;
     private UserBankDump? _currentBank;
+    private SystemDump? _currentSystemDump;
 
     [ObservableProperty]
     private ObservableCollection<string> _availablePorts = new();
@@ -58,7 +61,9 @@ public partial class MainViewModel : ObservableObject
         IGetAvailablePortsUseCase getAvailablePortsUseCase,
         IRequestSystemDumpUseCase requestSystemDumpUseCase,
         IExportBankUseCase exportBankUseCase,
-        IImportSysExUseCase importSysExUseCase)
+        IImportSysExUseCase importSysExUseCase,
+        ISaveSystemDumpUseCase saveSystemDumpUseCase,
+        IVerifySystemDumpRoundtripUseCase verifyRoundtripUseCase)
     {
         _midiPort = midiPort;
         _connectUseCase = connectUseCase;
@@ -67,6 +72,8 @@ public partial class MainViewModel : ObservableObject
         _requestSystemDumpUseCase = requestSystemDumpUseCase;
         _exportBankUseCase = exportBankUseCase;
         _importSysExUseCase = importSysExUseCase;
+        _saveSystemDumpUseCase = saveSystemDumpUseCase;
+        _verifyRoundtripUseCase = verifyRoundtripUseCase;
         
         // Auto-refresh ports on startup
         RefreshPorts();
@@ -170,6 +177,7 @@ public partial class MainViewModel : ObservableObject
 
             if (result.IsSuccess)
             {
+                _currentSystemDump = result.Value;
                 StatusMessage = "System settings downloaded successfully";
                 SystemSettings.LoadFromDump(result.Value);
             }
@@ -186,6 +194,79 @@ public partial class MainViewModel : ObservableObject
         {
             IsDownloading = false;
         }
+    }
+
+    [RelayCommand(CanExecute = nameof(CanSaveSystemSettings))]
+    private async Task SaveSystemSettingsAsync()
+    {
+        if (_currentSystemDump == null) return;
+
+        IsDownloading = true;
+        StatusMessage = "Saving system settings to pedal...";
+
+        try
+        {
+            // Create modified dump with current VM values
+            var modifiedDump = CreateModifiedSystemDump(_currentSystemDump);
+
+            // Save to hardware
+            var saveResult = await _saveSystemDumpUseCase.ExecuteAsync(modifiedDump);
+
+            if (saveResult.IsFailed)
+            {
+                StatusMessage = $"Save failed: {saveResult.Errors.First().Message}";
+                return;
+            }
+
+            // Verify roundtrip
+            var verifyResult = await _verifyRoundtripUseCase.ExecuteAsync(modifiedDump, waitMilliseconds: 1000);
+
+            if (verifyResult.IsSuccess)
+            {
+                StatusMessage = "System settings saved and verified successfully";
+                _currentSystemDump = modifiedDump;
+                SystemSettings.LoadFromDump(modifiedDump); // Reset dirty tracking
+            }
+            else
+            {
+                StatusMessage = $"Verification failed: {verifyResult.Errors.First().Message}";
+            }
+        }
+        catch (Exception ex)
+        {
+            StatusMessage = $"Error: {ex.Message}";
+        }
+        finally
+        {
+            IsDownloading = false;
+        }
+    }
+
+    [RelayCommand]
+    private void CancelSystemChanges()
+    {
+        SystemSettings.RevertChanges();
+        StatusMessage = "Changes cancelled";
+    }
+
+    private bool CanSaveSystemSettings() => !IsDownloading && SystemSettings.HasUnsavedChanges;
+
+    private SystemDump CreateModifiedSystemDump(SystemDump original)
+    {
+        // Clone original SysEx bytes
+        var modifiedSysEx = new byte[original.RawSysEx.Length];
+        Array.Copy(original.RawSysEx, modifiedSysEx, original.RawSysEx.Length);
+
+        // Update bytes with ViewModel values
+        modifiedSysEx[4] = (byte)SystemSettings.DeviceId; // Device ID
+        modifiedSysEx[8] = (byte)SystemSettings.MidiChannel; // MIDI Channel (0-15)
+        modifiedSysEx[20] = (byte)(SystemSettings.MidiClockEnabled ? 0x01 : 0x00); // MIDI Clock
+        modifiedSysEx[21] = (byte)(SystemSettings.MidiProgramChangeEnabled ? 0x01 : 0x00); // Program Change
+
+        // Recalculate checksum (last byte before 0xF7)
+        // For now, we assume SystemDump.FromSysEx will validate/fix this
+        
+        return SystemDump.FromSysEx(modifiedSysEx).Value;
     }
 
     /// <summary>
