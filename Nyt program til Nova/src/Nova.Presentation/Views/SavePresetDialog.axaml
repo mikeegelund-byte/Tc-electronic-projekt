@@ -1,0 +1,76 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="Nova.Presentation.Views.SavePresetDialog"
+        Title="Save Preset to Hardware"
+        Width="450"
+        Height="280"
+        WindowStartupLocation="CenterOwner"
+        CanResize="False"
+        Background="#2D2D2D">
+
+    <Border Padding="20">
+        <StackPanel Spacing="16">
+            <!-- Title -->
+            <TextBlock Text="Save Preset to Hardware"
+                       FontSize="18"
+                       FontWeight="Bold"
+                       Foreground="#FFFFFF"/>
+
+            <!-- Preset Name -->
+            <StackPanel Spacing="8">
+                <TextBlock Text="Preset Name:"
+                           Foreground="#AAAAAA"/>
+                <TextBox Name="PresetNameText"
+                         IsReadOnly="True"
+                         Background="#1E1E1E"
+                         Foreground="#FFFFFF"
+                         BorderBrush="#444444"
+                         Height="36"
+                         Padding="8"/>
+            </StackPanel>
+
+            <!-- Slot Selection -->
+            <StackPanel Spacing="8">
+                <TextBlock Text="Target Slot (1-60):"
+                           Foreground="#AAAAAA"/>
+                <ComboBox Name="SlotComboBox"
+                          Background="#1E1E1E"
+                          Foreground="#FFFFFF"
+                          BorderBrush="#444444"
+                          Height="36"
+                          HorizontalAlignment="Stretch"/>
+            </StackPanel>
+
+            <!-- Overwrite Warning -->
+            <Border Name="OverwriteWarning"
+                    Background="#AA5522"
+                    Padding="12"
+                    CornerRadius="4"
+                    IsVisible="False">
+                <TextBlock Text="⚠️ This will overwrite the existing preset in this slot!"
+                           Foreground="#FFFFFF"
+                           TextWrapping="Wrap"/>
+            </Border>
+
+            <!-- Buttons -->
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                <Button Grid.Column="0"
+                        Name="CancelButton"
+                        Content="Cancel"
+                        Background="#444444"
+                        Foreground="#FFFFFF"
+                        Height="36"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Center"/>
+                <Button Grid.Column="1"
+                        Name="SaveButton"
+                        Content="Save to Hardware"
+                        Background="#0066CC"
+                        Foreground="#FFFFFF"
+                        Height="36"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Center"/>
+            </Grid>
+        </StackPanel>
+    </Border>
+</Window>
