@@ -384,33 +384,38 @@ public partial class EditablePresetViewModel : ObservableObject
             return;
         }
 
-        StatusMessage = "Saving to device...";
+        StatusMessage = "Validating and sending to device...";
 
-        // NOTE: Since Preset is immutable and can only be created from SysEx via FromSysEx(),
-        // we cannot create a modified Preset with the edited values. The current implementation
-        // sends the original preset's SysEx to the device.
+        // IMPORTANT ARCHITECTURE NOTE:
+        // The Preset domain model is immutable by design (private setters, FromSysEx factory).
+        // This means we cannot create a modified Preset with edited values from the UI.
         // 
-        // For a full bidirectional edit implementation, one of these approaches would be needed:
-        // 1. Add encoding methods to Preset to rebuild SysEx from modified properties
-        // 2. Convert Preset to a record type with public setters
-        // 3. Add a factory method that accepts individual property values
+        // The current implementation:
+        // 1. Validates user edits in the UI (name length, value ranges)
+        // 2. Sends the ORIGINAL preset's SysEx to the device (not the edited values)
+        // 
+        // This makes the editor useful for:
+        // - Viewing all preset parameters
+        // - Validating parameter values
+        // - Re-sending an existing preset to the device
         //
-        // For now, we use the original preset since ToSysEx() returns the stored RawSysEx.
+        // It does NOT currently support modifying preset values on the device.
+        // To enable full edit functionality, the Preset class architecture needs enhancement.
+        
         if (_originalPreset == null)
         {
             StatusMessage = "Error: No preset loaded";
             return;
         }
 
-        // The use case will handle MIDI serialization using the original preset's SysEx
+        // Send the original preset's SysEx (UI edits are validated but not encoded into SysEx)
         var result = await _updatePresetUseCase.ExecuteAsync(_originalPreset, cancellationToken);
 
         if (result.IsSuccess)
         {
-            // Reset change tracking since we've saved
             HasChanges = false;
-            StatusMessage = $"Saved preset: {PresetName}";
-            _logger.Information("EditablePresetViewModel: Preset saved successfully");
+            StatusMessage = $"Preset sent: {_originalPreset.Name}";
+            _logger.Information("EditablePresetViewModel: Preset sent to device");
         }
         else
         {
