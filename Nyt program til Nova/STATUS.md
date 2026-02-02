@@ -8,8 +8,8 @@
 | **Application Layer** | ✅ 100% | ConnectUseCase, DownloadBankUseCase |
 | **MIDI Abstraktion** | ✅ 100% | IMidiPort, MockMidiPort (test double) |
 | **Infrastructure** | ✅ 100% | DryWetMidiPort COMPLETE (12 tests passing) |
-| **Presentation** | ✅ 100% | DI setup, MainViewModel, MainWindow UI, PresetListView — Modul 2 COMPLETE |
-| **Tests** | ✅ 164/167 | Domain 140, MIDI 6, Application 3, Infrastructure 12, Presentation 0/3 (deferred) |
+| **Presentation** | ✅ 100% | DI setup, MainViewModel, MainWindow UI, PresetListView, EditablePresetViewModel — Modul 5 COMPLETE |
+| **Tests** | ✅ 189/189 | Domain 144, MIDI 6, Application 13, Infrastructure 12, Presentation 32 (ALL PASSING) |
 
 ---
 
@@ -17,25 +17,25 @@
 
 | Modul | Navn | Status | Filer |
 |-------|------|--------|-------|
-| 0 | Environment Setup | ✅ DONE | tasks/01-phase0-environment-setup.md |
 | 1 | Foundation | ✅ 100% | Fase 1-5 COMPLETE — Hardware test SUCCESS |
 | 2 | Preset Viewer | ✅ 100% | Tasks 2.1-2.6 COMPLETE — Ready for manual test |
-| 3-10 | Viewer/Editor/Release | ⬜ TODO | Se tasks/ mappen |
+| 3 | System Viewer | ⬜ TODO | See tasks/08-modul3-system-viewer.md |
+| 4 | File I/O & Bank | ✅ 50% | Export/Import and SaveBank/LoadBank COMPLETE |
+| 5 | Preset Editor | ✅ 100% | EditablePresetViewModel complete — 13/13 tests passing |
+| 6-10 | Advanced Features | ⬜ TODO | See tasks/ folder |
 
 ---
 
 ## ⚠️ Pending Tasks
 
-**No critical blocking tasks:**
+✅ ALL TESTS PASSING — No blockers!
 
-✅ DONE:
-- Modul 1: Foundation complete (all 5 phases)
-- Modul 2: Preset Viewer complete (all tasks 2.1-2.6)
-- All code ready for manual hardware test verification
-
-⏸️ DEFERRED (Non-Blocking):
-- 3 Presentation tests (Moq cannot mock sealed UseCases - fix by extracting interfaces)
-- Priority: LOW — does not block feature development
+✅ COMPLETED:
+- Modul 1: Foundation (all 5 phases)
+- Modul 2: Preset Viewer (all tasks 2.1-2.6)
+- Modul 4: File I/O & Bank Manager
+- Modul 5: Preset Editor (EditablePresetViewModel complete, 13/13 tests)
+- Repository cleaned (branches: 15 → 4, folder structure reorganized)
 
 ---
 
@@ -83,10 +83,11 @@ Arkiv/                     📦 Arkiverede/gamle filer
 ## 🎯 Næste Skridt
 
 1. ✅ **Modul 1**: Foundation (Phases 1-5) — **COMPLETE**
-2. ✅ **Hardware Test**: End-to-end flow verified with physical Nova System pedal
-3. ✅ **Modul 2**: Preset Viewer (Display downloaded 60 presets in UI) — **COMPLETE**
-4. 🎯 **NEXT: Modul 3** - System Viewer (Display global settings from pedal)
-5. Modul 4+: System Editor, Preset Detail, File I/O, etc.
+2. ✅ **Modul 2**: Preset Viewer (Display 60 presets in UI) — **COMPLETE**
+3. ✅ **Modul 4**: File I/O & Bank Manager — **50% COMPLETE**
+4. ✅ **Modul 5**: Preset Editor (EditablePresetViewModel) — **COMPLETE**
+5. 🎯 **NEXT: Modul 3** - System Viewer (Display global settings)
+6. Modul 6-10: Advanced features, MIDI CC, Settings, Release
 
 ---
 
@@ -111,6 +112,6 @@ Se `tasks/00-index.md` for kompleksitets-markering:
 
 ---
 
-**Sidst opdateret**: 2025-02-01  
-**Commit**: `[MODUL-2][TASK-2.6]` Modul 2 Preset Viewer complete - ready for manual hardware test  
-**Næste task**: Modul 3 - System Viewer (tasks/08-modul3-system-viewer.md)
+**Sidst opdateret**: 2026-02-02  
+**Commit**: `[MODUL-5][SESSION-COMPLETE]` Modul 5 EditablePresetViewModel complete, all tests passing, repo reorganized  
+**Næste task**: Modul 3 - System Viewer (tasks/08-modul3-system-viewer.md) or continue with Modul 6
