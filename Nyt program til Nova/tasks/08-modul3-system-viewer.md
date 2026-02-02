@@ -15,10 +15,10 @@
 
 ## Exit Criteria
 
-- [ ] Can request system dump from pedal
-- [ ] All global settings parsed correctly
-- [ ] Settings displayed in read-only UI
-- [ ] All tests pass
+- [x] Can request system dump from pedal
+- [x] All global settings parsed correctly
+- [x] Settings displayed in read-only UI
+- [x] All tests pass
 
 ---
 
@@ -126,4 +126,4 @@ public partial class SystemSettingsViewModel : ObservableObject
 
 ---
 
-**Status**: READY (after Modul 2)
+**Status**: ✅ COMPLETE (All tasks done, all tests passing)
