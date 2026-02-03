@@ -22,6 +22,14 @@ public class SystemDump
     private const int CC_MAPPING_COUNT = 64;
     private const int BYTES_PER_CC_MAPPING = 2;
 
+    /// <summary>
+    /// Expression pedal mapping offsets (bytes 54-69 in System Dump).
+    /// </summary>
+    private const int PEDAL_PARAMETER_OFFSET = 54;  // Map Parameter (4 bytes)
+    private const int PEDAL_MIN_OFFSET = 58;        // Map Min (4 bytes, 0-100%)
+    private const int PEDAL_MID_OFFSET = 62;        // Map Mid (4 bytes, 0-100%)
+    private const int PEDAL_MAX_OFFSET = 66;        // Map Max (4 bytes, 0-100%)
+
     private SystemDump() { }
 
     /// <summary>
@@ -130,5 +138,41 @@ public class SystemDump
         RawSysEx[offset + 1] = parameterId;
 
         return Result.Ok();
+    }
+
+    /// <summary>
+    /// Gets the expression pedal parameter assignment (which parameter the pedal controls).
+    /// </summary>
+    /// <returns>Parameter ID (4 bytes little-endian)</returns>
+    public int GetPedalParameter()
+    {
+        return BitConverter.ToInt32(RawSysEx, PEDAL_PARAMETER_OFFSET);
+    }
+
+    /// <summary>
+    /// Gets the expression pedal minimum position value (0-100%).
+    /// </summary>
+    /// <returns>Minimum value as percentage (0-100)</returns>
+    public int GetPedalMin()
+    {
+        return BitConverter.ToInt32(RawSysEx, PEDAL_MIN_OFFSET);
+    }
+
+    /// <summary>
+    /// Gets the expression pedal midpoint position value (0-100%).
+    /// </summary>
+    /// <returns>Midpoint value as percentage (0-100)</returns>
+    public int GetPedalMid()
+    {
+        return BitConverter.ToInt32(RawSysEx, PEDAL_MID_OFFSET);
+    }
+
+    /// <summary>
+    /// Gets the expression pedal maximum position value (0-100%).
+    /// </summary>
+    /// <returns>Maximum value as percentage (0-100)</returns>
+    public int GetPedalMax()
+    {
+        return BitConverter.ToInt32(RawSysEx, PEDAL_MAX_OFFSET);
     }
 }
