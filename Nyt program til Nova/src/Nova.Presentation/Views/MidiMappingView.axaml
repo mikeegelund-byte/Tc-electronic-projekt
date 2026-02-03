@@ -8,27 +8,33 @@
              x:Class="Nova.Presentation.Views.MidiMappingView"
              x:DataType="vm:CCMappingViewModel">
     
-    <TabControl>
+    <TabControl AutomationProperties.Name="MIDI mapping tabs">
         <!-- Tab 1: CC Mapping -->
-        <TabItem Header="CC Assignments">
+        <TabItem Header="CC Assignments"
+                 AutomationProperties.Name="CC assignments tab">
             <DockPanel>
                 <!-- Header with status message and save button -->
                 <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="10" Spacing="10">
                     <TextBlock Text="{Binding StatusMessage}" 
                                VerticalAlignment="Center"
-                               Foreground="{DynamicResource ForegroundSubduedBrush}"/>
+                               Foreground="{DynamicResource ForegroundSubduedBrush}"
+                               AutomationProperties.LiveSetting="Polite"
+                               AutomationProperties.Name="Status message"/>
                     
                     <Button Content="Save CC Mappings"
                             Command="{Binding SaveChangesCommand}"
                             IsEnabled="{Binding HasUnsavedChanges}"
-                            HorizontalAlignment="Right"/>
+                            HorizontalAlignment="Right"
+                            AutomationProperties.Name="Save CC mappings"
+                            AutomationProperties.HelpText="Save changes to CC assignments"/>
                             
                     <TextBlock Text="*"
                                IsVisible="{Binding HasUnsavedChanges}"
                                FontSize="20"
                                Foreground="Orange"
                                VerticalAlignment="Center"
-                               ToolTip.Tip="Unsaved changes"/>
+                               ToolTip.Tip="Unsaved changes"
+                               AutomationProperties.Name="Unsaved changes indicator"/>
                 </StackPanel>
 
                 <!-- DataGrid showing CC mappings -->
@@ -36,7 +42,9 @@
                           AutoGenerateColumns="False"
                           IsReadOnly="False"
                           GridLinesVisibility="All"
-                          Margin="10">
+                          Margin="10"
+                          AutomationProperties.Name="CC mapping table"
+                          AutomationProperties.HelpText="MIDI Continuous Controller assignments to parameters">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Index" 
                                             Binding="{Binding Index}" 
@@ -63,7 +71,8 @@
         </TabItem>
         
         <!-- Tab 2: Expression Pedal -->
-        <TabItem Header="Expression Pedal">
+        <TabItem Header="Expression Pedal"
+                 AutomationProperties.Name="Expression pedal mapping tab">
             <views:PedalMappingView DataContext="{Binding PedalMapping}"/>
         </TabItem>
     </TabControl>
