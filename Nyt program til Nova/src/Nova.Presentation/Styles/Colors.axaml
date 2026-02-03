@@ -1,0 +1,68 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    <!-- Colors -->
+    <Color x:Key="AccentColor">#007AFF</Color>
+    <Color x:Key="DangerColor">#D92E1B</Color>
+    <Color x:Key="SuccessColor">#107C10</Color>
+    
+    <!-- Light Theme Colors -->
+    <Color x:Key="BackgroundLightColor">#F5F5F5</Color>
+    <Color x:Key="ForegroundLightColor">#333333</Color>
+    <Color x:Key="BorderLightColor">#CCCCCC</Color>
+    <Color x:Key="CardLightColor">#FFFFFF</Color>
+    
+    <!-- Dark Theme Colors -->
+    <Color x:Key="BackgroundDarkColor">#1E1E1E</Color>
+    <Color x:Key="ForegroundDarkColor">#EEEEEE</Color>
+    <Color x:Key="BorderDarkColor">#444444</Color>
+    <Color x:Key="CardDarkColor">#2D2D2D</Color>
+    
+    <!-- Spacing -->
+    <Thickness x:Key="SmallPadding">6</Thickness>
+    <Thickness x:Key="DefaultPadding">12</Thickness>
+    <Thickness x:Key="LargePadding">24</Thickness>
+    
+    <x:Double x:Key="SmallSpacing">6</x:Double>
+    <x:Double x:Key="DefaultSpacing">12</x:Double>
+    <x:Double x:Key="LargeSpacing">24</x:Double>
+    
+    <!-- Typography -->
+    <FontFamily x:Key="SystemFont">Segoe UI</FontFamily>
+    <FontFamily x:Key="MonoFont">Courier New</FontFamily>
+    
+    <x:Double x:Key="TitleFontSize">18</x:Double>
+    <x:Double x:Key="BodyFontSize">11</x:Double>
+    <x:Double x:Key="MonoFontSize">10</x:Double>
+    
+    <FontWeight x:Key="TitleFontWeight">Bold</FontWeight>
+    <FontWeight x:Key="BodyFontWeight">Normal</FontWeight>
+    
+    <!-- Border Radius -->
+    <CornerRadius x:Key="SmallRadius">4</CornerRadius>
+    <CornerRadius x:Key="MediumRadius">8</CornerRadius>
+    
+    <!-- Brushes -->
+    <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource AccentColor}"/>
+    <SolidColorBrush x:Key="DangerBrush" Color="{StaticResource DangerColor}"/>
+    <SolidColorBrush x:Key="SuccessBrush" Color="{StaticResource SuccessColor}"/>
+    
+    <!-- MainWindow Resource Aliases -->
+    <Thickness x:Key="SpacingSmall">6</Thickness>
+    <Thickness x:Key="SpacingMedium">12</Thickness>
+    <Thickness x:Key="SpacingLarge">24</Thickness>
+    <Thickness x:Key="CardPadding">16</Thickness>
+    
+    <CornerRadius x:Key="BorderRadiusMedium">8</CornerRadius>
+    <CornerRadius x:Key="BorderRadiusLarge">12</CornerRadius>
+    
+    <SolidColorBrush x:Key="BackgroundPrimary" Color="{StaticResource BackgroundLightColor}"/>
+    <SolidColorBrush x:Key="BackgroundSecondary" Color="{StaticResource CardLightColor}"/>
+    <SolidColorBrush x:Key="TextPrimary" Color="{StaticResource ForegroundLightColor}"/>
+    <SolidColorBrush x:Key="TextSecondary" Color="#666666"/>
+    <SolidColorBrush x:Key="BorderBrush" Color="{StaticResource BorderLightColor}"/>
+    
+    <x:Double x:Key="FontSizeLarge">14</x:Double>
+    <FontWeight x:Key="FontWeightBold">Bold</FontWeight>
+    
+</ResourceDictionary>

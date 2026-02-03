@@ -1,19 +1,19 @@
 # PROJEKT STATUS — Nova Manager
 
 **Sidst opdateret**: 2026-02-03  
-**Nuværende arbejde**: Modul 9 - MIDI Mapping Editor (Tasks 9.1.1-9.1.3 DONE, 9.2.1 Domain DONE)  
+**Nuværende arbejde**: Modul 10 - Release & Installer (Ready to start)  
 **Branch**: `main`
 
 ## 📊 Komplet Overblik
 
 | Komponent | Status | Beskrivelse |
 |-----------|--------|-------------|
-| **Domain Layer** | ✅ 100% | Preset, UserBankDump, SystemDump, SysExBuilder, SysExValidator |
-| **Application Layer** | ✅ 100% | Connect, DownloadBank, SavePreset, GetSystemSettings, SaveSystemSettings |
-| **MIDI Abstraktion** | ✅ 100% | IMidiPort, MockMidiPort (test double) |
+| **Domain Layer** | ✅ 100% | Preset, UserBankDump, SystemDump (med CC + Pedal mapping setters) |
+| **Application Layer** | ✅ 100% | All use cases inkl. CC/Pedal mapping, calibration |
+| **MIDI Abstraktion** | ✅ 100% | IMidiPort med ReceiveCCAsync, MockMidiPort |
 | **Infrastructure** | ✅ 100% | DryWetMidiPort COMPLETE (12 tests passing) |
-| **Presentation** | ✅ 100% | All modules 1-9 UI complete |
-| **Tests** | ✅ 308/308 | Domain 153, MIDI 6, Infrastructure 12, Application 73, Presentation 64 |
+| **Presentation** | ✅ 100% | All modules 1-9 UI complete (inkl. ResponseCurveEditor) |
+| **Tests** | ✅ 342/342 | Domain 160, MIDI 6, Infrastructure 12, Application 88, Presentation 76 |
 
 ---
 
@@ -30,42 +30,42 @@
 | 6 | Preset Editor | ✅ DONE | All parameters editable with validation |
 | 7 | Preset Management | ✅ DONE | Copy/rename/delete presets (A/B compare deferred) |
 | 8 | File I/O | ✅ DONE | Export/import .syx files |
-| 9 | MIDI Mapping | 🔄 IN PROGRESS | CC mapping table + pedal settings |
+| 9 | MIDI Mapping | ✅ DONE | CC mapping + pedal settings + response curve |
 | 10 | Release | ⬜ TODO | Installer + docs |
 
 ---
 
 ## ⚠️ Current Work
 
-**Module 9: MIDI Mapping Editor**
+**Module 10: Release & Installer** (READY TO START)
 
-**✅ Completed Tasks:**
-- Task 9.1.1: Display CC Assignment Table (commit `6ef7524`)
-  - GetCCMappingsUseCase with 4 tests
-  - CCMappingViewModel with DataGrid display
-- Task 9.1.2-9.1.3: Edit & Save CC Assignments (commit `127606d`)
-  - UpdateCCMappingUseCase with 6 validation tests
-  - Editable DataGrid with Save command and dirty tracking
-- Task 9.2.1: Pedal Mapping Domain (commit `7696466`)
-  - SystemDump getter methods (GetPedalParameter/Min/Mid/Max)
-  - 5 tests in SystemDumpPedalMappingTests
+**📋 Remaining Work:**
+- Phase 1: UI/UX Polish (Tasks 10.1.1-10.1.5)
+- Phase 2: Installer & Distribution (Tasks 10.2.1-10.2.4)
+- Phase 3: Documentation & CI (Tasks 10.3.1-10.3.4)
 
-**🔄 In Progress:**
-- Task 9.2.1: Complete ViewModel + UI (PedalMappingViewModel, NumericUpDown controls)
+**Previous Module Completed:**
 
-**📋 Remaining:**
-- Task 9.1.4: CC Learn Mode (OPTIONAL - requires user approval)
-- Task 9.2.2: Response Curve Editor (HIGH complexity)
-- Tasks 9.2.3-9.2.4: Pedal calibration & save
+**Module 9: MIDI Mapping Editor** ✅ 100% COMPLETE
+- Task 9.1.1-9.1.3: CC Assignment Display, Edit & Save (commits 6ef7524, 127606d)
+- Task 9.1.4: CC Learn Mode (commit 6ff9152)
+- Task 9.2.1: Pedal Mapping Display (commits 7696466, a7d1ada)
+- Task 9.2.2: Response Curve Editor with Bézier curves (commit e8fb7f7)
+- Task 9.2.3: Pedal Calibration (commit c7d0eed)
+- Task 9.2.4: Save Pedal Mapping (commit 228b168)
 
 ---
 
 ## ✅ Recent Completed Work
 
 **Module 9 (Current Session):**
-- ✅ Task 9.1.1: Display CC Assignment Table (297 tests)
-- ✅ Task 9.1.2-9.1.3: Edit & Save CC Assignments (303 tests)
-- ✅ Task 9.2.1 Domain: Pedal mapping getters (308 tests)
+- ✅ All tasks 9.1.1-9.2.4 COMPLETE (342 tests)
+- ✅ CC Assignment Table + Edit/Save (commits 6ef7524, 127606d)
+- ✅ CC Learn Mode (commit 6ff9152)
+- ✅ Pedal Mapping Display (commits 7696466, a7d1ada)
+- ✅ Response Curve Editor (commit e8fb7f7)
+- ✅ Pedal Calibration (commit c7d0eed)
+- ✅ Save Pedal Mapping (commit 228b168)
 
 **Module 8 (Previous Session):**
 - ✅ Export/Import .syx files (Tasks 8.1.1-8.2.3, 233 tests)
