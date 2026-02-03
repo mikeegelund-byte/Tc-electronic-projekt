@@ -29,9 +29,12 @@ public partial class App : global::Avalonia.Application
         services.AddTransient<IConnectUseCase, ConnectUseCase>();
         services.AddTransient<IDownloadBankUseCase, DownloadBankUseCase>();
         services.AddTransient<ISaveSystemDumpUseCase, SaveSystemDumpUseCase>();
+        services.AddTransient<IGetCCMappingsUseCase, GetCCMappingsUseCase>();
+        services.AddTransient<IUpdateCCMappingUseCase, UpdateCCMappingUseCase>();
         
         // ViewModels
         services.AddTransient<MainViewModel>();
+        services.AddTransient<CCMappingViewModel>();
         
         Services = services.BuildServiceProvider();
 

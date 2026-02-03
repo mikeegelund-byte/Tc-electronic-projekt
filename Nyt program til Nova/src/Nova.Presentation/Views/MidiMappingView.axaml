@@ -8,28 +8,50 @@
              x:DataType="vm:CCMappingViewModel">
     
     <DockPanel>
-        <!-- Header with status message -->
-        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="10">
+        <!-- Header with status message and save button -->
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="10" Spacing="10">
             <TextBlock Text="{Binding StatusMessage}" 
                        VerticalAlignment="Center"
                        Foreground="{DynamicResource ForegroundSubduedBrush}"/>
+            
+            <Button Content="Save CC Mappings"
+                    Command="{Binding SaveChangesCommand}"
+                    IsEnabled="{Binding HasUnsavedChanges}"
+                    HorizontalAlignment="Right"/>
+                    
+            <TextBlock Text="*"
+                       IsVisible="{Binding HasUnsavedChanges}"
+                       FontSize="20"
+                       Foreground="Orange"
+                       VerticalAlignment="Center"
+                       ToolTip.Tip="Unsaved changes"/>
         </StackPanel>
 
         <!-- DataGrid showing CC mappings -->
         <DataGrid ItemsSource="{Binding CcMappings}"
                   AutoGenerateColumns="False"
-                  IsReadOnly="True"
+                  IsReadOnly="False"
                   GridLinesVisibility="All"
                   Margin="10">
             <DataGrid.Columns>
+                <DataGridTextColumn Header="Index" 
+                                    Binding="{Binding Index}" 
+                                    IsReadOnly="True"
+                                    Width="80"/>
+                                    
                 <DataGridTextColumn Header="CC Number" 
-                                    Binding="{Binding CCNumber}" 
+                                    Binding="{Binding CcNumber, Mode=TwoWay}" 
+                                    IsReadOnly="False"
                                     Width="*"/>
+                                    
                 <DataGridTextColumn Header="Parameter ID" 
-                                    Binding="{Binding ParameterId}" 
+                                    Binding="{Binding ParameterId, Mode=TwoWay}" 
+                                    IsReadOnly="False"
                                     Width="*"/>
+                                    
                 <DataGridCheckBoxColumn Header="Assigned" 
-                                        Binding="{Binding IsAssigned}" 
+                                        Binding="{Binding IsAssigned, Mode=OneWay}" 
+                                        IsReadOnly="True"
                                         Width="Auto"/>
             </DataGrid.Columns>
         </DataGrid>
