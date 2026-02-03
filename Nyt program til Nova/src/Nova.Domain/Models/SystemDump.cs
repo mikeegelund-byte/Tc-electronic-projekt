@@ -4,7 +4,7 @@ namespace Nova.Domain.Models;
 
 /// <summary>
 /// Represents the System Dump from the Nova System pedal (global settings, 527 bytes).
-/// Contains MIDI configuration, global tempo, routing preferences, and other system-level parameters.
+/// Contains MIDI configuration, global tempo, routing preferences, CC mappings, and other system-level parameters.
 /// </summary>
 public class SystemDump
 {
@@ -12,6 +12,15 @@ public class SystemDump
     /// Raw 527-byte SysEx message including F0 start and F7 end bytes.
     /// </summary>
     public byte[] RawSysEx { get; private init; } = Array.Empty<byte>();
+
+    /// <summary>
+    /// Byte offset where CC mappings start in the System Dump.
+    /// Each CC mapping consists of 2 bytes: CC number + Parameter ID.
+    /// Total: 64 mappings × 2 bytes = 128 bytes (offsets 34-161).
+    /// </summary>
+    private const int CC_MAPPING_START_OFFSET = 34;
+    private const int CC_MAPPING_COUNT = 64;
+    private const int BYTES_PER_CC_MAPPING = 2;
 
     private SystemDump() { }
 
@@ -65,5 +74,42 @@ public class SystemDump
             return Result.Fail("SystemDump has no valid RawSysEx data");
 
         return Result.Ok(RawSysEx);
+    }
+
+    /// <summary>
+    /// Gets the CC mapping at the specified index (0-63).
+    /// </summary>
+    /// <param name="index">CC mapping slot index (0-63)</param>
+    /// <returns>Result with CCMapping or error</returns>
+    public Result<CCMapping> GetCCMapping(int index)
+    {
+        if (index < 0 || index >= CC_MAPPING_COUNT)
+            return Result.Fail($"CC mapping index out of range: {index} (valid range: 0-{CC_MAPPING_COUNT - 1})");
+
+        int offset = CC_MAPPING_START_OFFSET + (index * BYTES_PER_CC_MAPPING);
+        byte ccNumber = RawSysEx[offset];
+        byte parameterId = RawSysEx[offset + 1];
+
+        return Result.Ok(new CCMapping(ccNumber, parameterId));
+    }
+
+    /// <summary>
+    /// Gets all 64 CC mappings from the System Dump.
+    /// </summary>
+    /// <returns>Result with list of all CC mappings or error</returns>
+    public Result<List<CCMapping>> GetAllCCMappings()
+    {
+        var mappings = new List<CCMapping>(CC_MAPPING_COUNT);
+
+        for (int i = 0; i < CC_MAPPING_COUNT; i++)
+        {
+            var result = GetCCMapping(i);
+            if (result.IsFailed)
+                return Result.Fail($"Failed to read CC mapping at index {i}");
+
+            mappings.Add(result.Value);
+        }
+
+        return Result.Ok(mappings);
     }
 }

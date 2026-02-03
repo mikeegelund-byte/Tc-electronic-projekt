@@ -8,66 +8,83 @@
         <vm:FileManagerViewModel />
     </Design.DataContext>
 
-    <StackPanel Spacing="16">
+    <StackPanel Spacing="{StaticResource SpacingMedium}">
         <!-- Bank Operations -->
-        <Border Background="#2D2D2D" Padding="16" CornerRadius="8">
-            <StackPanel Spacing="12">
+        <Border Background="{StaticResource BackgroundSecondary}" 
+                Padding="{StaticResource CardPadding}" 
+                CornerRadius="{StaticResource BorderRadiusLarge}">
+            <StackPanel Spacing="{StaticResource SpacingMedium}">
                 <TextBlock Text="Bank File Operations" 
-                           FontWeight="Bold" 
-                           FontSize="16"/>
+                           FontWeight="{StaticResource FontWeightBold}" 
+                           FontSize="{StaticResource FontSizeLarge}"
+                           Foreground="{StaticResource TextPrimary}"/>
                 
                 <Grid ColumnDefinitions="*,16,*" RowDefinitions="Auto">
                     <Button Grid.Column="0"
-                            Content="💾 Save Bank to File"
+                            Content="Save Bank to File"
                             Command="{Binding SaveBankCommand}"
                             HorizontalAlignment="Stretch"
-                            Padding="16,8"/>
+                            Padding="{StaticResource ButtonPadding}"
+                            AutomationProperties.Name="Save bank to file"
+                            AutomationProperties.HelpText="Export all 60 presets to a file" />
                     
                     <Button Grid.Column="2"
-                            Content="📂 Load Bank from File"
+                            Content="Load Bank from File"
                             Command="{Binding LoadBankCommand}"
                             HorizontalAlignment="Stretch"
-                            Padding="16,8"/>
+                            Padding="{StaticResource ButtonPadding}"
+                            AutomationProperties.Name="Load bank from file"
+                            AutomationProperties.HelpText="Import 60 presets from a file" />
                 </Grid>
             </StackPanel>
         </Border>
 
         <!-- Preset Operations -->
-        <Border Background="#2D2D2D" Padding="16" CornerRadius="8">
-            <StackPanel Spacing="12">
+        <Border Background="{StaticResource BackgroundSecondary}" 
+                Padding="{StaticResource CardPadding}" 
+                CornerRadius="{StaticResource BorderRadiusLarge}">
+            <StackPanel Spacing="{StaticResource SpacingMedium}">
                 <TextBlock Text="Preset File Operations" 
-                           FontWeight="Bold" 
-                           FontSize="16"/>
+                           FontWeight="{StaticResource FontWeightBold}" 
+                           FontSize="{StaticResource FontSizeLarge}"
+                           Foreground="{StaticResource TextPrimary}"/>
                 
                 <Grid ColumnDefinitions="*,16,*" RowDefinitions="Auto">
                     <Button Grid.Column="0"
-                            Content="📤 Export Preset"
+                            Content="Export Preset"
                             Command="{Binding ExportPresetCommand}"
                             HorizontalAlignment="Stretch"
-                            Padding="16,8"/>
+                            Padding="{StaticResource ButtonPadding}"
+                            AutomationProperties.Name="Export single preset"
+                            AutomationProperties.HelpText="Export selected preset to file" />
                     
                     <Button Grid.Column="2"
-                            Content="📥 Import Preset"
+                            Content="Import Preset"
                             Command="{Binding ImportPresetCommand}"
                             HorizontalAlignment="Stretch"
-                            Padding="16,8"/>
+                            Padding="{StaticResource ButtonPadding}"
+                            AutomationProperties.Name="Import single preset"
+                            AutomationProperties.HelpText="Import preset from file" />
                 </Grid>
             </StackPanel>
         </Border>
 
         <!-- Status Display -->
-        <Border Background="#2D2D2D" Padding="16" CornerRadius="8">
+        <Border Background="{StaticResource BackgroundSecondary}" 
+                Padding="{StaticResource CardPadding}" 
+                CornerRadius="{StaticResource BorderRadiusLarge}">
             <StackPanel Spacing="8">
                 <TextBlock Text="File Status" 
-                           FontWeight="Bold" 
-                           FontSize="16"/>
+                           FontWeight="{StaticResource FontWeightBold}" 
+                           FontSize="{StaticResource FontSizeLarge}"
+                           Foreground="{StaticResource TextPrimary}"/>
                 
                 <TextBlock Text="{Binding StatusMessage}"
-                           Foreground="#AAAAAA"
+                           Foreground="{StaticResource TextSecondary}"
                            TextWrapping="Wrap"/>
                 
                 <TextBlock Text="{Binding CurrentFilePath, StringFormat='Current file: {0}'}"
-                           Foreground="#888888"
+                           Foreground="{StaticResource TextTertiary}"
                            TextWrapping="Wrap"
                            IsVisible="{Binding CurrentFilePath, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
             </StackPanel>
