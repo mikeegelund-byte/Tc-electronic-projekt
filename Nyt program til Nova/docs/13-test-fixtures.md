@@ -358,7 +358,7 @@ $fixtureDir = "src/Nova.Domain.Tests/Fixtures"
 
 # Copy real data from materials
 Copy-Item `
-    "d:\Tc electronic projekt\Tc originalt materiale\Nova-System-LTD_Artists-Presets-for-User-Bank.syx" `
+    "c:\Tc electronic projekt\Tc originalt materiale\Nova-System-LTD_Artists-Presets-for-User-Bank.syx" `
     "$fixtureDir/BankDumps/nova-bank-with-artist-presets.syx"
 
 # Generate corrupted fixtures (run via C# tool)
