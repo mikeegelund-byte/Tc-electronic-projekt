@@ -1,13 +1,9 @@
-$paths = @(
-  'C:\Program Files\NovaSystemManager\Nova.Presentation.exe',
-  'C:\Program Files (x86)\NovaSystemManager\Nova.Presentation.exe'
-)
-
-foreach ($p in $paths) {
-  if (Test-Path $p) {
-    $item = Get-Item $p
-    Write-Host ($p + ' exists, size=' + $item.Length)
-  } else {
-    Write-Host ($p + ' missing')
-  }
-}
+$appFolder = Join-Path $env:LOCALAPPDATA 'NovaSystemManager'
+$exe = Join-Path $appFolder 'Nova.Presentation.exe'
+$shortcutUser = Join-Path $env:USERPROFILE 'Desktop\Nova System Manager.lnk'
+$shortcutPublic = 'C:\Users\Public\Desktop\Nova System Manager.lnk'
+"AppFolder=$appFolder"
+"ExeExists=$([bool](Test-Path $exe))"
+"UserDesktopShortcut=$([bool](Test-Path $shortcutUser))"
+"PublicDesktopShortcut=$([bool](Test-Path $shortcutPublic))"
+if (Test-Path $exe) { (Get-Item $exe).FullName }
