@@ -10,21 +10,22 @@ Modul 3: System Viewer           [✅ 100% COMPLETE]
 Modul 4: System Editor           [✅ 100% COMPLETE]
 Modul 5: Preset Detail Viewer    [✅ 100% COMPLETE]
 Modul 6: Preset Editor           [✅ 100% COMPLETE]
-Modul 7: Preset Management       [🔄 50% - Tasks 7.1.1-7.1.4 DONE]
+Modul 7: Preset Management       [✅ 100% - Tasks 7.1.1-7.1.4 COMPLETE]
   Task 7.1.1: CopyPresetUseCase  [✅ COMPLETE - 7 tests]
   Task 7.1.2: RenamePresetUseCase[✅ COMPLETE - 8 tests]
   Task 7.1.3: DeletePresetUseCase[✅ COMPLETE - 7 tests]
   Task 7.1.4: Context Menu UI    [✅ COMPLETE]
-  Task 7.2.1-7.2.4: A/B Compare  [⬜ NOT STARTED - HIGH complexity, SONNET 4.5+]
+  Task 7.2.1-7.2.4: A/B Compare  [⏸️ DEFERRED TO V1.1]
 Modul 8: File I/O                [✅ 100% COMPLETE]
-  Export/Import SysEx            [✅ COMPLETE - 233 tests]
+  Export/Import SysEx            [✅ COMPLETE]
   Auto-detect file types         [✅ COMPLETE]
-Modul 9: MIDI Mapping            [⬜ NOT STARTED - READY FOR SONNET 4.5]
-  CC Assignments, Expression Pedal[⬜ TODO]
+Modul 9: MIDI Mapping            [✅ 100% COMPLETE]
+  Tasks 9.1.1-9.1.4: CC Mapping  [✅ COMPLETE - commits 6ef7524, 127606d, 6ff9152]
+  Tasks 9.2.1-9.2.4: Pedal Map   [✅ COMPLETE - commits 7696466, a7d1ada, e8fb7f7, c7d0eed, 228b168]
 Modul 10: Release & Installer    [⬜ NOT STARTED - Requires SONNET 4.5]
 ```
 
-**TOTAL**: 90% COMPLETE (277 tests passing)
+**TOTAL**: 90% COMPLETE (342 tests passing)
 
 ---
 
