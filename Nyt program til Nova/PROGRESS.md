@@ -3,31 +3,25 @@
 ## 📊 TOTAL FREMSKRIDT: 90%
 
 ```
-█████████████████████████████░ 90%
+█████████████████████████████░ 90% (Modul 9 COMPLETE, Modul 10 pending)
 ```
 
 ---
 
 ## 🎯 NUVÆRENDE SESSION [2026-02-03]
 
-**Modul 9 - MIDI Mapping Editor** — 🔄 IN PROGRESS (Tasks 9.1.1-9.1.3 + 9.2.1 DONE)
-- ✅ Task 9.1.1: Display CC Assignment Table COMPLETE
-  - GetCCMappingsUseCase med 4 tests (67 Application tests total)
-  - CCMappingViewModel med LoadFromDump pattern
-  - MidiMappingView med DataGrid (CC#, Parameter, Assigned)
-- ✅ Task 9.1.2-9.1.3: Edit & Save CC Assignments COMPLETE
-  - UpdateCCMappingUseCase med 6 tests (73 Application tests total)
-  - SystemDump.UpdateCCMapping Domain method
-  - CCMappingEditorViewModel wrapper for editable DataGrid
-  - Save button with dirty tracking (HasUnsavedChanges)
-- ✅ Task 9.2.1: Display Pedal Min/Mid/Max (Domain) COMPLETE
-  - SystemDump pedal getter methods (GetPedalParameter, Min, Mid, Max)
-  - SystemDumpPedalMappingTests with 5 tests (153 Domain tests total)
-  - Next: PedalMappingViewModel + UI
+**Modul 9 - MIDI Mapping Editor** — ✅ 100% COMPLETE
+- ✅ Task 9.1.1: Display CC Assignment Table (commit 6ef7524)
+- ✅ Task 9.1.2-9.1.3: Edit & Save CC Assignments (commit 127606d)
+- ✅ Task 9.1.4: CC Learn Mode (commit 6ff9152)
+- ✅ Task 9.2.1: Pedal Mapping Display - Domain + UI (commits 7696466, a7d1ada)
+- ✅ Task 9.2.2: Response Curve Editor - Bézier curves (commit e8fb7f7)
+- ✅ Task 9.2.3: Pedal Calibration - Learn min/max (commit c7d0eed)
+- ✅ Task 9.2.4: Save Pedal Mapping (commit 228b168)
 
-**Current Action**: Complete Task 9.2.1 ViewModel/UI (PedalMappingViewModel + NumericUpDown controls)  
+**Next Module**: Modul 10 - Release & Installer (UI/UX Polish, Installer, Docs & CI)  
 **Build Status**: ✅ GREEN (0 errors, 0 warnings)  
-**Test Count**: 308 passing (153 Domain + 6 Midi + 12 Infrastructure + 73 Application + 64 Presentation)
+**Test Count**: 342 passing (160 Domain + 6 Midi + 12 Infrastructure + 88 Application + 76 Presentation)
 
 ---
 
@@ -44,7 +38,7 @@
 | 6 | Preset Editor | ✅ DONE | 100% |
 | 7 | Preset Management | ✅ DONE | 100% |
 | 8 | File I/O | ✅ DONE | 100% |
-| 9 | MIDI Mapping | 🔄 IN PROGRESS | 40% |
+| 9 | MIDI Mapping | ✅ DONE | 100% |
 | 10 | Release | ⬜ TODO | 0% |
 
 ---
@@ -66,7 +60,7 @@
 | 11 | `11-modul6-preset-editor-SONNET45.md` | ✅ COMPLETE |
 | 12 | `12-modul7-preset-management.md` | ✅ COMPLETE |
 | 13 | `13-modul8-file-io.md` | ✅ COMPLETE |
-| 14 | `14-modul9-midi-mapping-SONNET45.md` | 🔄 TASKS 9.1.1-9.1.3, 9.2.1 DONE |
+| 14 | `14-modul9-midi-mapping-SONNET45.md` | ✅ COMPLETE (ALL TASKS) |
 | 15 | `15-modul10-release-SONNET45.md` | ⬜ TODO |
 
 **SONNET45 i filnavn** = Kræver Claude Sonnet 4.5+. Brug IKKE Haiku/GPT-4.1 mini.
@@ -76,13 +70,13 @@
 ## 🧪 TEST STATUS
 
 ```
-Domain:         153 tests ✅ (+9 CC/Pedal tests since session start)
+Domain:         160 tests ✅ (+7 pedal setters)
 MIDI:             6 tests ✅
 Infrastructure:  12 tests ✅
-Application:     73 tests ✅ (+10 GetCCMappingsUseCase + UpdateCCMappingUseCase)
-Presentation:    64 tests ✅
+Application:     88 tests ✅ (+15 CC/Pedal/Calibration use cases)
+Presentation:    76 tests ✅ (+12 Pedal + Response Curve)
 ─────────────────────────────
-TOTAL:          308 tests ✅
+TOTAL:          342 tests ✅
 ```
 
 **Hardware Test**: ✅ SUCCESS
@@ -95,7 +89,7 @@ TOTAL:          308 tests ✅
 ## 📅 SIDST OPDATERET
 
 **Dato**: 2026-02-03  
-**Commit**: `7696466` - [MODUL-9][PHASE-2] Display Pedal Min/Mid/Max - SystemDump pedal getter methods (308 tests)  
+**Commit**: `228b168` - [MODUL-9] Task 9.2.4: Save Pedal Mapping + MODUL 9 COMPLETE (342 tests)  
 **Branch**: `main`
 
 ---

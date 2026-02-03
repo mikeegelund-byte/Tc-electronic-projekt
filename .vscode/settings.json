@@ -30,5 +30,5 @@
     "chat.useNestedAgentsMdFiles": true,
     "inlineChat.enableV2": true,
     "inlineChat.notebookAgent": true,
-    "todo-tree.tree.scanMode": "current file"
+    "todo-tree.tree.scanMode": "workspace only"
 }
