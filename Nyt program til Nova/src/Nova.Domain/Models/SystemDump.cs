@@ -112,4 +112,23 @@ public class SystemDump
 
         return Result.Ok(mappings);
     }
+
+    /// <summary>
+    /// Updates a CC mapping at the specified index.
+    /// </summary>
+    /// <param name="index">CC mapping slot index (0-63)</param>
+    /// <param name="ccNumber">New CC number (0-127 or 0xFF for unassigned)</param>
+    /// <param name="parameterId">New parameter ID (0xFF for unassigned)</param>
+    /// <returns>Result indicating success or failure</returns>
+    public Result UpdateCCMapping(int index, byte ccNumber, byte parameterId)
+    {
+        if (index < 0 || index >= CC_MAPPING_COUNT)
+            return Result.Fail($"CC mapping index out of range: {index} (valid range: 0-{CC_MAPPING_COUNT - 1})");
+
+        int offset = CC_MAPPING_START_OFFSET + (index * BYTES_PER_CC_MAPPING);
+        RawSysEx[offset] = ccNumber;
+        RawSysEx[offset + 1] = parameterId;
+
+        return Result.Ok();
+    }
 }
