@@ -33,6 +33,19 @@
                       BorderBrush="#404040"
                       Background="#1E1E1E"
                       RowBackground="#2D2D2D">
+                <DataGrid.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Copy" 
+                                  Command="{Binding CopyPresetCommand}"
+                                  InputGesture="Ctrl+C"/>
+                        <MenuItem Header="Rename" 
+                                  Command="{Binding RenamePresetCommand}"
+                                  InputGesture="F2"/>
+                        <MenuItem Header="Delete" 
+                                  Command="{Binding DeletePresetCommand}"
+                                  InputGesture="Delete"/>
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Position" 
                                         Binding="{Binding Position}" 

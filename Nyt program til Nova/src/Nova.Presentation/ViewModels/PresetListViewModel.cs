@@ -2,6 +2,7 @@ namespace Nova.Presentation.ViewModels;
 
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Nova.Domain.Models;
 
 /// <summary>
@@ -48,5 +49,49 @@ public partial class PresetListViewModel : ObservableObject
         Presets.Clear();
         SelectedPreset = null;
         HasPresets = false;
+    }
+
+    /// <summary>
+    /// Copies the selected preset to a new slot.
+    /// </summary>
+    [RelayCommand(CanExecute = nameof(CanExecutePresetAction))]
+    private void CopyPreset()
+    {
+        if (SelectedPreset is null)
+            return;
+        
+        // TODO: Show dialog to select target slot
+        // Will be wired to ICopyPresetUseCase
+    }
+
+    /// <summary>
+    /// Renames the selected preset.
+    /// </summary>
+    [RelayCommand(CanExecute = nameof(CanExecutePresetAction))]
+    private void RenamePreset()
+    {
+        if (SelectedPreset is null)
+            return;
+        
+        // TODO: Show dialog to enter new name
+        // Will be wired to IRenamePresetUseCase
+    }
+
+    /// <summary>
+    /// Deletes the selected preset.
+    /// </summary>
+    [RelayCommand(CanExecute = nameof(CanExecutePresetAction))]
+    private void DeletePreset()
+    {
+        if (SelectedPreset is null)
+            return;
+        
+        // TODO: Show confirmation dialog
+        // Will be wired to IDeletePresetUseCase
+    }
+
+    private bool CanExecutePresetAction()
+    {
+        return SelectedPreset != null;
     }
 }
