@@ -53,10 +53,28 @@ wix build installer/Product.wxs installer/Components.wxs -o installer/output/Nov
 ## Installer Features
 
 - **Installation Directory**: `C:\Program Files\Nova System Manager\`
-- **Start Menu Shortcut**: Yes
-- **Desktop Shortcut**: Yes
+- **Start Menu Shortcut**: Yes (always installed)
+- **Desktop Shortcut**: Optional (enabled by default, controlled via ADDDESKTOPSHORTCUT property)
 - **Uninstall Support**: Yes (via Add/Remove Programs)
 - **Upgrade Support**: Automatic upgrade from previous versions
+
+## Customizing Installation
+
+### Desktop Shortcut
+
+The desktop shortcut is optional and enabled by default. To install without the desktop shortcut:
+
+```cmd
+msiexec /i NovaSystemManager.msi ADDDESKTOPSHORTCUT=0
+```
+
+To enable the desktop shortcut (default behavior):
+
+```cmd
+msiexec /i NovaSystemManager.msi ADDDESKTOPSHORTCUT=1
+```
+
+Or simply run the installer normally - the desktop shortcut will be created by default.
 
 ## Package Details
 
