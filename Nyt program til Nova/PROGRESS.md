@@ -10,15 +10,20 @@
 
 ## 🎯 NUVÆRENDE SESSION [2026-02-03]
 
-**Modul 9 - MIDI Mapping Phase 1** — 🚀 READY FOR HANDOFF
+**Modul 9 - MIDI Mapping Phase 1** — ✅ Task 9.1.1 COMPLETE
+- Task 9.1.1: Display CC Assignment Table ✅ DONE
+  - GetCCMappingsUseCase med 4 tests implementeret
+  - CCMappingViewModel med LoadFromDump pattern
+  - MidiMappingView med DataGrid (CC#, Parameter, Assigned)
+  - Fixed MVVM Toolkit naming conventions (CCMappings → CcMappings)
 - Previous sessions: Moduler 1-8 COMPLETE (90% samlede fremskridt)
 - Modul 7: Tasks 7.1.1-7.1.4 DONE (Copy/Rename/Delete/ContextMenu - 22 tests)
 - Modul 7: Tasks 7.2.1-7.2.4 NOT STARTED (A/B Compare, Undo/Redo - HIGH complexity)
 - Modul 8: COMPLETE (Export/Import .syx - 233 tests)
 
-**Current Action**: Documented per AGENTS.md pipeline → Ready for Sonnet 4.5  
+**Current Action**: Task 9.1.1 COMPLETE - Ready for 9.1.2-9.1.3 (Edit & Save)  
 **Build Status**: ✅ GREEN (0 errors, 0 warnings)  
-**Test Count**: 277 passing (144 Domain + 6 Midi + 12 Infrastructure + 48 Application + 67 Presentation)
+**Test Count**: 297 passing (148 Domain + 6 Midi + 12 Infrastructure + 67 Application + 64 Presentation)
 
 ---
 
@@ -35,7 +40,7 @@
 | 6 | Preset Editor | ✅ DONE | 100% |
 | 7 | Preset Management | 🔄 IN PROGRESS | 50% |
 | 8 | File I/O | ✅ DONE | 100% |
-| 9 | MIDI Mapping | ⬜ READY | 0% |
+| 9 | MIDI Mapping | 🔄 IN PROGRESS | 10% |
 | 10 | Release | ⬜ TODO | 0% |
 
 ---
@@ -57,7 +62,7 @@
 | 11 | `11-modul6-preset-editor-SONNET45.md` | 🤖 IN PROGRESS |
 | 12 | `12-modul7-preset-management.md` | ⬜ TODO |
 | 13 | `13-modul8-file-io.md` | ✅ COMPLETE |
-| 14 | `14-modul9-midi-mapping-SONNET45.md` | ⬜ TODO |
+| 14 | `14-modul9-midi-mapping-SONNET45.md` | 🔄 TASK 9.1.1 DONE |
 | 15 | `15-modul10-release-SONNET45.md` | ⬜ TODO |
 
 **SONNET45 i filnavn** = Kræver Claude Sonnet 4.5+. Brug IKKE Haiku/GPT-4.1 mini.
@@ -67,12 +72,14 @@
 ## 🧪 TEST STATUS
 
 ```
-Domain:      144 tests ✅
-MIDI:          6 tests ✅
-Infrastructure: 12 tests ✅
-Application:   27 tests ✅
-Presentation:  52 tests ✅
+Domain:         148 tests ✅ (+4 CC mapping tests)
+MIDI:             6 tests ✅
+Infrastructure:  12 tests ✅
+Application:     67 tests ✅ (+4 GetCCMappingsUseCase tests)
+Presentation:    64 tests ✅
 ─────────────────────────────
+TOTAL:          297 tests ✅
+```
 TOTAL:       241/241 passing (100%)
 ```
 
