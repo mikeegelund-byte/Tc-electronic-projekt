@@ -141,7 +141,7 @@ if ($manifestExists) {
     Write-ColorOutput "  ✓ Project root: $projectRoot" 'Success'
 } else {
     Write-ColorOutput "  ✗ APPLICATION_MANIFEST.md not found" 'Error'
-    Write-ColorOutput "    Run this script from: d:\Tc electronic projekt\Nyt program til Nova" 'Info'
+    Write-ColorOutput "    Run this script from: c:\Tc electronic projekt\Nyt program til Nova" 'Info'
     exit 1
 }
 
