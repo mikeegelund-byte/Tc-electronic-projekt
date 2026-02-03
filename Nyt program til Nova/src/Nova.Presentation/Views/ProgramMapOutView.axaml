@@ -1,0 +1,44 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Nova.Presentation.ViewModels"
+             x:Class="Nova.Presentation.Views.ProgramMapOutView"
+             x:DataType="vm:ProgramMapOutViewModel">
+
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="10" Spacing="10">
+            <TextBlock Text="{Binding StatusMessage}"
+                       VerticalAlignment="Center"
+                       Foreground="{DynamicResource ForegroundSubduedBrush}"/>
+
+            <Button Content="Save Program Map Out"
+                    Command="{Binding SaveChangesCommand}"
+                    IsEnabled="{Binding HasUnsavedChanges}"
+                    HorizontalAlignment="Right"/>
+
+            <TextBlock Text="*"
+                       IsVisible="{Binding HasUnsavedChanges}"
+                       FontSize="20"
+                       Foreground="Orange"
+                       VerticalAlignment="Center"
+                       ToolTip.Tip="Unsaved changes"/>
+        </StackPanel>
+
+        <DataGrid ItemsSource="{Binding Entries}"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="False"
+                  GridLinesVisibility="All"
+                  Margin="10">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Preset"
+                                    Binding="{Binding PresetDisplay}"
+                                    IsReadOnly="True"
+                                    Width="*"/>
+
+                <DataGridTextColumn Header="PC Out"
+                                    Binding="{Binding OutgoingProgram, Mode=TwoWay}"
+                                    IsReadOnly="False"
+                                    Width="120"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </DockPanel>
+</UserControl>
