@@ -5,6 +5,7 @@
 
     <Application.Styles>
         <FluentTheme />
+        <StyleInclude Source="/Styles/Animations.axaml"/>
     </Application.Styles>
     
     <Application.Resources>
