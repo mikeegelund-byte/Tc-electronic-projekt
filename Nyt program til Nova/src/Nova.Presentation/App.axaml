@@ -14,6 +14,7 @@
     <Application.Styles>
         <FluentTheme />
         <StyleInclude Source="/Styles/Animations.axaml"/>
+        <StyleInclude Source="/Styles/NovaTheme.axaml"/>
     </Application.Styles>
     
     <Application.Resources>

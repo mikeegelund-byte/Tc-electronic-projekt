@@ -28,8 +28,8 @@ Før du starter: Læs `llm-build-system/AGENTS.md` og følg pipelinen.
 | 6 | Preset Editor | ✅ DONE | **11-modul6-preset-editor-SONNET45.md** |
 | 7 | Preset Management | ✅ DONE | 12-modul7-preset-management.md |
 | 8 | File I/O | ✅ DONE | 13-modul8-file-io.md |
-| 9 | MIDI Mapping | 🔄 IN PROGRESS | **14-modul9-midi-mapping-SONNET45.md** |
-| 10 | Release | ⬜ TODO | **15-modul10-release-SONNET45.md** |
+| 9 | MIDI Mapping | ✅ DONE | **14-modul9-midi-mapping-SONNET45.md** |
+| 10 | Release | 🔄 IN PROGRESS | **15-modul10-release-SONNET45.md** |
 
 **Filer med SONNET45 i navnet**: Kræver Claude Sonnet 4.5 eller bedre. Brug IKKE Haiku eller GPT-4.1 mini.
 
@@ -37,8 +37,8 @@ Før du starter: Læs `llm-build-system/AGENTS.md` og følg pipelinen.
 
 ## 🚀 Nuværende Task
 
-**Fil**: `14-modul9-midi-mapping-SONNET45.md`  
-**Status**: 🔄 IN PROGRESS (Tasks 9.1.1-9.1.3 DONE, 9.2.1 Domain done)  
+**Fil**: `15-modul10-release-SONNET45.md`  
+**Status**: 🔄 IN PROGRESS (Phase 1: UI/UX Polish - Critical Accessibility)  
 **Se**: `PROGRESS.md` for detaljer
 
 ---
@@ -54,4 +54,4 @@ Før du starter: Læs `llm-build-system/AGENTS.md` og følg pipelinen.
 
 ---
 
-**Sidst opdateret**: 2026-02-03
+**Sidst opdateret**: 2026-02-03 (Modul 10 Phase 1 started)
