@@ -139,6 +139,19 @@ Write-Host 'Step 3: Harvesting published files...' -ForegroundColor Yellow
 
 $componentsWxs = Join-Path $InstallerDir 'Components.wxs'
 
+function New-SafeId {
+    param(
+        [string]$Text,
+        [string]$Prefix
+    )
+
+    $hashBytes = [System.Security.Cryptography.SHA256]::Create().ComputeHash(
+        [System.Text.Encoding]::UTF8.GetBytes($Text)
+    )
+    $hash = ([System.BitConverter]::ToString($hashBytes)) -replace "-", ""
+    return "$Prefix$($hash.Substring(0, 12))"
+}
+
 function Write-ComponentsWxs {
     param(
         [string]$PublishRoot,
@@ -147,10 +160,95 @@ function Write-ComponentsWxs {
 
     $publishRootFull = (Resolve-Path $PublishRoot).Path
     $files = Get-ChildItem -Path $PublishRoot -Recurse -File
+    $componentsByDir = @{}
+    $components = @()
+    $directoryTree = @{
+        Id = "INSTALLFOLDER"
+        Name = ""
+        Children = @{}
+    }
+
+    function Get-OrCreate-DirNode {
+        param(
+            [string[]]$Segments
+        )
+
+        $node = $directoryTree
+        foreach ($segment in $Segments) {
+            if (-not $node.Children.ContainsKey($segment)) {
+                $node.Children[$segment] = @{
+                    Id = (New-SafeId -Text ($node.Id + "_" + $segment) -Prefix "Dir")
+                    Name = $segment
+                    Children = @{}
+                }
+            }
+            $node = $node.Children[$segment]
+        }
+        return $node
+    }
+
+    $index = 1
+    foreach ($file in $files) {
+        $relPath = $file.FullName.Substring($publishRootFull.Length).TrimStart('\', '/')
+        $relDir = [IO.Path]::GetDirectoryName($relPath)
+        if ($null -eq $relDir) {
+            $relDir = ""
+        }
+        $relDirNormalized = $relDir -replace '\\', '/'
+        $segments = @()
+        if ($relDirNormalized) {
+            $segments = $relDirNormalized -split '/'
+        }
+
+        $dirNode = Get-OrCreate-DirNode -Segments $segments
+        $componentId = "Comp$index"
+        $fileId = "File$index"
+        $guid = [guid]::NewGuid().ToString().ToUpper()
+        $components += [pscustomobject]@{
+            Id = $componentId
+            FileId = $fileId
+            Guid = $guid
+            RelativePath = $relPath
+            DirectoryNode = $dirNode
+            DirectoryKey = $relDirNormalized
+        }
+
+        if (-not $componentsByDir.ContainsKey($relDirNormalized)) {
+            $componentsByDir[$relDirNormalized] = @()
+        }
+        $componentsByDir[$relDirNormalized] += $components[-1]
+        $index++
+    }
+
     $sb = New-Object System.Text.StringBuilder
     [void]$sb.AppendLine('<?xml version="1.0" encoding="UTF-8"?>')
     [void]$sb.AppendLine('<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">')
     [void]$sb.AppendLine('  <Fragment>')
+    [void]$sb.AppendLine('    <DirectoryRef Id="INSTALLFOLDER">')
+
+    function Write-Directory {
+        param(
+            [hashtable]$Node,
+            [string]$PathKey,
+            [int]$IndentLevel
+        )
+
+        $indent = '  ' * $IndentLevel
+        foreach ($child in $Node.Children.Values | Sort-Object Name) {
+            [void]$sb.AppendLine("$indent<Directory Id=`"$($child.Id)`" Name=`"$($child.Name)`">")
+            $childPathKey = if ($PathKey) { "$PathKey/$($child.Name)" } else { $child.Name }
+            Write-Directory -Node $child -PathKey $childPathKey -IndentLevel ($IndentLevel + 1)
+            [void]$sb.AppendLine("$indent</Directory>")
+        }
+
+        if ($componentsByDir.ContainsKey($PathKey)) {
+            foreach ($component in $componentsByDir[$PathKey]) {
+                $fileSource = $component.RelativePath -replace '/', '\\'
+                [void]$sb.AppendLine("$indent<Component Id=`"$($component.Id)`" Guid=`"$($component.Guid)`">")
+                [void]$sb.AppendLine("$indent  <File Id=`"$($component.FileId)`" Source=`"`$(var.PublishDir)\\$fileSource`" KeyPath=`"yes`" />")
+                [void]$sb.AppendLine("$indent</Component>")
+            }
+        }
     [void]$sb.AppendLine('    <ComponentGroup Id="PublishedFiles" Directory="INSTALLFOLDER">')
 
     $i = 1
@@ -163,6 +261,14 @@ function Write-ComponentsWxs {
         $i++
     }
 
+    Write-Directory -Node $directoryTree -PathKey "" -IndentLevel 3
+    [void]$sb.AppendLine('    </DirectoryRef>')
+    [void]$sb.AppendLine('  </Fragment>')
+    [void]$sb.AppendLine('  <Fragment>')
+    [void]$sb.AppendLine('    <ComponentGroup Id="PublishedFiles">')
+    foreach ($component in $components) {
+        [void]$sb.AppendLine("      <ComponentRef Id=`"$($component.Id)`" />")
+    }
     [void]$sb.AppendLine('    </ComponentGroup>')
     [void]$sb.AppendLine('  </Fragment>')
     [void]$sb.AppendLine('</Wix>')
@@ -171,6 +277,31 @@ function Write-ComponentsWxs {
     return $files.Count
 }
 
+Write-Host "  Attempting WiX harvest..." -ForegroundColor Gray
+$harvestArgs = @(
+    "harvest",
+    "dir", $PublishDir,
+    "-cg", "PublishedFiles",
+    "-gg",
+    "-scom",
+    "-sfrag",
+    "-srd",
+    "-sreg",
+    "-dr", "INSTALLFOLDER",
+    "-var", "var.PublishDir",
+    "-out", $componentsWxs
+)
+
+& wix @harvestArgs
+
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "  WiX harvest failed (exit code $LASTEXITCODE). Falling back to PowerShell generator." -ForegroundColor Yellow
+    $count = Write-ComponentsWxs -PublishRoot $PublishDir -OutputPath $componentsWxs
+    Write-Host "  ✓ Components generated with PowerShell ($count files)" -ForegroundColor Green
+} else {
+    Write-Host "  ✓ Components generated with WiX harvest" -ForegroundColor Green
+}
+Write-Host ""
 $count = Write-ComponentsWxs -PublishRoot $PublishDir -OutputPath $componentsWxs
 Write-Host ('  ✓ Components generated with PowerShell (' + $count + ' files)') -ForegroundColor Green
 Write-Host ''
