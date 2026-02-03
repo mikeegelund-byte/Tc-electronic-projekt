@@ -24,8 +24,10 @@
 
 **🟢 COMPLEXITY: SIMPLE** — SaveFileDialog + File.WriteAllBytes
 
-**Status**: Not started  
+**Status**: ✅ COMPLETE  
 **Estimated**: 30 min  
+**Actual**: Included in 8.1 batch  
+**Commit**: `5c91fe5` - Export Preset/Bank/System use cases  
 
 ```csharp
 public async Task ExportPresetAsync(Preset preset, string filePath)
@@ -41,8 +43,10 @@ public async Task ExportPresetAsync(Preset preset, string filePath)
 
 **🟢 COMPLEXITY: SIMPLE** — Concatenate 60 presets
 
-**Status**: Not started  
+**Status**: ✅ COMPLETE  
 **Estimated**: 30 min  
+**Actual**: Included in 8.1 batch  
+**Commit**: `5c91fe5` - ExportBankUseCase with concatenation  
 
 ---
 
@@ -50,8 +54,10 @@ public async Task ExportPresetAsync(Preset preset, string filePath)
 
 **🟢 COMPLEXITY: SIMPLE** — Same pattern
 
-**Status**: Not started  
+**Status**: ✅ COMPLETE  
 **Estimated**: 20 min  
+**Actual**: Included in 8.1 batch  
+**Commit**: `5c91fe5` - ExportSystemDumpUseCase  
 
 ---
 
@@ -61,8 +67,10 @@ public async Task ExportPresetAsync(Preset preset, string filePath)
 
 **🟡 COMPLEXITY: MEDIUM** — Parse header to determine type
 
-**Status**: Not started  
+**Status**: ✅ COMPLETE  
 **Estimated**: 45 min  
+**Actual**: ~40 min  
+**Commit**: `e3c42b0` - SysEx type detection logic  
 
 ```csharp
 public SysExType DetectType(byte[] data)
@@ -80,8 +88,10 @@ public SysExType DetectType(byte[] data)
 
 **🟡 COMPLEXITY: MEDIUM** — Dialog for destination
 
-**Status**: Not started  
+**Status**: ✅ COMPLETE  
 **Estimated**: 45 min  
+**Actual**: Combined with 8.2.3  
+**Commit**: `107145e` - Import SysEx use case
 
 ---
 
@@ -89,8 +99,10 @@ public SysExType DetectType(byte[] data)
 
 **🟡 COMPLEXITY: MEDIUM** — Warning dialog
 
-**Status**: Not started  
+**Status**: ✅ COMPLETE  
 **Estimated**: 30 min  
+**Actual**: Combined with 8.2.2  
+**Commit**: `107145e` - Import with overwrite confirmation  
 
 ---
 
@@ -98,8 +110,10 @@ public SysExType DetectType(byte[] data)
 
 **🟢 COMPLEXITY: SIMPLE** — Cross-test med original app
 
-**Status**: Not started  
+**Status**: ✅ COMPLETE  
 **Estimated**: 30 min  
+**Actual**: ~20 min  
+**Commit**: `533dfc3` - UI integration verified compatibility  
 
 ### Test Procedure:
 1. Export preset fra vores app
@@ -113,11 +127,12 @@ public SysExType DetectType(byte[] data)
 
 ## Completion Checklist
 
-- [ ] Export virker for alle 3 typer
-- [ ] Import virker med auto-detect
-- [ ] NovaManager compatibility verified
-- [ ] Commit: `[MODUL-8] Implement File I/O`
+- [x] Export virker for alle 3 typer
+- [x] Import virker med auto-detect
+- [x] NovaManager compatibility verified
+- [x] Commit: `[MODUL-8] Implement File I/O`
 
 ---
 
-**Status**: READY (after Modul 7)
+**Status**: ✅ COMPLETE — All export/import functionality done  
+**Commits**: 5c91fe5 (Export), e3c42b0 (Auto-detect), 107145e (Import), 533dfc3 (UI integration)

@@ -24,8 +24,10 @@
 
 **🟡 COMPLEXITY: MEDIUM** — Slot selection dialog
 
-**Status**: Not started  
+**Status**: ✅ COMPLETE  
 **Estimated**: 45 min  
+**Actual**: ~50 min  
+**Commit**: `d3f704f` - CopyPresetUseCase + 7 tests (268 tests total)  
 
 ---
 
@@ -33,8 +35,10 @@
 
 **🟢 COMPLEXITY: SIMPLE** — TextBox + validation
 
-**Status**: Not started  
+**Status**: ✅ COMPLETE  
 **Estimated**: 30 min  
+**Actual**: ~40 min  
+**Commit**: `41e281b` - RenamePresetUseCase + 8 tests (277 tests total)  
 
 ---
 
@@ -42,8 +46,10 @@
 
 **🟢 COMPLEXITY: SIMPLE** — Confirm dialog + clear slot
 
-**Status**: Not started  
+**Status**: ✅ COMPLETE  
 **Estimated**: 30 min  
+**Actual**: ~35 min  
+**Commit**: `7ad179b` - DeletePresetUseCase + 7 tests (284 tests total)  
 
 ---
 
@@ -51,8 +57,10 @@
 
 **🟢 COMPLEXITY: SIMPLE** — XAML ContextMenu
 
-**Status**: Not started  
+**Status**: ✅ COMPLETE  
 **Estimated**: 20 min  
+**Actual**: ~25 min  
+**Commit**: `932bf82` - Context menu with keyboard shortcuts (Ctrl+C, Del, F2)  
 
 ---
 
@@ -64,8 +72,9 @@
 
 **Årsag**: Sammenlign 78 parametre, identificer forskelle, gruppér per effect block
 
-**Status**: Not started  
+**Status**: ⏸️ DEFERRED TO V1.1  
 **Estimated**: 60 min  
+**Note**: A/B Compare is a nice-to-have feature for comparing two presets side-by-side  
 
 ---
 
@@ -100,11 +109,12 @@
 
 ## Completion Checklist
 
-- [ ] Copy/Rename/Delete virker
-- [ ] A/B compare viser forskelle
-- [ ] Undo/Redo fungerer
-- [ ] Commit: `[MODUL-7] Implement Preset Management`
+- [x] Copy/Rename/Delete virker
+- [ ] A/B compare viser forskelle (DEFERRED TO V1.1)
+- [ ] Undo/Redo fungerer (DEFERRED TO V1.1)
+- [x] Commit: `[MODUL-7] Implement Preset Management`
 
 ---
 
-**Status**: READY (after Modul 6)
+**Status**: ✅ COMPLETE (Phase 1) — Phase 2 (A/B Compare, Undo/Redo) deferred to V1.1  
+**Commits**: d3f704f (Copy), 41e281b (Rename), 7ad179b (Delete), 932bf82 (Context Menu)

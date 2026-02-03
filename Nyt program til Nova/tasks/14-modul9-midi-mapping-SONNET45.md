@@ -11,10 +11,13 @@
 
 - [x] Display current CC assignments
 - [x] Edit CC → parameter mappings
-- [ ] Expression pedal min/mid/max editor (Domain done, UI pending)
+- [x] CC Learn Mode
+- [x] Expression pedal min/mid/max editor (Domain + UI done)
 - [ ] Visual response curve
+- [ ] Pedal calibration
+- [ ] Save pedal mapping
 - [x] Save to hardware (via SaveSystemDumpUseCase)
-- [x] All tests pass (308 passing)
+- [x] All tests pass (319 passing)
 
 ---
 
@@ -53,14 +56,16 @@
 
 ---
 
-### Task 9.1.4: CC Learn Mode (OPTIONAL)
+### Task 9.1.4: CC Learn Mode
 
 **🔴 COMPLEXITY: HIGH** — Kræver SONNET 4.5+
 
 **Årsag**: Listen for CC → auto-assign, timeout handling
 
-**Status**: Not started  
+**Status**: ✅ COMPLETE  
 **Estimated**: 60 min  
+**Actual**: ~90 min  
+**Commit**: `6ff9152` - CCLearnModeUseCase + ReceiveCCAsync in IMidiPort + 6 tests  
 
 ---
 
