@@ -69,6 +69,10 @@ artifacts/
 releases/
 publish/
 
+# WiX Installer output
+installer/output/
+installer/Components.wxs
+
 # ============================================================================
 # Runtime Output
 # ============================================================================
