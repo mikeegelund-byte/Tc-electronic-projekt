@@ -5,6 +5,7 @@
            Version="1.0.0" 
            Manufacturer="TC Electronic Community" 
            UpgradeCode="A1B2C3D4-E5F6-4A5B-8C9D-0E1F2A3B4C5D"
+           Scope="perUser"
            Compressed="yes">
     
     <SummaryInformation Description="MIDI Manager for TC Electronic Nova System"
@@ -22,7 +23,7 @@
     </Feature>
     
     <!-- Directory Structure -->
-    <StandardDirectory Id="ProgramFiles64Folder">
+    <StandardDirectory Id="LocalAppDataFolder">
       <Directory Id="INSTALLFOLDER" Name="NovaSystemManager" />
     </StandardDirectory>
     
