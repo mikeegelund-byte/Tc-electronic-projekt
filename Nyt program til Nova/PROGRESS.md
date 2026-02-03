@@ -10,20 +10,24 @@
 
 ## 🎯 NUVÆRENDE SESSION [2026-02-03]
 
-**Modul 9 - MIDI Mapping Phase 1** — ✅ Task 9.1.1 COMPLETE
-- Task 9.1.1: Display CC Assignment Table ✅ DONE
-  - GetCCMappingsUseCase med 4 tests implementeret
+**Modul 9 - MIDI Mapping Editor** — 🔄 IN PROGRESS (Tasks 9.1.1-9.1.3 + 9.2.1 DONE)
+- ✅ Task 9.1.1: Display CC Assignment Table COMPLETE
+  - GetCCMappingsUseCase med 4 tests (67 Application tests total)
   - CCMappingViewModel med LoadFromDump pattern
   - MidiMappingView med DataGrid (CC#, Parameter, Assigned)
-  - Fixed MVVM Toolkit naming conventions (CCMappings → CcMappings)
-- Previous sessions: Moduler 1-8 COMPLETE (90% samlede fremskridt)
-- Modul 7: Tasks 7.1.1-7.1.4 DONE (Copy/Rename/Delete/ContextMenu - 22 tests)
-- Modul 7: Tasks 7.2.1-7.2.4 NOT STARTED (A/B Compare, Undo/Redo - HIGH complexity)
-- Modul 8: COMPLETE (Export/Import .syx - 233 tests)
+- ✅ Task 9.1.2-9.1.3: Edit & Save CC Assignments COMPLETE
+  - UpdateCCMappingUseCase med 6 tests (73 Application tests total)
+  - SystemDump.UpdateCCMapping Domain method
+  - CCMappingEditorViewModel wrapper for editable DataGrid
+  - Save button with dirty tracking (HasUnsavedChanges)
+- ✅ Task 9.2.1: Display Pedal Min/Mid/Max (Domain) COMPLETE
+  - SystemDump pedal getter methods (GetPedalParameter, Min, Mid, Max)
+  - SystemDumpPedalMappingTests with 5 tests (153 Domain tests total)
+  - Next: PedalMappingViewModel + UI
 
-**Current Action**: Task 9.1.1 COMPLETE - Ready for 9.1.2-9.1.3 (Edit & Save)  
+**Current Action**: Completing Task 9.2.1 ViewModel/UI, then Task 9.1.13  
 **Build Status**: ✅ GREEN (0 errors, 0 warnings)  
-**Test Count**: 297 passing (148 Domain + 6 Midi + 12 Infrastructure + 67 Application + 64 Presentation)
+**Test Count**: 308 passing (153 Domain + 6 Midi + 12 Infrastructure + 73 Application + 64 Presentation)
 
 ---
 
@@ -40,7 +44,7 @@
 | 6 | Preset Editor | ✅ DONE | 100% |
 | 7 | Preset Management | 🔄 IN PROGRESS | 50% |
 | 8 | File I/O | ✅ DONE | 100% |
-| 9 | MIDI Mapping | 🔄 IN PROGRESS | 10% |
+| 9 | MIDI Mapping | 🔄 IN PROGRESS | 30% |
 | 10 | Release | ⬜ TODO | 0% |
 
 ---
@@ -62,7 +66,7 @@
 | 11 | `11-modul6-preset-editor-SONNET45.md` | 🤖 IN PROGRESS |
 | 12 | `12-modul7-preset-management.md` | ⬜ TODO |
 | 13 | `13-modul8-file-io.md` | ✅ COMPLETE |
-| 14 | `14-modul9-midi-mapping-SONNET45.md` | 🔄 TASK 9.1.1 DONE |
+| 14 | `14-modul9-midi-mapping-SONNET45.md` | 🔄 TASKS 9.1.1-9.1.3, 9.2.1 DONE |
 | 15 | `15-modul10-release-SONNET45.md` | ⬜ TODO |
 
 **SONNET45 i filnavn** = Kræver Claude Sonnet 4.5+. Brug IKKE Haiku/GPT-4.1 mini.
@@ -72,15 +76,13 @@
 ## 🧪 TEST STATUS
 
 ```
-Domain:         148 tests ✅ (+4 CC mapping tests)
+Domain:         153 tests ✅ (+9 CC/Pedal tests since session start)
 MIDI:             6 tests ✅
 Infrastructure:  12 tests ✅
-Application:     67 tests ✅ (+4 GetCCMappingsUseCase tests)
+Application:     73 tests ✅ (+10 GetCCMappingsUseCase + UpdateCCMappingUseCase)
 Presentation:    64 tests ✅
 ─────────────────────────────
-TOTAL:          297 tests ✅
-```
-TOTAL:       241/241 passing (100%)
+TOTAL:          308 tests ✅
 ```
 
 **Hardware Test**: ✅ SUCCESS
@@ -92,9 +94,9 @@ TOTAL:       241/241 passing (100%)
 
 ## 📅 SIDST OPDATERET
 
-**Dato**: 2026-02-02  
-**Commit**: `a4bbd15` - [MODUL-6][TASKS-6.0-6.1.7] ToSysEx + effect block validation (324 tests passing)  
-**Branch**: `copilot/chubby-weasel` (PR #36 open to `main`)
+**Dato**: 2026-02-03  
+**Commit**: `7696466` - [MODUL-9][PHASE-2] Display Pedal Min/Mid/Max - SystemDump pedal getter methods (308 tests)  
+**Branch**: `main`
 
 ---
 
