@@ -63,14 +63,16 @@ public partial class SavePresetDialog : Window
 
     private void SetupKeyboardHandling()
     {
-        this.KeyDown += (sender, e) =>
+        this.KeyDown += OnKeyDown;
+    }
+
+    private void OnKeyDown(object? sender, KeyEventArgs e)
+    {
+        if (e.Key == Key.Escape)
         {
-            if (e.Key == Key.Escape)
-            {
-                OnCancelClicked(sender, e);
-                e.Handled = true;
-            }
-        };
+            OnCancelClicked(sender, e);
+            e.Handled = true;
+        }
     }
 
     private void OnSlotSelectionChanged(object? sender, SelectionChangedEventArgs e)

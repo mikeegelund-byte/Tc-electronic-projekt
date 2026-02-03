@@ -147,7 +147,7 @@
                                         Padding="{StaticResource ButtonPadding}"
                                         ToolTip.Tip="Download all 60 presets from pedal (F5 or Ctrl+D)"
                                         AutomationProperties.Name="Download user bank"
-                                        AutomationProperties.HelpText="Downloads all 60 presets from the Nova System pedal (F5)" />
+                                        AutomationProperties.HelpText="Downloads all 60 presets from the Nova System pedal (F5 or Ctrl+D)" />
                             </StackPanel>
                         </Border>
                         
