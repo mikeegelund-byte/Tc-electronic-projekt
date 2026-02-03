@@ -15,9 +15,16 @@
 
     <!-- === KEYBOARD SHORTCUTS === -->
     <Window.KeyBindings>
+      <!-- Existing shortcuts -->
       <KeyBinding Gesture="Ctrl+R" Command="{Binding RefreshPortsCommand}" />
       <KeyBinding Gesture="F5" Command="{Binding DownloadBankCommand}" />
       <KeyBinding Gesture="Ctrl+D" Command="{Binding DownloadBankCommand}" />
+      
+      <!-- New shortcuts (v1.0) -->
+      <KeyBinding Gesture="Ctrl+S" Command="{Binding SavePresetCommand}" />
+      <KeyBinding Gesture="Ctrl+Z" Command="{Binding UndoCommand}" />
+      <KeyBinding Gesture="Ctrl+Y" Command="{Binding RedoCommand}" />
+      <KeyBinding Gesture="Ctrl+C" Command="{Binding CopyPresetCommand}" />
     </Window.KeyBindings>
 
     <DockPanel Margin="{StaticResource SpacingMedium}">
@@ -138,6 +145,7 @@
                                         Command="{Binding DownloadBankCommand}"
                                         HorizontalAlignment="Left"
                                         Padding="{StaticResource ButtonPadding}"
+                                        ToolTip.Tip="Download all 60 presets from pedal (F5 or Ctrl+D)"
                                         AutomationProperties.Name="Download user bank"
                                         AutomationProperties.HelpText="Downloads all 60 presets from the Nova System pedal (F5)" />
                             </StackPanel>
