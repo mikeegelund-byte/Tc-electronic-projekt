@@ -175,4 +175,68 @@ public class SystemDump
     {
         return BitConverter.ToInt32(RawSysEx, PEDAL_MAX_OFFSET);
     }
+
+    /// <summary>
+    /// Updates the expression pedal parameter assignment.
+    /// </summary>
+    /// <param name="parameterId">Parameter ID to assign (0-127)</param>
+    /// <returns>Result indicating success or failure</returns>
+    public Result UpdatePedalParameter(int parameterId)
+    {
+        if (parameterId < 0 || parameterId > 127)
+            return Result.Fail($"Parameter ID out of range: {parameterId} (valid range: 0-127)");
+
+        var bytes = BitConverter.GetBytes(parameterId);
+        Array.Copy(bytes, 0, RawSysEx, PEDAL_PARAMETER_OFFSET, 4);
+
+        return Result.Ok();
+    }
+
+    /// <summary>
+    /// Updates the expression pedal minimum position value.
+    /// </summary>
+    /// <param name="min">Minimum value as percentage (0-100)</param>
+    /// <returns>Result indicating success or failure</returns>
+    public Result UpdatePedalMin(int min)
+    {
+        if (min < 0 || min > 100)
+            return Result.Fail($"Min value out of range: {min} (valid range: 0-100)");
+
+        var bytes = BitConverter.GetBytes(min);
+        Array.Copy(bytes, 0, RawSysEx, PEDAL_MIN_OFFSET, 4);
+
+        return Result.Ok();
+    }
+
+    /// <summary>
+    /// Updates the expression pedal midpoint position value.
+    /// </summary>
+    /// <param name="mid">Midpoint value as percentage (0-100)</param>
+    /// <returns>Result indicating success or failure</returns>
+    public Result UpdatePedalMid(int mid)
+    {
+        if (mid < 0 || mid > 100)
+            return Result.Fail($"Mid value out of range: {mid} (valid range: 0-100)");
+
+        var bytes = BitConverter.GetBytes(mid);
+        Array.Copy(bytes, 0, RawSysEx, PEDAL_MID_OFFSET, 4);
+
+        return Result.Ok();
+    }
+
+    /// <summary>
+    /// Updates the expression pedal maximum position value.
+    /// </summary>
+    /// <param name="max">Maximum value as percentage (0-100)</param>
+    /// <returns>Result indicating success or failure</returns>
+    public Result UpdatePedalMax(int max)
+    {
+        if (max < 0 || max > 100)
+            return Result.Fail($"Max value out of range: {max} (valid range: 0-100)");
+
+        var bytes = BitConverter.GetBytes(max);
+        Array.Copy(bytes, 0, RawSysEx, PEDAL_MAX_OFFSET, 4);
+
+        return Result.Ok();
+    }
 }

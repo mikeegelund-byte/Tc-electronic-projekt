@@ -1,6 +1,5 @@
 {
 	"servers": {
-		},
 		"firecrawl/firecrawl-mcp-server": {
 			"type": "stdio",
 			"command": "npx",

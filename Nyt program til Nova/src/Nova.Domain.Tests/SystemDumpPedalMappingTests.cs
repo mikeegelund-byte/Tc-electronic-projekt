@@ -145,4 +145,109 @@ public class SystemDumpPedalMappingTests
         mid.Should().Be(50, "Midpoint at 50%");
         max.Should().Be(100, "Maximum at 100%");
     }
+
+    [Fact]
+    public void UpdatePedalParameter_ValidValue_UpdatesBytes()
+    {
+        // Arrange
+        var systemDump = CreateValidSystemDump();
+
+        // Act
+        var result = systemDump.UpdatePedalParameter(42);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        systemDump.GetPedalParameter().Should().Be(42);
+    }
+
+    [Fact]
+    public void UpdatePedalParameter_OutOfRange_Fails()
+    {
+        // Arrange
+        var systemDump = CreateValidSystemDump();
+
+        // Act
+        var resultNegative = systemDump.UpdatePedalParameter(-1);
+        var resultTooHigh = systemDump.UpdatePedalParameter(128);
+
+        // Assert
+        resultNegative.IsFailed.Should().BeTrue();
+        resultTooHigh.IsFailed.Should().BeTrue();
+    }
+
+    [Fact]
+    public void UpdatePedalMin_ValidValue_UpdatesBytes()
+    {
+        // Arrange
+        var systemDump = CreateValidSystemDump();
+
+        // Act
+        var result = systemDump.UpdatePedalMin(25);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        systemDump.GetPedalMin().Should().Be(25);
+    }
+
+    [Fact]
+    public void UpdatePedalMin_OutOfRange_Fails()
+    {
+        // Arrange
+        var systemDump = CreateValidSystemDump();
+
+        // Act
+        var resultNegative = systemDump.UpdatePedalMin(-1);
+        var resultTooHigh = systemDump.UpdatePedalMin(101);
+
+        // Assert
+        resultNegative.IsFailed.Should().BeTrue();
+        resultTooHigh.IsFailed.Should().BeTrue();
+    }
+
+    [Fact]
+    public void UpdatePedalMid_ValidValue_UpdatesBytes()
+    {
+        // Arrange
+        var systemDump = CreateValidSystemDump();
+
+        // Act
+        var result = systemDump.UpdatePedalMid(50);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        systemDump.GetPedalMid().Should().Be(50);
+    }
+
+    [Fact]
+    public void UpdatePedalMax_ValidValue_UpdatesBytes()
+    {
+        // Arrange
+        var systemDump = CreateValidSystemDump();
+
+        // Act
+        var result = systemDump.UpdatePedalMax(100);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        systemDump.GetPedalMax().Should().Be(100);
+    }
+
+    [Fact]
+    public void UpdatePedalMapping_Roundtrip_PreservesValues()
+    {
+        // Arrange
+        var systemDump = CreateValidSystemDump();
+
+        // Act
+        systemDump.UpdatePedalParameter(20);
+        systemDump.UpdatePedalMin(10);
+        systemDump.UpdatePedalMid(60);
+        systemDump.UpdatePedalMax(90);
+
+        // Assert
+        systemDump.GetPedalParameter().Should().Be(20);
+        systemDump.GetPedalMin().Should().Be(10);
+        systemDump.GetPedalMid().Should().Be(60);
+        systemDump.GetPedalMax().Should().Be(90);
+    }
 }
