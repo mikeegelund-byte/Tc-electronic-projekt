@@ -8,12 +8,12 @@
         <vm:FileManagerViewModel />
     </Design.DataContext>
 
-    <StackPanel Spacing="{StaticResource SpacingMedium}">
+    <StackPanel Spacing="{StaticResource Spacing16}">
         <!-- Bank Operations -->
         <Border Background="{StaticResource BackgroundSecondary}" 
                 Padding="{StaticResource CardPadding}" 
                 CornerRadius="{StaticResource BorderRadiusLarge}">
-            <StackPanel Spacing="{StaticResource SpacingMedium}">
+            <StackPanel Spacing="{StaticResource Spacing16}">
                 <TextBlock Text="Bank File Operations" 
                            FontWeight="{StaticResource FontWeightBold}" 
                            FontSize="{StaticResource FontSizeLarge}"
@@ -43,7 +43,7 @@
         <Border Background="{StaticResource BackgroundSecondary}" 
                 Padding="{StaticResource CardPadding}" 
                 CornerRadius="{StaticResource BorderRadiusLarge}">
-            <StackPanel Spacing="{StaticResource SpacingMedium}">
+            <StackPanel Spacing="{StaticResource Spacing16}">
                 <TextBlock Text="Preset File Operations" 
                            FontWeight="{StaticResource FontWeightBold}" 
                            FontSize="{StaticResource FontSizeLarge}"

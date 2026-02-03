@@ -96,7 +96,7 @@
                         <Border Background="{StaticResource BackgroundSecondary}" 
                                 Padding="{StaticResource CardPadding}" 
                                 CornerRadius="{StaticResource BorderRadiusLarge}">
-                            <StackPanel Spacing="{StaticResource SpacingMedium}">
+                            <StackPanel Spacing="{StaticResource Spacing16}">
                                 <TextBlock Text="MIDI Connection" 
                                            FontWeight="{StaticResource FontWeightBold}" 
                                            FontSize="{StaticResource FontSizeLarge}"
@@ -171,7 +171,7 @@
                         <Border Background="{StaticResource BackgroundSecondary}" 
                                 Padding="{StaticResource CardPadding}" 
                                 CornerRadius="{StaticResource BorderRadiusLarge}">
-                            <StackPanel Spacing="{StaticResource SpacingMedium}">
+                            <StackPanel Spacing="{StaticResource Spacing16}">
                                 <TextBlock Text="User Bank" 
                                            FontWeight="{StaticResource FontWeightBold}" 
                                            FontSize="{StaticResource FontSizeLarge}"
