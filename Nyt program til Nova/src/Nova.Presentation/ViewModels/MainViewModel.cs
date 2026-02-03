@@ -1,4 +1,6 @@
 using System.Collections.ObjectModel;
+using Avalonia;
+using Avalonia.Styling;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Nova.Application.UseCases;
@@ -83,6 +85,18 @@ public partial class MainViewModel : ObservableObject
             AvailablePorts.Add(port);
         }
         StatusMessage = $"Found {AvailablePorts.Count} MIDI port(s)";
+    }
+
+    [RelayCommand]
+    private void ToggleTheme()
+    {
+        var app = global::Avalonia.Application.Current;
+        if (app != null)
+        {
+            app.RequestedThemeVariant = app.RequestedThemeVariant == ThemeVariant.Dark 
+                ? ThemeVariant.Light 
+                : ThemeVariant.Dark;
+        }
     }
 
     [RelayCommand(CanExecute = nameof(CanConnect))]
