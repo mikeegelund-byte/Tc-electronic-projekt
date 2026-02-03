@@ -3,57 +3,68 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:Nova.Presentation.ViewModels"
+             xmlns:views="using:Nova.Presentation.Views"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
              x:Class="Nova.Presentation.Views.MidiMappingView"
              x:DataType="vm:CCMappingViewModel">
     
-    <DockPanel>
-        <!-- Header with status message and save button -->
-        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="10" Spacing="10">
-            <TextBlock Text="{Binding StatusMessage}" 
-                       VerticalAlignment="Center"
-                       Foreground="{DynamicResource ForegroundSubduedBrush}"/>
-            
-            <Button Content="Save CC Mappings"
-                    Command="{Binding SaveChangesCommand}"
-                    IsEnabled="{Binding HasUnsavedChanges}"
-                    HorizontalAlignment="Right"/>
+    <TabControl>
+        <!-- Tab 1: CC Mapping -->
+        <TabItem Header="CC Assignments">
+            <DockPanel>
+                <!-- Header with status message and save button -->
+                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="10" Spacing="10">
+                    <TextBlock Text="{Binding StatusMessage}" 
+                               VerticalAlignment="Center"
+                               Foreground="{DynamicResource ForegroundSubduedBrush}"/>
                     
-            <TextBlock Text="*"
-                       IsVisible="{Binding HasUnsavedChanges}"
-                       FontSize="20"
-                       Foreground="Orange"
-                       VerticalAlignment="Center"
-                       ToolTip.Tip="Unsaved changes"/>
-        </StackPanel>
+                    <Button Content="Save CC Mappings"
+                            Command="{Binding SaveChangesCommand}"
+                            IsEnabled="{Binding HasUnsavedChanges}"
+                            HorizontalAlignment="Right"/>
+                            
+                    <TextBlock Text="*"
+                               IsVisible="{Binding HasUnsavedChanges}"
+                               FontSize="20"
+                               Foreground="Orange"
+                               VerticalAlignment="Center"
+                               ToolTip.Tip="Unsaved changes"/>
+                </StackPanel>
 
-        <!-- DataGrid showing CC mappings -->
-        <DataGrid ItemsSource="{Binding CcMappings}"
-                  AutoGenerateColumns="False"
-                  IsReadOnly="False"
-                  GridLinesVisibility="All"
-                  Margin="10">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Index" 
-                                    Binding="{Binding Index}" 
-                                    IsReadOnly="True"
-                                    Width="80"/>
-                                    
-                <DataGridTextColumn Header="CC Number" 
-                                    Binding="{Binding CcNumber, Mode=TwoWay}" 
-                                    IsReadOnly="False"
-                                    Width="*"/>
-                                    
-                <DataGridTextColumn Header="Parameter ID" 
-                                    Binding="{Binding ParameterId, Mode=TwoWay}" 
-                                    IsReadOnly="False"
-                                    Width="*"/>
-                                    
-                <DataGridCheckBoxColumn Header="Assigned" 
-                                        Binding="{Binding IsAssigned, Mode=OneWay}" 
-                                        IsReadOnly="True"
-                                        Width="Auto"/>
-            </DataGrid.Columns>
-        </DataGrid>
-    </DockPanel>
+                <!-- DataGrid showing CC mappings -->
+                <DataGrid ItemsSource="{Binding CcMappings}"
+                          AutoGenerateColumns="False"
+                          IsReadOnly="False"
+                          GridLinesVisibility="All"
+                          Margin="10">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Index" 
+                                            Binding="{Binding Index}" 
+                                            IsReadOnly="True"
+                                            Width="80"/>
+                                            
+                        <DataGridTextColumn Header="CC Number" 
+                                            Binding="{Binding CcNumber, Mode=TwoWay}" 
+                                            IsReadOnly="False"
+                                            Width="*"/>
+                                            
+                        <DataGridTextColumn Header="Parameter ID" 
+                                            Binding="{Binding ParameterId, Mode=TwoWay}" 
+                                            IsReadOnly="False"
+                                            Width="*"/>
+                                            
+                        <DataGridCheckBoxColumn Header="Assigned" 
+                                                Binding="{Binding IsAssigned, Mode=OneWay}" 
+                                                IsReadOnly="True"
+                                                Width="Auto"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </DockPanel>
+        </TabItem>
+        
+        <!-- Tab 2: Expression Pedal -->
+        <TabItem Header="Expression Pedal">
+            <views:PedalMappingView DataContext="{Binding PedalMapping}"/>
+        </TabItem>
+    </TabControl>
 </UserControl>
