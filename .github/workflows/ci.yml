@@ -22,7 +22,7 @@ jobs:
         
     - name: Restore dependencies
       working-directory: './Nyt program til Nova'
-      run: dotnet restore
+      run: dotnet restore NovaApp.sln
       
     - name: Build solution
       working-directory: './Nyt program til Nova'
