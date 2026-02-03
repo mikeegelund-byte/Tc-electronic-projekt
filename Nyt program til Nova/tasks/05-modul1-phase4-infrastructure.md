@@ -18,13 +18,13 @@
 
 ## Exit Criteria (Phase 4 Complete When ALL True)
 
-- [ ] `DryWetMidiPort` class implements `IMidiPort`
-- [ ] Can enumerate available MIDI ports
-- [ ] Can connect to a named port
-- [ ] Can receive SysEx messages via IAsyncEnumerable
-- [ ] Can send SysEx messages
-- [ ] All tests pass (unit + integration with mock)
-- [ ] Manual test: Connect to real Nova System pedal
+- [x] `DryWetMidiPort` class implements `IMidiPort`
+- [x] Can enumerate available MIDI ports
+- [x] Can connect to a named port
+- [x] Can receive SysEx messages via IAsyncEnumerable
+- [x] Can send SysEx messages
+- [x] All tests pass (unit + integration with mock)
+- [x] Manual test: Connect to real Nova System pedal
 
 ---
 

@@ -14,11 +14,11 @@
 **Actual**: Verified installed (SDK 8.0.417)
 
 ### Steps
-- [ ] Download .NET 8 LTS from https://dotnet.microsoft.com/download/dotnet/8.0
-- [ ] Choose: .NET 8.0.x → Windows x64 → Installer
-- [ ] Run installer, follow defaults
-- [ ] Verify: `dotnet --version` → 8.0.x
-- [ ] Verify: `dotnet --list-sdks` → 8.0.x in list
+- [x] Download .NET 8 LTS from https://dotnet.microsoft.com/download/dotnet/8.0
+- [x] Choose: .NET 8.0.x → Windows x64 → Installer
+- [x] Run installer, follow defaults
+- [x] Verify: `dotnet --version` → 8.0.x
+- [x] Verify: `dotnet --list-sdks` → 8.0.x in list
 
 ### Verification Command
 ```powershell
@@ -38,19 +38,19 @@ dotnet --version
 **Estimated**: 30 min (including download)
 
 ### Steps
-- [ ] Download from https://visualstudio.microsoft.com/downloads/
-- [ ] Choose Community edition
-- [ ] Run installer
-- [ ] Select workloads:
-  - [ ] .NET Desktop Development
-  - [ ] .NET Development
-  - [ ] C++ build tools (optional)
-- [ ] Ensure components:
-  - [ ] Git for Windows
-  - [ ] GitHub Copilot (optional)
-- [ ] Complete installation (~45 min)
-- [ ] Launch Visual Studio
-- [ ] Create/sign in to Microsoft Account
+- [x] Download from https://visualstudio.microsoft.com/downloads/
+- [x] Choose Community edition
+- [x] Run installer
+- [x] Select workloads:
+  - [x] .NET Desktop Development
+  - [x] .NET Development
+  - [x] C++ build tools (optional)
+- [x] Ensure components:
+  - [x] Git for Windows
+  - [x] GitHub Copilot (optional)
+- [x] Complete installation (~45 min)
+- [x] Launch Visual Studio
+- [x] Create/sign in to Microsoft Account
 
 ### Notes
 - Installation may take 30-45 minutes
@@ -66,12 +66,12 @@ dotnet --version
 **Actual**: Verified (Git 2.52.0)
 
 ### Steps
-- [ ] Verify: `git --version` → 2.40+
-- [ ] If not found, download from https://git-scm.com/download/win
-- [ ] Run Git installer, choose defaults
-- [ ] Verify again: `git --version`
-- [ ] Configure: `git config --global user.name "Your Name"`
-- [ ] Configure: `git config --global user.email "your@email.com"`
+- [x] Verify: `git --version` → 2.40+
+- [x] If not found, download from https://git-scm.com/download/win
+- [x] Run Git installer, choose defaults
+- [x] Verify again: `git --version`
+- [x] Configure: `git config --global user.name "Your Name"`
+- [x] Configure: `git config --global user.email "your@email.com"`
 
 ### Verification
 ```powershell
@@ -88,10 +88,10 @@ git config --global user.email
 **Estimated**: 2 min
 
 ### Steps
-- [ ] Navigate: `cd "d:\Tc electronic projekt\Nyt program til Nova"`
-- [ ] Create: `mkdir NovaApp`
-- [ ] Enter: `cd NovaApp`
-- [ ] Verify: `pwd` shows correct path
+- [x] Navigate: `cd "d:\Tc electronic projekt\Nyt program til Nova"`
+- [x] Create: `mkdir NovaApp`
+- [x] Enter: `cd NovaApp`
+- [x] Verify: `pwd` shows correct path
 
 ### Commands
 ```powershell
@@ -108,9 +108,9 @@ cd NovaApp
 **Estimated**: 1 min
 
 ### Steps
-- [ ] In NovaApp directory, run: `dotnet new sln -n NovaApp`
-- [ ] Verify: `NovaApp.sln` file exists
-- [ ] Check: `ls *.sln` shows NovaApp.sln
+- [x] In NovaApp directory, run: `dotnet new sln -n NovaApp`
+- [x] Verify: `NovaApp.sln` file exists
+- [x] Check: `ls *.sln` shows NovaApp.sln
 
 ### Commands
 ```powershell
@@ -129,22 +129,22 @@ ls *.sln  # Should show NovaApp.sln
 ### Steps
 
 #### Domain Project (Core business logic)
-- [ ] `dotnet new classlib -n Nova.Domain -f net8.0`
+- [x] `dotnet new classlib -n Nova.Domain -f net8.0`
 
 #### Application Project (Use cases)
-- [ ] `dotnet new classlib -n Nova.Application -f net8.0`
+- [x] `dotnet new classlib -n Nova.Application -f net8.0`
 
 #### Infrastructure Project (File I/O, config)
-- [ ] `dotnet new classlib -n Nova.Infrastructure -f net8.0`
+- [x] `dotnet new classlib -n Nova.Infrastructure -f net8.0`
 
 #### MIDI Project (Hardware abstraction)
-- [ ] `dotnet new classlib -n Nova.Midi -f net8.0`
+- [x] `dotnet new classlib -n Nova.Midi -f net8.0`
 
 #### UI Project (Avalonia)
-- [ ] `dotnet new avalonia.mvvm -n Nova.Presentation -f net8.0`
+- [x] `dotnet new avalonia.mvvm -n Nova.Presentation -f net8.0`
 
 #### Test Project (xUnit)
-- [ ] `dotnet new xunit -n Nova.Tests -f net8.0`
+- [x] `dotnet new xunit -n Nova.Tests -f net8.0`
 
 ### Commands
 ```powershell
@@ -169,12 +169,12 @@ ls  # Should show 6 folders
 **Estimated**: 2 min
 
 ### Steps
-- [ ] `dotnet sln add Nova.Domain`
-- [ ] `dotnet sln add Nova.Application`
-- [ ] `dotnet sln add Nova.Infrastructure`
-- [ ] `dotnet sln add Nova.Midi`
-- [ ] `dotnet sln add Nova.Presentation`
-- [ ] `dotnet sln add Nova.Tests`
+- [x] `dotnet sln add Nova.Domain`
+- [x] `dotnet sln add Nova.Application`
+- [x] `dotnet sln add Nova.Infrastructure`
+- [x] `dotnet sln add Nova.Midi`
+- [x] `dotnet sln add Nova.Presentation`
+- [x] `dotnet sln add Nova.Tests`
 
 ### Verification
 ```powershell
@@ -288,9 +288,9 @@ dotnet restore
 **Estimated**: 2 min
 
 ### Steps
-- [ ] In NovaApp root, create `.gitignore`
-- [ ] Add standard C# ignores (see below)
-- [ ] Verify git sees it: `git status`
+- [x] In NovaApp root, create `.gitignore`
+- [x] Add standard C# ignores (see below)
+- [x] Verify git sees it: `git status`
 
 ### Content for .gitignore
 ```
@@ -318,12 +318,12 @@ packages/
 **Estimated**: 3 min
 
 ### Steps
-- [ ] `git init`
-- [ ] `git config user.name "Your Name"`
-- [ ] `git config user.email "your@email.com"`
-- [ ] `git add .`
-- [ ] `git commit -m "Initial commit: empty projects, scaffolded structure"`
-- [ ] Verify: `git log --oneline` shows 1 commit
+- [x] `git init`
+- [x] `git config user.name "Your Name"`
+- [x] `git config user.email "your@email.com"`
+- [x] `git add .`
+- [x] `git commit -m "Initial commit: empty projects, scaffolded structure"`
+- [x] Verify: `git log --oneline` shows 1 commit
 
 ### Commands
 ```powershell
@@ -343,10 +343,10 @@ git log --oneline -5
 **Estimated**: 5 min
 
 ### Steps
-- [ ] `dotnet build` → Must succeed
-- [ ] Verify: "Build succeeded with 0 warnings"
-- [ ] `dotnet test` → Must show "Test Run Successful"
-- [ ] Verify: "Total tests: 0" (no tests yet, correct)
+- [x] `dotnet build` → Must succeed
+- [x] Verify: "Build succeeded with 0 warnings"
+- [x] `dotnet test` → Must show "Test Run Successful"
+- [x] Verify: "Total tests: 0" (no tests yet, correct)
 
 ### Commands
 ```powershell
@@ -372,11 +372,11 @@ Total tests: 0
 **Estimated**: 2 min
 
 ### Steps
-- [ ] Double-click `NovaApp.sln` or run: `start NovaApp.sln`
-- [ ] Visual Studio opens
-- [ ] All 6 projects visible in Solution Explorer
-- [ ] Build solution (Ctrl+Shift+B)
-- [ ] Verify build succeeds
+- [x] Double-click `NovaApp.sln` or run: `start NovaApp.sln`
+- [x] Visual Studio opens
+- [x] All 6 projects visible in Solution Explorer
+- [x] Build solution (Ctrl+Shift+B)
+- [x] Verify build succeeds
 
 ### Troubleshooting
 - If projects don't load: Close/reopen solution

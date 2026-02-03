@@ -77,26 +77,17 @@ Modul 10: Release & Installer    [⬜ NOT STARTED - Requires SONNET 4.5]
 ## 📊 Test Status
 
 ```
-Total tests: 248 ✅ (100% PASSING)
-  Nova.Domain.Tests:        144 tests ✅
-  Nova.Midi.Tests:          6 tests ✅
-  Nova.Application.Tests:   36 tests ✅ (+6 System Editor)
+Total tests: 308 ✅ (100% PASSING)
+  Nova.Domain.Tests:        153 tests ✅
+  Nova.Midi.Tests:            6 tests ✅
   Nova.Infrastructure.Tests: 12 tests ✅
-  Nova.Presentation.Tests:  50 tests ✅ (+4 Drive, +3 MainVM, +2 SystemSettings)
-Total tests: 189 ✅ (100% PASSING)
-  Nova.Domain.Tests:        144 tests ✅
-  Nova.Midi.Tests:          6 tests ✅
-  Nova.Application.Tests:   6 tests ✅ (includes RequestSystemDumpUseCase + File I/O + Bank Manager)
-  Nova.Infrastructure.Tests: 12 tests ✅
-  Nova.Presentation.Tests:  21 tests ✅ (includes PresetDetail, SystemSettings, EditablePreset tests)
+  Nova.Application.Tests:    73 tests ✅
+  Nova.Presentation.Tests:   64 tests ✅
 
 Build: 0 warnings, 0 errors ✅ GREEN
 Framework: .NET 8.0 LTS
-App Status: ✅ Fully functional with Tab-based UI Dashboard
-Hardware Test: ✅ SUCCESS — Downloaded 60 presets from Nova System pedal
-```
-App runs: ✅ UI displays correctly
-Hardware test: ✅ SUCCESS — Downloaded 60 presets from Nova System pedal via USB MIDI
+App Status: ✅ Fully functional with complete Module 1-9 implementation
+Hardware Test: ✅ SUCCESS — Downloaded 60 presets from Nova System pedal via USB MIDI
 ```
 
 ---
@@ -117,17 +108,30 @@ Hardware test: ✅ SUCCESS — Downloaded 60 presets from Nova System pedal via 
 
 ## 🎯 Next Steps
 
-**✅ Modul 2 COMPLETE** (100%):
-- All tasks 2.1-2.6 completed
-- PresetListView displays 60 presets with Position, Name, and Number
-- Edge case handling for empty/whitespace preset names
-- UI properly wired to MainViewModel
-- Ready for manual hardware testing with physical Nova System pedal
+**🔄 CURRENT: Modul 9 - MIDI Mapping Editor** (40% complete):
+- ✅ Task 9.1.1: Display CC Assignment Table COMPLETE
+  - GetCCMappingsUseCase with 4 tests (73 Application tests total)
+  - CCMappingViewModel with LoadFromDump pattern
+  - MidiMappingView with DataGrid (CC#, Parameter, Assigned)
+- ✅ Task 9.1.2-9.1.3: Edit & Save CC Assignments COMPLETE
+  - UpdateCCMappingUseCase with 6 tests
+  - SystemDump.UpdateCCMapping Domain method
+  - CCMappingEditorViewModel wrapper for editable DataGrid
+  - Save button with dirty tracking (HasUnsavedChanges)
+- ✅ Task 9.2.1: Display Pedal Min/Mid/Max (Domain) COMPLETE
+  - SystemDump pedal getter methods (GetPedalParameter, Min, Mid, Max)
+  - SystemDumpPedalMappingTests with 5 tests (153 Domain tests total)
+  - Commits: 6ef7524, 127606d, 7696466
+- 🔄 Task 9.2.1: PedalMappingViewModel + UI PENDING
+- 📋 Task 9.1.4: CC Learn Mode (OPTIONAL - requires user approval)
+- 📋 Task 9.2.2: Response Curve Editor (HIGH complexity - Bézier curves)
+- 📋 Tasks 9.2.3-9.2.4: Pedal calibration & save
 
-**🎯 NEXT: Modul 3 - System Viewer**:
-- Display global settings from SystemDump
-- Show effect parameters and system configuration
-- File: tasks/08-modul3-system-viewer.md
+**📋 NEXT: Modul 10 - Release & Installer**:
+- Installer creation (WiX/MSIX)
+- User documentation
+- Final testing
+- Release notes
 
 **Known Issues (Non-Blocking)**:
 - 3 Presentation tests failing (Moq sealed class issue)

@@ -21,12 +21,12 @@ Før du starter: Læs `llm-build-system/AGENTS.md` og følg pipelinen.
 | 1.3 | Use Cases | ✅ DONE | 04-modul1-phase3-use-cases.md |
 | 1.4 | Infrastructure | ✅ DONE | 05-modul1-phase4-infrastructure.md |
 | 1.5 | Presentation | ✅ DONE | **06-modul1-phase5-presentation-SONNET45.md** |
-| 2 | Preset Viewer | 🔄 IN PROGRESS | 07-modul2-preset-viewer.md |
-| 3 | System Viewer | ⬜ TODO | 08-modul3-system-viewer.md |
-| 4 | System Editor | ⬜ TODO | 09-modul4-system-editor.md |
-| 5 | Preset Detail | ⬜ TODO | 10-modul5-preset-detail.md |
-| 6 | Preset Editor | ⬜ TODO | **11-modul6-preset-editor-SONNET45.md** |
-| 7 | Preset Management | ⬜ TODO | 12-modul7-preset-management.md |
+| 2 | Preset Viewer | ✅ DONE | 07-modul2-preset-viewer.md |
+| 3 | System Viewer | ✅ DONE | 08-modul3-system-viewer.md |
+| 4 | System Editor | ✅ DONE | 09-modul4-system-editor.md |
+| 5 | Preset Detail | ✅ DONE | 10-modul5-preset-detail.md |
+| 6 | Preset Editor | ✅ DONE | **11-modul6-preset-editor-SONNET45.md** |
+| 7 | Preset Management | ✅ DONE | 12-modul7-preset-management.md |
 | 8 | File I/O | ✅ DONE | 13-modul8-file-io.md |
 | 9 | MIDI Mapping | 🔄 IN PROGRESS | **14-modul9-midi-mapping-SONNET45.md** |
 | 10 | Release | ⬜ TODO | **15-modul10-release-SONNET45.md** |
