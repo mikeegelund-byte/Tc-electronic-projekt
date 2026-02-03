@@ -9,12 +9,12 @@
 
 ## Exit Criteria
 
-- [ ] Display current CC assignments
-- [ ] Edit CC → parameter mappings
-- [ ] Expression pedal min/mid/max editor
+- [x] Display current CC assignments
+- [x] Edit CC → parameter mappings
+- [ ] Expression pedal min/mid/max editor (Domain done, UI pending)
 - [ ] Visual response curve
-- [ ] Save to hardware
-- [ ] All tests pass
+- [x] Save to hardware (via SaveSystemDumpUseCase)
+- [x] All tests pass (308 passing)
 
 ---
 
@@ -24,8 +24,10 @@
 
 **🟡 COMPLEXITY: MEDIUM** — DataGrid med mapping data
 
-**Status**: Not started  
+**Status**: ✅ DONE  
 **Estimated**: 45 min  
+**Actual**: ~60 min  
+**Commit**: `6ef7524` - GetCCMappingsUseCase, CCMappingViewModel, MidiMappingView  
 
 ---
 
@@ -33,8 +35,10 @@
 
 **🟡 COMPLEXITY: MEDIUM** — Dropdown per row
 
-**Status**: Not started  
+**Status**: ✅ DONE  
 **Estimated**: 60 min  
+**Actual**: ~45 min  
+**Commit**: `127606d` - UpdateCCMappingUseCase with validation  
 
 ---
 
@@ -42,8 +46,10 @@
 
 **🟡 COMPLEXITY: MEDIUM** — Update SystemDump + save
 
-**Status**: Not started  
+**Status**: ✅ DONE  
 **Estimated**: 45 min  
+**Actual**: Included in 9.1.2 (same commit)  
+**Commit**: `127606d` - Editable DataGrid with Save command and dirty tracking  
 
 ---
 
@@ -64,8 +70,9 @@
 
 **🟢 COMPLEXITY: SIMPLE** — 3 NumericUpDown controls
 
-**Status**: Not started  
+**Status**: 🔄 IN PROGRESS (Domain done, ViewModel+UI remaining)  
 **Estimated**: 30 min  
+**Commit**: `7696466` - SystemDump pedal getter methods + 5 tests  
 
 ---
 
