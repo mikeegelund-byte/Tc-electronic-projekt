@@ -138,40 +138,28 @@ Write-Host "Step 3: Harvesting published files..." -ForegroundColor Yellow
 
 $componentsWxs = Join-Path $InstallerDir "Components.wxs"
 
-function Write-ComponentsWxs {
-    param(
-        [string]$PublishRoot,
-        [string]$OutputPath
-    )
+$heatArgs = @(
+    "heat",
+    "dir", $PublishDir,
+    "-cg", "PublishedFiles",
+    "-gg",
+    "-scom",
+    "-sfrag",
+    "-srd",
+    "-sreg",
+    "-dr", "INSTALLFOLDER",
+    "-var", "var.PublishDir",
+    "-out", $componentsWxs
+)
 
-    $publishRootFull = (Resolve-Path $PublishRoot).Path
-    $files = Get-ChildItem -Path $PublishRoot -Recurse -File
-    $sb = New-Object System.Text.StringBuilder
-    [void]$sb.AppendLine('<?xml version="1.0" encoding="UTF-8"?>')
-    [void]$sb.AppendLine('<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">')
-    [void]$sb.AppendLine('  <Fragment>')
-    [void]$sb.AppendLine('    <ComponentGroup Id="PublishedFiles" Directory="INSTALLFOLDER">')
+& wix @heatArgs
 
-    $i = 1
-    foreach ($file in $files) {
-        $relPath = $file.FullName.Substring($publishRootFull.Length).TrimStart('\') -replace '\\', '/'
-        $guid = [guid]::NewGuid().ToString().ToUpper()
-        [void]$sb.AppendLine("      <Component Id=`"Comp$i`" Guid=`"$guid`">")
-        [void]$sb.AppendLine("        <File Id=`"File$i`" Source=`"`$(var.PublishDir)/$relPath`" KeyPath=`"yes`" />")
-        [void]$sb.AppendLine("      </Component>")
-        $i++
-    }
-
-    [void]$sb.AppendLine('    </ComponentGroup>')
-    [void]$sb.AppendLine('  </Fragment>')
-    [void]$sb.AppendLine('</Wix>')
-
-    Set-Content -Path $OutputPath -Value $sb.ToString()
-    return $files.Count
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "ERROR: WiX heat failed with exit code $LASTEXITCODE" -ForegroundColor Red
+    exit $LASTEXITCODE
 }
 
-$count = Write-ComponentsWxs -PublishRoot $PublishDir -OutputPath $componentsWxs
-Write-Host "  ✓ Components generated with PowerShell ($count files)" -ForegroundColor Green
+Write-Host "  ✓ Components generated with WiX heat" -ForegroundColor Green
 Write-Host ""
 
 # Step 5: Build the MSI installer
