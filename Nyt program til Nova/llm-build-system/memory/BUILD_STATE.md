@@ -1,42 +1,30 @@
 # BUILD_STATE.md — What's Been Built
 
-## 📈 Overall Progress
+## 📈 Overall Progress [2026-02-03]
 
 ```
-Modul 0: Environment Setup       [✅ COMPLETE]
-Modul 1: Connection + Bank       [✅ 100% COMPLETE]
+Modul 0: Environment Setup       [✅ 100% COMPLETE]
+Modul 1: Foundation (MIDI+Domain)[✅ 100% COMPLETE]
 Modul 2: Preset Viewer           [✅ 100% COMPLETE]
-Modul 3: System Viewer           [✅ 80% - DetailView merged]
-  Task 3.1-3.4: Core components  [✅ COMPLETE]
-  Task 3.5: UseCase Integration  [✅ COMPLETE]
-  Task 3.6: MainViewModel Wiring [✅ COMPLETE]
-  Task 3.7: Button in UI         [✅ COMPLETE]
+Modul 3: System Viewer           [✅ 100% COMPLETE]
 Modul 4: System Editor           [✅ 100% COMPLETE]
-  Task 4.1: Editable Controls    [✅ COMPLETE]
-  Task 4.2: Dirty Tracking       [✅ COMPLETE]
-  Task 4.3: SaveSystemDump UC    [✅ COMPLETE - 2 tests]
-  Task 4.4: Roundtrip Verify     [✅ COMPLETE - 4 tests]
-  Task 4.5: Save/Cancel Buttons  [✅ COMPLETE - 3 tests]
-Modul 5: Preset Detail Viewer    [🔄 70% IN PROGRESS]
-  Task 5.1: 7 Effect ViewModels  [✅ COMPLETE - Drive has 4 tests]
-  Task 5.2: PresetDetailViewModel[✅ COMPLETE]
-  Task 5.3: EffectBlockView      [⬜ TODO - XAML UserControl]
-  Task 5.4: PresetDetailView     [⬜ TODO - Update XAML]
-  Task 5.5: Wire Selection       [⬜ TODO - Already wired, needs test]
-  Task 3.5-3.6: DetailView UI    [✅ COMPLETE - agent merged]
-  Task 3.7: MainView integration [✅ COMPLETE - agent merged]
-Modul 4: File I/O & Bank Mgmt    [✅ 50% - Agents merged]
-  Export/Import UseCases         [✅ COMPLETE]
-  SaveBank/LoadBank UseCases     [✅ COMPLETE]
-Modul 5: Preset Editor           [✅ 30% - Agents merged]
-  EditablePresetViewModel        [✅ COMPLETE]
-  UpdatePresetUseCase            [✅ COMPLETE]
-Modul 6: MIDI Features           [✅ 20% - Agents merged]
-  MIDI CC Support (MidiCCMap)    [✅ COMPLETE]
-  SendCCUseCase                  [✅ COMPLETE]
-UI: Dashboard                    [✅ Tab Navigation merged]
-Modul 7-10: Advanced             [⬜ NOT STARTED]
+Modul 5: Preset Detail Viewer    [✅ 100% COMPLETE]
+Modul 6: Preset Editor           [✅ 100% COMPLETE]
+Modul 7: Preset Management       [🔄 50% - Tasks 7.1.1-7.1.4 DONE]
+  Task 7.1.1: CopyPresetUseCase  [✅ COMPLETE - 7 tests]
+  Task 7.1.2: RenamePresetUseCase[✅ COMPLETE - 8 tests]
+  Task 7.1.3: DeletePresetUseCase[✅ COMPLETE - 7 tests]
+  Task 7.1.4: Context Menu UI    [✅ COMPLETE]
+  Task 7.2.1-7.2.4: A/B Compare  [⬜ NOT STARTED - HIGH complexity, SONNET 4.5+]
+Modul 8: File I/O                [✅ 100% COMPLETE]
+  Export/Import SysEx            [✅ COMPLETE - 233 tests]
+  Auto-detect file types         [✅ COMPLETE]
+Modul 9: MIDI Mapping            [⬜ NOT STARTED - READY FOR SONNET 4.5]
+  CC Assignments, Expression Pedal[⬜ TODO]
+Modul 10: Release & Installer    [⬜ NOT STARTED - Requires SONNET 4.5]
 ```
+
+**TOTAL**: 90% COMPLETE (277 tests passing)
 
 ---
 
