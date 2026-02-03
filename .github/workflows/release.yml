@@ -1,0 +1,32 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+jobs:
+  build-and-release:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      
+      - name: Build Release
+        run: dotnet publish src/Nova.Presentation -c Release -o publish
+        working-directory: Nyt program til Nova
+      
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: NovaSystemManager
+          path: Nyt program til Nova/publish/
+      
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: Nyt program til Nova/publish/*
+          generate_release_notes: true
