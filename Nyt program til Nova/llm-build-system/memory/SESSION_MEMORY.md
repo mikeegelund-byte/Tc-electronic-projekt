@@ -1,5 +1,15 @@
 # SESSION_MEMORY.md — Current Session State
 
+## 📅 Session: 2026-02-03 (Installer x64-fix)
+
+### 🎯 Mål
+Fiks permanent installer-arkitektur (x64) og publish RID så SkiaSharp/HarfBuzzSharp native libs matcher.
+
+### Nuværende task
+Fil: (ingen task-fil fundet; PROGRESS.md findes ikke i rod-mappen) — Ad-hoc installer-fix efter brugerforespørgsel.
+
+---
+
 ## 📅 Session: 2026-02-03 (Claude Sonnet 4.5 - Modul 9 MIDI Mapping Editor)
 
 ### 🎯 Mål
