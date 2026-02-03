@@ -61,8 +61,8 @@ public sealed class RequestPresetUseCase : IRequestPresetUseCase
                 {
                     _logger.Debug("Received SysEx message: {Length} bytes", sysex.Length);
                     
-                    // Check if this is a valid preset response (521 bytes, F0/F7 markers)
-                    if (sysex.Length == 521 && sysex[0] == 0xF0 && sysex[520] == 0xF7)
+                    // Check if this is a valid preset response (520 bytes, or legacy 521 with double F7)
+                    if (IsPresetSysEx(sysex))
                     {
                         _logger.Debug("Valid preset SysEx received");
                         return sysex;
@@ -117,5 +117,16 @@ public sealed class RequestPresetUseCase : IRequestPresetUseCase
             _logger.Error(ex, "Unexpected error requesting preset #{PresetNumber}", presetNumber);
             return Result.Fail<Preset>($"Unexpected error: {ex.Message}");
         }
+    }
+
+    private static bool IsPresetSysEx(byte[] sysex)
+    {
+        if (sysex.Length == 520 && sysex[0] == 0xF0 && sysex[519] == 0xF7)
+            return true;
+
+        if (sysex.Length == 521 && sysex[0] == 0xF0 && sysex[519] == 0xF7 && sysex[520] == 0xF7)
+            return true;
+
+        return false;
     }
 }

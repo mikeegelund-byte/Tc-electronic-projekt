@@ -95,7 +95,7 @@ public sealed class CopyPresetUseCaseTests
     private static Preset CreateValidPreset(int presetNumber = 31)
     {
         // Create minimal valid SysEx for preset
-        var sysex = new byte[521];
+        var sysex = new byte[520];
         sysex[0] = 0xF0; // SysEx start
         sysex[1] = 0x00; // TC Electronic ID
         sysex[2] = 0x20;
@@ -118,7 +118,7 @@ public sealed class CopyPresetUseCaseTests
         }
         sysex[518] = (byte)(checksum & 0x7F);
         
-        sysex[520] = 0xF7; // SysEx end
+        sysex[519] = 0xF7; // SysEx end
 
         return Preset.FromSysEx(sysex).Value;
     }

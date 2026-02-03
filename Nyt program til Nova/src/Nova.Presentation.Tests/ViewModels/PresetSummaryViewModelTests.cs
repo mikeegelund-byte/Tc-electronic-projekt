@@ -83,7 +83,7 @@ public class PresetSummaryViewModelTests
     private static Preset CreateTestPreset(int number, string name)
     {
         // Create minimal valid SysEx data for testing
-        var sysex = new byte[521];
+        var sysex = new byte[520];
         sysex[0] = 0xF0;
         sysex[1] = 0x00; sysex[2] = 0x20; sysex[3] = 0x1F; // TC Electronic
         sysex[4] = 0x00; // Device ID
@@ -96,7 +96,7 @@ public class PresetSummaryViewModelTests
         var nameBytes = System.Text.Encoding.ASCII.GetBytes(name.PadRight(24));
         Array.Copy(nameBytes, 0, sysex, 9, Math.Min(24, nameBytes.Length));
         
-        sysex[520] = 0xF7;
+        sysex[519] = 0xF7;
 
         var result = Preset.FromSysEx(sysex);
         return result.Value;

@@ -49,7 +49,7 @@ public class SaveBankUseCaseTests
         File.Exists(_testFilePath).Should().BeTrue();
 
         var fileContent = await File.ReadAllBytesAsync(_testFilePath);
-        fileContent.Length.Should().Be(31260); // 60 presets * 521 bytes
+        fileContent.Length.Should().Be(31200); // 60 presets * 520 bytes
 
         // Cleanup
         File.Delete(_testFilePath);
@@ -109,7 +109,7 @@ public class SaveBankUseCaseTests
         result.Value.Should().Be(_testFilePath);
         
         var fileContent = await File.ReadAllBytesAsync(_testFilePath);
-        fileContent.Length.Should().Be(31260); // New content, not old
+        fileContent.Length.Should().Be(31200); // New content, not old
 
         // Cleanup
         File.Delete(_testFilePath);
@@ -117,8 +117,8 @@ public class SaveBankUseCaseTests
 
     private byte[] CreateDummyPreset(int presetNumber)
     {
-        // Create a valid 521-byte preset SysEx message
-        var bytes = new byte[521];
+        // Create a valid 520-byte preset SysEx message
+        var bytes = new byte[520];
         bytes[0] = 0xF0;  // SysEx start
         bytes[1] = 0x00;  // TC Electronic manufacturer ID
         bytes[2] = 0x20;
@@ -137,7 +137,7 @@ public class SaveBankUseCaseTests
         // Fill remaining bytes with valid data (zeros are valid for most parameters)
         // The Preset.FromSysEx() method doesn't validate checksums, just structure
         
-        bytes[520] = 0xF7;  // SysEx end
+        bytes[519] = 0xF7;  // SysEx end
         
         return bytes;
     }

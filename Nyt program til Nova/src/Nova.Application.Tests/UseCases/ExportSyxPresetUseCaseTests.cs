@@ -36,9 +36,9 @@ public sealed class ExportSyxPresetUseCaseTests : IDisposable
         result.IsSuccess.Should().BeTrue();
         File.Exists(filePath).Should().BeTrue();
         var fileBytes = File.ReadAllBytes(filePath);
-        fileBytes.Should().HaveCount(521);  // SysEx preset size
+        fileBytes.Should().HaveCount(520);  // SysEx preset size
         fileBytes[0].Should().Be(0xF0);     // SysEx start
-        fileBytes[520].Should().Be(0xF7);   // SysEx end
+        fileBytes[519].Should().Be(0xF7);   // SysEx end
     }
 
     [Fact]
@@ -110,14 +110,14 @@ public sealed class ExportSyxPresetUseCaseTests : IDisposable
         // Both files should be valid SysEx
         var bytes1 = File.ReadAllBytes(file1);
         var bytes2 = File.ReadAllBytes(file2);
-        bytes1.Should().HaveCount(521);
-        bytes2.Should().HaveCount(521);
+        bytes1.Should().HaveCount(520);
+        bytes2.Should().HaveCount(520);
     }
 
     private static Preset CreateValidPreset(string name)
     {
         // Create minimal valid SysEx for preset
-        var sysex = new byte[521];
+        var sysex = new byte[520];
         sysex[0] = 0xF0; // SysEx start
         sysex[1] = 0x00; // TC Electronic ID
         sysex[2] = 0x20;
@@ -140,7 +140,7 @@ public sealed class ExportSyxPresetUseCaseTests : IDisposable
         }
         sysex[518] = (byte)(checksum & 0x7F);
         
-        sysex[520] = 0xF7; // SysEx end
+        sysex[519] = 0xF7; // SysEx end
 
         return Preset.FromSysEx(sysex).Value;
     }

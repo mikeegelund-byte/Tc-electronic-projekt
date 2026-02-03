@@ -3,7 +3,7 @@ using FluentResults;
 namespace Nova.Domain.Models;
 
 /// <summary>
-/// Represents a single Nova System preset parsed from a 521-byte SysEx dump.
+/// Represents a single Nova System preset parsed from a 520-byte SysEx dump.
 /// </summary>
 public class Preset
 {
@@ -113,21 +113,23 @@ public class Preset
 
 
     /// <summary>
-    /// Parses a 521-byte SysEx message into a Preset.
+    /// Parses a 520-byte SysEx message into a Preset.
     /// </summary>
     /// <param name="sysex">Complete SysEx message (F0...F7)</param>
     /// <returns>Success with Preset or Failure with error messages</returns>
     public static Result<Preset> FromSysEx(byte[] sysex)
     {
-        // Validate length
-        if (sysex.Length != 521)
-            return Result.Fail($"Invalid preset length: expected 521 bytes, got {sysex.Length}");
+        var normalizedResult = NormalizeSysEx(sysex);
+        if (normalizedResult.IsFailed)
+            return Result.Fail(normalizedResult.Errors);
+
+        sysex = normalizedResult.Value;
 
         // Validate F0/F7 framing
         if (sysex[0] != 0xF0)
             return Result.Fail("SysEx must start with F0");
 
-        if (sysex[520] != 0xF7)
+        if (sysex[519] != 0xF7)
             return Result.Fail("SysEx must end with F7");
 
         // Validate TC Electronic manufacturer ID (00 20 1F)
@@ -347,13 +349,13 @@ public class Preset
     }
 
     /// <summary>
-    /// Serializes the preset back to a 521-byte SysEx message.
+    /// Serializes the preset back to a 520-byte SysEx message.
     /// Simply returns the stored RawSysEx since we preserve original bytes.
     /// </summary>
-    /// <returns>Result with 521-byte SysEx or error</returns>
+    /// <returns>Result with 520-byte SysEx or error</returns>
     public Result<byte[]> ToSysEx()
     {
-        if (RawSysEx == null || RawSysEx.Length != 521)
+        if (RawSysEx == null || RawSysEx.Length != 520)
             return Result.Fail("Preset has no valid RawSysEx data");
 
         return Result.Ok(RawSysEx);
@@ -424,5 +426,17 @@ public class Preset
 
         // Return raw value for small integers (likely positive values stored directly)
         return rawValue;
+    }
+
+    private static Result<byte[]> NormalizeSysEx(byte[] sysex)
+    {
+        if (sysex.Length == 520)
+            return Result.Ok(sysex);
+
+        if (sysex.Length == 521 && sysex[^1] == 0xF7 && sysex[^2] == 0xF7)
+            return Result.Ok(sysex[..^1]);
+
+        return Result.Fail(
+            $"Invalid preset length: expected 520 bytes (or 521 with double F7), got {sysex.Length}");
     }
 }

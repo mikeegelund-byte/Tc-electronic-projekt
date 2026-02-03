@@ -72,15 +72,15 @@ public sealed class SavePresetUseCase : ISavePresetUseCase
             _logger.Debug("Updated SysEx to {ByteCount} bytes with preset #{PresetNumber}", sysexData.Length, presetNumber);
 
             // Validate SysEx format
-            if (sysexData.Length != 521)
+            if (sysexData.Length != 520)
             {
-                _logger.Error("Invalid SysEx length: {Length} bytes (expected 521)", sysexData.Length);
-                return Result.Fail($"Invalid SysEx format: {sysexData.Length} bytes (expected 521)");
+                _logger.Error("Invalid SysEx length: {Length} bytes (expected 520)", sysexData.Length);
+                return Result.Fail($"Invalid SysEx format: {sysexData.Length} bytes (expected 520)");
             }
 
-            if (sysexData[0] != 0xF0 || sysexData[520] != 0xF7)
+            if (sysexData[0] != 0xF0 || sysexData[519] != 0xF7)
             {
-                _logger.Error("Invalid SysEx markers: start={Start:X2}, end={End:X2}", sysexData[0], sysexData[520]);
+                _logger.Error("Invalid SysEx markers: start={Start:X2}, end={End:X2}", sysexData[0], sysexData[519]);
                 return Result.Fail("Invalid SysEx format: missing F0/F7 markers");
             }
 
@@ -113,8 +113,7 @@ public sealed class SavePresetUseCase : ISavePresetUseCase
                 // Compare the saved SysEx with the retrieved SysEx
                 var retrievedSysEx = verifyResult.Value.ToSysEx().Value;
                 
-                // Compare all bytes except the checksum (bytes 518-519 might vary slightly due to rounding)
-                // Actually, compare everything - if it doesn't match exactly, something went wrong
+                // Compare all bytes (exact match required)
                 bool matches = sysexData.SequenceEqual(retrievedSysEx);
                 
                 if (!matches)

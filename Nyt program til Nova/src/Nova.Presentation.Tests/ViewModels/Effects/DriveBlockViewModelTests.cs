@@ -65,7 +65,7 @@ public class DriveBlockViewModelTests
 
     private static Preset CreatePresetWithDrive(int driveType, int gain = 50, int level = 0)
     {
-        var sysex = new byte[521];
+        var sysex = new byte[520];
         
         // Standard header
         sysex[0] = 0xF0; // Start
@@ -102,7 +102,7 @@ public class DriveBlockViewModelTests
                 sysex[i] = 0x00;
         }
         
-        sysex[520] = 0xF7; // End
+        sysex[519] = 0xF7; // End
         
         return Preset.FromSysEx(sysex).Value;
     }
