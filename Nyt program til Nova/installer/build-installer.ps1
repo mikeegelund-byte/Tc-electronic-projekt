@@ -152,6 +152,19 @@ function New-SafeId {
     return "$Prefix$($hash.Substring(0, 12))"
 }
 
+function New-SafeId {
+    param(
+        [string]$Text,
+        [string]$Prefix
+    )
+
+    $hashBytes = [System.Security.Cryptography.SHA256]::Create().ComputeHash(
+        [System.Text.Encoding]::UTF8.GetBytes($Text)
+    )
+    $hash = ([System.BitConverter]::ToString($hashBytes)) -replace "-", ""
+    return "$Prefix$($hash.Substring(0, 12))"
+}
+
 function Write-ComponentsWxs {
     param(
         [string]$PublishRoot,
