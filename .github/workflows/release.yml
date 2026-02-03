@@ -1,34 +1,123 @@
-name: Release
+name: Release - Build Installer
 
 on:
   push:
-    tags: ['v*']
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version number (e.g., 1.0.0)'
+        required: true
+        default: '1.0.0'
 
 jobs:
-  build-and-release:
+  build-installer:
     runs-on: windows-latest
-    permissions:
-      contents: write
+    
     steps:
-      - uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        
+    - name: Setup .NET 8.0
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
+        
+    - name: Install WiX Toolset
+      run: dotnet tool install --global wix
       
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '8.0.x'
+    - name: Get version from tag
+      id: get_version
+      shell: pwsh
+      run: |
+        if ("${{ github.event_name }}" -eq "push") {
+          $version = "${{ github.ref }}" -replace 'refs/tags/v', ''
+        } else {
+          $version = "${{ github.event.inputs.version }}"
+        }
+        echo "VERSION=$version" >> $env:GITHUB_OUTPUT
+        echo "Version: $version"
+        
+    - name: Restore dependencies
+      working-directory: './Nyt program til Nova'
+      run: dotnet restore
       
-      - name: Build Release
-        run: dotnet publish src/Nova.Presentation -c Release -o publish
-        working-directory: Nyt program til Nova
+    - name: Build solution
+      working-directory: './Nyt program til Nova'
+      run: dotnet build -c Release --no-restore
       
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: NovaSystemManager
-          path: Nyt program til Nova/publish/
+    - name: Run tests
+      working-directory: './Nyt program til Nova'
+      run: dotnet test -c Release --no-build --verbosity normal
       
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@v1
-        with:
-          files: Nyt program til Nova/publish/*
-          generate_release_notes: true
+    - name: Publish application
+      working-directory: './Nyt program til Nova'
+      run: |
+        dotnet publish src/Nova.Presentation/Nova.Presentation.csproj `
+          -c Release `
+          -r win-x64 `
+          --self-contained false `
+          -o publish `
+          --no-build
+          
+    - name: Build WiX installer
+      working-directory: './Nyt program til Nova/installer'
+      shell: pwsh
+      run: |
+        $publishDir = Join-Path $PWD "../publish"
+        $outputDir = Join-Path $PWD "output"
+        
+        if (-not (Test-Path $outputDir)) {
+          New-Item -ItemType Directory -Path $outputDir | Out-Null
+        }
+        
+        # Harvest published files
+        wix heat dir $publishDir `
+          -cg PublishedFiles `
+          -gg -scom -sfrag -srd -sreg `
+          -dr INSTALLFOLDER `
+          -var var.PublishDir `
+          -out Components.wxs
+        
+        # Build MSI
+        wix build Product.wxs Components.wxs `
+          -o output/NovaSystemManager-v${{ steps.get_version.outputs.VERSION }}.msi `
+          -d PublishDir=$publishDir
+          
+    - name: Upload installer artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: installer-msi
+        path: './Nyt program til Nova/installer/output/*.msi'
+        retention-days: 90
+        
+    - name: Create GitHub Release
+      if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+      uses: softprops/action-gh-release@v1
+      with:
+        files: './Nyt program til Nova/installer/output/*.msi'
+        draft: false
+        prerelease: false
+        generate_release_notes: true
+        body: |
+          ## Nova System Manager v${{ steps.get_version.outputs.VERSION }}
+          
+          ### Installation
+          Download the `.msi` installer below and run it.
+          
+          ### System Requirements
+          - Windows 10/11 (64-bit)
+          - .NET 8.0 Desktop Runtime (included)
+          - USB MIDI interface
+          
+          ### Documentation
+          - [User Manual](https://github.com/mikeegelund-byte/Tc-electronic-projekt/blob/main/Nyt%20program%20til%20Nova/docs/USER_MANUAL.md)
+          - [Changelog](https://github.com/mikeegelund-byte/Tc-electronic-projekt/blob/main/Nyt%20program%20til%20Nova/CHANGELOG.md)
+          
+          ### Support
+          Report issues: https://github.com/mikeegelund-byte/Tc-electronic-projekt/issues
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

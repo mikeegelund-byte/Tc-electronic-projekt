@@ -1,76 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
   <Package Name="Nova System Manager" 
-           Manufacturer="TC Electronic Community"
-           Version="1.0.0.0"
-           UpgradeCode="F59429EA-DA28-4365-878A-27A1ED6F3CAE"
-           ProductCode="*">
+           Language="1033" 
+           Version="1.0.0" 
+           Manufacturer="TC Electronic Community" 
+           UpgradeCode="A1B2C3D4-E5F6-4A5B-8C9D-0E1F2A3B4C5D"
+           Compressed="yes">
+    
+    <SummaryInformation Description="MIDI Manager for TC Electronic Nova System"
+                       Manufacturer="TC Electronic Community" 
+                       Keywords="MIDI, TC Electronic, Nova System" />
     
     <MajorUpgrade DowngradeErrorMessage="A newer version of Nova System Manager is already installed." />
+    <Media Id="1" Cabinet="product.cab" EmbedCab="yes" />
     
-    <Media Id="1" Cabinet="NovaSystemManager.cab" EmbedCab="yes" />
-
-    <!-- Property for optional desktop shortcut (defaults to enabled) -->
-    <Property Id="ADDDESKTOPSHORTCUT" Value="1" />
-
-    <!-- Define installation directory -->
+    <!-- Features -->
+    <Feature Id="Complete" Title="Nova System Manager" Level="1">
+      <ComponentGroupRef Id="PublishedFiles" />
+      <ComponentGroupRef Id="ProgramMenuShortcuts" />
+      <ComponentGroupRef Id="DesktopShortcut" />
+    </Feature>
+    
+    <!-- Directory Structure -->
     <StandardDirectory Id="ProgramFiles64Folder">
-      <Directory Id="INSTALLFOLDER" Name="Nova System Manager" />
+      <Directory Id="INSTALLFOLDER" Name="NovaSystemManager" />
     </StandardDirectory>
-
-    <!-- Define Start Menu directory -->
+    
     <StandardDirectory Id="ProgramMenuFolder">
       <Directory Id="ApplicationProgramsFolder" Name="Nova System Manager" />
     </StandardDirectory>
-
-    <!-- Define Desktop Folder -->
-    <StandardDirectory Id="DesktopFolder" />
-
-    <!-- Main feature with all components -->
-    <Feature Id="MainFeature" Title="Nova System Manager" Description="Main application files" Level="1">
-      <ComponentGroupRef Id="PublishedFiles" />
-      <ComponentRef Id="StartMenuShortcut" />
-      <ComponentRef Id="DesktopShortcut" />
-    </Feature>
-
-    <!-- Start Menu Shortcut Component -->
-    <Component Id="StartMenuShortcut" Directory="ApplicationProgramsFolder" Guid="B8C9D0E1-F2A3-4456-B8C9-D0E1F2A34567">
-      <Shortcut Id="StartMenuShortcut"
-                Name="Nova System Manager"
-                Description="TC Electronic Nova System Manager"
-                Target="[INSTALLFOLDER]Nova.Presentation.exe"
-                WorkingDirectory="INSTALLFOLDER"
-                Icon="NovaIcon.ico" />
-      <RemoveFolder Id="CleanUpShortcut" On="uninstall" />
-      <RegistryValue Root="HKCU" 
-                     Key="Software\TCElectronic\NovaSystemManager" 
-                     Name="installed" 
-                     Type="integer" 
-                     Value="1" 
-                     KeyPath="yes" />
-    </Component>
-
-    <!-- Desktop Shortcut Component (Optional) -->
-    <Component Id="DesktopShortcut" Directory="DesktopFolder" Guid="C9D0E1F2-A3B4-4567-C9D0-E1F2A3B45678">
-      <Condition>ADDDESKTOPSHORTCUT = 1</Condition>
-      <Shortcut Id="DesktopShortcut"
-                Name="Nova System Manager"
-                Description="TC Electronic Nova System Manager"
-                Target="[INSTALLFOLDER]Nova.Presentation.exe"
-                WorkingDirectory="INSTALLFOLDER"
-                Icon="NovaIcon.ico" />
-      <RegistryValue Root="HKCU" 
-                     Key="Software\TCElectronic\NovaSystemManager" 
-                     Name="desktop_shortcut" 
-                     Type="integer" 
-                     Value="1" 
-                     KeyPath="yes" />
-    </Component>
-
-    <!-- Icon definition -->
-    <Icon Id="NovaIcon.ico" SourceFile="$(var.PublishDir)\Nova.Presentation.exe" />
     
-    <!-- Add/Remove Programs icon -->
-    <Property Id="ARPPRODUCTICON" Value="NovaIcon.ico" />
+    <StandardDirectory Id="DesktopFolder" />
+    
+    <!-- Published files will be added by WiX heat tool (Components.wxs) -->
+    
+    <!-- Start Menu Shortcuts -->
+    <ComponentGroup Id="ProgramMenuShortcuts" Directory="ApplicationProgramsFolder">
+      <Component>
+        <Shortcut Id="ApplicationStartMenuShortcut"
+                  Name="Nova System Manager"
+                  Description="MIDI Manager for TC Electronic Nova System"
+                  Target="[INSTALLFOLDER]Nova.Presentation.exe"
+                  WorkingDirectory="INSTALLFOLDER" />
+        <RemoveFolder Id="CleanUpShortCut" On="uninstall" />
+        <RegistryValue Root="HKCU" 
+                      Key="Software\NovaSystemManager" 
+                      Name="installed" 
+                      Type="integer" 
+                      Value="1" 
+                      KeyPath="yes" />
+      </Component>
+    </ComponentGroup>
+    
+    <!-- Desktop Shortcut -->
+    <ComponentGroup Id="DesktopShortcut" Directory="DesktopFolder">
+      <Component>
+        <Shortcut Id="DesktopShortcut"
+                  Name="Nova System Manager"
+                  Description="MIDI Manager for TC Electronic Nova System"
+                  Target="[INSTALLFOLDER]Nova.Presentation.exe"
+                  WorkingDirectory="INSTALLFOLDER" />
+        <RegistryValue Root="HKCU" 
+                      Key="Software\NovaSystemManager" 
+                      Name="desktopShortcut" 
+                      Type="integer" 
+                      Value="1" 
+                      KeyPath="yes" />
+      </Component>
+    </ComponentGroup>
+    
   </Package>
 </Wix>
