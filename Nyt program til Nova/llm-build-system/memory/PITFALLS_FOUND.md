@@ -91,6 +91,20 @@ Status: læst
 - **Prevention**: Brug string-baseret Result.Fail i Domain-laget eller sikre ens FluentResults-version overalt.
 - **Related**: src/Nova.Domain/Models/Preset.cs
 
+### [2026-02-03] System Dump format antagelser var forkerte (526 bytes + nibble)
+- **Symptom**: Hardware sync registrerede input men ændringer virkede ikke; tests fejlede på SystemDump/pedal/CC.
+- **Root cause**: Antog 527 bytes og raw offsets til pedal/CC; real format er 526 bytes (ofte double F7) med 4-byte nibble encoding.
+- **Fix**: Normaliser 527→526, brug nibble encode/decode til pedal + MIDI settings, og refaktorer CC assignments til faste slots.
+- **Prevention**: Verificér SysEx layout mod legacy Java/Nibble-implementering før UI- og testmapping.
+- **Related**: src/Nova.Domain/Models/SystemDump.cs
+
+### [2026-02-03] MASTER_FILE_INDEX.md manglede i rod
+- **Symptom**: AGENTS pipeline krævede root MASTER_FILE_INDEX.md men filen manglede.
+- **Root cause**: Filen lå kun i Arkiv og var forældet.
+- **Fix**: Oprettet minimal root `MASTER_FILE_INDEX.md`.
+- **Prevention**: Hold root-index opdateret og ikke kun i Arkiv.
+- **Related**: MASTER_FILE_INDEX.md
+
 ---
 
 ## Anti-Patterns to Watch

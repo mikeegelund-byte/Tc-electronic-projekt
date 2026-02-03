@@ -25,9 +25,9 @@ public class SaveSystemDumpUseCaseTests
         // Assert
         result.IsSuccess.Should().BeTrue();
         mockMidi.Verify(x => x.SendSysExAsync(It.Is<byte[]>(bytes => 
-            bytes.Length == 527 && 
+            bytes.Length == 526 && 
             bytes[0] == 0xF0 && 
-            bytes[526] == 0xF7)), Times.Once);
+            bytes[525] == 0xF7)), Times.Once);
     }
 
     [Fact]
@@ -51,14 +51,14 @@ public class SaveSystemDumpUseCaseTests
 
     private byte[] CreateValidSystemDumpSysEx()
     {
-        var sysex = new byte[527];
+        var sysex = new byte[526];
         sysex[0] = 0xF0;                          // Start
         sysex[1] = 0x00; sysex[2] = 0x20; sysex[3] = 0x1F; // TC Electronic
         sysex[4] = 0x00;                          // Device ID
         sysex[5] = 0x63;                          // Nova System
         sysex[6] = 0x20;                          // Dump
         sysex[7] = 0x02;                          // System Dump
-        sysex[526] = 0xF7;                        // End
+        sysex[525] = 0xF7;                        // End
         return sysex;
     }
 }

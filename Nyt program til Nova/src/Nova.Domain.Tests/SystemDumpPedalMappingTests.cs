@@ -7,33 +7,17 @@ public class SystemDumpPedalMappingTests
 {
     private SystemDump CreateValidSystemDump()
     {
-        var validSystemDump = new byte[527];
-        validSystemDump[0] = 0xF0;  // SysEx start
-        validSystemDump[1] = 0x00;  // TC Electronic
-        validSystemDump[2] = 0x20;
-        validSystemDump[3] = 0x1F;
-        validSystemDump[4] = 0x04;  // Bank number
-        validSystemDump[5] = 0x63;  // Nova System model ID
-        validSystemDump[6] = 0x20;  // Message ID (Dump)
-        validSystemDump[7] = 0x02;  // Data Type (System Dump)
-        
-        validSystemDump[526] = 0xF7;  // SysEx end
-        
+        var validSystemDump = CreateValidSystemDumpBytes();
         return SystemDump.FromSysEx(validSystemDump).Value;
     }
 
     [Fact]
-    public void GetPedalParameter_ReadsBytes54To57()
+    public void GetPedalParameter_ReadsNibbleIndex6()
     {
         // Arrange
-        var systemDump = CreateValidSystemDump();
-        var rawBytes = systemDump.RawSysEx;
-        
-        // Set parameter ID to 42 (little-endian: 0x2A 0x00 0x00 0x00)
-        rawBytes[54] = 0x2A;
-        rawBytes[55] = 0x00;
-        rawBytes[56] = 0x00;
-        rawBytes[57] = 0x00;
+        var bytes = CreateValidSystemDumpBytes();
+        WriteNibble(bytes, 6, 42);
+        var systemDump = SystemDump.FromSysEx(bytes).Value;
 
         // Act
         var parameter = systemDump.GetPedalParameter();
@@ -43,17 +27,12 @@ public class SystemDumpPedalMappingTests
     }
 
     [Fact]
-    public void GetPedalMin_ReadsBytes58To61()
+    public void GetPedalMin_ReadsNibbleIndex3()
     {
         // Arrange
-        var systemDump = CreateValidSystemDump();
-        var rawBytes = systemDump.RawSysEx;
-        
-        // Set min to 25% (little-endian: 0x19 0x00 0x00 0x00)
-        rawBytes[58] = 0x19;
-        rawBytes[59] = 0x00;
-        rawBytes[60] = 0x00;
-        rawBytes[61] = 0x00;
+        var bytes = CreateValidSystemDumpBytes();
+        WriteNibble(bytes, 3, 25);
+        var systemDump = SystemDump.FromSysEx(bytes).Value;
 
         // Act
         var min = systemDump.GetPedalMin();
@@ -63,17 +42,12 @@ public class SystemDumpPedalMappingTests
     }
 
     [Fact]
-    public void GetPedalMid_ReadsBytes62To65()
+    public void GetPedalMid_ReadsNibbleIndex4()
     {
         // Arrange
-        var systemDump = CreateValidSystemDump();
-        var rawBytes = systemDump.RawSysEx;
-        
-        // Set mid to 50% (little-endian: 0x32 0x00 0x00 0x00)
-        rawBytes[62] = 0x32;
-        rawBytes[63] = 0x00;
-        rawBytes[64] = 0x00;
-        rawBytes[65] = 0x00;
+        var bytes = CreateValidSystemDumpBytes();
+        WriteNibble(bytes, 4, 50);
+        var systemDump = SystemDump.FromSysEx(bytes).Value;
 
         // Act
         var mid = systemDump.GetPedalMid();
@@ -83,17 +57,12 @@ public class SystemDumpPedalMappingTests
     }
 
     [Fact]
-    public void GetPedalMax_ReadsBytes66To69()
+    public void GetPedalMax_ReadsNibbleIndex5()
     {
         // Arrange
-        var systemDump = CreateValidSystemDump();
-        var rawBytes = systemDump.RawSysEx;
-        
-        // Set max to 75% (little-endian: 0x4B 0x00 0x00 0x00)
-        rawBytes[66] = 0x4B;
-        rawBytes[67] = 0x00;
-        rawBytes[68] = 0x00;
-        rawBytes[69] = 0x00;
+        var bytes = CreateValidSystemDumpBytes();
+        WriteNibble(bytes, 5, 75);
+        var systemDump = SystemDump.FromSysEx(bytes).Value;
 
         // Act
         var max = systemDump.GetPedalMax();
@@ -106,32 +75,12 @@ public class SystemDumpPedalMappingTests
     public void GetPedalValues_WithTypicalConfiguration_ReturnsExpectedValues()
     {
         // Arrange - typical expression pedal setup
-        var systemDump = CreateValidSystemDump();
-        var rawBytes = systemDump.RawSysEx;
-        
-        // Parameter: Volume (ID 10)
-        rawBytes[54] = 0x0A;
-        rawBytes[55] = 0x00;
-        rawBytes[56] = 0x00;
-        rawBytes[57] = 0x00;
-        
-        // Min: 0%
-        rawBytes[58] = 0x00;
-        rawBytes[59] = 0x00;
-        rawBytes[60] = 0x00;
-        rawBytes[61] = 0x00;
-        
-        // Mid: 50%
-        rawBytes[62] = 0x32;
-        rawBytes[63] = 0x00;
-        rawBytes[64] = 0x00;
-        rawBytes[65] = 0x00;
-        
-        // Max: 100%
-        rawBytes[66] = 0x64;
-        rawBytes[67] = 0x00;
-        rawBytes[68] = 0x00;
-        rawBytes[69] = 0x00;
+        var bytes = CreateValidSystemDumpBytes();
+        WriteNibble(bytes, 6, 10); // parameter
+        WriteNibble(bytes, 3, 0);  // min
+        WriteNibble(bytes, 4, 50); // mid
+        WriteNibble(bytes, 5, 100); // max
+        var systemDump = SystemDump.FromSysEx(bytes).Value;
 
         // Act
         var parameter = systemDump.GetPedalParameter();
@@ -140,10 +89,10 @@ public class SystemDumpPedalMappingTests
         var max = systemDump.GetPedalMax();
 
         // Assert
-        parameter.Should().Be(10, "Volume parameter");
-        min.Should().Be(0, "Minimum at 0%");
-        mid.Should().Be(50, "Midpoint at 50%");
-        max.Should().Be(100, "Maximum at 100%");
+        parameter.Should().Be(10);
+        min.Should().Be(0);
+        mid.Should().Be(50);
+        max.Should().Be(100);
     }
 
     [Fact]
@@ -249,5 +198,39 @@ public class SystemDumpPedalMappingTests
         systemDump.GetPedalMin().Should().Be(10);
         systemDump.GetPedalMid().Should().Be(60);
         systemDump.GetPedalMax().Should().Be(90);
+    }
+
+    private static byte[] CreateValidSystemDumpBytes()
+    {
+        var validSystemDump = new byte[526];
+        validSystemDump[0] = 0xF0;  // SysEx start
+        validSystemDump[1] = 0x00;  // TC Electronic
+        validSystemDump[2] = 0x20;
+        validSystemDump[3] = 0x1F;
+        validSystemDump[4] = 0x04;  // Device ID
+        validSystemDump[5] = 0x63;  // Nova System model ID
+        validSystemDump[6] = 0x20;  // Message ID (Dump)
+        validSystemDump[7] = 0x02;  // Data Type (System Dump)
+        validSystemDump[525] = 0xF7;  // SysEx end
+        return validSystemDump;
+    }
+
+    private static void WriteNibble(byte[] data, int nibbleIndex, int value)
+    {
+        var offset = 8 + (nibbleIndex * 4);
+        if (value >= 0)
+        {
+            data[offset] = (byte)(value % 128);
+            data[offset + 1] = (byte)(value / 128);
+            data[offset + 2] = 0;
+            data[offset + 3] = 0;
+        }
+        else
+        {
+            data[offset] = (byte)(128 - ((-value) % 128));
+            data[offset + 1] = (byte)((value / 128) + 127);
+            data[offset + 2] = 127;
+            data[offset + 3] = 7;
+        }
     }
 }

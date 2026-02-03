@@ -284,16 +284,36 @@ public partial class MainViewModel : ObservableObject
         var modifiedSysEx = new byte[original.RawSysEx.Length];
         Array.Copy(original.RawSysEx, modifiedSysEx, original.RawSysEx.Length);
 
-        // Update bytes with ViewModel values
-        modifiedSysEx[4] = (byte)SystemSettings.DeviceId; // Device ID
-        modifiedSysEx[8] = (byte)SystemSettings.MidiChannel; // MIDI Channel (0-15)
-        modifiedSysEx[20] = (byte)(SystemSettings.MidiClockEnabled ? 0x01 : 0x00); // MIDI Clock
-        modifiedSysEx[21] = (byte)(SystemSettings.MidiProgramChangeEnabled ? 0x01 : 0x00); // Program Change
+        // Update bytes with ViewModel values using SystemDump nibble encoding
+        var dumpResult = SystemDump.FromSysEx(modifiedSysEx);
+        if (dumpResult.IsFailed)
+            throw new InvalidOperationException(dumpResult.Errors.First().Message);
 
-        // Recalculate checksum (last byte before 0xF7)
-        // For now, we assume SystemDump.FromSysEx will validate/fix this
-        
-        return SystemDump.FromSysEx(modifiedSysEx).Value;
+        var dump = dumpResult.Value;
+
+        // Header device id (target device) and stored SysEx ID setting
+        dump.RawSysEx[4] = (byte)SystemSettings.DeviceId;
+        var sysExIdResult = dump.UpdateSysExId(SystemSettings.DeviceId);
+        if (sysExIdResult.IsFailed)
+            throw new InvalidOperationException(sysExIdResult.Errors.First().Message);
+
+        var midiChannelResult = dump.UpdateMidiChannel(SystemSettings.MidiChannel);
+        if (midiChannelResult.IsFailed)
+            throw new InvalidOperationException(midiChannelResult.Errors.First().Message);
+
+        var midiClockResult = dump.UpdateMidiClockEnabled(SystemSettings.MidiClockEnabled);
+        if (midiClockResult.IsFailed)
+            throw new InvalidOperationException(midiClockResult.Errors.First().Message);
+
+        var programChangeInResult = dump.UpdateProgramChangeInEnabled(SystemSettings.MidiProgramChangeEnabled);
+        if (programChangeInResult.IsFailed)
+            throw new InvalidOperationException(programChangeInResult.Errors.First().Message);
+
+        var programChangeOutResult = dump.UpdateProgramChangeOutEnabled(SystemSettings.MidiProgramChangeEnabled);
+        if (programChangeOutResult.IsFailed)
+            throw new InvalidOperationException(programChangeOutResult.Errors.First().Message);
+
+        return dump;
     }
 
     [RelayCommand(CanExecute = nameof(CanUseDevice))]

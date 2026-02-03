@@ -2,6 +2,12 @@
 
 ## 🔧 Hotfixes
 
+### 2026-02-03 — System Dump nibble + CC assignments
+- SystemDump normaliseret til 526 bytes (accepterer double F7)
+- Nibble-encoding implementeret for pedal + MIDI settings
+- MIDI CC assignments refaktoreret til faste slots (Tap/Drive/etc.)
+- Tests opdateret til nyt format
+
 ### 2026-02-03 — SysEx 520-byte normalization
 - Preset.FromSysEx accepterer 520 bytes (og legacy 521 med dobbelt F7) og normaliserer RawSysEx
 - Save/Load/Request/Delete/Import preset opdateret til 520-byte format

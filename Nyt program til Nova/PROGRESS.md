@@ -2,9 +2,9 @@
 
 ## Nuværende Fokus [2026-02-03]
 
-**Hotfix**: SysEx 520-byte normalisering (preset/bank)
+**Hotfix**: System Dump nibble + CC assignments
 - Build: ✅ GREEN (0 errors, 0 warnings)
-- Tests: ✅ 343 passing
+- Tests: ✅ 342 passing
 
 ## Status
 - v1.0 funktionalitet er implementeret (jf. tasks/00-index.md)

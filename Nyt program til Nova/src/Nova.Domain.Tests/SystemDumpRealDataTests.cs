@@ -18,7 +18,7 @@ public class SystemDumpRealDataTests
 
         // Assert
         result.IsSuccess.Should().BeTrue();
-        result.Value.RawSysEx.Should().HaveCount(527);
+        result.Value.RawSysEx.Should().HaveCount(526);
 
         // Verify key structure bytes
         result.Value.RawSysEx[0].Should().Be(0xF0, "SysEx start");
@@ -28,7 +28,7 @@ public class SystemDumpRealDataTests
         result.Value.RawSysEx[5].Should().Be(0x63, "Nova System model ID");
         result.Value.RawSysEx[6].Should().Be(0x20, "Dump message ID");
         result.Value.RawSysEx[7].Should().Be(0x02, "System Dump data type");
-        result.Value.RawSysEx[526].Should().Be(0xF7, "SysEx end");
+        result.Value.RawSysEx[525].Should().Be(0xF7, "SysEx end");
     }
 
     private static string GetHardwareTestDir()

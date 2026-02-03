@@ -1,5 +1,24 @@
 # SESSION_MEMORY.md — Current Session State
 
+## 📅 Session: 2026-02-03 (SystemDump nibble + MIDI CC mapping)
+
+### 🎯 Mål
+Fikse System Dump format (526 bytes + double F7 normalisering), nibble-encoding og CC assignments, samt opdatere tests/UI så hardware sync virker.
+
+### Nuværende task
+Ad-hoc hotfix (ingen task-fil).
+
+### 🔧 Status Update
+**Build Status**: ✅ GREEN (0 errors, 0 warnings)
+**Tests**: ✅ ALL PASSING (342 tests total)
+
+**Ændringer:**
+- SystemDump: nibble-encoding korrekt, double-F7 normalisering, MIDI CC assignments via faste slots
+- CC mapping UI/UseCases refaktoreret til faste assignments (ingen parameter-id)
+- Testdata opdateret til 526 bytes + nibble encoding
+
+---
+
 ## 📅 Session: 2026-02-03 (SysEx 520-byte fix)
 
 ### 🎯 Mål

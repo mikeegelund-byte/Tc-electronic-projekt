@@ -18,7 +18,7 @@ public class SystemSettingsViewModelTests
 
         // Assert
         vm.MidiChannel.Should().Be(5);
-        vm.DeviceId.Should().Be(0);
+        vm.DeviceId.Should().Be(12);
         vm.MidiClockEnabled.Should().BeTrue();
         vm.MidiProgramChangeEnabled.Should().BeTrue();
         vm.Version.Should().NotBeEmpty();
@@ -53,31 +53,47 @@ public class SystemSettingsViewModelTests
 
     private static SystemDump CreateValidSystemDump()
     {
-        // Create minimal valid SystemDump for testing
-        var sysex = new byte[527];
+        var sysex = new byte[526];
         sysex[0] = 0xF0;
         sysex[1] = 0x00; sysex[2] = 0x20; sysex[3] = 0x1F;
-        sysex[4] = 0x00; // Device ID
-        sysex[5] = 0x63; // Nova System
-        sysex[6] = 0x20; // Dump message
-        sysex[7] = 0x02; // System dump type
-        
-        // Set MIDI channel (offset 8 = channel 5)
-        sysex[8] = 5;
-        
-        // Set MIDI clock enabled (offset 20)
-        sysex[20] = 0x01;
-        
-        // Set MIDI program change enabled (offset 21)
-        sysex[21] = 0x01;
-        
-        // Set version (offset 22-23)
+        sysex[4] = 0x00;
+        sysex[5] = 0x63;
+        sysex[6] = 0x20;
+        sysex[7] = 0x02;
+
+        // MIDI settings via nibble encoding
+        WriteNibble(sysex, 19, 5);  // MIDI channel
+        WriteNibble(sysex, 20, 1);  // Program Change In enabled
+        WriteNibble(sysex, 21, 1);  // Program Change Out enabled
+        WriteNibble(sysex, 22, 1);  // MIDI clock enabled
+        WriteNibble(sysex, 23, 12); // SysEx ID
+
+        // Fake version bytes (legacy behavior)
         sysex[22] = 1;
         sysex[23] = 2;
-        
-        sysex[526] = 0xF7;
-        
+
+        sysex[525] = 0xF7;
+
         var result = SystemDump.FromSysEx(sysex);
         return result.Value;
+    }
+
+    private static void WriteNibble(byte[] data, int nibbleIndex, int value)
+    {
+        var offset = 8 + (nibbleIndex * 4);
+        if (value >= 0)
+        {
+            data[offset] = (byte)(value % 128);
+            data[offset + 1] = (byte)(value / 128);
+            data[offset + 2] = 0;
+            data[offset + 3] = 0;
+        }
+        else
+        {
+            data[offset] = (byte)(128 - ((-value) % 128));
+            data[offset + 1] = (byte)((value / 128) + 127);
+            data[offset + 2] = 127;
+            data[offset + 3] = 7;
+        }
     }
 }

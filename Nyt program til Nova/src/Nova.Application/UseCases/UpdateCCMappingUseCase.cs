@@ -5,18 +5,18 @@ namespace Nova.Application.UseCases;
 
 public class UpdateCCMappingUseCase : IUpdateCCMappingUseCase
 {
-    public Task<Result> ExecuteAsync(SystemDump systemDump, int ccIndex, byte ccNumber, byte parameterId)
+    public Task<Result> ExecuteAsync(SystemDump systemDump, int ccIndex, int? ccNumber)
     {
         if (systemDump == null)
             return Task.FromResult(Result.Fail("System Dump cannot be null"));
 
-        if (ccIndex < 0 || ccIndex > 63)
-            return Task.FromResult(Result.Fail("CC index must be between 0 and 63"));
+        if (ccIndex < 0 || ccIndex > 10)
+            return Task.FromResult(Result.Fail("CC index must be between 0 and 10"));
 
-        if (ccNumber > 127 && ccNumber != 0xFF)
-            return Task.FromResult(Result.Fail("CC number must be between 0 and 127 or 0xFF for unassigned"));
+        if (ccNumber.HasValue && (ccNumber.Value < 0 || ccNumber.Value > 127))
+            return Task.FromResult(Result.Fail("CC number must be between 0 and 127"));
 
-        var updateResult = systemDump.UpdateCCMapping(ccIndex, ccNumber, parameterId);
+        var updateResult = systemDump.UpdateCCMapping(ccIndex, ccNumber);
         return Task.FromResult(updateResult);
     }
 }
