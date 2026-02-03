@@ -85,7 +85,7 @@ public sealed class DeletePresetUseCase : IDeletePresetUseCase
         sysex[5] = 0x63; // Nova System
         sysex[6] = 0x20; // Preset dump
         sysex[7] = 0x01; // Data type: Preset
-        sysex[8] = (byte)(slotNumber + 30); // Convert 1-60 to 31-90 (0x1F-0x5A)
+        sysex[8] = (byte)slotNumber; // Slot number (1-60)
         
         // Reserved byte (void)
         sysex[9] = 0x00;
@@ -109,12 +109,5 @@ public sealed class DeletePresetUseCase : IDeletePresetUseCase
         sysex[520] = 0xF7; // SysEx end
         
         return sysex;
-    }
-        }
-        catch (Exception ex)
-        {
-            _logger.Error(ex, "Unexpected error deleting preset in slot {SlotNumber}", slotNumber);
-            return Result.Fail($"Unexpected error: {ex.Message}");
-        }
     }
 }
