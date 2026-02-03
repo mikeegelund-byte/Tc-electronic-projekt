@@ -1,0 +1,225 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    <!-- ============================================ -->
+    <!-- Nova System Manager - Comprehensive Theme    -->
+    <!-- WCAG AA Compliant (4.5:1 contrast minimum)   -->
+    <!-- ============================================ -->
+    
+    <!-- === KEYBOARD FOCUS INDICATORS === -->
+    <!-- Issue #4: Keyboard focus visual styles -->
+    <Style Selector="Button:focus-visible">
+        <Setter Property="BorderBrush" Value="#007AFF" />
+        <Setter Property="BorderThickness" Value="2" />
+        <Setter Property="RenderTransform">
+            <Setter.Value>
+                <ScaleTransform ScaleX="1.02" ScaleY="1.02" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <Style Selector="TextBox:focus-visible, ComboBox:focus-visible, NumericUpDown:focus-visible">
+        <Setter Property="BorderBrush" Value="#007AFF" />
+        <Setter Property="BorderThickness" Value="2" />
+    </Style>
+    
+    <Style Selector="DataGridRow:focus-visible">
+        <Setter Property="BorderBrush" Value="#007AFF" />
+        <Setter Property="BorderThickness" Value="2,0,2,0" />
+    </Style>
+    
+    <!-- === BUTTON STYLES === -->
+    <!-- Enhanced button styles with hover states (Issue #8) -->
+    <Style Selector="Button.primary">
+        <Setter Property="Background" Value="{DynamicResource AccentPrimary}" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="Padding" Value="{DynamicResource ButtonPadding}" />
+        <Setter Property="CornerRadius" Value="4" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Cursor" Value="Hand" />
+    </Style>
+    
+    <Style Selector="Button.primary:pointerover">
+        <Setter Property="Background" Value="#0066CC" />
+    </Style>
+    
+    <Style Selector="Button.primary:pressed">
+        <Setter Property="Background" Value="#005BB5" />
+    </Style>
+    
+    <Style Selector="Button.primary:disabled">
+        <Setter Property="Opacity" Value="0.5" />
+        <Setter Property="Cursor" Value="Arrow" />
+    </Style>
+    
+    <Style Selector="Button.secondary">
+        <Setter Property="Background" Value="{DynamicResource BackgroundTertiary}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextPrimary}" />
+        <Setter Property="Padding" Value="{DynamicResource ButtonPadding}" />
+        <Setter Property="CornerRadius" Value="4" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderBrush" Value="{DynamicResource BorderDefault}" />
+        <Setter Property="Cursor" Value="Hand" />
+    </Style>
+    
+    <Style Selector="Button.secondary:pointerover">
+        <Setter Property="Background" Value="{DynamicResource BackgroundPrimary}" />
+    </Style>
+    
+    <Style Selector="Button.success">
+        <Setter Property="Background" Value="{DynamicResource SuccessColor}" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="Padding" Value="{DynamicResource ButtonPadding}" />
+        <Setter Property="CornerRadius" Value="4" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Cursor" Value="Hand" />
+    </Style>
+    
+    <Style Selector="Button.success:pointerover">
+        <Setter Property="Background" Value="#0D6A0D" />
+    </Style>
+    
+    <Style Selector="Button.danger">
+        <Setter Property="Background" Value="{DynamicResource DangerColor}" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="Padding" Value="{DynamicResource ButtonPadding}" />
+        <Setter Property="CornerRadius" Value="4" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Cursor" Value="Hand" />
+    </Style>
+    
+    <Style Selector="Button.danger:pointerover">
+        <Setter Property="Background" Value="#C02818" />
+    </Style>
+    
+    <!-- === INPUT STYLES === -->
+    <Style Selector="TextBox, ComboBox">
+        <Setter Property="Padding" Value="{DynamicResource InputPadding}" />
+        <Setter Property="CornerRadius" Value="4" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderBrush" Value="{DynamicResource BorderDefault}" />
+    </Style>
+    
+    <Style Selector="TextBox:focus, ComboBox:focus">
+        <Setter Property="BorderBrush" Value="{DynamicResource AccentPrimary}" />
+        <Setter Property="BorderThickness" Value="2" />
+    </Style>
+    
+    <!-- === CARD/PANEL STYLES === -->
+    <Style Selector="Border.card">
+        <Setter Property="Background" Value="{DynamicResource BackgroundSecondary}" />
+        <Setter Property="Padding" Value="{DynamicResource CardPadding}" />
+        <Setter Property="CornerRadius" Value="{DynamicResource BorderRadiusMedium}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource BorderDefault}" />
+        <Setter Property="BorderThickness" Value="1" />
+    </Style>
+    
+    <!-- === DATAGRID STYLES === -->
+    <!-- Issue #13: Alternating row backgrounds -->
+    <Style Selector="DataGridRow:nth-child(odd)">
+        <Setter Property="Background" Value="{DynamicResource BackgroundSecondary}" />
+    </Style>
+    
+    <Style Selector="DataGridRow:nth-child(even)">
+        <Setter Property="Background" Value="{DynamicResource BackgroundPrimary}" />
+    </Style>
+    
+    <Style Selector="DataGridRow:pointerover">
+        <Setter Property="Background" Value="{DynamicResource BackgroundTertiary}" />
+    </Style>
+    
+    <Style Selector="DataGridRow:selected">
+        <Setter Property="Background" Value="#005BB5" />
+        <Setter Property="Foreground" Value="White" />
+    </Style>
+    
+    <!-- === READ-ONLY INDICATORS === -->
+    <!-- Issue #39: Visual distinction for read-only fields -->
+    <!-- Note: TextBlock doesn't support borders directly, wrap in Border if needed -->
+    <Style Selector="Border.readonly-wrapper">
+        <Setter Property="Background" Value="{DynamicResource BackgroundTertiary}" />
+        <Setter Property="CornerRadius" Value="4" />
+        <Setter Property="BorderBrush" Value="{DynamicResource BorderDefault}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Padding" Value="8,4" />
+    </Style>
+    
+    <Style Selector="TextBox:disabled">
+        <Setter Property="Background" Value="{DynamicResource BackgroundTertiary}" />
+        <Setter Property="Opacity" Value="0.7" />
+    </Style>
+    
+    <!-- === STATUS INDICATORS === -->
+    <!-- Issue #5: Not just color - add icons and text -->
+    <Style Selector="Border.status-connected">
+        <Setter Property="Background" Value="{DynamicResource StatusConnected}" />
+        <Setter Property="CornerRadius" Value="4" />
+        <Setter Property="Padding" Value="8,4" />
+    </Style>
+    
+    <Style Selector="Border.status-disconnected">
+        <Setter Property="Background" Value="{DynamicResource StatusDisconnected}" />
+        <Setter Property="CornerRadius" Value="4" />
+        <Setter Property="Padding" Value="8,4" />
+    </Style>
+    
+    <!-- === WARNING/ERROR PANELS === -->
+    <!-- Issue #34: Warning with proper contrast -->
+    <Style Selector="Border.warning">
+        <Setter Property="Background" Value="{DynamicResource WarningBackground}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource WarningColor}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="4" />
+        <Setter Property="Padding" Value="12,8" />
+    </Style>
+    
+    <Style Selector="Border.error">
+        <Setter Property="Background" Value="#FFE5E5" />
+        <Setter Property="BorderBrush" Value="{DynamicResource DangerColor}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="4" />
+        <Setter Property="Padding" Value="12,8" />
+    </Style>
+    
+    <Style Selector="Border.success">
+        <Setter Property="Background" Value="#E5F5E5" />
+        <Setter Property="BorderBrush" Value="{DynamicResource SuccessColor}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="4" />
+        <Setter Property="Padding" Value="12,8" />
+    </Style>
+    
+    <!-- Dark theme variants for status panels -->
+    <Style Selector="Border.warning:dark">
+        <Setter Property="Background" Value="#3D2E1A" />
+    </Style>
+    
+    <Style Selector="Border.error:dark">
+        <Setter Property="Background" Value="#3D1A1A" />
+    </Style>
+    
+    <Style Selector="Border.success:dark">
+        <Setter Property="Background" Value="#1A3D1A" />
+    </Style>
+    
+    <!-- === LOADING STATES === -->
+    <!-- Issue #9: Loading indicators -->
+    <!-- Note: Use ProgressBar for loading states as ProgressRing may not be available -->
+    <Style Selector="ProgressBar.loading">
+        <Setter Property="Height" Value="4" />
+        <Setter Property="Foreground" Value="{DynamicResource AccentPrimary}" />
+        <Setter Property="Background" Value="{DynamicResource BackgroundTertiary}" />
+    </Style>
+    
+    <!-- === TOOLTIP STYLES === -->
+    <!-- Issue #14: Tooltips for all interactive elements -->
+    <Style Selector="ToolTip">
+        <Setter Property="Background" Value="{DynamicResource BackgroundSecondary}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource BorderDefault}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="4" />
+        <Setter Property="Padding" Value="8,4" />
+        <Setter Property="FontSize" Value="11" />
+    </Style>
+    
+</Styles>
