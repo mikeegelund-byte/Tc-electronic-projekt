@@ -1,0 +1,23 @@
+{
+  "DriveEnabled": 1,
+  "DriveType": 0,
+  "DriveGain": 28,
+  "DriveLevel": -5,
+  "BoostType": 0,
+  "BoostGain": 0,
+  "BoostLevel": 0,
+  "DelayEnabled": 1,
+  "DelayType": 0,
+  "DelayTime": 420,
+  "DelayFeedback": 22,
+  "DelayMix": 18,
+  "ReverbEnabled": 1,
+  "ReverbType": 1,
+  "ReverbDecay": 120,
+  "ReverbMix": 22,
+  "ModulationEnabled": 0,
+  "GateThreshold": -40,
+  "EqGain1": 2,
+  "EqGain2": -1,
+  "EqGain3": 3
+}

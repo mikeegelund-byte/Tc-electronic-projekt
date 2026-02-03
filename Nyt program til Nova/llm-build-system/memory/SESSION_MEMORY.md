@@ -16,6 +16,7 @@ Ad-hoc fejlretning (ingen task-fil). Fokus: konsistent preset-nummerering.
 - Standardiseret på preset-numre 31-90 i Save/Request/Copy/Delete use cases
 - Import i MainViewModel bruger nu preset-numre 31-90 (ingen fejl på 61-90)
 - Opdaterede tests og interface-dokumentation
+- Tilføjet LLM-værktøjer: `tools/llm/preset_builder.py`, `tools/llm/preset_map.json`, `tools/llm/audio_to_preset_rules.md`
 
 ---
 
