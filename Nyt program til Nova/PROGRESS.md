@@ -105,8 +105,8 @@ TOTAL:          308 tests ✅
 1. ✅ Modul 1-5: Foundation + MIDI + ViewModels + Preset Viewer + System Viewer + System Editor + Preset Detail — **ALL COMPLETE**
 2. 🤖 **CURRENT**: Modul 6 - Preset Editor Phase 1 (75% - Agents #3 & #4 deployed)
    - Task 6.0: ✅ ToSysEx() implementation (258 tests)
-   - Tasks 6.1.1-6.1.7: ✅ 7 effect block validations (66 tests)
-   - Task 6.1.8: 🤖 Agent #3 - Global parameter validation (12 tests pending)
+   - Tasks 6.1.1-6.1.7: ✅ 7 effect block validations (66 tests) {cm:2026-02-03}
+   - Task 6.1.8: 🤖 Agent #3 - Global parameter validation (12 tests pending) {cm:2026-02-03}
    - Task 6.1.9: 🤖 Agent #4 - XAML editable UI (26 controls pending)
 3. 🔜 **NEXT**: Module 6 Phase 2 (Optional) - Live CC Updates (deferred until agents complete)
 4. 📋 Module 7: Preset Management (save/rename presets)

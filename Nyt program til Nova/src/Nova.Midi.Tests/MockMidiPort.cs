@@ -11,6 +11,7 @@ public class MockMidiPort : IMidiPort
     private bool _isConnected;
     private readonly Queue<byte[]> _responseQueue = new();
     private readonly Channel<byte[]> _receiveChannel = Channel.CreateUnbounded<byte[]>();
+    private readonly Channel<byte[]> _ccChannel = Channel.CreateUnbounded<byte[]>();
 
     public string Name { get; set; } = "Mock Port";
     public bool IsConnected => _isConnected;
@@ -26,6 +27,7 @@ public class MockMidiPort : IMidiPort
     {
         _isConnected = false;
         _receiveChannel.Writer.TryComplete();
+        _ccChannel.Writer.TryComplete();
         return Task.FromResult(Result.Ok());
     }
 
@@ -73,6 +75,30 @@ public class MockMidiPort : IMidiPort
     public async Task SendResponseAsync(byte[] sysex)
     {
         await _receiveChannel.Writer.WriteAsync(sysex);
+    }
+
+    public async IAsyncEnumerable<byte[]> ReceiveCCAsync(
+        [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken cancellationToken = default)
+    {
+        if (!IsConnected)
+            yield break;
+
+        await foreach (var ccMessage in _ccChannel.Reader.ReadAllAsync(cancellationToken))
+        {
+            yield return ccMessage;
+        }
+    }
+
+    /// <summary>
+    /// For testing: send CC message as if received from hardware.
+    /// </summary>
+    public async Task SendCCAsync(byte ccNumber, byte value, byte channel = 0)
+    {
+        var ccMessage = new byte[3];
+        ccMessage[0] = (byte)(0xB0 + channel);  // Status byte
+        ccMessage[1] = ccNumber;                // CC number
+        ccMessage[2] = value;                   // CC value
+        await _ccChannel.Writer.WriteAsync(ccMessage);
     }
 
     public static IEnumerable<string> GetAvailableOutputPorts()
