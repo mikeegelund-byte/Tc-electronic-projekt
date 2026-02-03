@@ -50,4 +50,19 @@ public interface IMidiPort
     /// <param name="cancellationToken">Token to cancel reception</param>
     /// <returns>Async enumerable of SysEx messages</returns>
     IAsyncEnumerable<byte[]> ReceiveSysExAsync(CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Receives MIDI Control Change messages from the MIDI port.
+    /// Yields complete CC messages (3 bytes: status, CC number, value).
+    /// 
+    /// Use with foreach or async enumeration:
+    ///   await foreach (var ccMessage in port.ReceiveCCAsync())
+    ///   {
+    ///       byte ccNumber = ccMessage[1];
+    ///       byte value = ccMessage[2];
+    ///   }
+    /// </summary>
+    /// <param name="cancellationToken">Token to cancel reception</param>
+    /// <returns>Async enumerable of CC messages</returns>
+    IAsyncEnumerable<byte[]> ReceiveCCAsync(CancellationToken cancellationToken = default);
 }

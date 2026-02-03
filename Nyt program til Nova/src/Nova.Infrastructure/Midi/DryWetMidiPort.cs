@@ -12,6 +12,7 @@ public sealed class DryWetMidiPort : IMidiPort, IDisposable
     private InputDevice? _inputDevice;
     private OutputDevice? _outputDevice;
     private Channel<byte[]>? _sysExChannel;
+    private Channel<byte[]>? _ccChannel;
 
     public string Name { get; private set; } = string.Empty;
     public bool IsConnected => _inputDevice != null && _outputDevice != null;
@@ -136,6 +137,16 @@ public sealed class DryWetMidiPort : IMidiPort, IDisposable
 
             _sysExChannel?.Writer.TryWrite(data);
         }
+        else if (e.Event is ControlChangeEvent ccEvent)
+        {
+            // MIDI CC format: [Status: 0xB0 + channel] [CC#: 0-127] [Value: 0-127]
+            var ccMessage = new byte[3];
+            ccMessage[0] = (byte)(0xB0 + ccEvent.Channel);  // Status byte with channel
+            ccMessage[1] = (byte)ccEvent.ControlNumber;    // CC number
+            ccMessage[2] = (byte)ccEvent.ControlValue;     // CC value
+
+            _ccChannel?.Writer.TryWrite(ccMessage);
+        }
     }
 
     private async IAsyncEnumerable<byte[]> ReadSysExAsync(
@@ -146,6 +157,28 @@ public sealed class DryWetMidiPort : IMidiPort, IDisposable
         await foreach (var sysex in _sysExChannel.Reader.ReadAllAsync(cancellationToken))
         {
             yield return sysex;
+        }
+    }
+
+    public IAsyncEnumerable<byte[]> ReceiveCCAsync(CancellationToken cancellationToken = default)
+    {
+        if (_inputDevice == null)
+            throw new InvalidOperationException("Not connected");
+
+        _ccChannel = Channel.CreateUnbounded<byte[]>();
+        _inputDevice.EventReceived += OnEventReceived;
+
+        return ReadCCAsync(cancellationToken);
+    }
+
+    private async IAsyncEnumerable<byte[]> ReadCCAsync(
+        [EnumeratorCancellation] CancellationToken cancellationToken)
+    {
+        if (_ccChannel == null) yield break;
+
+        await foreach (var ccMessage in _ccChannel.Reader.ReadAllAsync(cancellationToken))
+        {
+            yield return ccMessage;
         }
     }
 

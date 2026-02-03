@@ -95,6 +95,13 @@ public class FailingSendMockMidiPort : IMidiPort
 #pragma warning restore CS1998
     }
 
+    public IAsyncEnumerable<byte[]> ReceiveCCAsync(CancellationToken cancellationToken = default)
+    {
+#pragma warning disable CS1998
+        return new AsyncEnumerableEmpty();
+#pragma warning restore CS1998
+    }
+
     private class AsyncEnumerableEmpty : IAsyncEnumerable<byte[]>
     {
         public IAsyncEnumerator<byte[]> GetAsyncEnumerator(CancellationToken cancellationToken = default)
