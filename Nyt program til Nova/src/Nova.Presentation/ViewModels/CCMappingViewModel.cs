@@ -58,15 +58,25 @@ public partial class CCMappingViewModel : ObservableObject
     [ObservableProperty]
     private PedalMappingViewModel _pedalMapping;
 
+    [ObservableProperty]
+    private ProgramMapInViewModel _programMapIn;
+
+    [ObservableProperty]
+    private ProgramMapOutViewModel _programMapOut;
+
     public CCMappingViewModel(
         IGetCCMappingsUseCase getCCMappingsUseCase,
         IUpdateCCMappingUseCase updateCCMappingUseCase,
-        ISaveSystemDumpUseCase saveSystemDumpUseCase)
+        ISaveSystemDumpUseCase saveSystemDumpUseCase,
+        ProgramMapInViewModel programMapInViewModel,
+        ProgramMapOutViewModel programMapOutViewModel)
     {
         _getCCMappingsUseCase = getCCMappingsUseCase;
         _updateCCMappingUseCase = updateCCMappingUseCase;
         _saveSystemDumpUseCase = saveSystemDumpUseCase;
         _pedalMapping = new PedalMappingViewModel();
+        _programMapIn = programMapInViewModel;
+        _programMapOut = programMapOutViewModel;
     }
 
     /// <summary>
@@ -87,6 +97,8 @@ public partial class CCMappingViewModel : ObservableObject
 
         // Load pedal mapping
         PedalMapping.LoadFromDump(dump);
+        await ProgramMapIn.LoadFromDump(dump);
+        await ProgramMapOut.LoadFromDump(dump);
 
         var result = await _getCCMappingsUseCase.ExecuteAsync(dump);
 

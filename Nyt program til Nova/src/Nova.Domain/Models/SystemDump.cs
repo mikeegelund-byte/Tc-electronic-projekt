@@ -30,6 +30,10 @@ public class SystemDump
     private const int NIBBLE_SYSEX_ID = 23;
 
     private const int MIDI_CC_ASSIGNMENT_COUNT = 11;
+    private const int PROGRAM_MAP_IN_START = 64;
+    private const int PROGRAM_MAP_IN_COUNT = 43;
+    private const int PROGRAM_MAP_OUT_START = 107;
+    private const int PROGRAM_MAP_OUT_COUNT = 20;
 
     private static readonly (string Name, int NibbleIndex)[] MidiCcAssignments =
     {
@@ -155,6 +159,108 @@ public class SystemDump
         var slot = MidiCcAssignments[index];
         var encoded = EncodeMidiCcValue(ccNumber);
         return SetNibbleValue(slot.NibbleIndex, encoded);
+    }
+
+    /// <summary>
+    /// Gets the incoming Program Change mapping table (PC 1-127).
+    /// </summary>
+    public List<ProgramMapInEntry> GetProgramMapIn()
+    {
+        var entries = new List<ProgramMapInEntry>(127);
+
+        for (int i = 0; i < PROGRAM_MAP_IN_COUNT; i++)
+        {
+            var nibbleIndex = PROGRAM_MAP_IN_START + i;
+            var (v1, v2, v3) = ReadMidiMapValues(nibbleIndex);
+
+            var incoming1 = (i * 3) + 1;
+            if (incoming1 <= 127)
+                entries.Add(new ProgramMapInEntry(incoming1, DecodeProgramMapPreset(v1)));
+
+            var incoming2 = (i * 3) + 2;
+            if (incoming2 <= 127)
+                entries.Add(new ProgramMapInEntry(incoming2, DecodeProgramMapPreset(v2)));
+
+            var incoming3 = (i * 3) + 3;
+            if (incoming3 <= 127)
+                entries.Add(new ProgramMapInEntry(incoming3, DecodeProgramMapPreset(v3)));
+        }
+
+        return entries;
+    }
+
+    public Result UpdateProgramMapIn(int incomingProgram, int? presetNumber)
+    {
+        if (incomingProgram < 1 || incomingProgram > 127)
+            return Result.Fail($"Incoming program out of range: {incomingProgram} (valid range: 1-127)");
+
+        if (presetNumber.HasValue && (presetNumber.Value < 1 || presetNumber.Value > 90))
+            return Result.Fail($"Preset number out of range: {presetNumber} (valid range: 1-90 or Off)");
+
+        var index = (incomingProgram - 1) / 3;
+        var slot = (incomingProgram - 1) % 3;
+        var nibbleIndex = PROGRAM_MAP_IN_START + index;
+
+        var (v1, v2, v3) = ReadMidiMapValues(nibbleIndex);
+        var encoded = presetNumber.HasValue ? presetNumber.Value : 0;
+
+        switch (slot)
+        {
+            case 0: v1 = encoded; break;
+            case 1: v2 = encoded; break;
+            case 2: v3 = encoded; break;
+        }
+
+        return WriteMidiMapValues(nibbleIndex, v1, v2, v3);
+    }
+
+    /// <summary>
+    /// Gets the outgoing Program Change mapping table for user presets (31-90).
+    /// </summary>
+    public List<ProgramMapOutEntry> GetProgramMapOut()
+    {
+        var entries = new List<ProgramMapOutEntry>(60);
+
+        for (int i = 0; i < PROGRAM_MAP_OUT_COUNT; i++)
+        {
+            var nibbleIndex = PROGRAM_MAP_OUT_START + i;
+            var (v1, v2, v3) = ReadMidiMapValues(nibbleIndex);
+
+            var preset1 = 31 + (i * 3);
+            entries.Add(new ProgramMapOutEntry(preset1, v1));
+
+            var preset2 = 32 + (i * 3);
+            entries.Add(new ProgramMapOutEntry(preset2, v2));
+
+            var preset3 = 33 + (i * 3);
+            entries.Add(new ProgramMapOutEntry(preset3, v3));
+        }
+
+        return entries;
+    }
+
+    public Result UpdateProgramMapOut(int presetNumber, int outgoingProgram)
+    {
+        if (presetNumber < 31 || presetNumber > 90)
+            return Result.Fail($"Preset number out of range: {presetNumber} (valid range: 31-90)");
+
+        if (outgoingProgram < 0 || outgoingProgram > 127)
+            return Result.Fail($"Outgoing program out of range: {outgoingProgram} (valid range: 0-127)");
+
+        var index = (presetNumber - 31) / 3;
+        var slot = (presetNumber - 31) % 3;
+        var nibbleIndex = PROGRAM_MAP_OUT_START + index;
+
+        var (v1, v2, v3) = ReadMidiMapValues(nibbleIndex);
+
+        switch (slot)
+        {
+            case 0: v1 = outgoingProgram; break;
+            case 1: v2 = outgoingProgram; break;
+            case 2: v3 = outgoingProgram; break;
+        }
+
+        return WriteMidiMapValues(nibbleIndex, v1, v2, v3);
     }
 
     /// <summary>
@@ -347,6 +453,52 @@ public class SystemDump
             return 0;
 
         return ccNumber.Value + 1;
+    }
+
+    private static int? DecodeProgramMapPreset(int value)
+    {
+        if (value <= 0 || value > 90)
+            return null;
+
+        return value;
+    }
+
+    private (int V1, int V2, int V3) ReadMidiMapValues(int nibbleIndex)
+    {
+        var offset = DATA_START_OFFSET + (nibbleIndex * 4);
+        if (RawSysEx == null || RawSysEx.Length != EXPECTED_LENGTH)
+            return (0, 0, 0);
+
+        var b0 = RawSysEx[offset] & 0x7F;
+        var b1 = RawSysEx[offset + 1] & 0x7F;
+        var b2 = RawSysEx[offset + 2] & 0x7F;
+        var b3 = RawSysEx[offset + 3] & 0x7F;
+
+        var v1 = (b2 / 4) + (32 * (b3 % 8));
+        var v2 = (b1 / 2) + (64 * (b2 % 4));
+        var v3 = b0 + (128 * (b1 % 2));
+
+        return (v1, v2, v3);
+    }
+
+    private Result WriteMidiMapValues(int nibbleIndex, int v1, int v2, int v3)
+    {
+        if (RawSysEx == null || RawSysEx.Length != EXPECTED_LENGTH)
+            return Result.Fail("SystemDump har ingen gyldig RawSysEx data");
+
+        if (nibbleIndex < 0 || nibbleIndex >= NIBBLE_COUNT)
+            return Result.Fail($"Nibble index out of range: {nibbleIndex} (valid range: 0-{NIBBLE_COUNT - 1})");
+
+        if (v1 < 0 || v1 > 127 || v2 < 0 || v2 > 127 || v3 < 0 || v3 > 127)
+            return Result.Fail("MIDI map values must be between 0 and 127");
+
+        var offset = DATA_START_OFFSET + (nibbleIndex * 4);
+        RawSysEx[offset] = (byte)v3;
+        RawSysEx[offset + 1] = (byte)((v2 % 64) * 2);
+        RawSysEx[offset + 2] = (byte)((v1 % 32) * 4 + (v2 / 64));
+        RawSysEx[offset + 3] = (byte)(v1 / 32);
+
+        return Result.Ok();
     }
 
     private static int DecodeNibbleValue(byte[] data, int offset)

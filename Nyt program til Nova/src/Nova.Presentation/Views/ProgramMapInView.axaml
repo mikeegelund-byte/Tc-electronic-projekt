@@ -1,0 +1,54 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Nova.Presentation.ViewModels"
+             x:Class="Nova.Presentation.Views.ProgramMapInView"
+             x:DataType="vm:ProgramMapInViewModel">
+
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="10" Spacing="10">
+            <TextBlock Text="{Binding StatusMessage}"
+                       VerticalAlignment="Center"
+                       Foreground="{DynamicResource ForegroundSubduedBrush}"/>
+
+            <Button Content="Save Program Map In"
+                    Command="{Binding SaveChangesCommand}"
+                    IsEnabled="{Binding HasUnsavedChanges}"
+                    HorizontalAlignment="Right"/>
+
+            <TextBlock Text="*"
+                       IsVisible="{Binding HasUnsavedChanges}"
+                       FontSize="20"
+                       Foreground="Orange"
+                       VerticalAlignment="Center"
+                       ToolTip.Tip="Unsaved changes"/>
+        </StackPanel>
+
+        <DataGrid ItemsSource="{Binding Entries}"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="False"
+                  GridLinesVisibility="All"
+                  Margin="10">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Incoming PC"
+                                    Binding="{Binding IncomingProgram}"
+                                    IsReadOnly="True"
+                                    Width="120"/>
+
+                <DataGridTextColumn Header="Preset #"
+                                    Binding="{Binding PresetNumber, Mode=TwoWay}"
+                                    IsReadOnly="False"
+                                    Width="120"/>
+
+                <DataGridTextColumn Header="Preset"
+                                    Binding="{Binding PresetDisplay}"
+                                    IsReadOnly="True"
+                                    Width="*"/>
+
+                <DataGridCheckBoxColumn Header="Assigned"
+                                        Binding="{Binding IsAssigned}"
+                                        IsReadOnly="True"
+                                        Width="Auto"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </DockPanel>
+</UserControl>
