@@ -19,7 +19,7 @@
                           AutomationProperties.Name="Parameter selection"
                           AutomationProperties.HelpText="Select which parameter the expression pedal controls (0-127)"/>
             <TextBlock Text="Which parameter the expression pedal controls" 
-                      FontSize="11" Foreground="#808080"/>
+                      FontSize="11" Foreground="{DynamicResource TextTertiary}"/>
         </StackPanel>
         
         <!-- Min Value -->
@@ -31,7 +31,7 @@
                           AutomationProperties.Name="Minimum value percentage"
                           AutomationProperties.HelpText="Value when expression pedal is at minimum position (0-100%)"/>
             <TextBlock Text="Value when pedal is at minimum position" 
-                      FontSize="11" Foreground="#808080"/>
+                      FontSize="11" Foreground="{DynamicResource TextTertiary}"/>
         </StackPanel>
         
         <!-- Mid Value -->
@@ -43,7 +43,7 @@
                           AutomationProperties.Name="Middle value percentage"
                           AutomationProperties.HelpText="Value when expression pedal is at middle position (0-100%)"/>
             <TextBlock Text="Value when pedal is at middle position" 
-                      FontSize="11" Foreground="#808080"/>
+                      FontSize="11" Foreground="{DynamicResource TextTertiary}"/>
         </StackPanel>
         
         <!-- Max Value -->
@@ -55,14 +55,14 @@
                           AutomationProperties.Name="Maximum value percentage"
                           AutomationProperties.HelpText="Value when expression pedal is at maximum position (0-100%)"/>
             <TextBlock Text="Value when pedal is at maximum position" 
-                      FontSize="11" Foreground="#808080"/>
+                      FontSize="11" Foreground="{DynamicResource TextTertiary}"/>
         </StackPanel>
 
         <!-- Response Curve Editor -->
         <StackPanel Spacing="8" Margin="0,16,0,0">
             <TextBlock Text="Response Curve:" FontWeight="SemiBold"/>
             <TextBlock Text="Drag yellow control points to adjust pedal response curve" 
-                      FontSize="11" Foreground="#808080"/>
+                      FontSize="11" Foreground="{DynamicResource TextTertiary}"/>
             <controls:ResponseCurveEditor Name="CurveEditor"
                                           AutomationProperties.Name="Response curve editor"
                                           AutomationProperties.HelpText="Visual editor for adjusting expression pedal response curve" />

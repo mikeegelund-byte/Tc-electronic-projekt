@@ -174,7 +174,7 @@
     </Style>
     
     <Style Selector="Border.error">
-        <Setter Property="Background" Value="#FFE5E5" />
+        <Setter Property="Background" Value="{DynamicResource ErrorBackground}" />
         <Setter Property="BorderBrush" Value="{DynamicResource DangerColor}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="CornerRadius" Value="4" />
@@ -182,24 +182,11 @@
     </Style>
     
     <Style Selector="Border.success">
-        <Setter Property="Background" Value="#E5F5E5" />
+        <Setter Property="Background" Value="{DynamicResource SuccessBackground}" />
         <Setter Property="BorderBrush" Value="{DynamicResource SuccessColor}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="CornerRadius" Value="4" />
         <Setter Property="Padding" Value="12,8" />
-    </Style>
-    
-    <!-- Dark theme variants for status panels -->
-    <Style Selector="Border.warning:dark">
-        <Setter Property="Background" Value="#3D2E1A" />
-    </Style>
-    
-    <Style Selector="Border.error:dark">
-        <Setter Property="Background" Value="#3D1A1A" />
-    </Style>
-    
-    <Style Selector="Border.success:dark">
-        <Setter Property="Background" Value="#1A3D1A" />
     </Style>
     
     <!-- === LOADING STATES === -->

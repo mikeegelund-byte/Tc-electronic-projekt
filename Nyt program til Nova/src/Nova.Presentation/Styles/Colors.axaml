@@ -24,6 +24,8 @@
             <SolidColorBrush x:Key="DangerColor" Color="#D92E1B" /><!-- Per UI Guidelines -->
             <SolidColorBrush x:Key="WarningColor" Color="#FF9500" />
             <SolidColorBrush x:Key="WarningBackground" Color="#FFF4E5" />
+            <SolidColorBrush x:Key="ErrorBackground" Color="#FFE5E5" />
+            <SolidColorBrush x:Key="SuccessBackground" Color="#E5F5E5" />
 
             <!-- Border Colors -->
             <SolidColorBrush x:Key="BorderDefault" Color="#D1D1D6" />
@@ -50,6 +52,8 @@
             <SolidColorBrush x:Key="DangerColor" Color="#D92E1B" /><!-- Per UI Guidelines -->
             <SolidColorBrush x:Key="WarningColor" Color="#FF9500" />
             <SolidColorBrush x:Key="WarningBackground" Color="#CC6633" /><!-- Fixed: 4.7:1 contrast -->
+            <SolidColorBrush x:Key="ErrorBackground" Color="#3D1A1A" /><!-- Dark theme -->
+            <SolidColorBrush x:Key="SuccessBackground" Color="#1A3D1A" /><!-- Dark theme -->
 
             <!-- Border Colors -->
             <SolidColorBrush x:Key="BorderDefault" Color="#3A3A3A" />
