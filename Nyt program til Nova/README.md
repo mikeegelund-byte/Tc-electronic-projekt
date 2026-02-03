@@ -18,6 +18,37 @@ dotnet test NovaApp.sln
 dotnet run --project src/Nova.Presentation
 ```
 
+## Installation
+
+### End Users - Windows Installer (.msi)
+
+Download and run the latest `NovaSystemManager.msi` installer from the releases page.
+
+The installer will:
+- Install the application to `C:\Program Files\Nova System Manager\`
+- Create Start Menu and Desktop shortcuts
+- Enable easy uninstall via Windows Settings
+
+### Developers - Build from Source
+
+See Quick Start section above.
+
+### Building the Installer
+
+To create the Windows installer package:
+
+```powershell
+# Install WiX Toolset (one-time setup)
+dotnet tool install --global wix
+
+# Build the MSI installer
+.\installer\build-installer.ps1
+```
+
+The installer will be created at `installer\output\NovaSystemManager.msi`.
+
+For more details, see [installer/README.md](installer/README.md).
+
 ## Project Structure
 ```
 src/
