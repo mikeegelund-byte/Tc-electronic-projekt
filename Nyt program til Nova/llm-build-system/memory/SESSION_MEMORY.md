@@ -1,5 +1,25 @@
 # SESSION_MEMORY.md — Current Session State
 
+## 📅 Session: 2026-02-03 (SysEx 520-byte fix)
+
+### 🎯 Mål
+Fikse preset SysEx længde til 520 bytes, acceptere legacy 521 med dobbelt F7, og sikre bank load/save + tests matcher så hardware sync virker.
+
+### Nuværende task
+Ad-hoc bugfix (PROGRESS.md genskabt i rod-mappen).
+
+### 🔧 Status Update
+**Build Status**: ✅ GREEN (0 errors, 0 warnings)
+**Tests**: ✅ ALL PASSING (343 tests total)
+
+**Ændringer:**
+- Normaliseret preset SysEx til 520 bytes (acceptér legacy 521 med dobbelt F7)
+- Trimning af evt. ekstra F0/F7 i DryWetMIDI receive
+- Opdateret Save/Load/Request/Delete/Import preset til 520-byte format
+- Opdateret tests og tilføjet legacy double-F7 test
+
+---
+
 ## 📅 Session: 2026-02-03 (Preset number-fix)
 
 ### 🎯 Mål

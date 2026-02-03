@@ -77,6 +77,20 @@ Status: læst
 - **Status**: ⚠️ DEFERRED - MainViewModel code is complete and compiles, tests will be fixed later when extracting UseCase interfaces
 - **Related**: src/Nova.Presentation.Tests/ViewModels/MainViewModelTests.cs, src/Nova.Application/UseCases/
 
+### [2026-02-03] Preset SysEx længde mismatch (520 vs 521)
+- **Symptom**: Hardware sync registrerer input men parser intet; bank load/ældre dumps fejler.
+- **Root cause**: Kode forventede 521 bytes, mens korrekt preset SysEx er 520 bytes; nogle captures havde dobbelt F7 (521).
+- **Fix**: Normaliser til 520 bytes og accepter legacy 521 med dobbelt F7; trim evt. F0/F7 i MIDI receive.
+- **Prevention**: Brug MIDI_PROTOCOL.md (520 bytes) som kilde og test for legacy double-F7.
+- **Related**: src/Nova.Domain/Models/Preset.cs, src/Nova.Infrastructure/Midi/DryWetMidiPort.cs
+
+### [2026-02-03] FluentResults Errors-propagation gav MissingMethodException
+- **Symptom**: Runtime fejlede med MissingMethodException på ResultBase.get_Errors() i Preset.FromSysEx.
+- **Root cause**: Result.Fail(result.Errors) udløste et method lookup mismatch i FluentResults ved runtime.
+- **Fix**: Returnér fejl som string i stedet for at propagerer Errors-listen direkte.
+- **Prevention**: Brug string-baseret Result.Fail i Domain-laget eller sikre ens FluentResults-version overalt.
+- **Related**: src/Nova.Domain/Models/Preset.cs
+
 ---
 
 ## Anti-Patterns to Watch

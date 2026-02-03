@@ -1,5 +1,13 @@
 # BUILD_STATE.md — What's Been Built
 
+## 🔧 Hotfixes
+
+### 2026-02-03 — SysEx 520-byte normalization
+- Preset.FromSysEx accepterer 520 bytes (og legacy 521 med dobbelt F7) og normaliserer RawSysEx
+- Save/Load/Request/Delete/Import preset opdateret til 520-byte format
+- DryWetMidiPort stripper evt. ekstra F0/F7 ved receive
+- Tests opdateret + legacy double-F7 test
+
 ## 📈 Overall Progress [2026-02-03]
 
 ```
