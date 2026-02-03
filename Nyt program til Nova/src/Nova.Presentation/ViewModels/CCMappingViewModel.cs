@@ -60,6 +60,9 @@ public partial class CCMappingViewModel : ObservableObject
     [ObservableProperty]
     private bool _hasUnsavedChanges;
 
+    [ObservableProperty]
+    private PedalMappingViewModel _pedalMapping;
+
     public CCMappingViewModel(
         IGetCCMappingsUseCase getCCMappingsUseCase,
         IUpdateCCMappingUseCase updateCCMappingUseCase,
@@ -68,6 +71,7 @@ public partial class CCMappingViewModel : ObservableObject
         _getCCMappingsUseCase = getCCMappingsUseCase;
         _updateCCMappingUseCase = updateCCMappingUseCase;
         _saveSystemDumpUseCase = saveSystemDumpUseCase;
+        _pedalMapping = new PedalMappingViewModel();
     }
 
     /// <summary>
@@ -85,6 +89,10 @@ public partial class CCMappingViewModel : ObservableObject
         }
 
         _currentSystemDump = dump;
+        
+        // Load pedal mapping
+        PedalMapping.LoadFromDump(dump);
+        
         var result = await _getCCMappingsUseCase.ExecuteAsync(dump);
 
         if (result.IsSuccess)

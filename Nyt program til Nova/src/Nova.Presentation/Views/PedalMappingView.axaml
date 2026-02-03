@@ -1,0 +1,52 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Nova.Presentation.ViewModels"
+             x:Class="Nova.Presentation.Views.PedalMappingView"
+             x:DataType="vm:PedalMappingViewModel">
+    
+    <StackPanel Spacing="16" Margin="16">
+        <TextBlock Text="Expression Pedal Mapping" 
+                   FontSize="18" FontWeight="Bold" 
+                   Margin="0,0,0,8"/>
+        
+        <!-- Parameter Selection -->
+        <StackPanel Spacing="4">
+            <TextBlock Text="Map Parameter:" FontWeight="SemiBold"/>
+            <NumericUpDown Value="{Binding Parameter}" 
+                          Minimum="0" Maximum="127"
+                          Width="200" HorizontalAlignment="Left"/>
+            <TextBlock Text="Which parameter the expression pedal controls" 
+                      FontSize="11" Foreground="#808080"/>
+        </StackPanel>
+        
+        <!-- Min Value -->
+        <StackPanel Spacing="4">
+            <TextBlock Text="Minimum Value (%):" FontWeight="SemiBold"/>
+            <NumericUpDown Value="{Binding Min}" 
+                          Minimum="0" Maximum="100"
+                          Width="200" HorizontalAlignment="Left"/>
+            <TextBlock Text="Value when pedal is at minimum position" 
+                      FontSize="11" Foreground="#808080"/>
+        </StackPanel>
+        
+        <!-- Mid Value -->
+        <StackPanel Spacing="4">
+            <TextBlock Text="Middle Value (%):" FontWeight="SemiBold"/>
+            <NumericUpDown Value="{Binding Mid}" 
+                          Minimum="0" Maximum="100"
+                          Width="200" HorizontalAlignment="Left"/>
+            <TextBlock Text="Value when pedal is at middle position" 
+                      FontSize="11" Foreground="#808080"/>
+        </StackPanel>
+        
+        <!-- Max Value -->
+        <StackPanel Spacing="4">
+            <TextBlock Text="Maximum Value (%):" FontWeight="SemiBold"/>
+            <NumericUpDown Value="{Binding Max}" 
+                          Minimum="0" Maximum="100"
+                          Width="200" HorizontalAlignment="Left"/>
+            <TextBlock Text="Value when pedal is at maximum position" 
+                      FontSize="11" Foreground="#808080"/>
+        </StackPanel>
+    </StackPanel>
+</UserControl>
