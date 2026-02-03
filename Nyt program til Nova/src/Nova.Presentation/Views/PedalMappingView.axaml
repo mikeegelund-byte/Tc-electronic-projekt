@@ -1,6 +1,7 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:vm="using:Nova.Presentation.ViewModels"
+             xmlns:controls="using:Nova.Presentation.Controls"
              x:Class="Nova.Presentation.Views.PedalMappingView"
              x:DataType="vm:PedalMappingViewModel">
     
@@ -47,6 +48,14 @@
                           Width="200" HorizontalAlignment="Left"/>
             <TextBlock Text="Value when pedal is at maximum position" 
                       FontSize="11" Foreground="#808080"/>
+        </StackPanel>
+
+        <!-- Response Curve Editor -->
+        <StackPanel Spacing="8" Margin="0,16,0,0">
+            <TextBlock Text="Response Curve:" FontWeight="SemiBold"/>
+            <TextBlock Text="Drag yellow control points to adjust pedal response curve" 
+                      FontSize="11" Foreground="#808080"/>
+            <controls:ResponseCurveEditor Name="CurveEditor" />
         </StackPanel>
     </StackPanel>
 </UserControl>
