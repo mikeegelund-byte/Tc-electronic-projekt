@@ -10,6 +10,9 @@
     
     <Media Id="1" Cabinet="NovaSystemManager.cab" EmbedCab="yes" />
 
+    <!-- Property for optional desktop shortcut (defaults to enabled) -->
+    <Property Id="ADDDESKTOPSHORTCUT" Value="1" />
+
     <!-- Define installation directory -->
     <StandardDirectory Id="ProgramFiles64Folder">
       <Directory Id="INSTALLFOLDER" Name="Nova System Manager" />
@@ -47,8 +50,9 @@
                      KeyPath="yes" />
     </Component>
 
-    <!-- Desktop Shortcut Component -->
+    <!-- Desktop Shortcut Component (Optional) -->
     <Component Id="DesktopShortcut" Directory="DesktopFolder" Guid="C9D0E1F2-A3B4-4567-C9D0-E1F2A3B45678">
+      <Condition>ADDDESKTOPSHORTCUT = 1</Condition>
       <Shortcut Id="DesktopShortcut"
                 Name="Nova System Manager"
                 Description="TC Electronic Nova System Manager"
