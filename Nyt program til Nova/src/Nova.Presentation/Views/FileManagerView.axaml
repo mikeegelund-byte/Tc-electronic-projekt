@@ -22,7 +22,7 @@
                 <Grid ColumnDefinitions="*,16,*" RowDefinitions="Auto">
                     <Button Grid.Column="0"
                             Content="Save Bank to File"
-                            Command="{Binding SaveBankCommand}"
+                            Command="{Binding $parent[Window].((vm:MainViewModel)DataContext).SaveBankCommand}"
                             HorizontalAlignment="Stretch"
                             Padding="{StaticResource ButtonPadding}"
                             AutomationProperties.Name="Save bank to file"
@@ -30,7 +30,7 @@
                     
                     <Button Grid.Column="2"
                             Content="Load Bank from File"
-                            Command="{Binding LoadBankCommand}"
+                            Command="{Binding $parent[Window].((vm:MainViewModel)DataContext).LoadBankCommand}"
                             HorizontalAlignment="Stretch"
                             Padding="{StaticResource ButtonPadding}"
                             AutomationProperties.Name="Load bank from file"
@@ -52,7 +52,7 @@
                 <Grid ColumnDefinitions="*,16,*" RowDefinitions="Auto">
                     <Button Grid.Column="0"
                             Content="Export Preset"
-                            Command="{Binding ExportPresetCommand}"
+                            Command="{Binding $parent[Window].((vm:MainViewModel)DataContext).ExportPresetCommand}"
                             HorizontalAlignment="Stretch"
                             Padding="{StaticResource ButtonPadding}"
                             AutomationProperties.Name="Export single preset"
@@ -60,7 +60,7 @@
                     
                     <Button Grid.Column="2"
                             Content="Import Preset"
-                            Command="{Binding ImportPresetCommand}"
+                            Command="{Binding $parent[Window].((vm:MainViewModel)DataContext).ImportPresetCommand}"
                             HorizontalAlignment="Stretch"
                             Padding="{StaticResource ButtonPadding}"
                             AutomationProperties.Name="Import single preset"

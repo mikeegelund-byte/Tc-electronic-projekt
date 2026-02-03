@@ -212,6 +212,12 @@
                      AutomationProperties.Name="System configuration tab">
                 <views:SystemSettingsView DataContext="{Binding SystemSettings}" />
             </TabItem>
+
+            <!-- MIDI Mapping Tab -->
+            <TabItem Header="MIDI Mapping"
+                     AutomationProperties.Name="MIDI mapping tab">
+                <views:MidiMappingView DataContext="{Binding CcMapping}" />
+            </TabItem>
         </TabControl>
     </DockPanel>
     

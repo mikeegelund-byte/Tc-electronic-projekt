@@ -6,6 +6,8 @@ using Nova.Application.UseCases;
 using Nova.Infrastructure.Midi;
 using Nova.Midi;
 using Nova.Presentation.ViewModels;
+using Serilog;
+using System.IO;
 
 namespace Nova.Presentation;
 
@@ -21,6 +23,22 @@ public partial class App : global::Avalonia.Application
     public override void OnFrameworkInitializationCompleted()
     {
         var services = new ServiceCollection();
+
+        var logDir = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+            "NovaSystemManager",
+            "logs");
+        Directory.CreateDirectory(logDir);
+
+        Log.Logger = new LoggerConfiguration()
+            .MinimumLevel.Debug()
+            .WriteTo.File(
+                Path.Combine(logDir, "NovaSystemManager-.log"),
+                rollingInterval: RollingInterval.Day,
+                retainedFileCountLimit: 7)
+            .CreateLogger();
+
+        services.AddSingleton<ILogger>(Log.Logger);
         
         // Infrastructure
         services.AddSingleton<IMidiPort, DryWetMidiPort>();
@@ -29,6 +47,14 @@ public partial class App : global::Avalonia.Application
         services.AddTransient<IConnectUseCase, ConnectUseCase>();
         services.AddTransient<IDownloadBankUseCase, DownloadBankUseCase>();
         services.AddTransient<ISaveSystemDumpUseCase, SaveSystemDumpUseCase>();
+        services.AddTransient<IRequestSystemDumpUseCase, RequestSystemDumpUseCase>();
+        services.AddTransient<IRequestPresetUseCase, RequestPresetUseCase>();
+        services.AddTransient<ISavePresetUseCase, SavePresetUseCase>();
+        services.AddTransient<SaveBankUseCase>();
+        services.AddTransient<LoadBankUseCase>();
+        services.AddTransient<ExportPresetUseCase>();
+        services.AddTransient<IExportPresetUseCase, ExportSyxPresetUseCase>();
+        services.AddTransient<ImportPresetUseCase>();
         services.AddTransient<IGetCCMappingsUseCase, GetCCMappingsUseCase>();
         services.AddTransient<IUpdateCCMappingUseCase, UpdateCCMappingUseCase>();
         
@@ -44,6 +70,8 @@ public partial class App : global::Avalonia.Application
             {
                 DataContext = Services.GetRequiredService<MainViewModel>()
             };
+
+            desktop.Exit += (_, _) => Log.CloseAndFlush();
         }
 
         base.OnFrameworkInitializationCompleted();
