@@ -22,9 +22,6 @@
                   GridLinesVisibility="All"
                   Margin="10">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Index" 
-                                    Binding="{Binding $parent[DataGrid].Items.IndexOf(.)}"
-                                    Width="Auto"/>
                 <DataGridTextColumn Header="CC Number" 
                                     Binding="{Binding CCNumber}" 
                                     Width="*"/>

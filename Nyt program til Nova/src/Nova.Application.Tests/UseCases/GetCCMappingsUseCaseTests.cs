@@ -34,9 +34,10 @@ public class GetCCMappingsUseCaseTests
         validSystemDump[1] = 0x00;  // TC Electronic
         validSystemDump[2] = 0x20;
         validSystemDump[3] = 0x1F;
-        validSystemDump[4] = 0x00;  // Nova System
-        validSystemDump[5] = 0x62;  // System Dump
-        validSystemDump[6] = 0x01;  // Version
+        validSystemDump[4] = 0x04;  // Bank number
+        validSystemDump[5] = 0x63;  // Nova System model ID
+        validSystemDump[6] = 0x20;  // Message ID (Dump)
+        validSystemDump[7] = 0x02;  // Data Type (System Dump)
         validSystemDump[526] = 0xF7; // SysEx end
 
         // Fill CC mapping data (offset 34, 64 mappings × 2 bytes)
@@ -67,9 +68,10 @@ public class GetCCMappingsUseCaseTests
         validSystemDump[1] = 0x00;
         validSystemDump[2] = 0x20;
         validSystemDump[3] = 0x1F;
-        validSystemDump[4] = 0x00;
-        validSystemDump[5] = 0x62;
-        validSystemDump[6] = 0x01;
+        validSystemDump[4] = 0x04;
+        validSystemDump[5] = 0x63;
+        validSystemDump[6] = 0x20;
+        validSystemDump[7] = 0x02;
         validSystemDump[526] = 0xF7;
 
         // Fill all CC mappings with assigned values (not 0xFF)
@@ -98,9 +100,10 @@ public class GetCCMappingsUseCaseTests
         validSystemDump[1] = 0x00;
         validSystemDump[2] = 0x20;
         validSystemDump[3] = 0x1F;
-        validSystemDump[4] = 0x00;
-        validSystemDump[5] = 0x62;
-        validSystemDump[6] = 0x01;
+        validSystemDump[4] = 0x04;
+        validSystemDump[5] = 0x63;
+        validSystemDump[6] = 0x20;
+        validSystemDump[7] = 0x02;
         validSystemDump[526] = 0xF7;
 
         // First 5 mappings assigned, rest unassigned (0xFF)
