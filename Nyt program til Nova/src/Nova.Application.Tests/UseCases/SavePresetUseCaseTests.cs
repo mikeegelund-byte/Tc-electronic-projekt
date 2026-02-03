@@ -24,7 +24,7 @@ public sealed class SavePresetUseCaseTests
     }
 
     [Fact]
-    public async Task ExecuteAsync_WithValidPresetAndSlot_SendsToMidi()
+    public async Task ExecuteAsync_WithValidPresetNumber_SendsToMidi()
     {
         // Arrange
         var preset = CreateValidPreset();
@@ -41,26 +41,26 @@ public sealed class SavePresetUseCaseTests
             bytes.Length == 521 &&
             bytes[0] == 0xF0 &&
             bytes[520] == 0xF7 &&
-            bytes[8] == 32)), Times.Once); // Verify slot number
+            bytes[8] == 32)), Times.Once); // Verify preset number
     }
 
     [Theory]
     [InlineData(0)]
     [InlineData(-1)]
-    [InlineData(61)]
-    [InlineData(100)]
-    public async Task ExecuteAsync_WithInvalidSlotNumber_ReturnsFailure(int invalidSlot)
+    [InlineData(30)]
+    [InlineData(91)]
+    public async Task ExecuteAsync_WithInvalidPresetNumber_ReturnsFailure(int invalidPresetNumber)
     {
         // Arrange
         var preset = CreateValidPreset();
         _mockMidiPort.Setup(x => x.IsConnected).Returns(true);
 
         // Act
-        var result = await _useCase.ExecuteAsync(preset, invalidSlot);
+        var result = await _useCase.ExecuteAsync(preset, invalidPresetNumber);
 
         // Assert
         result.IsFailed.Should().BeTrue();
-        result.Errors.First().Message.Should().Contain("Invalid slot number");
+        result.Errors.First().Message.Should().Contain("Invalid preset number");
         _mockMidiPort.Verify(x => x.SendSysExAsync(It.IsAny<byte[]>()), Times.Never);
     }
 
@@ -107,12 +107,12 @@ public sealed class SavePresetUseCaseTests
                      .ReturnsAsync(Result.Ok());
 
         // Act
-        var result = await _useCase.ExecuteAsync(preset, 45); // Save to slot 45
+        var result = await _useCase.ExecuteAsync(preset, 45); // Save to preset #45
 
         // Assert
         result.IsSuccess.Should().BeTrue();
         _mockMidiPort.Verify(x => x.SendSysExAsync(It.Is<byte[]>(bytes =>
-            bytes[8] == 45)), Times.Once); // Verify new slot number in SysEx
+            bytes[8] == 45)), Times.Once); // Verify new preset number in SysEx
     }
 
     [Fact]

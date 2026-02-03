@@ -5,7 +5,7 @@ using Serilog;
 namespace Nova.Application.UseCases;
 
 /// <summary>
-/// Use case for copying a preset to a different slot.
+/// Use case for copying a preset to a different user preset number.
 /// </summary>
 public sealed class CopyPresetUseCase : ICopyPresetUseCase
 {
@@ -19,46 +19,46 @@ public sealed class CopyPresetUseCase : ICopyPresetUseCase
     }
 
     /// <summary>
-    /// Copies a preset to a different slot on the hardware.
+    /// Copies a preset to a different user preset number on the hardware.
     /// </summary>
     /// <param name="preset">The preset to copy</param>
-    /// <param name="targetSlot">Target slot number (1-60)</param>
+    /// <param name="targetPresetNumber">Target preset number (31-90)</param>
     /// <returns>Result indicating success or failure</returns>
-    public async Task<Result> ExecuteAsync(Preset preset, int targetSlot)
+    public async Task<Result> ExecuteAsync(Preset preset, int targetPresetNumber)
     {
         try
         {
-            // Validate target slot
-            if (targetSlot < 1 || targetSlot > 60)
+            // Validate target preset number
+            if (targetPresetNumber < 31 || targetPresetNumber > 90)
             {
-                _logger.Error("Invalid target slot: {TargetSlot}. Must be 1-60", targetSlot);
-                return Result.Fail($"Target slot must be between 1 and 60, got {targetSlot}");
+                _logger.Error("Invalid target preset number: {PresetNumber}. Must be 31-90", targetPresetNumber);
+                return Result.Fail($"Target preset number must be between 31 and 90, got {targetPresetNumber}");
             }
 
-            // Check if copying to same slot
-            if (preset.Number == targetSlot)
+            // Check if copying to same preset
+            if (preset.Number == targetPresetNumber)
             {
-                _logger.Warning("Attempted to copy preset to same slot {SlotNumber}", targetSlot);
-                return Result.Fail("Cannot copy preset to the same slot");
+                _logger.Warning("Attempted to copy preset to same preset #{PresetNumber}", targetPresetNumber);
+                return Result.Fail("Cannot copy preset to the same preset");
             }
 
-            _logger.Information("Copying preset '{PresetName}' from slot {SourceSlot} to slot {TargetSlot}", 
-                preset.Name, preset.Number, targetSlot);
+            _logger.Information("Copying preset '{PresetName}' from preset #{SourcePreset} to preset #{TargetPreset}", 
+                preset.Name, preset.Number, targetPresetNumber);
 
-            // Use SavePresetUseCase to save the copy - it handles slot number update and SysEx
-            var saveResult = await _savePresetUseCase.ExecuteAsync(preset, targetSlot, verify: false);
+            // Use SavePresetUseCase to save the copy - it handles preset number update and SysEx
+            var saveResult = await _savePresetUseCase.ExecuteAsync(preset, targetPresetNumber, verify: false);
             
             if (saveResult.IsSuccess)
             {
-                _logger.Information("Successfully copied preset '{PresetName}' to slot {TargetSlot}", 
-                    preset.Name, targetSlot);
+                _logger.Information("Successfully copied preset '{PresetName}' to preset #{TargetPreset}", 
+                    preset.Name, targetPresetNumber);
             }
 
             return saveResult;
         }
         catch (Exception ex)
         {
-            _logger.Error(ex, "Unexpected error copying preset to slot {TargetSlot}", targetSlot);
+            _logger.Error(ex, "Unexpected error copying preset to preset #{PresetNumber}", targetPresetNumber);
             return Result.Fail($"Unexpected error: {ex.Message}");
         }
     }

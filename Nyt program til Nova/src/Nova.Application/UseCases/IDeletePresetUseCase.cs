@@ -3,14 +3,14 @@ using FluentResults;
 namespace Nova.Application.UseCases;
 
 /// <summary>
-/// Interface for deleting a preset by clearing the slot.
+/// Interface for deleting a preset by clearing the user preset number.
 /// </summary>
 public interface IDeletePresetUseCase
 {
     /// <summary>
-    /// Deletes a preset by clearing its slot (sending an init preset with default parameters).
+    /// Deletes a preset by clearing its user preset number (sending an init preset with default parameters).
     /// </summary>
-    /// <param name="slotNumber">Slot number (1-60)</param>
+    /// <param name="presetNumber">Preset number (31-90)</param>
     /// <returns>Result indicating success or failure</returns>
-    Task<Result> ExecuteAsync(int slotNumber);
+    Task<Result> ExecuteAsync(int presetNumber);
 }

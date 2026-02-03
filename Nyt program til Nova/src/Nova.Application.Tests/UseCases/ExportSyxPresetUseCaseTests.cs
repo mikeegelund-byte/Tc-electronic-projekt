@@ -126,7 +126,7 @@ public sealed class ExportSyxPresetUseCaseTests : IDisposable
         sysex[5] = 0x63; // Nova System
         sysex[6] = 0x20; // Preset dump
         sysex[7] = 0x01; // Data type: Preset
-        sysex[8] = 31;   // Preset number (slot 1)
+        sysex[8] = 31;   // Preset number (user preset 31)
         
         // Set preset name at bytes 9-32 (24 chars)
         var nameBytes = System.Text.Encoding.ASCII.GetBytes(name.PadRight(24));

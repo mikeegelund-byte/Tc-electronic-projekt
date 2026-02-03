@@ -24,7 +24,7 @@ public sealed class RenamePresetUseCase : IRenamePresetUseCase
     }
 
     /// <summary>
-    /// Renames a preset and saves it back to the same slot.
+    /// Renames a preset and saves it back to the same preset number.
     /// </summary>
     /// <param name="preset">The preset to rename</param>
     /// <param name="newName">New name (max 24 characters)</param>
@@ -46,7 +46,7 @@ public sealed class RenamePresetUseCase : IRenamePresetUseCase
                 return Result.Fail<Preset>("Preset name must be 24 characters or less");
             }
 
-            _logger.Information("Renaming preset from '{OldName}' to '{NewName}' in slot {SlotNumber}", 
+            _logger.Information("Renaming preset from '{OldName}' to '{NewName}' in preset #{PresetNumber}", 
                 preset.Name, newName, preset.Number);
 
             // Get current preset SysEx and modify name bytes (9-32 = 24 ASCII chars)
@@ -93,7 +93,7 @@ public sealed class RenamePresetUseCase : IRenamePresetUseCase
                 return Result.Ok(renamedPreset);
             }
 
-            _logger.Information("Successfully renamed preset to '{NewName}' in slot {SlotNumber}", 
+            _logger.Information("Successfully renamed preset to '{NewName}' in preset #{PresetNumber}", 
                 newName, preset.Number);
 
             return Result.Ok(verifyResult.Value);

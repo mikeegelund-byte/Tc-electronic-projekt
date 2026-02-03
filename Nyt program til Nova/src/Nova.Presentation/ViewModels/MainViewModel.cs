@@ -498,21 +498,21 @@ public partial class MainViewModel : ObservableObject
                 importedPreset = result.Value;
             }
 
-            var targetSlot = PresetList.SelectedPreset?.Number ?? importedPreset.Number;
-            if (targetSlot < 1 || targetSlot > 60)
+            var targetPresetNumber = PresetList.SelectedPreset?.Number ?? importedPreset.Number;
+            if (targetPresetNumber < 31 || targetPresetNumber > 90)
             {
-                UpdateFileStatus("Select a target slot (preset) before importing");
+                UpdateFileStatus("Select a target preset (31-90) before importing");
                 return;
             }
 
-            var presetForSlot = CreatePresetForSlot(importedPreset, targetSlot);
-            var saveResult = await _savePresetUseCase.ExecuteAsync(presetForSlot, targetSlot);
+            var presetForNumber = CreatePresetForNumber(importedPreset, targetPresetNumber);
+            var saveResult = await _savePresetUseCase.ExecuteAsync(presetForNumber, targetPresetNumber);
 
             if (saveResult.IsSuccess)
             {
-                UpdateFileStatus($"Preset imported to slot {targetSlot}", path);
-                StatusMessage = $"Preset saved to slot {targetSlot}";
-                UpdateCurrentBank(presetForSlot);
+                UpdateFileStatus($"Preset imported to preset #{targetPresetNumber}", path);
+                StatusMessage = $"Preset saved to preset #{targetPresetNumber}";
+                UpdateCurrentBank(presetForNumber);
             }
             else
             {
@@ -581,7 +581,7 @@ public partial class MainViewModel : ObservableObject
         return string.IsNullOrWhiteSpace(safe) ? "Preset" : safe.Trim();
     }
 
-    private Preset CreatePresetForSlot(Preset preset, int slotNumber)
+    private Preset CreatePresetForNumber(Preset preset, int presetNumber)
     {
         var sysexResult = preset.ToSysEx();
         if (sysexResult.IsFailed)
@@ -590,7 +590,7 @@ public partial class MainViewModel : ObservableObject
         var sysex = sysexResult.Value;
         if (sysex.Length > 8)
         {
-            sysex[8] = (byte)slotNumber;
+            sysex[8] = (byte)presetNumber;
         }
 
         var parsed = Preset.FromSysEx(sysex);

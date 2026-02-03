@@ -1,5 +1,24 @@
 # SESSION_MEMORY.md — Current Session State
 
+## 📅 Session: 2026-02-03 (Preset number-fix)
+
+### 🎯 Mål
+Fjerne mismatch mellem slot-numre og preset-numre (31-90) i save/copy/delete/request/import, så alle 60 user presets kan gemmes/overskrives korrekt.
+
+### Nuværende task
+Ad-hoc fejlretning (ingen task-fil). Fokus: konsistent preset-nummerering.
+
+### 🔧 Status Update
+**Build Status**: ✅ GREEN (0 errors, 0 warnings)
+**Tests**: ✅ ALL PASSING (342 tests total)
+
+**Ændringer:**
+- Standardiseret på preset-numre 31-90 i Save/Request/Copy/Delete use cases
+- Import i MainViewModel bruger nu preset-numre 31-90 (ingen fejl på 61-90)
+- Opdaterede tests og interface-dokumentation
+
+---
+
 ## 📅 Session: 2026-02-03 (Installer x64-fix)
 
 ### 🎯 Mål
