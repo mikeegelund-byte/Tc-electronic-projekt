@@ -11,7 +11,7 @@
     <Media Id="1" Cabinet="NovaSystemManager.cab" EmbedCab="yes" />
 
     <!-- Define installation directory -->
-    <StandardDirectory Id="ProgramFiles6464Folder">
+    <StandardDirectory Id="ProgramFiles64Folder">
       <Directory Id="INSTALLFOLDER" Name="Nova System Manager" />
     </StandardDirectory>
 

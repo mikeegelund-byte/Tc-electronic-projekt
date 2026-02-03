@@ -201,4 +201,3 @@ Write-Host "  1. Test the installer on a clean Windows machine" -ForegroundColor
 Write-Host "  2. Verify the application launches correctly" -ForegroundColor Gray
 Write-Host "  3. Test the uninstall process" -ForegroundColor Gray
 Write-Host ""
-
