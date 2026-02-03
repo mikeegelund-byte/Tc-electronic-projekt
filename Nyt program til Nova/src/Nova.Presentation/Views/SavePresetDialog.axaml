@@ -2,54 +2,65 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         x:Class="Nova.Presentation.Views.SavePresetDialog"
         Title="Save Preset to Hardware"
+        MinWidth="400" MinHeight="250"
         Width="450"
         Height="280"
         WindowStartupLocation="CenterOwner"
-        CanResize="False"
-        Background="#2D2D2D">
+        CanResize="True"
+        Background="{StaticResource BackgroundSecondary}">
 
-    <Border Padding="20">
+    <Border Padding="{StaticResource SpacingLarge}">
         <StackPanel Spacing="16">
             <!-- Title -->
             <TextBlock Text="Save Preset to Hardware"
-                       FontSize="18"
-                       FontWeight="Bold"
-                       Foreground="#FFFFFF"/>
+                       FontSize="{StaticResource FontSizeXLarge}"
+                       FontWeight="{StaticResource FontWeightBold}"
+                       Foreground="{StaticResource TextPrimary}"/>
 
             <!-- Preset Name -->
             <StackPanel Spacing="8">
                 <TextBlock Text="Preset Name:"
-                           Foreground="#AAAAAA"/>
+                           Foreground="{StaticResource TextSecondary}"/>
                 <TextBox Name="PresetNameText"
-                         IsReadOnly="True"
-                         Background="#1E1E1E"
-                         Foreground="#FFFFFF"
-                         BorderBrush="#444444"
+                         Background="{StaticResource BackgroundPrimary}"
+                         Foreground="{StaticResource TextPrimary}"
+                         BorderBrush="{StaticResource BorderDefault}"
                          Height="36"
-                         Padding="8"/>
+                         Padding="{StaticResource InputPadding}"
+                         AutomationProperties.Name="Preset name"
+                         AutomationProperties.HelpText="Enter the name for this preset (maximum 16 characters)" />
             </StackPanel>
 
             <!-- Slot Selection -->
             <StackPanel Spacing="8">
                 <TextBlock Text="Target Slot (1-60):"
-                           Foreground="#AAAAAA"/>
+                           Foreground="{StaticResource TextSecondary}"/>
                 <ComboBox Name="SlotComboBox"
-                          Background="#1E1E1E"
-                          Foreground="#FFFFFF"
-                          BorderBrush="#444444"
+                          Background="{StaticResource BackgroundPrimary}"
+                          Foreground="{StaticResource TextPrimary}"
+                          BorderBrush="{StaticResource BorderDefault}"
                           Height="36"
-                          HorizontalAlignment="Stretch"/>
+                          HorizontalAlignment="Stretch"
+                          AutomationProperties.Name="Target slot selection"
+                          AutomationProperties.HelpText="Choose which slot (1-60) to save this preset to" />
             </StackPanel>
 
             <!-- Overwrite Warning -->
             <Border Name="OverwriteWarning"
-                    Background="#AA5522"
-                    Padding="12"
-                    CornerRadius="4"
+                    Background="{StaticResource WarningBackground}"
+                    Padding="{StaticResource SpacingMedium}"
+                    CornerRadius="{StaticResource BorderRadiusMedium}"
                     IsVisible="False">
-                <TextBlock Text="⚠️ This will overwrite the existing preset in this slot!"
-                           Foreground="#FFFFFF"
-                           TextWrapping="Wrap"/>
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <TextBlock Text="⚠"
+                               FontSize="16"
+                               VerticalAlignment="Center"
+                               Foreground="{StaticResource WarningColor}" />
+                    <TextBlock Text="This will overwrite the existing preset in this slot!"
+                               Foreground="{StaticResource TextPrimary}"
+                               TextWrapping="Wrap"
+                               VerticalAlignment="Center" />
+                </StackPanel>
             </Border>
 
             <!-- Buttons -->
@@ -57,19 +68,23 @@
                 <Button Grid.Column="0"
                         Name="CancelButton"
                         Content="Cancel"
-                        Background="#444444"
-                        Foreground="#FFFFFF"
+                        Background="{StaticResource BackgroundTertiary}"
+                        Foreground="{StaticResource TextPrimary}"
                         Height="36"
                         HorizontalAlignment="Stretch"
-                        HorizontalContentAlignment="Center"/>
+                        HorizontalContentAlignment="Center"
+                        AutomationProperties.Name="Cancel"
+                        AutomationProperties.HelpText="Close dialog without saving" />
                 <Button Grid.Column="1"
                         Name="SaveButton"
                         Content="Save to Hardware"
-                        Background="#0066CC"
-                        Foreground="#FFFFFF"
+                        Background="{StaticResource AccentPrimary}"
+                        Foreground="{StaticResource TextPrimary}"
                         Height="36"
                         HorizontalAlignment="Stretch"
-                        HorizontalContentAlignment="Center"/>
+                        HorizontalContentAlignment="Center"
+                        AutomationProperties.Name="Save to hardware"
+                        AutomationProperties.HelpText="Write preset to selected slot on Nova System pedal" />
             </Grid>
         </StackPanel>
     </Border>

@@ -5,6 +5,7 @@
         x:Class="Nova.Presentation.MainWindow"
         x:DataType="vm:MainViewModel"
         Title="Nova System Manager"
+        MinWidth="1200" MinHeight="700"
         Width="1400" Height="800"
         WindowStartupLocation="CenterScreen">
 
@@ -12,85 +13,133 @@
         <vm:MainViewModel />
     </Design.DataContext>
 
-    <DockPanel Margin="16">
+    <!-- === KEYBOARD SHORTCUTS === -->
+    <Window.KeyBindings>
+      <KeyBinding Gesture="Ctrl+R" Command="{Binding RefreshPortsCommand}" />
+      <KeyBinding Gesture="F5" Command="{Binding DownloadBankCommand}" />
+      <KeyBinding Gesture="Ctrl+D" Command="{Binding DownloadBankCommand}" />
+    </Window.KeyBindings>
+
+    <DockPanel Margin="{StaticResource SpacingMedium}">
         <!-- Status Bar at Bottom -->
         <Border DockPanel.Dock="Bottom" 
-                Background="#1E1E1E" 
-                Padding="8" 
-                CornerRadius="4"
+                Background="{StaticResource BackgroundPrimary}" 
+                Padding="{StaticResource SpacingSmall}" 
+                CornerRadius="{StaticResource BorderRadiusMedium}"
                 Margin="0,16,0,0">
             <Grid ColumnDefinitions="*,Auto">
                 <TextBlock Text="{Binding StatusMessage}" 
-                           Foreground="#CCCCCC"
-                           VerticalAlignment="Center"/>
+                           Foreground="{StaticResource TextSecondary}"
+                           VerticalAlignment="Center"
+                           AutomationProperties.LiveSetting="Polite"
+                           AutomationProperties.Name="Status message" />
                 <ProgressBar Grid.Column="1" 
                              Value="{Binding DownloadProgress}"
                              Width="100"
+                             Height="4"
                              IsVisible="{Binding IsDownloading}"
-                             Margin="16,0,0,0"/>
+                             VerticalAlignment="Center"
+                             Margin="16,0,0,0"
+                             AutomationProperties.Name="Download progress" />
             </Grid>
         </Border>
 
         <!-- Main Content with Tab Control -->
         <TabControl>
             <!-- Connection Tab -->
-            <TabItem Header="🔌 Connection">
+            <TabItem Header="Connection"
+                     AutomationProperties.Name="Connection and MIDI settings tab">
                 <Grid ColumnDefinitions="*,16,400" RowDefinitions="*">
                     <!-- Left Side: Connection, Bank Operations, and Preset List -->
                     <StackPanel Grid.Column="0" Spacing="16">
                         <!-- Connection Section -->
-                        <Border Background="#2D2D2D" Padding="16" CornerRadius="8">
-                            <StackPanel Spacing="12">
+                        <Border Background="{StaticResource BackgroundSecondary}" 
+                                Padding="{StaticResource CardPadding}" 
+                                CornerRadius="{StaticResource BorderRadiusLarge}">
+                            <StackPanel Spacing="{StaticResource SpacingMedium}">
                                 <TextBlock Text="MIDI Connection" 
-                                           FontWeight="Bold" 
-                                           FontSize="16"/>
+                                           FontWeight="{StaticResource FontWeightBold}" 
+                                           FontSize="{StaticResource FontSizeLarge}"
+                                           Foreground="{StaticResource TextPrimary}"/>
                                 
                                 <Grid ColumnDefinitions="*,Auto,Auto" RowDefinitions="Auto">
                                     <ComboBox ItemsSource="{Binding AvailablePorts}"
                                               SelectedItem="{Binding SelectedPort}"
                                               PlaceholderText="Select MIDI Port..."
-                                              HorizontalAlignment="Stretch"/>
+                                              HorizontalAlignment="Stretch"
+                                              AutomationProperties.Name="MIDI port selection"
+                                              AutomationProperties.HelpText="Choose a MIDI port to connect to the Nova System pedal"/>
                                     
                                     <Button Grid.Column="1" 
-                                            Content="🔄" 
+                                            Content="↻"
                                             Command="{Binding RefreshPortsCommand}"
-                                            ToolTip.Tip="Refresh port list"
-                                            Margin="8,0,0,0"/>
+                                            ToolTip.Tip="Refresh available MIDI ports (Ctrl+R)"
+                                            Margin="8,0,0,0"
+                                            FontSize="18"
+                                            Width="32"
+                                            AutomationProperties.Name="Refresh MIDI ports"
+                                            AutomationProperties.HelpText="Scan for available MIDI devices" />
                                     
                                     <Button Grid.Column="2"
                                             Content="Connect"
                                             Command="{Binding ConnectCommand}"
                                             Margin="8,0,0,0"
-                                            Width="100"/>
+                                            Width="100"
+                                            AutomationProperties.Name="Connect to MIDI device"
+                                            AutomationProperties.HelpText="Establishes connection to selected MIDI port" />
                                 </Grid>
                                 
-                                <StackPanel Orientation="Horizontal" Spacing="8" IsVisible="{Binding IsConnected}">
-                                    <Ellipse Width="12" Height="12" Fill="#4CAF50"/>
-                                    <TextBlock Text="Connected" Foreground="#AAAAAA"/>
+                                <!-- Connected Status -->
+                                <StackPanel Orientation="Horizontal" 
+                                            Spacing="8" 
+                                            IsVisible="{Binding IsConnected}">
+                                    <Ellipse Width="12" 
+                                             Height="12" 
+                                             Fill="{StaticResource StatusConnected}"
+                                             VerticalAlignment="Center" />
+                                    <TextBlock Text="Connected" 
+                                               Foreground="{StaticResource StatusConnected}"
+                                               FontWeight="{StaticResource FontWeightSemiBold}"
+                                               VerticalAlignment="Center"
+                                               AutomationProperties.LiveSetting="Polite" />
                                 </StackPanel>
                                 
-                                <StackPanel Orientation="Horizontal" Spacing="8" IsVisible="{Binding !IsConnected}">
-                                    <Ellipse Width="12" Height="12" Fill="#757575"/>
-                                    <TextBlock Text="Disconnected" Foreground="#AAAAAA"/>
+                                <!-- Disconnected Status -->
+                                <StackPanel Orientation="Horizontal" 
+                                            Spacing="8" 
+                                            IsVisible="{Binding !IsConnected}">
+                                    <Ellipse Width="12" 
+                                             Height="12" 
+                                             Fill="{StaticResource StatusDisconnected}"
+                                             VerticalAlignment="Center" />
+                                    <TextBlock Text="Disconnected" 
+                                               Foreground="{StaticResource TextSecondary}"
+                                               VerticalAlignment="Center"
+                                               AutomationProperties.LiveSetting="Polite" />
                                 </StackPanel>
                             </StackPanel>
                         </Border>
 
                         <!-- Bank Operations Section -->
-                        <Border Background="#2D2D2D" Padding="16" CornerRadius="8">
-                            <StackPanel Spacing="12">
+                        <Border Background="{StaticResource BackgroundSecondary}" 
+                                Padding="{StaticResource CardPadding}" 
+                                CornerRadius="{StaticResource BorderRadiusLarge}">
+                            <StackPanel Spacing="{StaticResource SpacingMedium}">
                                 <TextBlock Text="User Bank" 
-                                           FontWeight="Bold" 
-                                           FontSize="16"/>
+                                           FontWeight="{StaticResource FontWeightBold}" 
+                                           FontSize="{StaticResource FontSizeLarge}"
+                                           Foreground="{StaticResource TextPrimary}"/>
                                 
                                 <TextBlock Text="Trigger 'Send Dump' from your Nova System pedal (UTILITY → MIDI → Send Dump)"
-                                           Foreground="#888888"
+                                           Foreground="{StaticResource TextTertiary}"
                                            TextWrapping="Wrap"/>
                                 
-                                <Button Content="📥 Download User Bank"
+                                <Button Content="Download User Bank"
                                         Command="{Binding DownloadBankCommand}"
                                         HorizontalAlignment="Left"
-                                        Padding="16,8"/>
+                                        Padding="{StaticResource ButtonPadding}"
+                                        AutomationProperties.Name="Download user bank"
+                                        AutomationProperties.HelpText="Downloads all 60 presets from the Nova System pedal (F5)" />
                             </StackPanel>
                         </Border>
                         
@@ -105,12 +154,14 @@
             </TabItem>
 
             <!-- File Manager Tab -->
-            <TabItem Header="💾 File Manager">
+            <TabItem Header="File Manager"
+                     AutomationProperties.Name="File management tab">
                 <views:FileManagerView DataContext="{Binding FileManager}" />
             </TabItem>
 
             <!-- System Settings Tab -->
-            <TabItem Header="⚙️ System Settings">
+            <TabItem Header="System Settings"
+                     AutomationProperties.Name="System configuration tab">
                 <views:SystemSettingsView DataContext="{Binding SystemSettings}" />
             </TabItem>
         </TabControl>
