@@ -35,14 +35,14 @@
                            Foreground="{StaticResource TextPrimary}"
                            VerticalAlignment="Center" />
                 <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8">
-                    <ToggleButton Content="🌙"
-                                  Command="{Binding ToggleThemeCommand}"
-                                  ToolTip.Tip="Toggle Dark/Light theme"
-                                  FontSize="18"
-                                  Width="40"
-                                  Height="32"
-                                  AutomationProperties.Name="Toggle theme"
-                                  AutomationProperties.HelpText="Switch between light and dark mode" />
+                    <Button Content="🌙"
+                            Command="{Binding ToggleThemeCommand}"
+                            ToolTip.Tip="Toggle Dark/Light theme"
+                            FontSize="18"
+                            Width="40"
+                            Height="32"
+                            AutomationProperties.Name="Toggle theme"
+                            AutomationProperties.HelpText="Switch between light and dark mode" />
                 </StackPanel>
             </Grid>
         </Border>
