@@ -119,11 +119,10 @@ public class Preset
     /// <returns>Success with Preset or Failure with error messages</returns>
     public static Result<Preset> FromSysEx(byte[] sysex)
     {
-        var normalizedResult = NormalizeSysEx(sysex);
-        if (normalizedResult.IsFailed)
-            return Result.Fail(normalizedResult.Errors);
+        if (!TryNormalizeSysEx(sysex, out var normalized, out var errorMessage))
+            return Result.Fail(errorMessage);
 
-        sysex = normalizedResult.Value;
+        sysex = normalized;
 
         // Validate F0/F7 framing
         if (sysex[0] != 0xF0)
@@ -428,15 +427,21 @@ public class Preset
         return rawValue;
     }
 
-    private static Result<byte[]> NormalizeSysEx(byte[] sysex)
+    private static bool TryNormalizeSysEx(byte[] sysex, out byte[] normalized, out string errorMessage)
     {
+        normalized = sysex;
+        errorMessage = string.Empty;
+
         if (sysex.Length == 520)
-            return Result.Ok(sysex);
+            return true;
 
         if (sysex.Length == 521 && sysex[^1] == 0xF7 && sysex[^2] == 0xF7)
-            return Result.Ok(sysex[..^1]);
+        {
+            normalized = sysex[..^1];
+            return true;
+        }
 
-        return Result.Fail(
-            $"Invalid preset length: expected 520 bytes (or 521 with double F7), got {sysex.Length}");
+        errorMessage = $"Invalid preset length: expected 520 bytes (or 521 with double F7), got {sysex.Length}";
+        return false;
     }
 }
