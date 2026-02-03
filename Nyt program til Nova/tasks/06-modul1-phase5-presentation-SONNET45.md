@@ -18,13 +18,13 @@
 
 ## Exit Criteria (Phase 5 Complete When ALL True)
 
-- [ ] MainWindow shows port selection dropdown
-- [ ] "Connect" button connects to selected port
-- [ ] "Download Bank" button triggers bank download
-- [ ] Status bar shows connection state and progress
-- [ ] Error messages displayed to user
-- [ ] DI container wires everything together
-- [ ] Manual test: Full flow works on real pedal
+- [x] MainWindow shows port selection dropdown
+- [x] "Connect" button connects to selected port
+- [x] "Download Bank" button triggers bank download
+- [x] Status bar shows connection state and progress
+- [x] Error messages displayed to user
+- [x] DI container wires everything together
+- [x] Manual test: Full flow works on real pedal
 
 ---
 

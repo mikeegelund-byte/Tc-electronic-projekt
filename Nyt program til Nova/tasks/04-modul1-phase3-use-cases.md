@@ -21,11 +21,11 @@
 
 ## Exit Criteria (Phase 3 Complete When ALL True)
 
-- [ ] `ConnectUseCase` implemented and tested
-- [ ] `DownloadBankUseCase` implemented and tested
-- [ ] Uses `IMidiPort` abstraction (no direct MIDI calls)
-- [ ] `dotnet test` passes
-- [ ] Application layer coverage ≥ 80%
+- [x] `ConnectUseCase` implemented and tested
+- [x] `DownloadBankUseCase` implemented and tested
+- [x] Uses `IMidiPort` abstraction (no direct MIDI calls)
+- [x] `dotnet test` passes
+- [x] Application layer coverage ≥ 80%
 
 ---
 

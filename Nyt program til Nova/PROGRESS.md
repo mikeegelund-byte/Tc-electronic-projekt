@@ -25,7 +25,7 @@
   - SystemDumpPedalMappingTests with 5 tests (153 Domain tests total)
   - Next: PedalMappingViewModel + UI
 
-**Current Action**: Completing Task 9.2.1 ViewModel/UI, then Task 9.1.13  
+**Current Action**: Complete Task 9.2.1 ViewModel/UI (PedalMappingViewModel + NumericUpDown controls)  
 **Build Status**: ✅ GREEN (0 errors, 0 warnings)  
 **Test Count**: 308 passing (153 Domain + 6 Midi + 12 Infrastructure + 73 Application + 64 Presentation)
 
@@ -42,9 +42,9 @@
 | 4 | System Editor | ✅ DONE | 100% |
 | 5 | Preset Detail | ✅ DONE | 100% |
 | 6 | Preset Editor | ✅ DONE | 100% |
-| 7 | Preset Management | 🔄 IN PROGRESS | 50% |
+| 7 | Preset Management | ✅ DONE | 100% |
 | 8 | File I/O | ✅ DONE | 100% |
-| 9 | MIDI Mapping | 🔄 IN PROGRESS | 30% |
+| 9 | MIDI Mapping | 🔄 IN PROGRESS | 40% |
 | 10 | Release | ⬜ TODO | 0% |
 
 ---
@@ -63,8 +63,8 @@
 | 8 | `08-modul3-system-viewer.md` | ✅ COMPLETE |
 | 9 | `09-modul4-system-editor.md` | ✅ COMPLETE |
 | 10 | `10-modul5-preset-detail.md` | ✅ COMPLETE |
-| 11 | `11-modul6-preset-editor-SONNET45.md` | 🤖 IN PROGRESS |
-| 12 | `12-modul7-preset-management.md` | ⬜ TODO |
+| 11 | `11-modul6-preset-editor-SONNET45.md` | ✅ COMPLETE |
+| 12 | `12-modul7-preset-management.md` | ✅ COMPLETE |
 | 13 | `13-modul8-file-io.md` | ✅ COMPLETE |
 | 14 | `14-modul9-midi-mapping-SONNET45.md` | 🔄 TASKS 9.1.1-9.1.3, 9.2.1 DONE |
 | 15 | `15-modul10-release-SONNET45.md` | ⬜ TODO |
