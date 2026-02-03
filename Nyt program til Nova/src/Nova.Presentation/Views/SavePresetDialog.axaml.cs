@@ -1,5 +1,6 @@
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Interactivity;
 using Nova.Domain.Models;
 using System.Collections.Generic;
@@ -15,12 +16,14 @@ public partial class SavePresetDialog : Window
     public SavePresetDialog()
     {
         InitializeComponent();
+        SetupKeyboardHandling();
     }
 
     public SavePresetDialog(Preset preset, UserBankDump? bankDump = null)
     {
         InitializeComponent();
         _bankDump = bankDump;
+        SetupKeyboardHandling();
 
         // Set preset name (read-only)
         var presetNameText = this.FindControl<TextBox>("PresetNameText");
@@ -55,6 +58,20 @@ public partial class SavePresetDialog : Window
         if (cancelButton != null)
         {
             cancelButton.Click += OnCancelClicked;
+        }
+    }
+
+    private void SetupKeyboardHandling()
+    {
+        this.KeyDown += OnKeyDown;
+    }
+
+    private void OnKeyDown(object? sender, KeyEventArgs e)
+    {
+        if (e.Key == Key.Escape)
+        {
+            OnCancelClicked(sender, e);
+            e.Handled = true;
         }
     }
 

@@ -1,0 +1,84 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- === LIGHT THEME === -->
+    <ResourceDictionary.ThemeDictionaries>
+        <ResourceDictionary x:Key="Light">
+            <!-- Background Colors -->
+            <SolidColorBrush x:Key="BackgroundPrimary" Color="#FFFFFF" />
+            <SolidColorBrush x:Key="BackgroundSecondary" Color="#F5F5F5" />
+            <SolidColorBrush x:Key="BackgroundTertiary" Color="#ECECEC" />
+
+            <!-- Text Colors -->
+            <SolidColorBrush x:Key="TextPrimary" Color="#333333" />
+            <SolidColorBrush x:Key="TextSecondary" Color="#666666" />
+            <SolidColorBrush x:Key="TextTertiary" Color="#999999" />
+
+            <!-- Accent Colors (same in both themes) -->
+            <SolidColorBrush x:Key="AccentPrimary" Color="#007AFF" />
+
+            <!-- Status Colors -->
+            <SolidColorBrush x:Key="StatusConnected" Color="#34C759" />
+            <SolidColorBrush x:Key="StatusDisconnected" Color="#8E8E93" />
+            <SolidColorBrush x:Key="SuccessColor" Color="#34C759" />
+            <SolidColorBrush x:Key="WarningColor" Color="#FF9500" />
+            <SolidColorBrush x:Key="WarningBackground" Color="#FFF4E5" />
+
+            <!-- Border Colors -->
+            <SolidColorBrush x:Key="BorderDefault" Color="#D1D1D6" />
+        </ResourceDictionary>
+
+        <ResourceDictionary x:Key="Dark">
+            <!-- Background Colors -->
+            <SolidColorBrush x:Key="BackgroundPrimary" Color="#2C2C2C" />
+            <SolidColorBrush x:Key="BackgroundSecondary" Color="#1E1E1E" />
+            <SolidColorBrush x:Key="BackgroundTertiary" Color="#252525" />
+
+            <!-- Text Colors -->
+            <SolidColorBrush x:Key="TextPrimary" Color="#EEEEEE" />
+            <SolidColorBrush x:Key="TextSecondary" Color="#AAAAAA" />
+            <SolidColorBrush x:Key="TextTertiary" Color="#888888" />
+
+            <!-- Accent Colors (same in both themes) -->
+            <SolidColorBrush x:Key="AccentPrimary" Color="#007AFF" />
+
+            <!-- Status Colors -->
+            <SolidColorBrush x:Key="StatusConnected" Color="#34C759" />
+            <SolidColorBrush x:Key="StatusDisconnected" Color="#8E8E93" />
+            <SolidColorBrush x:Key="SuccessColor" Color="#34C759" />
+            <SolidColorBrush x:Key="WarningColor" Color="#FF9500" />
+            <SolidColorBrush x:Key="WarningBackground" Color="#3D2E1A" />
+
+            <!-- Border Colors -->
+            <SolidColorBrush x:Key="BorderDefault" Color="#3A3A3A" />
+        </ResourceDictionary>
+    </ResourceDictionary.ThemeDictionaries>
+
+    <!-- === SHARED RESOURCES (non-theme-variant) === -->
+    
+    <!-- Spacing -->
+    <Thickness x:Key="SpacingSmall">8</Thickness>
+    <Thickness x:Key="SpacingMedium">16</Thickness>
+    <Thickness x:Key="SpacingLarge">24</Thickness>
+
+    <!-- Padding -->
+    <Thickness x:Key="CardPadding">16</Thickness>
+    <Thickness x:Key="ButtonPadding">12,6</Thickness>
+    <Thickness x:Key="InputPadding">8,4</Thickness>
+
+    <!-- Border Radius -->
+    <CornerRadius x:Key="BorderRadiusMedium">4</CornerRadius>
+    <CornerRadius x:Key="BorderRadiusLarge">8</CornerRadius>
+
+    <!-- Font Sizes -->
+    <x:Double x:Key="FontSizeLarge">16</x:Double>
+    <x:Double x:Key="FontSizeXLarge">20</x:Double>
+
+    <!-- Font Weights -->
+    <FontWeight x:Key="FontWeightBold">Bold</FontWeight>
+    <FontWeight x:Key="FontWeightSemiBold">SemiBold</FontWeight>
+
+    <!-- Font Families -->
+    <FontFamily x:Key="FontMonospace">Consolas, Courier New, monospace</FontFamily>
+
+</ResourceDictionary>
