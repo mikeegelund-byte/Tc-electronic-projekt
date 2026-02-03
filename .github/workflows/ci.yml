@@ -22,15 +22,15 @@ jobs:
         
     - name: Restore dependencies
       working-directory: './Nyt program til Nova'
-      run: dotnet restore
+      run: dotnet restore NovaApp.sln
       
     - name: Build solution
       working-directory: './Nyt program til Nova'
-      run: dotnet build -c Release --no-restore
+      run: dotnet build NovaApp.sln -c Release --no-restore
       
     - name: Run unit tests
       working-directory: './Nyt program til Nova'
-      run: dotnet test -c Release --no-build --verbosity normal --logger "trx;LogFileName=test-results.trx"
+      run: dotnet test NovaApp.sln -c Release --no-build --verbosity normal --logger "trx;LogFileName=test-results.trx"
       
     - name: Upload test results
       if: always()
