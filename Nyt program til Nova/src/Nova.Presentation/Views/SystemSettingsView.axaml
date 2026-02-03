@@ -3,16 +3,16 @@
              x:Class="Nova.Presentation.Views.SystemSettingsView"
              xmlns:vm="using:Nova.Presentation.ViewModels"
              x:DataType="vm:SystemSettingsViewModel"
-             Background="#2D2D2D"
-             Foreground="#E0E0E0">
+             Background="{StaticResource BackgroundSecondary}"
+             Foreground="{StaticResource TextPrimary}">
   
   <ScrollViewer>
-    <StackPanel Margin="20">
+    <StackPanel Margin="{StaticResource SpacingLarge}">
       <!-- Title -->
       <TextBlock Text="System Settings" 
-                 FontSize="18" 
-                 FontWeight="Bold"
-                 Foreground="#FFFFFF"
+                 FontSize="{StaticResource FontSizeXLarge}" 
+                 FontWeight="{StaticResource FontWeightBold}"
+                 Foreground="{StaticResource TextPrimary}"
                  Margin="0,0,0,20" />
       
       <!-- Settings Grid -->
@@ -21,69 +21,99 @@
         <!-- MIDI Channel -->
         <TextBlock Grid.Row="0" Grid.Column="0" 
                    Text="MIDI Channel:" 
-                   Foreground="#CCCCCC"
+                   Foreground="{StaticResource TextSecondary}"
                    Margin="0,0,10,10" />
         <TextBlock Grid.Row="0" Grid.Column="1" 
                    Text="{Binding MidiChannel}"
-                   Foreground="#E0E0E0"
-                   Margin="0,0,0,10" />
+                   Foreground="{StaticResource TextPrimary}"
+                   Background="{StaticResource BackgroundTertiary}"
+                   Padding="8,4"
+                   Margin="0,0,0,10"
+                   AutomationProperties.Name="MIDI channel (read-only)"
+                   ToolTip.Tip="MIDI channel setting from hardware" />
         
         <!-- Device ID -->
         <TextBlock Grid.Row="1" Grid.Column="0" 
                    Text="Device ID:" 
-                   Foreground="#CCCCCC"
+                   Foreground="{StaticResource TextSecondary}"
                    Margin="0,0,10,10" />
         <TextBlock Grid.Row="1" Grid.Column="1" 
                    Text="{Binding DeviceId}"
-                   Foreground="#E0E0E0"
-                   Margin="0,0,0,10" />
+                   Foreground="{StaticResource TextPrimary}"
+                   Background="{StaticResource BackgroundTertiary}"
+                   Padding="8,4"
+                   Margin="0,0,0,10"
+                   AutomationProperties.Name="Device ID (read-only)"
+                   ToolTip.Tip="Device identifier from hardware" />
         
         <!-- MIDI Clock Enabled -->
         <TextBlock Grid.Row="2" Grid.Column="0" 
                    Text="MIDI Clock:" 
-                   Foreground="#CCCCCC"
+                   Foreground="{StaticResource TextSecondary}"
                    Margin="0,0,10,10" />
         <TextBlock Grid.Row="2" Grid.Column="1" 
-                   Text="{Binding MidiClockEnabled}"
-                   Foreground="#E0E0E0"
-                   Margin="0,0,0,10" />
+                   Foreground="{StaticResource TextPrimary}"
+                   Background="{StaticResource BackgroundTertiary}"
+                   Padding="8,4"
+                   Margin="0,0,0,10"
+                   AutomationProperties.Name="MIDI clock status (read-only)">
+            <TextBlock.Text>
+                <MultiBinding StringFormat="{}">
+                    <Binding Path="MidiClockEnabled" />
+                </MultiBinding>
+            </TextBlock.Text>
+        </TextBlock>
         
         <!-- MIDI Program Change Enabled -->
         <TextBlock Grid.Row="3" Grid.Column="0" 
                    Text="Program Change:" 
-                   Foreground="#CCCCCC"
+                   Foreground="{StaticResource TextSecondary}"
                    Margin="0,0,10,10" />
         <TextBlock Grid.Row="3" Grid.Column="1" 
-                   Text="{Binding MidiProgramChangeEnabled}"
-                   Foreground="#E0E0E0"
-                   Margin="0,0,0,10" />
+                   Foreground="{StaticResource TextPrimary}"
+                   Background="{StaticResource BackgroundTertiary}"
+                   Padding="8,4"
+                   Margin="0,0,0,10"
+                   AutomationProperties.Name="Program change status (read-only)">
+            <TextBlock.Text>
+                <MultiBinding StringFormat="{}">
+                    <Binding Path="MidiProgramChangeEnabled" />
+                </MultiBinding>
+            </TextBlock.Text>
+        </TextBlock>
         
         <!-- Version -->
         <TextBlock Grid.Row="4" Grid.Column="0" 
                    Text="Version:" 
-                   Foreground="#CCCCCC"
+                   Foreground="{StaticResource TextSecondary}"
                    Margin="0,0,10,0" />
         <TextBlock Grid.Row="4" Grid.Column="1" 
                    Text="{Binding Version}"
-                   Foreground="#E0E0E0" />
+                   Foreground="{StaticResource TextPrimary}"
+                   Background="{StaticResource BackgroundTertiary}"
+                   Padding="8,4"
+                   AutomationProperties.Name="Firmware version (read-only)"
+                   ToolTip.Tip="Hardware firmware version" />
       </Grid>
 
       <!-- Action Buttons -->
       <StackPanel Orientation="Horizontal" 
-                  Spacing="12" 
+                  Spacing="{StaticResource SpacingMedium}" 
                   Margin="0,20,0,0"
                   HorizontalAlignment="Left">
-        <Button Content="💾 Save to Pedal"
+        <Button Content="Save to Pedal"
                 Command="{Binding $parent[Window].((vm:MainViewModel)DataContext).SaveSystemSettingsCommand}"
-
-                Padding="16,8"
-                Background="#4CAF50"
-                Foreground="White" />
+                Padding="{StaticResource ButtonPadding}"
+                Background="{StaticResource SuccessColor}"
+                Foreground="{StaticResource TextPrimary}"
+                AutomationProperties.Name="Save system settings to pedal"
+                AutomationProperties.HelpText="Write settings to Nova System hardware" />
         
-        <Button Content="↩️ Cancel"
+        <Button Content="Cancel"
                 Command="{Binding $parent[Window].((vm:MainViewModel)DataContext).CancelSystemChangesCommand}"
-
-                Padding="16,8" />
+                Padding="{StaticResource ButtonPadding}"
+                AutomationProperties.Name="Cancel changes"
+                AutomationProperties.HelpText="Discard unsaved changes" />
       </StackPanel>
     </StackPanel>
   </ScrollViewer>

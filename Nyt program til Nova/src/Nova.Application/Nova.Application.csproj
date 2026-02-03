@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <ProjectReference Include="..\Nova.Common\Nova.Common.csproj" />
     <ProjectReference Include="..\Nova.Domain\Nova.Domain.csproj" />
     <ProjectReference Include="..\Nova.Midi\Nova.Midi.csproj" />
   </ItemGroup>

@@ -1,0 +1,40 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:Nova.Presentation.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+             x:Class="Nova.Presentation.Views.MidiMappingView"
+             x:DataType="vm:CCMappingViewModel">
+    
+    <DockPanel>
+        <!-- Header with status message -->
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="10">
+            <TextBlock Text="{Binding StatusMessage}" 
+                       VerticalAlignment="Center"
+                       Foreground="{DynamicResource ForegroundSubduedBrush}"/>
+        </StackPanel>
+
+        <!-- DataGrid showing CC mappings -->
+        <DataGrid ItemsSource="{Binding CcMappings}"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  GridLinesVisibility="All"
+                  Margin="10">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Index" 
+                                    Binding="{Binding $parent[DataGrid].Items.IndexOf(.)}"
+                                    Width="Auto"/>
+                <DataGridTextColumn Header="CC Number" 
+                                    Binding="{Binding CCNumber}" 
+                                    Width="*"/>
+                <DataGridTextColumn Header="Parameter ID" 
+                                    Binding="{Binding ParameterId}" 
+                                    Width="*"/>
+                <DataGridCheckBoxColumn Header="Assigned" 
+                                        Binding="{Binding IsAssigned}" 
+                                        Width="Auto"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </DockPanel>
+</UserControl>

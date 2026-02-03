@@ -156,3 +156,9 @@ debug-*.ps1
 
 src/Nova.HardwareTest/Dumps/
 src/Nova.HardwareTest/nova-dump-*.syx
+
+# ============================================================================
+# Kombai Templates (stored separately on USB drive)
+# ============================================================================
+
+.kombai/templates/

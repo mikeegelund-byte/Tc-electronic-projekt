@@ -4,21 +4,24 @@
              x:Class="Nova.Presentation.Views.PresetListView"
              x:DataType="vm:PresetListViewModel">
 
-    <Border Background="#2D2D2D" Padding="16" CornerRadius="8" Margin="0,16,0,0">
+    <Border Background="{StaticResource BackgroundSecondary}" 
+            Padding="{StaticResource CardPadding}" 
+            CornerRadius="{StaticResource BorderRadiusLarge}" 
+            Margin="0,16,0,0">
         <DockPanel>
             <TextBlock DockPanel.Dock="Top" 
                        Text="User Bank Presets (60)" 
-                       FontWeight="Bold" 
-                       FontSize="16"
+                       FontWeight="{StaticResource FontWeightBold}" 
+                       FontSize="{StaticResource FontSizeLarge}"
                        Margin="0,0,0,12"
-                       Foreground="#FFFFFF"/>
+                       Foreground="{StaticResource TextPrimary}"/>
 
             <TextBlock DockPanel.Dock="Top"
-                       Text="No presets loaded. Click 'Download Bank' to retrieve presets from pedal."
+                       Text="No presets loaded. Click 'Download User Bank' to retrieve presets from pedal."
                        IsVisible="{Binding !HasPresets}"
-                       Foreground="#999999"
+                       Foreground="{StaticResource TextTertiary}"
                        FontStyle="Italic"
-                       Margin="0,8"/>
+                       Margin="0,8,0,0"/>
 
             <DataGrid ItemsSource="{Binding Presets}"
                       SelectedItem="{Binding SelectedPreset}"
@@ -30,34 +33,23 @@
                       GridLinesVisibility="Horizontal"
                       HeadersVisibility="Column"
                       BorderThickness="1"
-                      BorderBrush="#404040"
-                      Background="#1E1E1E"
-                      RowBackground="#2D2D2D">
-                <DataGrid.ContextMenu>
-                    <ContextMenu>
-                        <MenuItem Header="Copy" 
-                                  Command="{Binding CopyPresetCommand}"
-                                  InputGesture="Ctrl+C"/>
-                        <MenuItem Header="Rename" 
-                                  Command="{Binding RenamePresetCommand}"
-                                  InputGesture="F2"/>
-                        <MenuItem Header="Delete" 
-                                  Command="{Binding DeletePresetCommand}"
-                                  InputGesture="Delete"/>
-                    </ContextMenu>
-                </DataGrid.ContextMenu>
+                      BorderBrush="{StaticResource BorderDefault}"
+                      Background="{StaticResource BackgroundPrimary}"
+                      RowBackground="{StaticResource BackgroundSecondary}"
+                      AutomationProperties.Name="Preset list"
+                      AutomationProperties.HelpText="List of all 60 presets in user bank">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Position" 
                                         Binding="{Binding Position}" 
                                         Width="100"
-                                        FontFamily="Consolas"/>
+                                        FontFamily="{StaticResource FontMonospace}"/>
                     <DataGridTextColumn Header="Name" 
                                         Binding="{Binding Name}" 
-                                        Width="*"/>
+                                        Width="*" />
                     <DataGridTextColumn Header="Preset #" 
                                         Binding="{Binding Number}" 
                                         Width="100"
-                                        FontFamily="Consolas"/>
+                                        FontFamily="{StaticResource FontMonospace}"/>
                 </DataGrid.Columns>
             </DataGrid>
         </DockPanel>
