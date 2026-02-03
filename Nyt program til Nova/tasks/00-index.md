@@ -1,56 +1,184 @@
 # Task Index — Nova Manager
 
-## 🎯 Project Goal
-Windows application til at læse, redigere og skrive presets/system-settings til TC Electronic Nova System guitar effects processor via MIDI SysEx.
+## 🎉 v1.0.0 Complete!
+
+All core features are implemented and tested. The application is production-ready.
+
+**Status**: ✅ All 10 modules complete (342 tests passing)  
+**Release Date**: February 3, 2026  
+**Next Version**: v1.1 (planned features below)
+
+📂 **Historical Tasks**: See `Arkiv/completed-tasks/` for all completed module implementations.
 
 ---
 
-## ⚠️ VIGTIGT: Læs AGENTS.md først!
+## v1.1 Planned Features
 
-Før du starter: Læs `llm-build-system/AGENTS.md` og følg pipelinen.
+### HIGH Priority (User-Requested)
 
----
+| Feature | Description | Estimated | Task File |
+|---------|-------------|-----------|-----------|
+| **MIDI CC Learn Mode** | Click "Learn" button, send CC message, app captures and assigns it | 3 days | `16-v11-cc-learn.md` |
+| **Editable System Settings** | Allow editing MIDI channel, global bypass, device ID | 2 days | `17-v11-system-editor.md` |
+| **Pedal Calibration** | Wizard to calibrate expression pedal min/max positions | 2 days | `18-v11-pedal-calibration.md` |
 
-## 📊 Samlet Overblik
+### MEDIUM Priority (Enhanced UX)
 
-| Modul | Navn | Status | Fil |
-|-------|------|--------|-----|
-| 0 | Environment Setup | ✅ DONE | (Arkiveret) |
-| 1.1 | MIDI Abstraction | ✅ DONE | (Arkiveret) |
-| 1.2 | Domain Models | ✅ DONE | 03-modul1-phase2-domain-models.md |
-| 1.3 | Use Cases | ✅ DONE | 04-modul1-phase3-use-cases.md |
-| 1.4 | Infrastructure | ✅ DONE | 05-modul1-phase4-infrastructure.md |
-| 1.5 | Presentation | ✅ DONE | **06-modul1-phase5-presentation-SONNET45.md** |
-| 2 | Preset Viewer | ✅ DONE | 07-modul2-preset-viewer.md |
-| 3 | System Viewer | ✅ DONE | 08-modul3-system-viewer.md |
-| 4 | System Editor | ✅ DONE | 09-modul4-system-editor.md |
-| 5 | Preset Detail | ✅ DONE | 10-modul5-preset-detail.md |
-| 6 | Preset Editor | ✅ DONE | **11-modul6-preset-editor-SONNET45.md** |
-| 7 | Preset Management | ✅ DONE | 12-modul7-preset-management.md |
-| 8 | File I/O | ✅ DONE | 13-modul8-file-io.md |
-| 9 | MIDI Mapping | ✅ DONE | **14-modul9-midi-mapping-SONNET45.md** |
-| 10 | Release | ✅ DONE | **15-modul10-release-SONNET45.md** |
+| Feature | Description | Estimated | Task File |
+|---------|-------------|-----------|-----------|
+| **Preset Library Browser** | Browse, search, and organize preset collections | 4 days | `19-v11-preset-library.md` |
+| **Undo/Redo History** | Visual history panel showing all changes | 2 days | `20-v11-undo-history.md` |
+| **Preset Comparison** | Side-by-side comparison of two presets | 3 days | `21-v11-preset-compare.md` |
 
-**Filer med SONNET45 i navnet**: Kræver Claude Sonnet 4.5 eller bedre. Brug IKKE Haiku eller GPT-4.1 mini.
+### LOW Priority (Nice-to-Have)
+
+| Feature | Description | Estimated | Task File |
+|---------|-------------|-----------|-----------|
+| **Export to PDF** | Generate printable preset sheets with all parameters | 2 days | `22-v11-pdf-export.md` |
+| **Preset Tags** | Add custom tags to presets for better organization | 2 days | `23-v11-preset-tags.md` |
+| **Dark/Light Auto-Switch** | Follow Windows theme automatically | 1 day | `24-v11-theme-auto.md` |
 
 ---
 
-## 🚀 Nuværende Task
+## v1.2 Future Roadmap
 
-**Status**: ✅ ALL MODULES COMPLETE - v1.0.0 READY FOR RELEASE!  
-**Se**: `PROGRESS.md` and `RELEASE_NOTES.md` for details
+### Platform Expansion
+
+| Feature | Description | Estimated |
+|---------|-------------|-----------|
+| **macOS Support** | Port application to macOS (Avalonia supports it) | 2 weeks |
+| **Linux Support** | Port application to Linux | 2 weeks |
+
+### Advanced Features
+
+| Feature | Description | Estimated |
+|---------|-------------|-----------|
+| **Cloud Preset Sync** | Sync presets across devices via cloud storage | 1 week |
+| **Preset Sharing** | Share presets with community via URL/QR code | 1 week |
+| **Batch Operations** | Bulk edit, copy, rename multiple presets | 3 days |
+
+### AI-Powered Features (Experimental)
+
+| Feature | Description | Estimated |
+|---------|-------------|-----------|
+| **AI Preset Generator** | Generate presets based on text description | 3 weeks |
+| **Similar Preset Finder** | Find presets with similar sound characteristics | 2 weeks |
+| **Auto-Parameter Tuning** | AI-assisted parameter optimization | 4 weeks |
 
 ---
 
-## 📚 Reference (READ-ONLY)
+## v1.3+ Ideas (Backlog)
 
-| Dokument | Indhold |
-|----------|---------|
-| docs/03-architecture.md | 4-lags arkitektur |
-| docs/05-midi-io-contract.md | MIDI interface |
-| docs/06-sysex-formats.md | SysEx byte layout |
-| docs/SYSEX_MAP_TABLES.md | Parameter offsets |
+- **MIDI Program Change Sequencer**: Automate preset changes during performance
+- **Audio Spectrum Analyzer**: Visualize output frequency spectrum
+- **Preset Morphing**: Smooth transition between two presets
+- **Multi-Pedal Support**: Manage multiple Nova System units
+- **VST Plugin**: Use Nova System as VST3/AU plugin in DAW
+- **Mobile App**: iOS/Android companion app for remote control
 
 ---
 
-**Sidst opdateret**: 2026-02-03 (Modul 10 Phase 1 started)
+## Contributing New Features
+
+Want to implement a feature? Follow these steps:
+
+1. **Check** if a task file exists in `tasks/` directory
+2. **Read** the task file for requirements and implementation details
+3. **Create** a feature branch: `git checkout -b feature/cc-learn-mode`
+4. **Implement** with tests (target: 80%+ coverage)
+5. **Update** CHANGELOG.md and USER_MANUAL.md
+6. **Submit** a Pull Request
+
+### Development Guidelines
+
+- **Architecture**: Follow Clean Architecture patterns
+- **Testing**: Write unit tests for all new code
+- **Documentation**: Update user manual for user-facing features
+- **Code Style**: Follow C# conventions and existing patterns
+- **Accessibility**: Maintain WCAG AA compliance
+
+---
+
+## Task File Template
+
+When creating a new task file, use this template:
+
+```markdown
+# Task: [Feature Name] (v1.x)
+
+## Goal
+[Brief description of what this feature does]
+
+## User Story
+As a [user type], I want [goal] so that [benefit].
+
+## Requirements
+- [ ] Requirement 1
+- [ ] Requirement 2
+- [ ] Requirement 3
+
+## Implementation Tasks
+- [ ] Task 1
+- [ ] Task 2
+- [ ] Task 3
+
+## Testing Checklist
+- [ ] Unit tests for core logic
+- [ ] Integration tests for UI
+- [ ] Manual testing on hardware
+- [ ] Accessibility testing
+
+## Documentation Updates
+- [ ] Update USER_MANUAL.md
+- [ ] Update CHANGELOG.md
+- [ ] Add example screenshots
+
+## Estimated: X days
+## Priority: HIGH|MEDIUM|LOW
+```
+
+---
+
+## Version History
+
+### v1.0.0 (February 3, 2026) ✅
+- Initial release
+- Full SysEx protocol implementation
+- 342 passing tests
+- WCAG AA accessible
+- Complete user manual
+- WiX installer
+- CI/CD pipeline
+
+**Completed Modules** (all in `Arkiv/completed-tasks/`):
+- Module 0: Environment Setup
+- Module 1: Foundation (MIDI + Domain)
+- Module 2: Preset Viewer
+- Module 3: System Viewer
+- Module 4: System Editor
+- Module 5: Preset Detail
+- Module 6: Preset Editor
+- Module 7: Preset Management
+- Module 8: File I/O
+- Module 9: MIDI Mapping
+- Module 10: Release & Polish
+
+---
+
+## Development Resources
+
+### Documentation
+- [Architecture Guide](../docs/03-architecture.md)
+- [MIDI Protocol](../MIDI_PROTOCOL.md)
+- [Effect Reference](../EFFECT_REFERENCE.md)
+- [Testing Strategy](../TESTING_STRATEGY.md)
+
+### External Resources
+- [TC Electronic Nova System Manual](https://www.tcelectronic.com/brand/tcelectronic/nova-system)
+- [DryWetMIDI Documentation](https://melanchall.github.io/drywetmidi/)
+- [Avalonia UI Documentation](https://docs.avaloniaui.net/)
+
+---
+
+**Last Updated**: February 3, 2026  
+**Status**: v1.0.0 Released, v1.1 Planning Phase
