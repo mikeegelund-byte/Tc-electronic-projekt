@@ -81,7 +81,9 @@
                 
                 <TextBlock Text="{Binding StatusMessage}"
                            Foreground="{StaticResource TextSecondary}"
-                           TextWrapping="Wrap"/>
+                           TextWrapping="Wrap"
+                           AutomationProperties.LiveSetting="Polite"
+                           AutomationProperties.Name="File operation status"/>
                 
                 <TextBlock Text="{Binding CurrentFilePath, StringFormat='Current file: {0}'}"
                            Foreground="{StaticResource TextTertiary}"

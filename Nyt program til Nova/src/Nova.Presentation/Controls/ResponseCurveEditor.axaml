@@ -8,7 +8,9 @@
                 Background="Transparent"
                 PointerPressed="OnPointerPressed"
                 PointerMoved="OnPointerMoved"
-                PointerReleased="OnPointerReleased">
+                PointerReleased="OnPointerReleased"
+                AutomationProperties.Name="Response curve canvas"
+                AutomationProperties.HelpText="Interactive canvas for editing pedal response curve">
             
             <!-- Grid lines will be drawn in code-behind -->
             <!-- Curve path will be drawn in code-behind -->
