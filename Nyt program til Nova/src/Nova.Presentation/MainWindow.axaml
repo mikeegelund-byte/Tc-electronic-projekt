@@ -15,12 +15,45 @@
 
     <!-- === KEYBOARD SHORTCUTS === -->
     <Window.KeyBindings>
+      <!-- Existing shortcuts -->
       <KeyBinding Gesture="Ctrl+R" Command="{Binding RefreshPortsCommand}" />
       <KeyBinding Gesture="F5" Command="{Binding DownloadBankCommand}" />
       <KeyBinding Gesture="Ctrl+D" Command="{Binding DownloadBankCommand}" />
+      
+      <!-- New shortcuts (v1.0) -->
+      <KeyBinding Gesture="Ctrl+S" Command="{Binding SavePresetCommand}" />
+      <KeyBinding Gesture="Ctrl+Z" Command="{Binding UndoCommand}" />
+      <KeyBinding Gesture="Ctrl+Y" Command="{Binding RedoCommand}" />
+      <KeyBinding Gesture="Ctrl+C" Command="{Binding CopyPresetCommand}" />
     </Window.KeyBindings>
 
     <DockPanel Margin="{StaticResource SpacingMedium}">
+        <!-- Toolbar at Top -->
+        <Border DockPanel.Dock="Top"
+                Background="{StaticResource BackgroundSecondary}"
+                Padding="{StaticResource SpacingSmall}"
+                CornerRadius="{StaticResource BorderRadiusMedium}"
+                Margin="0,0,0,16">
+            <Grid ColumnDefinitions="*,Auto">
+                <TextBlock Grid.Column="0"
+                           Text="Nova System Manager"
+                           FontSize="{StaticResource FontSizeLarge}"
+                           FontWeight="{StaticResource FontWeightBold}"
+                           Foreground="{StaticResource TextPrimary}"
+                           VerticalAlignment="Center" />
+                <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8">
+                    <Button Content="🌙"
+                            Command="{Binding ToggleThemeCommand}"
+                            ToolTip.Tip="Toggle Dark/Light theme"
+                            FontSize="18"
+                            Width="40"
+                            Height="32"
+                            AutomationProperties.Name="Toggle theme"
+                            AutomationProperties.HelpText="Switch between light and dark mode" />
+                </StackPanel>
+            </Grid>
+        </Border>
+
         <!-- Status Bar at Bottom -->
         <Border DockPanel.Dock="Bottom" 
                 Background="{StaticResource BackgroundPrimary}" 
@@ -138,8 +171,9 @@
                                         Command="{Binding DownloadBankCommand}"
                                         HorizontalAlignment="Left"
                                         Padding="{StaticResource ButtonPadding}"
+                                        ToolTip.Tip="Download all 60 presets from pedal (F5 or Ctrl+D)"
                                         AutomationProperties.Name="Download user bank"
-                                        AutomationProperties.HelpText="Downloads all 60 presets from the Nova System pedal (F5)" />
+                                        AutomationProperties.HelpText="Downloads all 60 presets from the Nova System pedal (F5 or Ctrl+D)" />
                             </StackPanel>
                         </Border>
                         
