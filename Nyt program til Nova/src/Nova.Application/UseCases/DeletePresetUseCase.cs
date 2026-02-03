@@ -1,6 +1,5 @@
 using FluentResults;
 using Nova.Domain.Models;
-using Nova.Domain.Midi;
 using Serilog;
 
 namespace Nova.Application.UseCases;
