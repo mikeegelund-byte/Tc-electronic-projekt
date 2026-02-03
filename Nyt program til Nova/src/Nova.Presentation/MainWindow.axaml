@@ -21,6 +21,32 @@
     </Window.KeyBindings>
 
     <DockPanel Margin="{StaticResource SpacingMedium}">
+        <!-- Toolbar at Top -->
+        <Border DockPanel.Dock="Top"
+                Background="{StaticResource BackgroundSecondary}"
+                Padding="{StaticResource SpacingSmall}"
+                CornerRadius="{StaticResource BorderRadiusMedium}"
+                Margin="0,0,0,16">
+            <Grid ColumnDefinitions="*,Auto">
+                <TextBlock Grid.Column="0"
+                           Text="Nova System Manager"
+                           FontSize="{StaticResource FontSizeLarge}"
+                           FontWeight="{StaticResource FontWeightBold}"
+                           Foreground="{StaticResource TextPrimary}"
+                           VerticalAlignment="Center" />
+                <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8">
+                    <ToggleButton Content="🌙"
+                                  Command="{Binding ToggleThemeCommand}"
+                                  ToolTip.Tip="Toggle Dark/Light theme"
+                                  FontSize="18"
+                                  Width="40"
+                                  Height="32"
+                                  AutomationProperties.Name="Toggle theme"
+                                  AutomationProperties.HelpText="Switch between light and dark mode" />
+                </StackPanel>
+            </Grid>
+        </Border>
+
         <!-- Status Bar at Bottom -->
         <Border DockPanel.Dock="Bottom" 
                 Background="{StaticResource BackgroundPrimary}" 
