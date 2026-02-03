@@ -256,4 +256,42 @@ public partial class MainViewModel : ObservableObject
             PresetDetail.LoadFromPreset(null);
         }
     }
+
+    // ============= KEYBOARD SHORTCUTS (v1.0 placeholders) =============
+    
+    /// <summary>
+    /// Placeholder for Save Preset functionality (planned for v1.1).
+    /// </summary>
+    [RelayCommand]
+    private void SavePreset()
+    {
+        StatusMessage = "Save Preset (Ctrl+S) - Coming in v1.1";
+    }
+
+    /// <summary>
+    /// Placeholder for Undo functionality (planned for v1.1).
+    /// </summary>
+    [RelayCommand]
+    private void Undo()
+    {
+        StatusMessage = "Undo (Ctrl+Z) - Coming in v1.1";
+    }
+
+    /// <summary>
+    /// Placeholder for Redo functionality (planned for v1.1).
+    /// </summary>
+    [RelayCommand]
+    private void Redo()
+    {
+        StatusMessage = "Redo (Ctrl+Y) - Coming in v1.1";
+    }
+
+    /// <summary>
+    /// Placeholder for Copy Preset functionality (planned for v1.1).
+    /// </summary>
+    [RelayCommand]
+    private void CopyPreset()
+    {
+        StatusMessage = "Copy Preset (Ctrl+C) - Coming in v1.1";
+    }
 }
