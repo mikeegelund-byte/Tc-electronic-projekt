@@ -19,62 +19,50 @@
                           AutomationProperties.Name="Parameter selection"
                           AutomationProperties.HelpText="Select which parameter the expression pedal controls (0-127)"/>
             <TextBlock Text="Which parameter the expression pedal controls" 
-                      FontSize="11" Foreground="{DynamicResource TextTertiary}"/>
+                      FontSize="11" Foreground="#808080"/>
         </StackPanel>
         
         <!-- Min Value -->
         <StackPanel Spacing="4">
-            <TextBlock Text="Minimum Value:" FontWeight="SemiBold"/>
-            <StackPanel Orientation="Horizontal" Spacing="4">
-                <NumericUpDown Value="{Binding Min}" 
-                              Minimum="0" Maximum="100"
-                              Width="200"
-                              AutomationProperties.Name="Minimum value percentage"
-                              AutomationProperties.HelpText="Value when expression pedal is at minimum position (0-100%)"/>
-                <TextBlock Text="%" VerticalAlignment="Center" 
-                          Foreground="{DynamicResource TextTertiary}"/>
-            </StackPanel>
+            <TextBlock Text="Minimum Value (%):" FontWeight="SemiBold"/>
+            <NumericUpDown Value="{Binding Min}" 
+                          Minimum="0" Maximum="100"
+                          Width="200" HorizontalAlignment="Left"
+                          AutomationProperties.Name="Minimum value percentage"
+                          AutomationProperties.HelpText="Value when expression pedal is at minimum position (0-100%)"/>
             <TextBlock Text="Value when pedal is at minimum position" 
-                      FontSize="11" Foreground="{DynamicResource TextTertiary}"/>
+                      FontSize="11" Foreground="#808080"/>
         </StackPanel>
         
         <!-- Mid Value -->
         <StackPanel Spacing="4">
-            <TextBlock Text="Middle Value:" FontWeight="SemiBold"/>
-            <StackPanel Orientation="Horizontal" Spacing="4">
-                <NumericUpDown Value="{Binding Mid}" 
-                              Minimum="0" Maximum="100"
-                              Width="200"
-                              AutomationProperties.Name="Middle value percentage"
-                              AutomationProperties.HelpText="Value when expression pedal is at middle position (0-100%)"/>
-                <TextBlock Text="%" VerticalAlignment="Center" 
-                          Foreground="{DynamicResource TextTertiary}"/>
-            </StackPanel>
+            <TextBlock Text="Middle Value (%):" FontWeight="SemiBold"/>
+            <NumericUpDown Value="{Binding Mid}" 
+                          Minimum="0" Maximum="100"
+                          Width="200" HorizontalAlignment="Left"
+                          AutomationProperties.Name="Middle value percentage"
+                          AutomationProperties.HelpText="Value when expression pedal is at middle position (0-100%)"/>
             <TextBlock Text="Value when pedal is at middle position" 
-                      FontSize="11" Foreground="{DynamicResource TextTertiary}"/>
+                      FontSize="11" Foreground="#808080"/>
         </StackPanel>
         
         <!-- Max Value -->
         <StackPanel Spacing="4">
-            <TextBlock Text="Maximum Value:" FontWeight="SemiBold"/>
-            <StackPanel Orientation="Horizontal" Spacing="4">
-                <NumericUpDown Value="{Binding Max}" 
-                              Minimum="0" Maximum="100"
-                              Width="200"
-                              AutomationProperties.Name="Maximum value percentage"
-                              AutomationProperties.HelpText="Value when expression pedal is at maximum position (0-100%)"/>
-                <TextBlock Text="%" VerticalAlignment="Center" 
-                          Foreground="{DynamicResource TextTertiary}"/>
-            </StackPanel>
+            <TextBlock Text="Maximum Value (%):" FontWeight="SemiBold"/>
+            <NumericUpDown Value="{Binding Max}" 
+                          Minimum="0" Maximum="100"
+                          Width="200" HorizontalAlignment="Left"
+                          AutomationProperties.Name="Maximum value percentage"
+                          AutomationProperties.HelpText="Value when expression pedal is at maximum position (0-100%)"/>
             <TextBlock Text="Value when pedal is at maximum position" 
-                      FontSize="11" Foreground="{DynamicResource TextTertiary}"/>
+                      FontSize="11" Foreground="#808080"/>
         </StackPanel>
 
         <!-- Response Curve Editor -->
         <StackPanel Spacing="8" Margin="0,16,0,0">
             <TextBlock Text="Response Curve:" FontWeight="SemiBold"/>
             <TextBlock Text="Drag yellow control points to adjust pedal response curve" 
-                      FontSize="11" Foreground="{DynamicResource TextTertiary}"/>
+                      FontSize="11" Foreground="#808080"/>
             <controls:ResponseCurveEditor Name="CurveEditor"
                                           AutomationProperties.Name="Response curve editor"
                                           AutomationProperties.HelpText="Visual editor for adjusting expression pedal response curve" />
