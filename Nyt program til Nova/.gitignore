@@ -170,3 +170,6 @@ src/Nova.HardwareTest/nova-dump-*.syx
 # ============================================================================
 
 .kombai/templates/
+
+# Local-first backup bundles
+backups/

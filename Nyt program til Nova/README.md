@@ -198,6 +198,40 @@ Contributions are welcome! This is an open-source community project.
 
 1. **Fork** the repository
 2. **Create** a feature branch (`git checkout -b feature/amazing-feature`)
+
+---
+
+## 🏠 Local-first workflow (recommended for single-developer projects)
+
+This project is developed primarily on a single developer machine. GitHub (or any remote) is
+kept only as an off-site backup — not as the primary working copy. The guidance below
+helps avoid accidental pushes or repository operations that might affect your local history.
+
+- Remote name: the project's GitHub remote has been renamed to `backup` to avoid accidental
+  pushes from tools that assume a remote named `origin`.
+- Pushes are disabled by default for `backup` (push URL set to `no_push`). To enable a manual
+  push, run:
+
+```powershell
+git remote set-url --push backup https://github.com/your/repo.git
+git push backup main
+```
+
+- Manual backup (recommended): use the provided script to create a git bundle you can copy
+  offline or to cloud storage:
+
+```powershell
+.\scripts\backup-git.ps1
+# creates a file under ./backups/repo-backup-YYYYMMDD_HHMMSS.bundle
+```
+
+- If you need to re-enable push temporarily, set the push URL as shown above and push.
+
+Notes:
+- Avoid force-pushing `main`. If you must restore or rewrite history, coordinate with any
+  collaborators (or re-clone the repo yourself afterwards).
+- Keep large binary files out of the repository; use external storage or Git LFS if necessary.
+
 3. **Commit** your changes (`git commit -m 'Add amazing feature'`)
 4. **Push** to the branch (`git push origin feature/amazing-feature`)
 5. **Open** a Pull Request
