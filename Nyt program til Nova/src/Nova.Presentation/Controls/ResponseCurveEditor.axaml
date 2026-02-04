@@ -2,13 +2,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="Nova.Presentation.Controls.ResponseCurveEditor"
              Width="400" Height="300">
-    <Border BorderBrush="#808080" BorderThickness="1" Background="#1E1E1E">
+    <Border BorderBrush="{DynamicResource BorderDefault}" 
+            BorderThickness="1" 
+            Background="{DynamicResource BackgroundSecondary}">
         <Canvas Name="CurveCanvas" 
                 Width="400" Height="300"
                 Background="Transparent"
                 PointerPressed="OnPointerPressed"
                 PointerMoved="OnPointerMoved"
-                PointerReleased="OnPointerReleased">
+                PointerReleased="OnPointerReleased"
+                AutomationProperties.Name="Response curve canvas"
+                AutomationProperties.HelpText="Interactive canvas for editing pedal response curve">
             
             <!-- Grid lines will be drawn in code-behind -->
             <!-- Curve path will be drawn in code-behind -->

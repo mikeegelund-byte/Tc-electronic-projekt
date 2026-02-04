@@ -69,6 +69,10 @@ artifacts/
 releases/
 publish/
 
+# WiX Installer output
+installer/output/
+installer/Components.wxs
+
 # ============================================================================
 # Runtime Output
 # ============================================================================
@@ -156,6 +160,10 @@ debug-*.ps1
 
 src/Nova.HardwareTest/Dumps/
 src/Nova.HardwareTest/nova-dump-*.syx
+
+# EXCEPT: Keep test fixture files for CI/CD
+!src/Nova.HardwareTest/Dumps/
+!src/Nova.HardwareTest/Dumps/*.syx
 
 # ============================================================================
 # Kombai Templates (stored separately on USB drive)

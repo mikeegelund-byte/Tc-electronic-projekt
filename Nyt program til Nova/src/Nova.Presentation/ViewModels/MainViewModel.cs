@@ -1,4 +1,6 @@
 using System.Collections.ObjectModel;
+using Avalonia;
+using Avalonia.Styling;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Nova.Application.UseCases;
@@ -83,6 +85,18 @@ public partial class MainViewModel : ObservableObject
             AvailablePorts.Add(port);
         }
         StatusMessage = $"Found {AvailablePorts.Count} MIDI port(s)";
+    }
+
+    [RelayCommand]
+    private void ToggleTheme()
+    {
+        var app = global::Avalonia.Application.Current;
+        if (app != null)
+        {
+            app.RequestedThemeVariant = app.RequestedThemeVariant == ThemeVariant.Dark 
+                ? ThemeVariant.Light 
+                : ThemeVariant.Dark;
+        }
     }
 
     [RelayCommand(CanExecute = nameof(CanConnect))]
@@ -241,5 +255,43 @@ public partial class MainViewModel : ObservableObject
         {
             PresetDetail.LoadFromPreset(null);
         }
+    }
+
+    // ============= KEYBOARD SHORTCUTS (v1.0 placeholders) =============
+    
+    /// <summary>
+    /// Placeholder for Save Preset functionality (planned for v1.1).
+    /// </summary>
+    [RelayCommand]
+    private void SavePreset()
+    {
+        StatusMessage = "Save Preset (Ctrl+S) - Coming in v1.1";
+    }
+
+    /// <summary>
+    /// Placeholder for Undo functionality (planned for v1.1).
+    /// </summary>
+    [RelayCommand]
+    private void Undo()
+    {
+        StatusMessage = "Undo (Ctrl+Z) - Coming in v1.1";
+    }
+
+    /// <summary>
+    /// Placeholder for Redo functionality (planned for v1.1).
+    /// </summary>
+    [RelayCommand]
+    private void Redo()
+    {
+        StatusMessage = "Redo (Ctrl+Y) - Coming in v1.1";
+    }
+
+    /// <summary>
+    /// Placeholder for Copy Preset functionality (planned for v1.1).
+    /// </summary>
+    [RelayCommand]
+    private void CopyPreset()
+    {
+        StatusMessage = "Copy Preset (Ctrl+C) - Coming in v1.1";
     }
 }
