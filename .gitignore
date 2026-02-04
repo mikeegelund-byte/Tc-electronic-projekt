@@ -1,0 +1,7 @@
+# Root-level ignore for local-first workflow
+backups/
+coverage-report/
+coverage-report-*/
+coverage-report-txt/
+tools/temurin-jdk17/
+tools/temurin-jdk17.zip

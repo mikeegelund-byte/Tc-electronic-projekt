@@ -2,30 +2,26 @@
 
 **Modern MIDI Manager for TC Electronic Nova System Guitar Effects Pedal**
 
-[![Build Status](https://img.shields.io/github/actions/workflow/status/mikeegelund-byte/Tc-electronic-projekt/ci.yml?branch=main)](https://github.com/mikeegelund-byte/Tc-electronic-projekt/actions)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/github/v/release/mikeegelund-byte/Tc-electronic-projekt)](https://github.com/mikeegelund-byte/Tc-electronic-projekt/releases)
-
 Nova System Manager is a desktop application for managing presets and settings on your TC Electronic Nova System multi-effects pedal. Built with .NET 8 and Avalonia, it provides a modern, accessible interface for preset editing, file management, and MIDI configuration.
+
+Local-first note: This repository is developed and run on this PC. GitHub is used only as an off-site backup, not as the primary source of truth.
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
-### For End Users
+### Run Locally
 
-1. **Download** the latest release: [NovaSystemManager-v1.0.0.msi](https://github.com/mikeegelund-byte/Tc-electronic-projekt/releases)
-2. **Install** by running the .msi file (Windows 10/11 64-bit)
-3. **Connect** your Nova System via USB MIDI interface
-4. **Launch** Nova System Manager from desktop shortcut
-5. **Download** your presets by clicking "Download Bank" (F5)
+1. Build the solution: `dotnet build NovaApp.sln`
+2. Run the app: `dotnet run --project src/Nova.Presentation`
+3. Optional: build the installer with `.\installer\build-installer.ps1`
 
-📖 **Full guide**: See [User Manual](docs/USER_MANUAL.md) for detailed instructions.
+See `docs/USER_MANUAL.md` for detailed instructions.
 
-### For Developers
+### Local Development
 
 ```powershell
-# Clone and build
+# Build
 cd "Nyt program til Nova"
 dotnet build NovaApp.sln
 
@@ -69,8 +65,7 @@ dotnet run --project src/Nova.Presentation
 ### Technical
 ✅ Full SysEx protocol implementation (TC Electronic Nova System)  
 ✅ **342 passing unit tests** (Domain, Application, Presentation layers)  
-✅ CI/CD with GitHub Actions  
-✅ Self-contained installer (.msi) with automatic updates  
+✅ Local MSI installer build (optional)  
 ✅ Comprehensive documentation and user manual
 
 ---
@@ -119,9 +114,8 @@ dotnet run --project src/Nova.Presentation
 ### Build Steps
 
 ```powershell
-# Clone repository
-git clone https://github.com/mikeegelund-byte/Tc-electronic-projekt.git
-cd "Tc electronic projekt/Nyt program til Nova"
+# Open the local repo
+cd "Nyt program til Nova"
 
 # Restore dependencies
 dotnet restore NovaApp.sln
@@ -190,18 +184,7 @@ dotnet test src/Nova.HardwareTest/
 
 ---
 
-## 🤝 Contributing
-
-Contributions are welcome! This is an open-source community project.
-
-### Guidelines
-
-1. **Fork** the repository
-2. **Create** a feature branch (`git checkout -b feature/amazing-feature`)
-
----
-
-## 🏠 Local-first workflow (recommended for single-developer projects)
+## Local-first workflow
 
 This project is developed primarily on a single developer machine. GitHub (or any remote) is
 kept only as an off-site backup — not as the primary working copy. The guidance below
@@ -213,8 +196,9 @@ helps avoid accidental pushes or repository operations that might affect your lo
   push, run:
 
 ```powershell
-git remote set-url --push backup https://github.com/your/repo.git
+git remote set-url --push backup https://github.com/mikeegelund-byte/Tc-electronic-projekt.git
 git push backup main
+git remote set-url --push backup no_push
 ```
 
 - Manual backup (recommended): use the provided script to create a git bundle you can copy
@@ -232,17 +216,19 @@ Notes:
   collaborators (or re-clone the repo yourself afterwards).
 - Keep large binary files out of the repository; use external storage or Git LFS if necessary.
 
-3. **Commit** your changes (`git commit -m 'Add amazing feature'`)
-4. **Push** to the branch (`git push origin feature/amazing-feature`)
-5. **Open** a Pull Request
+### Restore from backup
 
-### Development Workflow
+From a local bundle:
 
-- Follow Clean Architecture principles
-- Write unit tests for new features (target: 80%+ coverage)
-- Update documentation for user-facing changes
-- Run `dotnet test` before committing
-- Follow C# coding conventions and naming standards
+```powershell
+git clone "path\\to\\repo-backup-YYYYMMDD_HHMMSS.bundle" "Tc electronic projekt"
+```
+
+From GitHub backup (only for recovery):
+
+```powershell
+git clone https://github.com/mikeegelund-byte/Tc-electronic-projekt.git
+```
 
 ### Roadmap for v1.1
 
@@ -273,7 +259,7 @@ Nyt program til Nova/
 
 **Architecture**: Clean Architecture with Domain-Driven Design (DDD)  
 **UI Framework**: Avalonia 11.3  
-**MIDI Library**: DryWetMIDI 7.x  
+**MIDI Library**: DryWetMIDI 8.0.3  
 **Testing**: xUnit, Moq, FluentAssertions
 
 ---
@@ -299,35 +285,5 @@ of this software and associated documentation files...
 - **Community contributors** for testing and feedback
 
 ---
-
-## 🔗 Links
-
-- **Releases**: [https://github.com/mikeegelund-byte/Tc-electronic-projekt/releases](https://github.com/mikeegelund-byte/Tc-electronic-projekt/releases)
-- **Issues**: [https://github.com/mikeegelund-byte/Tc-electronic-projekt/issues](https://github.com/mikeegelund-byte/Tc-electronic-projekt/issues)
-- **Discussions**: [https://github.com/mikeegelund-byte/Tc-electronic-projekt/discussions](https://github.com/mikeegelund-byte/Tc-electronic-projekt/discussions)
-
----
-
-## ❓ Support
-
-### Need Help?
-
-1. Check the [User Manual](docs/USER_MANUAL.md)
-2. Review [Troubleshooting Guide](docs/USER_MANUAL.md#troubleshooting)
-3. Search existing [GitHub Issues](https://github.com/mikeegelund-byte/Tc-electronic-projekt/issues)
-4. Ask in [Discussions](https://github.com/mikeegelund-byte/Tc-electronic-projekt/discussions)
-
-### Found a Bug?
-
-Please [open an issue](https://github.com/mikeegelund-byte/Tc-electronic-projekt/issues/new) with:
-- Description of the problem
-- Steps to reproduce
-- Expected vs actual behavior
-- Screenshots (if applicable)
-- System information (Windows version, .NET version)
-
----
-
-**Made with ❤️ by the TC Electronic Community**
 
 *Nova System Manager v1.0.0 - February 2026*

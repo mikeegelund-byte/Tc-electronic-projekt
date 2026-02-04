@@ -1,6 +1,6 @@
 <#
   Manual backup script for local-first workflow.
-  Creates a `backups/` folder and writes a git bundle containing all refs.
+  Creates a `backups/` folder at repo root and writes a git bundle containing all refs.
   Usage: Open PowerShell in repo root and run: .\scripts\backup-git.ps1
 #>
 Param(
@@ -9,7 +9,8 @@ Param(
 )
 
 $now = Get-Date -Format yyyyMMdd_HHmmss
-$repoRoot = Split-Path -Parent $MyInvocation.MyCommand.Definition
+$scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Definition
+$repoRoot = Split-Path -Parent $scriptDir
 $outDir = Join-Path $repoRoot $OutputDir
 If (-Not (Test-Path $outDir)) { New-Item -ItemType Directory -Path $outDir | Out-Null }
 
@@ -28,5 +29,5 @@ If ($LASTEXITCODE -eq 0) {
 
 # Optional: show instructions to push to remote backup if wanted
 Write-Host "To push to the GitHub backup manually, run:"
-Write-Host "  git remote set-url --push backup https://github.com/your/repo.git"
+Write-Host "  git remote set-url --push backup https://github.com/mikeegelund-byte/Tc-electronic-projekt.git"
 Write-Host "  git push backup main"
