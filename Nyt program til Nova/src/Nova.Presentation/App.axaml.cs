@@ -57,9 +57,15 @@ public partial class App : global::Avalonia.Application
         services.AddTransient<ImportPresetUseCase>();
         services.AddTransient<IGetCCMappingsUseCase, GetCCMappingsUseCase>();
         services.AddTransient<IUpdateCCMappingUseCase, UpdateCCMappingUseCase>();
+        services.AddTransient<IGetProgramMapInUseCase, GetProgramMapInUseCase>();
+        services.AddTransient<IUpdateProgramMapInUseCase, UpdateProgramMapInUseCase>();
+        services.AddTransient<IGetProgramMapOutUseCase, GetProgramMapOutUseCase>();
+        services.AddTransient<IUpdateProgramMapOutUseCase, UpdateProgramMapOutUseCase>();
         
         // ViewModels
         services.AddTransient<MainViewModel>();
+        services.AddTransient<ProgramMapInViewModel>();
+        services.AddTransient<ProgramMapOutViewModel>();
         services.AddTransient<CCMappingViewModel>();
         
         Services = services.BuildServiceProvider();
