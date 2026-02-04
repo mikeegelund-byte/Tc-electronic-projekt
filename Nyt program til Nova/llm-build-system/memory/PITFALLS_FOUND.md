@@ -77,34 +77,6 @@ Status: læst
 - **Status**: ⚠️ DEFERRED - MainViewModel code is complete and compiles, tests will be fixed later when extracting UseCase interfaces
 - **Related**: src/Nova.Presentation.Tests/ViewModels/MainViewModelTests.cs, src/Nova.Application/UseCases/
 
-### [2026-02-03] Preset SysEx længde mismatch (520 vs 521)
-- **Symptom**: Hardware sync registrerer input men parser intet; bank load/ældre dumps fejler.
-- **Root cause**: Kode forventede 521 bytes, mens korrekt preset SysEx er 520 bytes; nogle captures havde dobbelt F7 (521).
-- **Fix**: Normaliser til 520 bytes og accepter legacy 521 med dobbelt F7; trim evt. F0/F7 i MIDI receive.
-- **Prevention**: Brug MIDI_PROTOCOL.md (520 bytes) som kilde og test for legacy double-F7.
-- **Related**: src/Nova.Domain/Models/Preset.cs, src/Nova.Infrastructure/Midi/DryWetMidiPort.cs
-
-### [2026-02-03] FluentResults Errors-propagation gav MissingMethodException
-- **Symptom**: Runtime fejlede med MissingMethodException på ResultBase.get_Errors() i Preset.FromSysEx.
-- **Root cause**: Result.Fail(result.Errors) udløste et method lookup mismatch i FluentResults ved runtime.
-- **Fix**: Returnér fejl som string i stedet for at propagerer Errors-listen direkte.
-- **Prevention**: Brug string-baseret Result.Fail i Domain-laget eller sikre ens FluentResults-version overalt.
-- **Related**: src/Nova.Domain/Models/Preset.cs
-
-### [2026-02-03] System Dump format antagelser var forkerte (526 bytes + nibble)
-- **Symptom**: Hardware sync registrerede input men ændringer virkede ikke; tests fejlede på SystemDump/pedal/CC.
-- **Root cause**: Antog 527 bytes og raw offsets til pedal/CC; real format er 526 bytes (ofte double F7) med 4-byte nibble encoding.
-- **Fix**: Normaliser 527→526, brug nibble encode/decode til pedal + MIDI settings, og refaktorer CC assignments til faste slots.
-- **Prevention**: Verificér SysEx layout mod legacy Java/Nibble-implementering før UI- og testmapping.
-- **Related**: src/Nova.Domain/Models/SystemDump.cs
-
-### [2026-02-03] MASTER_FILE_INDEX.md manglede i rod
-- **Symptom**: AGENTS pipeline krævede root MASTER_FILE_INDEX.md men filen manglede.
-- **Root cause**: Filen lå kun i Arkiv og var forældet.
-- **Fix**: Oprettet minimal root `MASTER_FILE_INDEX.md`.
-- **Prevention**: Hold root-index opdateret og ikke kun i Arkiv.
-- **Related**: MASTER_FILE_INDEX.md
-
 ---
 
 ## Anti-Patterns to Watch

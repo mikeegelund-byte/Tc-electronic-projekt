@@ -9,7 +9,7 @@ namespace Nova.Application.UseCases;
 public interface IRenamePresetUseCase
 {
     /// <summary>
-    /// Renames a preset and saves it back to the same preset number.
+    /// Renames a preset and saves it back to the same slot.
     /// </summary>
     /// <param name="preset">The preset to rename</param>
     /// <param name="newName">New name (max 24 characters)</param>

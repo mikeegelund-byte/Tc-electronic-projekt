@@ -334,7 +334,7 @@ Pitch Level 2: -10
     private Preset CreateTestPreset(int number, string name)
     {
         // Create a minimal valid SysEx message for testing
-        var sysex = new byte[520];
+        var sysex = new byte[521];
         
         // Header
         sysex[0] = 0xF0;
@@ -354,7 +354,7 @@ Pitch Level 2: -10
         Array.Copy(nameBytes, 0, sysex, 9, 24);
         
         // End marker
-        sysex[519] = 0xF7;
+        sysex[520] = 0xF7;
         
         var presetResult = Preset.FromSysEx(sysex);
         return presetResult.Value;

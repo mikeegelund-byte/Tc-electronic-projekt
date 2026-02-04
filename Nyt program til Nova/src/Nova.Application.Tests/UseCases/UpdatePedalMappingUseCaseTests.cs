@@ -10,16 +10,16 @@ public class UpdatePedalMappingUseCaseTests
 {
     private SystemDump CreateValidSystemDump()
     {
-        var validSystemDump = new byte[526];
+        var validSystemDump = new byte[527];
         validSystemDump[0] = 0xF0;  // SysEx start
         validSystemDump[1] = 0x00;  // TC Electronic
         validSystemDump[2] = 0x20;
         validSystemDump[3] = 0x1F;
-        validSystemDump[4] = 0x04;  // Device ID
+        validSystemDump[4] = 0x04;  // Bank number
         validSystemDump[5] = 0x63;  // Nova System model ID
         validSystemDump[6] = 0x20;  // Message ID (Dump)
         validSystemDump[7] = 0x02;  // Data Type (System Dump)
-        validSystemDump[525] = 0xF7;  // SysEx end
+        validSystemDump[526] = 0xF7;  // SysEx end
         
         return SystemDump.FromSysEx(validSystemDump).Value;
     }

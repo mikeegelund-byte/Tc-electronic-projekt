@@ -1,6 +1,7 @@
 using FluentAssertions;
 using Nova.Application.UseCases;
 using Nova.Domain.Models;
+using Xunit;
 
 namespace Nova.Application.Tests.UseCases;
 
@@ -25,11 +26,26 @@ public class GetCCMappingsUseCaseTests
     }
 
     [Fact]
-    public async Task ExecuteAsync_WhenSystemDumpIsValid_Returns11Assignments()
+    public async Task ExecuteAsync_WhenSystemDumpIsValid_Returns64Mappings()
     {
         // Arrange
-        byte[] validSystemDump = CreateValidSystemDumpBytes();
-        WriteNibble(validSystemDump, 8, 21); // Tap Tempo -> CC 20
+        byte[] validSystemDump = new byte[527];
+        validSystemDump[0] = 0xF0;  // SysEx start
+        validSystemDump[1] = 0x00;  // TC Electronic
+        validSystemDump[2] = 0x20;
+        validSystemDump[3] = 0x1F;
+        validSystemDump[4] = 0x04;  // Bank number
+        validSystemDump[5] = 0x63;  // Nova System model ID
+        validSystemDump[6] = 0x20;  // Message ID (Dump)
+        validSystemDump[7] = 0x02;  // Data Type (System Dump)
+        validSystemDump[526] = 0xF7; // SysEx end
+
+        // Fill CC mapping data (offset 34, 64 mappings × 2 bytes)
+        for (int i = 0; i < 64; i++)
+        {
+            validSystemDump[34 + (i * 2)] = (byte)(i + 1);     // CC number
+            validSystemDump[34 + (i * 2) + 1] = (byte)(i + 10); // Parameter ID
+        }
 
         var systemDump = SystemDump.FromSysEx(validSystemDump).Value;
 
@@ -38,18 +54,69 @@ public class GetCCMappingsUseCaseTests
 
         // Assert
         result.IsSuccess.Should().BeTrue();
-        result.Value.Should().HaveCount(11);
-        result.Value[0].Assignment.Should().Be("Tap Tempo");
-        result.Value[0].CCNumber.Should().Be(20);
+        result.Value.Should().HaveCount(64);
+        result.Value[0].CCNumber.Should().Be(1);
+        result.Value[0].ParameterId.Should().Be(10);
+    }
+
+    [Fact]
+    public async Task ExecuteAsync_WhenSystemDumpIsValid_AllMappingsAreAssigned()
+    {
+        // Arrange
+        byte[] validSystemDump = new byte[527];
+        validSystemDump[0] = 0xF0;
+        validSystemDump[1] = 0x00;
+        validSystemDump[2] = 0x20;
+        validSystemDump[3] = 0x1F;
+        validSystemDump[4] = 0x04;
+        validSystemDump[5] = 0x63;
+        validSystemDump[6] = 0x20;
+        validSystemDump[7] = 0x02;
+        validSystemDump[526] = 0xF7;
+
+        // Fill all CC mappings with assigned values (not 0xFF)
+        for (int i = 0; i < 64; i++)
+        {
+            validSystemDump[34 + (i * 2)] = (byte)(i + 1);
+            validSystemDump[34 + (i * 2) + 1] = (byte)(i + 10);
+        }
+
+        var systemDump = SystemDump.FromSysEx(validSystemDump).Value;
+
+        // Act
+        var result = await _useCase.ExecuteAsync(systemDump);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.Should().AllSatisfy(mapping => mapping.IsAssigned.Should().BeTrue());
     }
 
     [Fact]
     public async Task ExecuteAsync_WithUnassignedMappings_ReturnsCorrectIsAssignedStatus()
     {
         // Arrange
-        byte[] validSystemDump = CreateValidSystemDumpBytes();
-        // Tap Tempo assigned, others default Off
-        WriteNibble(validSystemDump, 8, 11); // CC 10
+        byte[] validSystemDump = new byte[527];
+        validSystemDump[0] = 0xF0;
+        validSystemDump[1] = 0x00;
+        validSystemDump[2] = 0x20;
+        validSystemDump[3] = 0x1F;
+        validSystemDump[4] = 0x04;
+        validSystemDump[5] = 0x63;
+        validSystemDump[6] = 0x20;
+        validSystemDump[7] = 0x02;
+        validSystemDump[526] = 0xF7;
+
+        // First 5 mappings assigned, rest unassigned (0xFF)
+        for (int i = 0; i < 5; i++)
+        {
+            validSystemDump[34 + (i * 2)] = (byte)(i + 1);
+            validSystemDump[34 + (i * 2) + 1] = (byte)(i + 10);
+        }
+        for (int i = 5; i < 64; i++)
+        {
+            validSystemDump[34 + (i * 2)] = 0xFF;
+            validSystemDump[34 + (i * 2) + 1] = 0xFF;
+        }
 
         var systemDump = SystemDump.FromSysEx(validSystemDump).Value;
 
@@ -58,41 +125,7 @@ public class GetCCMappingsUseCaseTests
 
         // Assert
         result.IsSuccess.Should().BeTrue();
-        result.Value.First().IsAssigned.Should().BeTrue();
-        result.Value.Skip(1).Should().AllSatisfy(mapping => mapping.IsAssigned.Should().BeFalse());
-    }
-
-    private static byte[] CreateValidSystemDumpBytes()
-    {
-        var sysex = new byte[526];
-        sysex[0] = 0xF0;  // SysEx start
-        sysex[1] = 0x00;  // TC Electronic
-        sysex[2] = 0x20;
-        sysex[3] = 0x1F;
-        sysex[4] = 0x04;  // Device ID
-        sysex[5] = 0x63;  // Nova System
-        sysex[6] = 0x20;  // Dump message
-        sysex[7] = 0x02;  // System dump type
-        sysex[525] = 0xF7; // SysEx end
-        return sysex;
-    }
-
-    private static void WriteNibble(byte[] data, int nibbleIndex, int value)
-    {
-        var offset = 8 + (nibbleIndex * 4);
-        if (value >= 0)
-        {
-            data[offset] = (byte)(value % 128);
-            data[offset + 1] = (byte)(value / 128);
-            data[offset + 2] = 0;
-            data[offset + 3] = 0;
-        }
-        else
-        {
-            data[offset] = (byte)(128 - ((-value) % 128));
-            data[offset + 1] = (byte)((value / 128) + 127);
-            data[offset + 2] = 127;
-            data[offset + 3] = 7;
-        }
+        result.Value.Take(5).Should().AllSatisfy(mapping => mapping.IsAssigned.Should().BeTrue());
+        result.Value.Skip(5).Should().AllSatisfy(mapping => mapping.IsAssigned.Should().BeFalse());
     }
 }

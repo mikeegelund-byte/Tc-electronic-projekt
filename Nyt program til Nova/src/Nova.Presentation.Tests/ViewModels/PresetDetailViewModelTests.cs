@@ -163,11 +163,11 @@ public class PresetDetailViewModelTests
     }
 
     /// <summary>
-    /// Helper method to create a valid 520-byte Nova System preset SysEx message
+    /// Helper method to create a valid 521-byte Nova System preset SysEx message
     /// </summary>
     private static byte[] CreateValidPresetSysEx(int presetNumber, string presetName)
     {
-        var sysex = new byte[520];
+        var sysex = new byte[521];
         
         // Header
         sysex[0] = 0xF0;  // SysEx start
@@ -205,7 +205,7 @@ public class PresetDetailViewModelTests
         Encode4ByteValue(sysex, 386, 0); // Reverb disabled
         
         // Footer
-        sysex[519] = 0xF7;  // SysEx end
+        sysex[520] = 0xF7;  // SysEx end
         
         return sysex;
     }

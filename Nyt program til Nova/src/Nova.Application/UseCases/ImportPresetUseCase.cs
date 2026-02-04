@@ -130,8 +130,8 @@ public sealed class ImportPresetUseCase
     {
         try
         {
-            // Create a 520-byte SysEx message
-            var sysex = new byte[520];
+            // Create a 521-byte SysEx message
+            var sysex = new byte[521];
 
             // Header (F0 00 20 1F 00 63 20 01)
             sysex[0] = 0xF0;
@@ -262,7 +262,7 @@ public sealed class ImportPresetUseCase
             EncodeSignedDbValue(sysex, 494, ParseInt(parameters, "Pitch Level 2"), -100, 0);
 
             // End marker
-            sysex[519] = 0xF7;
+            sysex[520] = 0xF7;
 
             return Result.Ok(sysex);
         }

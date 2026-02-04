@@ -11,8 +11,8 @@ public interface IRequestPresetUseCase
     /// <summary>
     /// Requests a specific preset from the hardware device.
     /// </summary>
-    /// <param name="presetNumber">User preset number (31-90)</param>
+    /// <param name="slotNumber">User slot number (1-60)</param>
     /// <param name="timeout">Timeout in milliseconds (default: 2000ms)</param>
     /// <returns>Result containing the preset on success, or error on failure</returns>
-    Task<Result<Preset>> ExecuteAsync(int presetNumber, int timeout = 2000);
+    Task<Result<Preset>> ExecuteAsync(int slotNumber, int timeout = 2000);
 }

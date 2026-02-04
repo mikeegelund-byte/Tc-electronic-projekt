@@ -58,10 +58,10 @@ public class RequestSystemDumpUseCaseTests
         result.IsFailed.Should().BeTrue();
     }
 
-    // Helper to create valid SystemDump SysEx bytes (526 bytes)
+    // Helper to create valid SystemDump SysEx bytes (527 bytes)
     private static byte[] CreateValidSystemDumpBytes()
     {
-        var sysex = new byte[526];
+        var sysex = new byte[527];
         sysex[0] = 0xF0;
         sysex[1] = 0x00; sysex[2] = 0x20; sysex[3] = 0x1F; // TC Electronic
         sysex[4] = 0x00; // Device ID
@@ -69,7 +69,7 @@ public class RequestSystemDumpUseCaseTests
         sysex[6] = 0x20; // Dump message type
         sysex[7] = 0x02; // System dump data type
         // Rest can be zeros - validation only checks header
-        sysex[525] = 0xF7;
+        sysex[526] = 0xF7;
         return sysex;
     }
 }

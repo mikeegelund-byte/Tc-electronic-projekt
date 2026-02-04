@@ -23,11 +23,16 @@ public partial class SystemSettingsViewModel : ObservableObject
         if (dump?.RawSysEx == null || dump.RawSysEx.Length < 10)
             return;
 
-        // Parse from SystemDump nibble values
-        DeviceId = dump.GetSysExId();
-        MidiChannel = dump.GetMidiChannel();
-        MidiClockEnabled = dump.GetMidiClockEnabled();
-        MidiProgramChangeEnabled = dump.GetProgramChangeInEnabled() || dump.GetProgramChangeOutEnabled();
+        // Parse from raw SysEx bytes
+        // Byte 4 = Device ID
+        DeviceId = dump.RawSysEx[4];
+        
+        // Byte 8 = MIDI Channel (0-15)
+        MidiChannel = dump.RawSysEx[8];
+        
+        // Bytes 20-21 = MIDI settings (0x01 = enabled)
+        MidiClockEnabled = dump.RawSysEx.Length > 20 && dump.RawSysEx[20] == 0x01;
+        MidiProgramChangeEnabled = dump.RawSysEx.Length > 21 && dump.RawSysEx[21] == 0x01;
         
         // Version info from bytes 22-23 (major.minor)
         if (dump.RawSysEx.Length > 23)

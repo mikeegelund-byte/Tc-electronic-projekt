@@ -146,7 +146,7 @@ public sealed class RenamePresetUseCaseTests
     private static Preset CreateValidPreset(string name = "Test Preset")
     {
         // Create minimal valid SysEx for preset
-        var sysex = new byte[520];
+        var sysex = new byte[521];
         sysex[0] = 0xF0; // SysEx start
         sysex[1] = 0x00; // TC Electronic ID
         sysex[2] = 0x20;
@@ -155,7 +155,7 @@ public sealed class RenamePresetUseCaseTests
         sysex[5] = 0x63; // Nova System
         sysex[6] = 0x20; // Preset dump
         sysex[7] = 0x01; // Data type: Preset
-        sysex[8] = 31; // Preset number (user preset 31)
+        sysex[8] = 31; // Preset number (slot 1)
         
         // Set preset name at bytes 9-32 (24 chars)
         var nameBytes = System.Text.Encoding.ASCII.GetBytes(name.PadRight(24));
@@ -169,7 +169,7 @@ public sealed class RenamePresetUseCaseTests
         }
         sysex[518] = (byte)(checksum & 0x7F);
         
-        sysex[519] = 0xF7; // SysEx end
+        sysex[520] = 0xF7; // SysEx end
 
         return Preset.FromSysEx(sysex).Value;
     }

@@ -54,8 +54,7 @@ public class LoadBankUseCaseTests
 
         // Give Progress<T> time to complete all pending callbacks (they're posted async to SynchronizationContext)
         // This is necessary because Progress<T>.Report() doesn't guarantee immediate execution
-        // Release mode optimizations may require more time
-        await Task.Delay(2000);
+        await Task.Delay(1000);
 
         // Assert
         result.IsSuccess.Should().BeTrue();
@@ -64,20 +63,15 @@ public class LoadBankUseCaseTests
         // Verify all 60 presets were sent
         _midiPort.Verify(m => m.SendSysExAsync(It.IsAny<byte[]>()), Times.Exactly(60));
         
-        // Verify progress was reported - with Progress<T> timing issues in Release mode,
-        // we may not get all 60 reports before the test completes.
-        // The important assertions (result.Value == 60 and MIDI sends == 60) already verify correctness.
-        // We just check that SOME progress was reported if any callbacks executed.
+        // Verify progress was reported - with Progress<T> timing issues, we may not get all reports
+        // but we should get at least 1 report, and if we get any, the final should be 60
         lock (progressLock)
         {
-            // In Release mode, Progress<T> callbacks may not all complete even with delays.
-            // As long as the operation succeeded (checked above), this is acceptable.
             if (progressReports.Count > 0)
             {
-                progressReports.Should().OnlyContain(p => p > 0 && p <= 60, 
-                    "all progress values should be between 1 and 60");
+                progressReports.Last().Should().Be(60, "final progress report should indicate completion");
             }
-            // Note: We don't assert on count or final value because Progress<T> timing is not guaranteed
+            // Note: We don't assert NotBeEmpty() because Progress<T> timing is not guaranteed in tests
         }
 
         // Cleanup
@@ -148,8 +142,8 @@ public class LoadBankUseCaseTests
 
     private byte[] CreateDummyPreset(int presetNumber)
     {
-        // Create a valid 520-byte preset SysEx message
-        var bytes = new byte[520];
+        // Create a valid 521-byte preset SysEx message
+        var bytes = new byte[521];
         bytes[0] = 0xF0;  // SysEx start
         bytes[1] = 0x00;  // TC Electronic manufacturer ID
         bytes[2] = 0x20;
@@ -167,7 +161,7 @@ public class LoadBankUseCaseTests
         
         // Fill remaining bytes with valid data (zeros are valid for most parameters)
         
-        bytes[519] = 0xF7;  // SysEx end
+        bytes[520] = 0xF7;  // SysEx end
         
         return bytes;
     }

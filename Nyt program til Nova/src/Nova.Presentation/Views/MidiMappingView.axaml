@@ -51,13 +51,13 @@
                                             IsReadOnly="True"
                                             Width="80"/>
                                             
-                        <DataGridTextColumn Header="Assignment" 
-                                            Binding="{Binding Assignment}" 
-                                            IsReadOnly="True"
-                                            Width="*"/>
-                                            
                         <DataGridTextColumn Header="CC Number" 
                                             Binding="{Binding CcNumber, Mode=TwoWay}" 
+                                            IsReadOnly="False"
+                                            Width="*"/>
+                                            
+                        <DataGridTextColumn Header="Parameter ID" 
+                                            Binding="{Binding ParameterId, Mode=TwoWay}" 
                                             IsReadOnly="False"
                                             Width="*"/>
                                             

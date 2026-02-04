@@ -129,21 +129,10 @@ public sealed class DryWetMidiPort : IMidiPort, IDisposable
     {
         if (e.Event is NormalSysExEvent sysEx)
         {
-            // DryWetMIDI should return data WITHOUT F0/F7, but some devices include trailing F7.
-            var payload = sysEx.Data;
-            if (payload.Length > 0 && payload[0] == 0xF0)
-            {
-                payload = payload[1..];
-            }
-
-            if (payload.Length > 0 && payload[^1] == 0xF7)
-            {
-                payload = payload[..^1];
-            }
-
-            var data = new byte[payload.Length + 2];
+            // DryWetMIDI returns data WITHOUT F0/F7, we add them back
+            var data = new byte[sysEx.Data.Length + 2];
             data[0] = 0xF0;
-            Array.Copy(payload, 0, data, 1, payload.Length);
+            Array.Copy(sysEx.Data, 0, data, 1, sysEx.Data.Length);
             data[^1] = 0xF7;
 
             _sysExChannel?.Writer.TryWrite(data);

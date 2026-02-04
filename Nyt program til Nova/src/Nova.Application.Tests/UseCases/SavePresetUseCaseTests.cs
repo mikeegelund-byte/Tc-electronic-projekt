@@ -24,7 +24,7 @@ public sealed class SavePresetUseCaseTests
     }
 
     [Fact]
-    public async Task ExecuteAsync_WithValidPresetNumber_SendsToMidi()
+    public async Task ExecuteAsync_WithValidPresetAndSlot_SendsToMidi()
     {
         // Arrange
         var preset = CreateValidPreset();
@@ -38,29 +38,29 @@ public sealed class SavePresetUseCaseTests
         // Assert
         result.IsSuccess.Should().BeTrue();
         _mockMidiPort.Verify(x => x.SendSysExAsync(It.Is<byte[]>(bytes =>
-            bytes.Length == 520 &&
+            bytes.Length == 521 &&
             bytes[0] == 0xF0 &&
-            bytes[519] == 0xF7 &&
-            bytes[8] == 32)), Times.Once); // Verify preset number
+            bytes[520] == 0xF7 &&
+            bytes[8] == 32)), Times.Once); // Verify slot number
     }
 
     [Theory]
     [InlineData(0)]
     [InlineData(-1)]
-    [InlineData(30)]
-    [InlineData(91)]
-    public async Task ExecuteAsync_WithInvalidPresetNumber_ReturnsFailure(int invalidPresetNumber)
+    [InlineData(61)]
+    [InlineData(100)]
+    public async Task ExecuteAsync_WithInvalidSlotNumber_ReturnsFailure(int invalidSlot)
     {
         // Arrange
         var preset = CreateValidPreset();
         _mockMidiPort.Setup(x => x.IsConnected).Returns(true);
 
         // Act
-        var result = await _useCase.ExecuteAsync(preset, invalidPresetNumber);
+        var result = await _useCase.ExecuteAsync(preset, invalidSlot);
 
         // Assert
         result.IsFailed.Should().BeTrue();
-        result.Errors.First().Message.Should().Contain("Invalid preset number");
+        result.Errors.First().Message.Should().Contain("Invalid slot number");
         _mockMidiPort.Verify(x => x.SendSysExAsync(It.IsAny<byte[]>()), Times.Never);
     }
 
@@ -107,12 +107,12 @@ public sealed class SavePresetUseCaseTests
                      .ReturnsAsync(Result.Ok());
 
         // Act
-        var result = await _useCase.ExecuteAsync(preset, 45); // Save to preset #45
+        var result = await _useCase.ExecuteAsync(preset, 45); // Save to slot 45
 
         // Assert
         result.IsSuccess.Should().BeTrue();
         _mockMidiPort.Verify(x => x.SendSysExAsync(It.Is<byte[]>(bytes =>
-            bytes[8] == 45)), Times.Once); // Verify new preset number in SysEx
+            bytes[8] == 45)), Times.Once); // Verify new slot number in SysEx
     }
 
     [Fact]
@@ -130,19 +130,19 @@ public sealed class SavePresetUseCaseTests
         // Assert
         result.IsSuccess.Should().BeTrue();
         _mockMidiPort.Verify(x => x.SendSysExAsync(It.Is<byte[]>(bytes =>
-            bytes.Length == 520 &&
+            bytes.Length == 521 &&
             bytes[0] == 0xF0 &&                          // Start marker
             bytes[1] == 0x00 && bytes[2] == 0x20 && bytes[3] == 0x1F && // TC Electronic ID
             bytes[5] == 0x63 &&                          // Nova System
             bytes[6] == 0x20 &&                          // Dump message
             bytes[7] == 0x01 &&                          // Preset type
-            bytes[519] == 0xF7)), Times.Once);           // End marker
+            bytes[520] == 0xF7)), Times.Once);           // End marker
     }
 
     private Preset CreateValidPreset()
     {
-        // Create a valid 520-byte SysEx and parse it
-        var sysex = new byte[520];
+        // Create a valid 521-byte SysEx and parse it
+        var sysex = new byte[521];
         sysex[0] = 0xF0;                              // Start
         sysex[1] = 0x00; sysex[2] = 0x20; sysex[3] = 0x1F; // TC Electronic
         sysex[4] = 0x00;                              // Device ID
@@ -169,7 +169,7 @@ public sealed class SavePresetUseCaseTests
             checksum += sysex[i];
         }
         sysex[518] = (byte)(checksum & 0x7F);
-        sysex[519] = 0xF7;                            // End
+        sysex[520] = 0xF7;                            // End
         
         return Preset.FromSysEx(sysex).Value;
     }

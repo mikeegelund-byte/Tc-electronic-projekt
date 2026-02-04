@@ -1,14 +1,14 @@
 namespace Nova.Domain.Models;
 
 /// <summary>
-/// Represents a fixed MIDI CC assignment slot (Tap/Drive/etc.) with an optional CC number.
+/// Represents a MIDI CC (Control Change) to parameter mapping.
 /// </summary>
-/// <param name="Assignment">Human-readable assignment name</param>
-/// <param name="CCNumber">MIDI CC number (0-127) or null for Off</param>
-public record CCMapping(string Assignment, int? CCNumber)
+/// <param name="CCNumber">MIDI CC number (0-127), or 0xFF for unassigned</param>
+/// <param name="ParameterId">Parameter ID being controlled, or 0xFF for unassigned</param>
+public record CCMapping(byte CCNumber, byte ParameterId)
 {
     /// <summary>
-    /// Indicates whether this slot has an assigned CC number.
+    /// Indicates whether this CC mapping slot is assigned.
     /// </summary>
-    public bool IsAssigned => CCNumber.HasValue;
+    public bool IsAssigned => CCNumber != 0xFF && ParameterId != 0xFF;
 }

@@ -45,36 +45,22 @@ public sealed class LoadBankUseCase
 
             byte[] fileData = await File.ReadAllBytesAsync(filePath, cancellationToken);
 
-            // Step 2: Validate file size (60 presets * 520 bytes = 31,200 bytes)
-            const int presetSize = 520;
-            const int legacyPresetSize = 521;
-            var expectedSize = 60 * presetSize;
-            var expectedLegacySize = 60 * legacyPresetSize;
-            int chunkSize;
-
-            if (fileData.Length == expectedSize)
+            // Step 2: Validate file size (60 presets * 521 bytes = 31,260 bytes)
+            const int expectedSize = 60 * 521;
+            if (fileData.Length != expectedSize)
             {
-                chunkSize = presetSize;
-            }
-            else if (fileData.Length == expectedLegacySize)
-            {
-                chunkSize = legacyPresetSize;
-            }
-            else
-            {
-                _logger.Error("Invalid file size: expected {Expected} or {ExpectedLegacy} bytes, got {Actual}",
-                    expectedSize, expectedLegacySize, fileData.Length);
-                return Result.Fail<int>(
-                    $"Invalid file size: expected {expectedSize} or {expectedLegacySize} bytes, got {fileData.Length}");
+                _logger.Error("Invalid file size: expected {Expected} bytes, got {Actual}", 
+                    expectedSize, fileData.Length);
+                return Result.Fail<int>($"Invalid file size: expected {expectedSize} bytes, got {fileData.Length}");
             }
 
             // Step 3: Parse and send each preset
             int presetsLoaded = 0;
             for (int i = 0; i < 60; i++)
             {
-                // Extract preset
-                var presetData = new byte[chunkSize];
-                Array.Copy(fileData, i * chunkSize, presetData, 0, chunkSize);
+                // Extract 521-byte preset
+                var presetData = new byte[521];
+                Array.Copy(fileData, i * 521, presetData, 0, 521);
 
                 // Parse preset to validate it
                 var presetResult = Preset.FromSysEx(presetData);

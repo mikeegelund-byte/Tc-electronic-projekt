@@ -9,7 +9,7 @@ public class PresetTests
     public void FromSysEx_ValidPreset_ParsesCorrectly()
     {
         // Arrange - minimal valid preset SysEx
-        var sysex = new byte[520];
+        var sysex = new byte[521];
         sysex[0] = 0xF0;                    // SysEx start
         sysex[1] = 0x00; sysex[2] = 0x20; sysex[3] = 0x1F; // TC Electronic ID
         sysex[4] = 0x00;                    // Device ID
@@ -22,7 +22,7 @@ public class PresetTests
         for (int i = 0; i < 24; i++)
             sysex[9 + i] = (byte)name[i];
         // ... rest of parameters ...
-        sysex[519] = 0xF7;                  // SysEx end
+        sysex[520] = 0xF7;                  // SysEx end
 
         // Act
         var result = Preset.FromSysEx(sysex);
@@ -44,42 +44,16 @@ public class PresetTests
 
         // Assert
         result.IsFailed.Should().BeTrue();
-        result.Errors.Should().ContainSingle(e => e.Message.Contains("520 bytes"));
-    }
-
-    [Fact]
-    public void FromSysEx_LegacyDoubleF7Length521_ParsesCorrectly()
-    {
-        // Arrange - 521 bytes with double F7 (legacy capture)
-        var sysex = new byte[521];
-        sysex[0] = 0xF0;
-        sysex[1] = 0x00; sysex[2] = 0x20; sysex[3] = 0x1F;
-        sysex[4] = 0x00;
-        sysex[5] = 0x63;
-        sysex[6] = 0x20;
-        sysex[7] = 0x01;
-        sysex[8] = 0x1F;
-        var name = "Test Preset             ";
-        for (int i = 0; i < 24; i++)
-            sysex[9 + i] = (byte)name[i];
-        sysex[519] = 0xF7;
-        sysex[520] = 0xF7;
-
-        // Act
-        var result = Preset.FromSysEx(sysex);
-
-        // Assert
-        result.IsSuccess.Should().BeTrue();
-        result.Value.RawSysEx.Should().HaveCount(520);
+        result.Errors.Should().ContainSingle(e => e.Message.Contains("521 bytes"));
     }
 
     [Fact]
     public void FromSysEx_MissingF0_ReturnsFailure()
     {
         // Arrange
-        var sysex = new byte[520];
+        var sysex = new byte[521];
         sysex[0] = 0x00; // Wrong start
-        sysex[519] = 0xF7;
+        sysex[520] = 0xF7;
 
         // Act
         var result = Preset.FromSysEx(sysex);
@@ -93,14 +67,14 @@ public class PresetTests
     public void FromSysEx_WrongModelId_ReturnsFailure()
     {
         // Arrange
-        var sysex = new byte[520];
+        var sysex = new byte[521];
         sysex[0] = 0xF0;
         sysex[1] = 0x00; sysex[2] = 0x20; sysex[3] = 0x1F; // TC Electronic
         sysex[4] = 0x00; // Device ID
         sysex[5] = 0xFF; // Wrong model ID (should be 0x63)
         sysex[6] = 0x20; // Message ID
         sysex[7] = 0x01; // Data Type
-        sysex[519] = 0xF7;
+        sysex[520] = 0xF7;
 
         // Act
         var result = Preset.FromSysEx(sysex);
@@ -144,7 +118,7 @@ public class PresetTests
 
     private static byte[] CreateValidPresetSysEx(int number, string name)
     {
-        var sysex = new byte[520];
+        var sysex = new byte[521];
         sysex[0] = 0xF0;
         sysex[1] = 0x00; sysex[2] = 0x20; sysex[3] = 0x1F;
         sysex[4] = 0x00;
@@ -157,7 +131,7 @@ public class PresetTests
         var nameBytes = System.Text.Encoding.ASCII.GetBytes(name.PadRight(24));
         Array.Copy(nameBytes, 0, sysex, 9, 24);
 
-        sysex[519] = 0xF7;
+        sysex[520] = 0xF7;
         return sysex;
     }
 }

@@ -31,7 +31,7 @@ public class PresetParametersTests
         else
         {
             // Fallback: minimal valid preset structure (all zeros for parameters)
-            _realPresetBytes = new byte[520];
+            _realPresetBytes = new byte[521];
             _realPresetBytes[0] = 0xF0;
             _realPresetBytes[1] = 0x00;
             _realPresetBytes[2] = 0x20;
@@ -41,7 +41,7 @@ public class PresetParametersTests
             _realPresetBytes[6] = 0x20;
             _realPresetBytes[7] = 0x01;
             _realPresetBytes[8] = 31; // Preset number
-            _realPresetBytes[519] = 0xF7;
+            _realPresetBytes[520] = 0xF7;
         }
     }
 

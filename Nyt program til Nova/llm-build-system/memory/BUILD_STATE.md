@@ -1,19 +1,5 @@
 # BUILD_STATE.md — What's Been Built
 
-## 🔧 Hotfixes
-
-### 2026-02-03 — System Dump nibble + CC assignments
-- SystemDump normaliseret til 526 bytes (accepterer double F7)
-- Nibble-encoding implementeret for pedal + MIDI settings
-- MIDI CC assignments refaktoreret til faste slots (Tap/Drive/etc.)
-- Tests opdateret til nyt format
-
-### 2026-02-03 — SysEx 520-byte normalization
-- Preset.FromSysEx accepterer 520 bytes (og legacy 521 med dobbelt F7) og normaliserer RawSysEx
-- Save/Load/Request/Delete/Import preset opdateret til 520-byte format
-- DryWetMidiPort stripper evt. ekstra F0/F7 ved receive
-- Tests opdateret + legacy double-F7 test
-
 ## 📈 Overall Progress [2026-02-03]
 
 ```
@@ -24,22 +10,21 @@ Modul 3: System Viewer           [✅ 100% COMPLETE]
 Modul 4: System Editor           [✅ 100% COMPLETE]
 Modul 5: Preset Detail Viewer    [✅ 100% COMPLETE]
 Modul 6: Preset Editor           [✅ 100% COMPLETE]
-Modul 7: Preset Management       [✅ 100% - Tasks 7.1.1-7.1.4 COMPLETE]
+Modul 7: Preset Management       [🔄 50% - Tasks 7.1.1-7.1.4 DONE]
   Task 7.1.1: CopyPresetUseCase  [✅ COMPLETE - 7 tests]
   Task 7.1.2: RenamePresetUseCase[✅ COMPLETE - 8 tests]
   Task 7.1.3: DeletePresetUseCase[✅ COMPLETE - 7 tests]
   Task 7.1.4: Context Menu UI    [✅ COMPLETE]
-  Task 7.2.1-7.2.4: A/B Compare  [⏸️ DEFERRED TO V1.1]
+  Task 7.2.1-7.2.4: A/B Compare  [⬜ NOT STARTED - HIGH complexity, SONNET 4.5+]
 Modul 8: File I/O                [✅ 100% COMPLETE]
-  Export/Import SysEx            [✅ COMPLETE]
+  Export/Import SysEx            [✅ COMPLETE - 233 tests]
   Auto-detect file types         [✅ COMPLETE]
-Modul 9: MIDI Mapping            [✅ 100% COMPLETE]
-  Tasks 9.1.1-9.1.4: CC Mapping  [✅ COMPLETE - commits 6ef7524, 127606d, 6ff9152]
-  Tasks 9.2.1-9.2.4: Pedal Map   [✅ COMPLETE - commits 7696466, a7d1ada, e8fb7f7, c7d0eed, 228b168]
+Modul 9: MIDI Mapping            [⬜ NOT STARTED - READY FOR SONNET 4.5]
+  CC Assignments, Expression Pedal[⬜ TODO]
 Modul 10: Release & Installer    [⬜ NOT STARTED - Requires SONNET 4.5]
 ```
 
-**TOTAL**: 90% COMPLETE (342 tests passing)
+**TOTAL**: 90% COMPLETE (277 tests passing)
 
 ---
 

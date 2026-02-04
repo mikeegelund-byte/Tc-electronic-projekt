@@ -23,7 +23,7 @@ public class PresetRealDataTests
         result.IsSuccess.Should().BeTrue();
         result.Value.Number.Should().Be(31); // 0x1F = 31 decimal
         result.Value.Name.Should().NotBeNullOrEmpty();
-        result.Value.RawSysEx.Should().HaveCount(520);
+        result.Value.RawSysEx.Should().HaveCount(521);
     }
 
     [Fact]

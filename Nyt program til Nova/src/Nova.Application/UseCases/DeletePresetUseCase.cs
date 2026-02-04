@@ -5,7 +5,7 @@ using Serilog;
 namespace Nova.Application.UseCases;
 
 /// <summary>
-/// Use case for deleting a preset by clearing its user preset number.
+/// Use case for deleting a preset by clearing its slot.
 /// </summary>
 public sealed class DeletePresetUseCase : IDeletePresetUseCase
 {
@@ -21,25 +21,25 @@ public sealed class DeletePresetUseCase : IDeletePresetUseCase
     }
 
     /// <summary>
-    /// Deletes a preset by sending an init preset with default parameters to clear the user preset number.
+    /// Deletes a preset by sending an init preset with default parameters to clear the slot.
     /// </summary>
-    /// <param name="presetNumber">Preset number (31-90)</param>
+    /// <param name="slotNumber">Slot number (1-60)</param>
     /// <returns>Result indicating success or failure</returns>
-    public async Task<Result> ExecuteAsync(int presetNumber)
+    public async Task<Result> ExecuteAsync(int slotNumber)
     {
         try
         {
-            // Validate preset number
-            if (presetNumber < 31 || presetNumber > 90)
+            // Validate slot number
+            if (slotNumber < 1 || slotNumber > 60)
             {
-                _logger.Error("Invalid preset number for delete: {PresetNumber}", presetNumber);
-                return Result.Fail($"Preset number must be between 31 and 90 (got {presetNumber})");
+                _logger.Error("Invalid slot number for delete: {SlotNumber}", slotNumber);
+                return Result.Fail($"Slot number must be between 1 and 60 (got {slotNumber})");
             }
 
-            _logger.Information("Deleting preset #{PresetNumber}", presetNumber);
+            _logger.Information("Deleting preset in slot {SlotNumber}", slotNumber);
 
             // Create init preset SysEx with default parameters
-            var initPresetSysEx = CreateInitPresetSysEx(presetNumber);
+            var initPresetSysEx = CreateInitPresetSysEx(slotNumber);
 
             // Parse to Preset object
             var presetResult = Preset.FromSysEx(initPresetSysEx);
@@ -50,21 +50,21 @@ public sealed class DeletePresetUseCase : IDeletePresetUseCase
                 return Result.Fail($"Failed to create init preset: {presetResult.Errors.First().Message}");
             }
 
-            // Send init preset to hardware to clear the preset
-            var saveResult = await _savePresetUseCase.ExecuteAsync(presetResult.Value, presetNumber, verify: false);
+            // Send init preset to hardware to clear the slot
+            var saveResult = await _savePresetUseCase.ExecuteAsync(presetResult.Value, slotNumber, verify: false);
             if (saveResult.IsFailed)
             {
-                _logger.Error("Failed to delete preset #{PresetNumber}: {Errors}", 
-                    presetNumber, string.Join(", ", saveResult.Errors));
+                _logger.Error("Failed to delete preset in slot {SlotNumber}: {Errors}", 
+                    slotNumber, string.Join(", ", saveResult.Errors));
                 return Result.Fail($"Failed to delete preset: {saveResult.Errors.First().Message}");
             }
 
-            _logger.Information("Successfully deleted preset #{PresetNumber}", presetNumber);
+            _logger.Information("Successfully deleted preset in slot {SlotNumber}", slotNumber);
             return Result.Ok();
         }
         catch (Exception ex)
         {
-            _logger.Error(ex, "Unexpected error deleting preset #{PresetNumber}", presetNumber);
+            _logger.Error(ex, "Unexpected error deleting preset in slot {SlotNumber}", slotNumber);
             return Result.Fail($"Unexpected error: {ex.Message}");
         }
     }
@@ -72,9 +72,9 @@ public sealed class DeletePresetUseCase : IDeletePresetUseCase
     /// <summary>
     /// Creates a minimal init preset SysEx with all parameters at default values (0).
     /// </summary>
-    private static byte[] CreateInitPresetSysEx(int presetNumber)
+    private static byte[] CreateInitPresetSysEx(int slotNumber)
     {
-        var sysex = new byte[520];
+        var sysex = new byte[521];
         
         // SysEx header
         sysex[0] = 0xF0; // SysEx start
@@ -85,13 +85,13 @@ public sealed class DeletePresetUseCase : IDeletePresetUseCase
         sysex[5] = 0x63; // Nova System
         sysex[6] = 0x20; // Preset dump
         sysex[7] = 0x01; // Data type: Preset
-        sysex[8] = (byte)presetNumber; // Preset number (31-90)
+        sysex[8] = (byte)slotNumber; // Slot number (1-60)
         
         // Reserved byte (void)
         sysex[9] = 0x00;
         
-        // Preset name at bytes 9-32 (24 chars): "Init 31", "Init 32", etc.
-        var name = $"Init {presetNumber:D2}".PadRight(24);
+        // Preset name at bytes 9-32 (24 chars): "Init 01", "Init 02", etc.
+        var name = $"Init {slotNumber:D2}".PadRight(24);
         var nameBytes = System.Text.Encoding.ASCII.GetBytes(name);
         Array.Copy(nameBytes, 0, sysex, 9, 24);
         
@@ -106,7 +106,7 @@ public sealed class DeletePresetUseCase : IDeletePresetUseCase
         }
         sysex[518] = (byte)(checksum & 0x7F);
         
-        sysex[519] = 0xF7; // SysEx end
+        sysex[520] = 0xF7; // SysEx end
         
         return sysex;
     }

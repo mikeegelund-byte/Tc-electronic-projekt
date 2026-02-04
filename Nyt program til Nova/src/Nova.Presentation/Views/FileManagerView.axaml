@@ -8,12 +8,12 @@
         <vm:FileManagerViewModel />
     </Design.DataContext>
 
-    <StackPanel Spacing="{StaticResource Spacing16}">
+    <StackPanel Spacing="{StaticResource SpacingMedium}">
         <!-- Bank Operations -->
         <Border Background="{StaticResource BackgroundSecondary}" 
                 Padding="{StaticResource CardPadding}" 
                 CornerRadius="{StaticResource BorderRadiusLarge}">
-            <StackPanel Spacing="{StaticResource Spacing16}">
+            <StackPanel Spacing="{StaticResource SpacingMedium}">
                 <TextBlock Text="Bank File Operations" 
                            FontWeight="{StaticResource FontWeightBold}" 
                            FontSize="{StaticResource FontSizeLarge}"
@@ -22,7 +22,7 @@
                 <Grid ColumnDefinitions="*,16,*" RowDefinitions="Auto">
                     <Button Grid.Column="0"
                             Content="Save Bank to File"
-                            Command="{Binding $parent[Window].((vm:MainViewModel)DataContext).SaveBankCommand}"
+                            Command="{Binding SaveBankCommand}"
                             HorizontalAlignment="Stretch"
                             Padding="{StaticResource ButtonPadding}"
                             AutomationProperties.Name="Save bank to file"
@@ -30,7 +30,7 @@
                     
                     <Button Grid.Column="2"
                             Content="Load Bank from File"
-                            Command="{Binding $parent[Window].((vm:MainViewModel)DataContext).LoadBankCommand}"
+                            Command="{Binding LoadBankCommand}"
                             HorizontalAlignment="Stretch"
                             Padding="{StaticResource ButtonPadding}"
                             AutomationProperties.Name="Load bank from file"
@@ -43,7 +43,7 @@
         <Border Background="{StaticResource BackgroundSecondary}" 
                 Padding="{StaticResource CardPadding}" 
                 CornerRadius="{StaticResource BorderRadiusLarge}">
-            <StackPanel Spacing="{StaticResource Spacing16}">
+            <StackPanel Spacing="{StaticResource SpacingMedium}">
                 <TextBlock Text="Preset File Operations" 
                            FontWeight="{StaticResource FontWeightBold}" 
                            FontSize="{StaticResource FontSizeLarge}"
@@ -52,7 +52,7 @@
                 <Grid ColumnDefinitions="*,16,*" RowDefinitions="Auto">
                     <Button Grid.Column="0"
                             Content="Export Preset"
-                            Command="{Binding $parent[Window].((vm:MainViewModel)DataContext).ExportPresetCommand}"
+                            Command="{Binding ExportPresetCommand}"
                             HorizontalAlignment="Stretch"
                             Padding="{StaticResource ButtonPadding}"
                             AutomationProperties.Name="Export single preset"
@@ -60,7 +60,7 @@
                     
                     <Button Grid.Column="2"
                             Content="Import Preset"
-                            Command="{Binding $parent[Window].((vm:MainViewModel)DataContext).ImportPresetCommand}"
+                            Command="{Binding ImportPresetCommand}"
                             HorizontalAlignment="Stretch"
                             Padding="{StaticResource ButtonPadding}"
                             AutomationProperties.Name="Import single preset"

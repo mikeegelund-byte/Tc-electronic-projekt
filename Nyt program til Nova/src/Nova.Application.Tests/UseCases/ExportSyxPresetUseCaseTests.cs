@@ -36,9 +36,9 @@ public sealed class ExportSyxPresetUseCaseTests : IDisposable
         result.IsSuccess.Should().BeTrue();
         File.Exists(filePath).Should().BeTrue();
         var fileBytes = File.ReadAllBytes(filePath);
-        fileBytes.Should().HaveCount(520);  // SysEx preset size
+        fileBytes.Should().HaveCount(521);  // SysEx preset size
         fileBytes[0].Should().Be(0xF0);     // SysEx start
-        fileBytes[519].Should().Be(0xF7);   // SysEx end
+        fileBytes[520].Should().Be(0xF7);   // SysEx end
     }
 
     [Fact]
@@ -110,14 +110,14 @@ public sealed class ExportSyxPresetUseCaseTests : IDisposable
         // Both files should be valid SysEx
         var bytes1 = File.ReadAllBytes(file1);
         var bytes2 = File.ReadAllBytes(file2);
-        bytes1.Should().HaveCount(520);
-        bytes2.Should().HaveCount(520);
+        bytes1.Should().HaveCount(521);
+        bytes2.Should().HaveCount(521);
     }
 
     private static Preset CreateValidPreset(string name)
     {
         // Create minimal valid SysEx for preset
-        var sysex = new byte[520];
+        var sysex = new byte[521];
         sysex[0] = 0xF0; // SysEx start
         sysex[1] = 0x00; // TC Electronic ID
         sysex[2] = 0x20;
@@ -126,7 +126,7 @@ public sealed class ExportSyxPresetUseCaseTests : IDisposable
         sysex[5] = 0x63; // Nova System
         sysex[6] = 0x20; // Preset dump
         sysex[7] = 0x01; // Data type: Preset
-        sysex[8] = 31;   // Preset number (user preset 31)
+        sysex[8] = 31;   // Preset number (slot 1)
         
         // Set preset name at bytes 9-32 (24 chars)
         var nameBytes = System.Text.Encoding.ASCII.GetBytes(name.PadRight(24));
@@ -140,7 +140,7 @@ public sealed class ExportSyxPresetUseCaseTests : IDisposable
         }
         sysex[518] = (byte)(checksum & 0x7F);
         
-        sysex[519] = 0xF7; // SysEx end
+        sysex[520] = 0xF7; // SysEx end
 
         return Preset.FromSysEx(sysex).Value;
     }

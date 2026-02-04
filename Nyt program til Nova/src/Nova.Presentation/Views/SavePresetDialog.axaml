@@ -18,7 +18,7 @@
                        Foreground="{StaticResource TextPrimary}"/>
 
             <!-- Preset Name -->
-            <StackPanel Spacing="4">
+            <StackPanel Spacing="8">
                 <TextBlock Text="Preset Name:"
                            Foreground="{StaticResource TextSecondary}"/>
                 <TextBox Name="PresetNameText"
@@ -26,16 +26,9 @@
                          Foreground="{StaticResource TextPrimary}"
                          BorderBrush="{StaticResource BorderDefault}"
                          Height="36"
-                         MaxLength="16"
                          Padding="{StaticResource InputPadding}"
                          AutomationProperties.Name="Preset name"
                          AutomationProperties.HelpText="Enter the name for this preset (maximum 16 characters)" />
-                <TextBlock Name="ValidationError"
-                           Text="Preset name is required (1-16 characters)"
-                           Foreground="{StaticResource DangerColor}"
-                           FontSize="{StaticResource FontSizeSmall}"
-                           IsVisible="False"
-                           AutomationProperties.LiveSetting="Assertive" />
             </StackPanel>
 
             <!-- Slot Selection -->
@@ -59,14 +52,11 @@
                     CornerRadius="{StaticResource BorderRadiusMedium}"
                     IsVisible="False">
                 <StackPanel Orientation="Horizontal" Spacing="8">
-                    <PathIcon Width="18" Height="18" VerticalAlignment="Center"
-                              Foreground="{StaticResource WarningColor}">
-                        <PathIcon.Data>
-                            <!-- Warning triangle icon -->
-                            M12 5.99L19.53 19H4.47L12 5.99M12 2L1 21h22L12 2zm1 14h-2v2h2v-2zm0-6h-2v4h2v-4z
-                        </PathIcon.Data>
-                    </PathIcon>
-                    <TextBlock Text="Warning: This will overwrite the existing preset in this slot!"
+                    <TextBlock Text="⚠"
+                               FontSize="16"
+                               VerticalAlignment="Center"
+                               Foreground="{StaticResource WarningColor}" />
+                    <TextBlock Text="This will overwrite the existing preset in this slot!"
                                Foreground="{StaticResource TextPrimary}"
                                TextWrapping="Wrap"
                                VerticalAlignment="Center" />

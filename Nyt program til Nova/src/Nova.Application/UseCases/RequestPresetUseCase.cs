@@ -25,18 +25,18 @@ public sealed class RequestPresetUseCase : IRequestPresetUseCase
     /// <summary>
     /// Requests a specific preset from the hardware device.
     /// </summary>
-    /// <param name="presetNumber">User preset number (31-90)</param>
+    /// <param name="slotNumber">User slot number (1-60)</param>
     /// <param name="timeout">Timeout in milliseconds (default: 2000ms)</param>
     /// <returns>Result containing the preset on success, or error on failure</returns>
-    public async Task<Result<Preset>> ExecuteAsync(int presetNumber, int timeout = 2000)
+    public async Task<Result<Preset>> ExecuteAsync(int slotNumber, int timeout = 2000)
     {
         try
         {
-            // Step 1: Validate preset number
-            if (presetNumber < 31 || presetNumber > 90)
+            // Step 1: Validate slot number
+            if (slotNumber < 1 || slotNumber > 60)
             {
-                _logger.Error("Invalid preset number: {PresetNumber}. Must be 31-90", presetNumber);
-                return Result.Fail<Preset>($"Preset number must be between 31 and 90, got {presetNumber}");
+                _logger.Error("Invalid slot number: {SlotNumber}. Must be 1-60", slotNumber);
+                return Result.Fail<Preset>($"Slot number must be between 1 and 60, got {slotNumber}");
             }
 
             // Step 2: Check MIDI connection
@@ -46,12 +46,15 @@ public sealed class RequestPresetUseCase : IRequestPresetUseCase
                 return Result.Fail<Preset>("MIDI device not connected");
             }
 
-            _logger.Information("Requesting preset #{PresetNumber}", presetNumber);
+            _logger.Information("Requesting preset from slot {SlotNumber}", slotNumber);
 
-            // Step 3: Build request SysEx
-            byte[] requestSysEx = SysExBuilder.BuildPresetRequest((byte)presetNumber);
+            // Step 3: Convert slot number to preset number (User presets are 31-90, so slot 1-60 => preset 31-90)
+            byte presetNumber = (byte)(slotNumber + 30);  // Slot 1 => Preset 31 (0x1F), Slot 60 => Preset 90 (0x5A)
 
-            _logger.Debug("Sending preset request for preset #{PresetNumber}", presetNumber);
+            // Step 4: Build request SysEx
+            byte[] requestSysEx = SysExBuilder.BuildPresetRequest(presetNumber);
+
+            _logger.Debug("Sending preset request for slot {SlotNumber} (preset #{PresetNumber})", slotNumber, presetNumber);
 
             // Step 5: Start listening for SysEx responses BEFORE sending request
             var cancellationTokenSource = new CancellationTokenSource(timeout);
@@ -61,8 +64,8 @@ public sealed class RequestPresetUseCase : IRequestPresetUseCase
                 {
                     _logger.Debug("Received SysEx message: {Length} bytes", sysex.Length);
                     
-                    // Check if this is a valid preset response (520 bytes, or legacy 521 with double F7)
-                    if (IsPresetSysEx(sysex))
+                    // Check if this is a valid preset response (521 bytes, F0/F7 markers)
+                    if (sysex.Length == 521 && sysex[0] == 0xF0 && sysex[520] == 0xF7)
                     {
                         _logger.Debug("Valid preset SysEx received");
                         return sysex;
@@ -90,7 +93,7 @@ public sealed class RequestPresetUseCase : IRequestPresetUseCase
             try
             {
                 byte[] responseSysEx = await receiveTask;
-                _logger.Information("Received preset response for preset #{PresetNumber}", presetNumber);
+                _logger.Information("Received preset response from slot {SlotNumber}", slotNumber);
 
                 // Step 8: Parse preset
                 var presetResult = Preset.FromSysEx(responseSysEx);
@@ -114,19 +117,8 @@ public sealed class RequestPresetUseCase : IRequestPresetUseCase
         }
         catch (Exception ex)
         {
-            _logger.Error(ex, "Unexpected error requesting preset #{PresetNumber}", presetNumber);
+            _logger.Error(ex, "Unexpected error requesting preset from slot {SlotNumber}", slotNumber);
             return Result.Fail<Preset>($"Unexpected error: {ex.Message}");
         }
-    }
-
-    private static bool IsPresetSysEx(byte[] sysex)
-    {
-        if (sysex.Length == 520 && sysex[0] == 0xF0 && sysex[519] == 0xF7)
-            return true;
-
-        if (sysex.Length == 521 && sysex[0] == 0xF0 && sysex[519] == 0xF7 && sysex[520] == 0xF7)
-            return true;
-
-        return false;
     }
 }

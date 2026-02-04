@@ -15,29 +15,34 @@ public partial class CCMappingEditorViewModel : ObservableObject
     private int _index;
 
     [ObservableProperty]
-    private string _assignment = string.Empty;
+    private byte _ccNumber;
 
     [ObservableProperty]
-    private int? _ccNumber;
+    private byte _parameterId;
 
-    public bool IsAssigned => CcNumber.HasValue;
+    public bool IsAssigned => CcNumber != 0xFF && ParameterId != 0xFF;
 
-    public CCMappingEditorViewModel(int index, string assignment, int? ccNumber)
+    public CCMappingEditorViewModel(int index, byte ccNumber, byte parameterId)
     {
         _index = index;
-        _assignment = assignment;
         _ccNumber = ccNumber;
+        _parameterId = parameterId;
     }
 
-    partial void OnCcNumberChanged(int? value)
+    partial void OnCcNumberChanged(byte value)
+    {
+        OnPropertyChanged(nameof(IsAssigned));
+    }
+
+    partial void OnParameterIdChanged(byte value)
     {
         OnPropertyChanged(nameof(IsAssigned));
     }
 }
 
 /// <summary>
-/// ViewModel for MIDI CC Assignment Editor.
-/// Displays fixed assignment slots and allows editing.
+/// ViewModel for MIDI CC Mapping Editor (Module 9).
+/// Displays CC to parameter assignments and allows editing.
 /// </summary>
 public partial class CCMappingViewModel : ObservableObject
 {
@@ -58,29 +63,19 @@ public partial class CCMappingViewModel : ObservableObject
     [ObservableProperty]
     private PedalMappingViewModel _pedalMapping;
 
-    [ObservableProperty]
-    private ProgramMapInViewModel _programMapIn;
-
-    [ObservableProperty]
-    private ProgramMapOutViewModel _programMapOut;
-
     public CCMappingViewModel(
         IGetCCMappingsUseCase getCCMappingsUseCase,
         IUpdateCCMappingUseCase updateCCMappingUseCase,
-        ISaveSystemDumpUseCase saveSystemDumpUseCase,
-        ProgramMapInViewModel programMapInViewModel,
-        ProgramMapOutViewModel programMapOutViewModel)
+        ISaveSystemDumpUseCase saveSystemDumpUseCase)
     {
         _getCCMappingsUseCase = getCCMappingsUseCase;
         _updateCCMappingUseCase = updateCCMappingUseCase;
         _saveSystemDumpUseCase = saveSystemDumpUseCase;
         _pedalMapping = new PedalMappingViewModel();
-        _programMapIn = programMapInViewModel;
-        _programMapOut = programMapOutViewModel;
     }
 
     /// <summary>
-    /// Loads CC assignments from a SystemDump object.
+    /// Loads CC mappings from a SystemDump object.
     /// </summary>
     public async Task LoadFromDump(SystemDump dump)
     {
@@ -94,12 +89,10 @@ public partial class CCMappingViewModel : ObservableObject
         }
 
         _currentSystemDump = dump;
-
+        
         // Load pedal mapping
         PedalMapping.LoadFromDump(dump);
-        await ProgramMapIn.LoadFromDump(dump);
-        await ProgramMapOut.LoadFromDump(dump);
-
+        
         var result = await _getCCMappingsUseCase.ExecuteAsync(dump);
 
         if (result.IsSuccess)
@@ -108,21 +101,22 @@ public partial class CCMappingViewModel : ObservableObject
             for (int i = 0; i < result.Value.Count; i++)
             {
                 var mapping = result.Value[i];
-                var editorVm = new CCMappingEditorViewModel(i, mapping.Assignment, mapping.CCNumber);
-
+                var editorVm = new CCMappingEditorViewModel(i, mapping.CCNumber, mapping.ParameterId);
+                
                 // Subscribe to property changes to track dirty state
                 editorVm.PropertyChanged += (s, e) =>
                 {
-                    if (e.PropertyName == nameof(CCMappingEditorViewModel.CcNumber))
+                    if (e.PropertyName == nameof(CCMappingEditorViewModel.CcNumber) ||
+                        e.PropertyName == nameof(CCMappingEditorViewModel.ParameterId))
                     {
                         HasUnsavedChanges = true;
                     }
                 };
-
+                
                 CcMappings.Add(editorVm);
             }
-
-            StatusMessage = $"Loaded {result.Value.Count} CC assignments";
+            
+            StatusMessage = $"Loaded {result.Value.Count} CC mappings";
             HasUnsavedChanges = false;
         }
         else
@@ -147,7 +141,8 @@ public partial class CCMappingViewModel : ObservableObject
             var updateResult = await _updateCCMappingUseCase.ExecuteAsync(
                 _currentSystemDump,
                 mapping.Index,
-                mapping.CcNumber);
+                mapping.CcNumber,
+                mapping.ParameterId);
 
             if (updateResult.IsFailed)
             {
@@ -161,7 +156,7 @@ public partial class CCMappingViewModel : ObservableObject
 
         if (saveResult.IsSuccess)
         {
-            StatusMessage = "CC assignments saved successfully";
+            StatusMessage = "CC mappings saved successfully";
             HasUnsavedChanges = false;
         }
         else

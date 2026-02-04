@@ -21,56 +21,56 @@ public sealed class CopyPresetUseCaseTests
     }
 
     [Fact]
-    public async Task ExecuteAsync_WithValidPresetAndTargetNumber_CopiesPreset()
+    public async Task ExecuteAsync_WithValidPresetAndSlot_CopiesPreset()
     {
         // Arrange
-        var preset = CreateValidPreset(presetNumber: 31);
-        int targetPresetNumber = 40;
-        _mockSavePresetUseCase.Setup(x => x.ExecuteAsync(preset, targetPresetNumber, false))
+        var preset = CreateValidPreset(slotNumber: 5);
+        int targetSlot = 10;
+        _mockSavePresetUseCase.Setup(x => x.ExecuteAsync(preset, targetSlot, false))
             .ReturnsAsync(Result.Ok());
 
         // Act
-        var result = await _useCase.ExecuteAsync(preset, targetPresetNumber);
+        var result = await _useCase.ExecuteAsync(preset, targetSlot);
 
         // Assert
         result.IsSuccess.Should().BeTrue();
-        _mockSavePresetUseCase.Verify(x => x.ExecuteAsync(preset, targetPresetNumber, false), Times.Once);
+        _mockSavePresetUseCase.Verify(x => x.ExecuteAsync(preset, targetSlot, false), Times.Once);
     }
 
     [Theory]
     [InlineData(0)]
     [InlineData(-1)]
-    [InlineData(30)]
-    [InlineData(91)]
-    public async Task ExecuteAsync_WithInvalidTargetPresetNumber_ReturnsFailed(int invalidPresetNumber)
+    [InlineData(61)]
+    [InlineData(100)]
+    public async Task ExecuteAsync_WithInvalidTargetSlot_ReturnsFailed(int invalidSlot)
     {
         // Arrange
         var preset = CreateValidPreset();
 
         // Act
-        var result = await _useCase.ExecuteAsync(preset, invalidPresetNumber);
+        var result = await _useCase.ExecuteAsync(preset, invalidSlot);
 
         // Assert
         result.IsFailed.Should().BeTrue();
         result.Errors.Should().ContainSingle()
-            .Which.Message.Should().Contain("between 31 and 90");
+            .Which.Message.Should().Contain("between 1 and 60");
         _mockSavePresetUseCase.Verify(x => x.ExecuteAsync(It.IsAny<Preset>(), It.IsAny<int>(), It.IsAny<bool>()), Times.Never);
     }
 
     [Fact]
-    public async Task ExecuteAsync_CopyingToSamePreset_ReturnsFailed()
+    public async Task ExecuteAsync_CopyingToSameSlot_ReturnsFailed()
     {
         // Arrange
-        var preset = CreateValidPreset(presetNumber: 45);
-        int targetPresetNumber = 45; // Same as source
+        var preset = CreateValidPreset(slotNumber: 15);
+        int targetSlot = 15; // Same as source
 
         // Act
-        var result = await _useCase.ExecuteAsync(preset, targetPresetNumber);
+        var result = await _useCase.ExecuteAsync(preset, targetSlot);
 
         // Assert
         result.IsFailed.Should().BeTrue();
         result.Errors.Should().ContainSingle()
-            .Which.Message.Should().Contain("same preset");
+            .Which.Message.Should().Contain("same slot");
         _mockSavePresetUseCase.Verify(x => x.ExecuteAsync(It.IsAny<Preset>(), It.IsAny<int>(), It.IsAny<bool>()), Times.Never);
     }
 
@@ -78,13 +78,13 @@ public sealed class CopyPresetUseCaseTests
     public async Task ExecuteAsync_WhenSaveFails_ReturnsFailedResult()
     {
         // Arrange
-        var preset = CreateValidPreset(presetNumber: 31);
-        int targetPresetNumber = 40;
-        _mockSavePresetUseCase.Setup(x => x.ExecuteAsync(preset, targetPresetNumber, false))
+        var preset = CreateValidPreset(slotNumber: 5);
+        int targetSlot = 10;
+        _mockSavePresetUseCase.Setup(x => x.ExecuteAsync(preset, targetSlot, false))
             .ReturnsAsync(Result.Fail("MIDI error"));
 
         // Act
-        var result = await _useCase.ExecuteAsync(preset, targetPresetNumber);
+        var result = await _useCase.ExecuteAsync(preset, targetSlot);
 
         // Assert
         result.IsFailed.Should().BeTrue();
@@ -92,10 +92,10 @@ public sealed class CopyPresetUseCaseTests
             .Which.Message.Should().Contain("MIDI error");
     }
 
-    private static Preset CreateValidPreset(int presetNumber = 31)
+    private static Preset CreateValidPreset(int slotNumber = 31)
     {
         // Create minimal valid SysEx for preset
-        var sysex = new byte[520];
+        var sysex = new byte[521];
         sysex[0] = 0xF0; // SysEx start
         sysex[1] = 0x00; // TC Electronic ID
         sysex[2] = 0x20;
@@ -104,7 +104,7 @@ public sealed class CopyPresetUseCaseTests
         sysex[5] = 0x63; // Nova System
         sysex[6] = 0x20; // Preset dump
         sysex[7] = 0x01; // Data type: Preset (0x01)
-        sysex[8] = (byte)presetNumber; // Preset number
+        sysex[8] = (byte)slotNumber; // Preset number
         
         // Set preset name "Test Preset" at bytes 10-25 (16 chars)
         var nameBytes = System.Text.Encoding.ASCII.GetBytes("Test Preset".PadRight(16));
@@ -118,7 +118,7 @@ public sealed class CopyPresetUseCaseTests
         }
         sysex[518] = (byte)(checksum & 0x7F);
         
-        sysex[519] = 0xF7; // SysEx end
+        sysex[520] = 0xF7; // SysEx end
 
         return Preset.FromSysEx(sysex).Value;
     }
