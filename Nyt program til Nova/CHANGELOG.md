@@ -67,33 +67,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### User Interface
 - Modern, clean UI design built with Avalonia
-- Dark theme (default) with WCAG AA compliant colors
+- Dark theme (default)
 - Light theme option
-- Theme toggle in toolbar (🌙 button)
+- Theme toggle in settings
 - Responsive layout (adapts to window size)
 - Professional color scheme:
-  - Dark: #2C2C2C background, #1E1E1E panels
+  - Dark: #1E1E1E background, #2D2D2D panels
   - Light: Clean, high-contrast colors
-  - Text: #CCCCCC on dark (5.3:1 contrast ratio)
-  - Warning: #CC6633 background (4.7:1 contrast ratio)
-- Consistent spacing system (6px/12px/24px grid)
+- Consistent 8px grid spacing
 - 4px/8px border radius for modern look
 - Smooth animations (100-200ms transitions)
-- Hover effects on all interactive elements
-- Focus indicators for keyboard navigation (2px blue border)
-- Alternating row colors in data grids
-- Status indicators with both color AND text labels
-- Comprehensive theme system with NovaTheme.axaml
-
-#### Accessibility (WCAG AA Compliant)
-- All interactive controls have AutomationProperties (85+ properties)
-- Keyboard navigation with visible focus indicators
-- Screen reader support (Windows Narrator, NVDA)
-- Text contrast ratios ≥ 4.5:1
-- Status information not conveyed by color alone
-- Keyboard shortcuts for all major actions
-- Touch-friendly target sizes (≥ 44x44 pixels)
-- Clear visual distinction between read-only and editable fields
+- Hover effects on interactive elements
 
 #### Keyboard Shortcuts
 - `Ctrl+S` - Save preset
