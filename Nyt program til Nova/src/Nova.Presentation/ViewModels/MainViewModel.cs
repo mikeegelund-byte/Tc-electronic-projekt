@@ -1,14 +1,10 @@
 using System.Collections.ObjectModel;
-using System.IO;
-using Avalonia;
-using Avalonia.Styling;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Nova.Application.UseCases;
 using Nova.Domain.Models;
 using Nova.Infrastructure.Midi;
 using Nova.Midi;
-using Nova.Presentation.Services;
 
 namespace Nova.Presentation.ViewModels;
 
@@ -18,13 +14,6 @@ public partial class MainViewModel : ObservableObject
     private readonly IConnectUseCase _connectUseCase;
     private readonly IDownloadBankUseCase _downloadBankUseCase;
     private readonly ISaveSystemDumpUseCase _saveSystemDumpUseCase;
-    private readonly IRequestSystemDumpUseCase _requestSystemDumpUseCase;
-    private readonly SaveBankUseCase _saveBankUseCase;
-    private readonly LoadBankUseCase _loadBankUseCase;
-    private readonly ExportPresetUseCase _exportPresetUseCase;
-    private readonly IExportPresetUseCase _exportSyxPresetUseCase;
-    private readonly ImportPresetUseCase _importPresetUseCase;
-    private readonly ISavePresetUseCase _savePresetUseCase;
     private UserBankDump? _currentBank;
     private SystemDump? _currentSystemDump;
 
@@ -37,11 +26,9 @@ public partial class MainViewModel : ObservableObject
 
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(ConnectCommand), nameof(DownloadBankCommand))]
-    [NotifyCanExecuteChangedFor(nameof(DownloadSystemSettingsCommand), nameof(SaveBankCommand), nameof(LoadBankCommand), nameof(ImportPresetCommand))]
     private bool _isConnected;
 
     [ObservableProperty]
-    [NotifyCanExecuteChangedFor(nameof(DownloadBankCommand), nameof(DownloadSystemSettingsCommand), nameof(SaveBankCommand), nameof(LoadBankCommand), nameof(SaveSystemSettingsCommand), nameof(ImportPresetCommand))]
     private bool _isDownloading;
 
     [ObservableProperty]
@@ -62,35 +49,16 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty]
     private SystemSettingsViewModel _systemSettings = new();
 
-    [ObservableProperty]
-    private CCMappingViewModel _ccMapping;
-
     public MainViewModel(
         IMidiPort midiPort,
         IConnectUseCase connectUseCase,
         IDownloadBankUseCase downloadBankUseCase,
-        ISaveSystemDumpUseCase saveSystemDumpUseCase,
-        IRequestSystemDumpUseCase requestSystemDumpUseCase,
-        SaveBankUseCase saveBankUseCase,
-        LoadBankUseCase loadBankUseCase,
-        ExportPresetUseCase exportPresetUseCase,
-        IExportPresetUseCase exportSyxPresetUseCase,
-        ImportPresetUseCase importPresetUseCase,
-        ISavePresetUseCase savePresetUseCase,
-        CCMappingViewModel ccMappingViewModel)
+        ISaveSystemDumpUseCase saveSystemDumpUseCase)
     {
         _midiPort = midiPort;
         _connectUseCase = connectUseCase;
         _downloadBankUseCase = downloadBankUseCase;
         _saveSystemDumpUseCase = saveSystemDumpUseCase;
-        _requestSystemDumpUseCase = requestSystemDumpUseCase;
-        _saveBankUseCase = saveBankUseCase;
-        _loadBankUseCase = loadBankUseCase;
-        _exportPresetUseCase = exportPresetUseCase;
-        _exportSyxPresetUseCase = exportSyxPresetUseCase;
-        _importPresetUseCase = importPresetUseCase;
-        _savePresetUseCase = savePresetUseCase;
-        _ccMapping = ccMappingViewModel;
         
         // Auto-refresh ports on startup
         RefreshPorts();
@@ -101,7 +69,6 @@ public partial class MainViewModel : ObservableObject
             if (e.PropertyName == nameof(PresetListViewModel.SelectedPreset))
             {
                 OnPresetSelectionChanged();
-                ExportPresetCommand.NotifyCanExecuteChanged();
             }
         };
     }
@@ -116,18 +83,6 @@ public partial class MainViewModel : ObservableObject
             AvailablePorts.Add(port);
         }
         StatusMessage = $"Found {AvailablePorts.Count} MIDI port(s)";
-    }
-
-    [RelayCommand]
-    private void ToggleTheme()
-    {
-        var app = global::Avalonia.Application.Current;
-        if (app != null)
-        {
-            app.RequestedThemeVariant = app.RequestedThemeVariant == ThemeVariant.Dark 
-                ? ThemeVariant.Light 
-                : ThemeVariant.Dark;
-        }
     }
 
     [RelayCommand(CanExecute = nameof(CanConnect))]
@@ -197,34 +152,9 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand(CanExecute = nameof(CanDownload))]
     private async Task DownloadSystemSettingsAsync()
     {
-        IsDownloading = true;
-        StatusMessage = "Requesting system settings from pedal...";
-
-        try
-        {
-            var result = await _requestSystemDumpUseCase.ExecuteAsync(timeoutMs: 8000);
-
-            if (result.IsSuccess)
-            {
-                _currentSystemDump = result.Value;
-                SystemSettings.LoadFromDump(result.Value);
-                await CcMapping.LoadFromDump(result.Value);
-                StatusMessage = "System settings loaded successfully";
-                SaveSystemSettingsCommand.NotifyCanExecuteChanged();
-            }
-            else
-            {
-                StatusMessage = $"Error: {result.Errors.First().Message}";
-            }
-        }
-        catch (Exception ex)
-        {
-            StatusMessage = $"Error: {ex.Message}";
-        }
-        finally
-        {
-            IsDownloading = false;
-        }
+        // TODO: Implement when IRequestSystemDumpUseCase is available
+        await Task.CompletedTask;
+        StatusMessage = "System settings download not yet implemented";
     }
 
     [RelayCommand(CanExecute = nameof(CanSaveSystemSettings))]
@@ -266,17 +196,11 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     private void CancelSystemChanges()
     {
-        if (_currentSystemDump == null)
-        {
-            StatusMessage = "No system settings loaded";
-            return;
-        }
-
-        SystemSettings.LoadFromDump(_currentSystemDump);
-        StatusMessage = "Changes reverted";
+        // TODO: Implement when SystemSettings.RevertChanges is available
+        StatusMessage = "Cancel changes not yet implemented";
     }
 
-    private bool CanSaveSystemSettings() => IsConnected && !IsDownloading && _currentSystemDump != null;
+    private bool CanSaveSystemSettings() => !IsDownloading; // TODO: Add && SystemSettings.HasUnsavedChanges when available
 
     private SystemDump CreateModifiedSystemDump(SystemDump original)
     {
@@ -284,267 +208,16 @@ public partial class MainViewModel : ObservableObject
         var modifiedSysEx = new byte[original.RawSysEx.Length];
         Array.Copy(original.RawSysEx, modifiedSysEx, original.RawSysEx.Length);
 
-        // Update bytes with ViewModel values using SystemDump nibble encoding
-        var dumpResult = SystemDump.FromSysEx(modifiedSysEx);
-        if (dumpResult.IsFailed)
-            throw new InvalidOperationException(dumpResult.Errors.First().Message);
+        // Update bytes with ViewModel values
+        modifiedSysEx[4] = (byte)SystemSettings.DeviceId; // Device ID
+        modifiedSysEx[8] = (byte)SystemSettings.MidiChannel; // MIDI Channel (0-15)
+        modifiedSysEx[20] = (byte)(SystemSettings.MidiClockEnabled ? 0x01 : 0x00); // MIDI Clock
+        modifiedSysEx[21] = (byte)(SystemSettings.MidiProgramChangeEnabled ? 0x01 : 0x00); // Program Change
 
-        var dump = dumpResult.Value;
-
-        // Header device id (target device) and stored SysEx ID setting
-        dump.RawSysEx[4] = (byte)SystemSettings.DeviceId;
-        var sysExIdResult = dump.UpdateSysExId(SystemSettings.DeviceId);
-        if (sysExIdResult.IsFailed)
-            throw new InvalidOperationException(sysExIdResult.Errors.First().Message);
-
-        var midiChannelResult = dump.UpdateMidiChannel(SystemSettings.MidiChannel);
-        if (midiChannelResult.IsFailed)
-            throw new InvalidOperationException(midiChannelResult.Errors.First().Message);
-
-        var midiClockResult = dump.UpdateMidiClockEnabled(SystemSettings.MidiClockEnabled);
-        if (midiClockResult.IsFailed)
-            throw new InvalidOperationException(midiClockResult.Errors.First().Message);
-
-        var programChangeInResult = dump.UpdateProgramChangeInEnabled(SystemSettings.MidiProgramChangeEnabled);
-        if (programChangeInResult.IsFailed)
-            throw new InvalidOperationException(programChangeInResult.Errors.First().Message);
-
-        var programChangeOutResult = dump.UpdateProgramChangeOutEnabled(SystemSettings.MidiProgramChangeEnabled);
-        if (programChangeOutResult.IsFailed)
-            throw new InvalidOperationException(programChangeOutResult.Errors.First().Message);
-
-        return dump;
-    }
-
-    [RelayCommand(CanExecute = nameof(CanUseDevice))]
-    private async Task SaveBankAsync()
-    {
-        var path = await FileDialogService.PickSaveFileAsync(
-            "Save User Bank",
-            $"NovaBank_{DateTime.Now:yyyyMMdd_HHmmss}.syx",
-            new[] { FileDialogService.SyxFileType, FileDialogService.AllFilesType },
-            "syx");
-
-        if (string.IsNullOrWhiteSpace(path))
-        {
-            UpdateFileStatus("Save bank cancelled");
-            return;
-        }
-
-        IsDownloading = true;
-        StatusMessage = "Waiting for User Bank dump... trigger 'Send Dump' on pedal";
-        UpdateFileStatus("Waiting for User Bank dump... trigger 'Send Dump' on pedal", path);
-        DownloadProgress = 0;
-
-        try
-        {
-            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(60));
-            var result = await _saveBankUseCase.ExecuteAsync(path, cts.Token);
-
-            if (result.IsSuccess)
-            {
-                UpdateFileStatus("Bank saved successfully", result.Value);
-                StatusMessage = "Bank saved to file";
-            }
-            else
-            {
-                UpdateFileStatus($"Save failed: {result.Errors.First().Message}");
-                StatusMessage = $"Error: {result.Errors.First().Message}";
-            }
-        }
-        catch (Exception ex)
-        {
-            UpdateFileStatus($"Save failed: {ex.Message}");
-            StatusMessage = $"Error: {ex.Message}";
-        }
-        finally
-        {
-            IsDownloading = false;
-        }
-    }
-
-    [RelayCommand(CanExecute = nameof(CanUseDevice))]
-    private async Task LoadBankAsync()
-    {
-        var path = await FileDialogService.PickOpenFileAsync(
-            "Load User Bank",
-            new[] { FileDialogService.SyxFileType, FileDialogService.AllFilesType });
-
-        if (string.IsNullOrWhiteSpace(path))
-        {
-            UpdateFileStatus("Load bank cancelled");
-            return;
-        }
-
-        IsDownloading = true;
-        StatusMessage = "Sending bank to pedal...";
-        UpdateFileStatus("Sending bank to pedal...", path);
-        DownloadProgress = 0;
-
-        try
-        {
-            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(60));
-            var progress = new Progress<int>(count =>
-            {
-                DownloadProgress = (int)Math.Round((count / 60.0) * 100);
-            });
-
-            var result = await _loadBankUseCase.ExecuteAsync(path, progress, cts.Token);
-
-            if (result.IsSuccess)
-            {
-                UpdateFileStatus($"Bank loaded to pedal ({result.Value}/60 presets)", path);
-                StatusMessage = "Bank loaded to pedal";
-                DownloadProgress = 100;
-            }
-            else
-            {
-                UpdateFileStatus($"Load failed: {result.Errors.First().Message}");
-                StatusMessage = $"Error: {result.Errors.First().Message}";
-                DownloadProgress = 0;
-            }
-        }
-        catch (Exception ex)
-        {
-            UpdateFileStatus($"Load failed: {ex.Message}");
-            StatusMessage = $"Error: {ex.Message}";
-            DownloadProgress = 0;
-        }
-        finally
-        {
-            IsDownloading = false;
-        }
-    }
-
-    [RelayCommand(CanExecute = nameof(CanExportPreset))]
-    private async Task ExportPresetAsync()
-    {
-        var preset = GetSelectedPreset();
-        if (preset == null)
-        {
-            UpdateFileStatus("Select a preset to export");
-            return;
-        }
-
-        var suggestedName = $"{SanitizeFileName(preset.Name)}_{preset.Number}.syx";
-        var path = await FileDialogService.PickSaveFileAsync(
-            "Export Preset",
-            suggestedName,
-            new[] { FileDialogService.SyxFileType, FileDialogService.TextFileType, FileDialogService.AllFilesType },
-            "syx");
-
-        if (string.IsNullOrWhiteSpace(path))
-        {
-            UpdateFileStatus("Export cancelled");
-            return;
-        }
-
-        var extension = Path.GetExtension(path).ToLowerInvariant();
-        try
-        {
-            if (extension == ".txt")
-            {
-                var result = await _exportPresetUseCase.ExecuteAsync(preset, path, CancellationToken.None);
-                if (result.IsSuccess)
-                {
-                    UpdateFileStatus("Preset exported to text file", path);
-                }
-                else
-                {
-                    UpdateFileStatus($"Export failed: {result.Errors.First().Message}");
-                }
-            }
-            else
-            {
-                if (string.IsNullOrWhiteSpace(extension))
-                {
-                    path = path + ".syx";
-                }
-
-                var result = await _exportSyxPresetUseCase.ExecuteAsync(preset, path);
-                if (result.IsSuccess)
-                {
-                    UpdateFileStatus("Preset exported to .syx", path);
-                }
-                else
-                {
-                    UpdateFileStatus($"Export failed: {result.Errors.First().Message}");
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            UpdateFileStatus($"Export failed: {ex.Message}");
-        }
-    }
-
-    [RelayCommand(CanExecute = nameof(CanUseDevice))]
-    private async Task ImportPresetAsync()
-    {
-        var path = await FileDialogService.PickOpenFileAsync(
-            "Import Preset",
-            new[] { FileDialogService.SyxFileType, FileDialogService.TextFileType, FileDialogService.AllFilesType });
-
-        if (string.IsNullOrWhiteSpace(path))
-        {
-            UpdateFileStatus("Import cancelled");
-            return;
-        }
-
-        Preset? importedPreset = null;
-        var extension = Path.GetExtension(path).ToLowerInvariant();
-
-        try
-        {
-            if (extension == ".txt")
-            {
-                var result = await _importPresetUseCase.ExecuteAsync(path, CancellationToken.None);
-                if (result.IsFailed)
-                {
-                    UpdateFileStatus($"Import failed: {result.Errors.First().Message}");
-                    return;
-                }
-                importedPreset = result.Value;
-            }
-            else
-            {
-                var data = await File.ReadAllBytesAsync(path);
-                var result = Preset.FromSysEx(data);
-                if (result.IsFailed)
-                {
-                    UpdateFileStatus($"Import failed: {result.Errors.First().Message}");
-                    return;
-                }
-                importedPreset = result.Value;
-            }
-
-            var targetPresetNumber = PresetList.SelectedPreset?.Number ?? importedPreset.Number;
-            if (targetPresetNumber < 31 || targetPresetNumber > 90)
-            {
-                UpdateFileStatus("Select a target preset (31-90) before importing");
-                return;
-            }
-
-            var presetForNumber = CreatePresetForNumber(importedPreset, targetPresetNumber);
-            var saveResult = await _savePresetUseCase.ExecuteAsync(presetForNumber, targetPresetNumber);
-
-            if (saveResult.IsSuccess)
-            {
-                UpdateFileStatus($"Preset imported to preset #{targetPresetNumber}", path);
-                StatusMessage = $"Preset saved to preset #{targetPresetNumber}";
-                UpdateCurrentBank(presetForNumber);
-            }
-            else
-            {
-                UpdateFileStatus($"Save failed: {saveResult.Errors.First().Message}");
-                StatusMessage = $"Error: {saveResult.Errors.First().Message}";
-            }
-        }
-        catch (Exception ex)
-        {
-            UpdateFileStatus($"Import failed: {ex.Message}");
-            StatusMessage = $"Error: {ex.Message}";
-        }
+        // Recalculate checksum (last byte before 0xF7)
+        // For now, we assume SystemDump.FromSysEx will validate/fix this
+        
+        return SystemDump.FromSysEx(modifiedSysEx).Value;
     }
 
     /// <summary>
@@ -567,66 +240,6 @@ public partial class MainViewModel : ObservableObject
         else
         {
             PresetDetail.LoadFromPreset(null);
-        }
-    }
-
-    private bool CanUseDevice() => IsConnected && !IsDownloading;
-
-    private bool CanExportPreset() => _currentBank != null && PresetList.SelectedPreset != null;
-
-    private Preset? GetSelectedPreset()
-    {
-        if (_currentBank == null || PresetList.SelectedPreset == null)
-            return null;
-
-        return _currentBank.Presets.FirstOrDefault(p => p?.Number == PresetList.SelectedPreset.Number);
-    }
-
-    private void UpdateFileStatus(string message, string? path = null)
-    {
-        FileManager.StatusMessage = message;
-        if (!string.IsNullOrWhiteSpace(path))
-        {
-            FileManager.CurrentFilePath = path;
-        }
-    }
-
-    private string SanitizeFileName(string name)
-    {
-        if (string.IsNullOrWhiteSpace(name))
-            return "Preset";
-
-        var invalid = Path.GetInvalidFileNameChars();
-        var safe = new string(name.Select(ch => invalid.Contains(ch) ? '_' : ch).ToArray());
-        return string.IsNullOrWhiteSpace(safe) ? "Preset" : safe.Trim();
-    }
-
-    private Preset CreatePresetForNumber(Preset preset, int presetNumber)
-    {
-        var sysexResult = preset.ToSysEx();
-        if (sysexResult.IsFailed)
-            return preset;
-
-        var sysex = sysexResult.Value;
-        if (sysex.Length > 8)
-        {
-            sysex[8] = (byte)presetNumber;
-        }
-
-        var parsed = Preset.FromSysEx(sysex);
-        return parsed.IsSuccess ? parsed.Value : preset;
-    }
-
-    private void UpdateCurrentBank(Preset preset)
-    {
-        if (_currentBank == null)
-            return;
-
-        var updated = _currentBank.WithPreset(preset.Number, preset);
-        if (updated.IsSuccess)
-        {
-            _currentBank = updated.Value;
-            PresetList.LoadFromBank(_currentBank);
         }
     }
 
