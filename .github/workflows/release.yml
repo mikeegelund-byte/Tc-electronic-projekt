@@ -60,8 +60,7 @@ jobs:
           -c Release `
           -r win-x64 `
           --self-contained false `
-          -o publish `
-          --no-build
+          -o publish
           
     - name: Build WiX installer
       working-directory: './Nyt program til Nova/installer'

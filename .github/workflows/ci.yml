@@ -46,8 +46,7 @@ jobs:
           -c Release `
           -r win-x64 `
           --self-contained false `
-          -o publish `
-          --no-build
+          -o publish
           
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
