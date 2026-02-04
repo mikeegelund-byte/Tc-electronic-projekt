@@ -1,57 +1,32 @@
-name: CI - Build and Test
+name: CI
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
-  workflow_dispatch:
+    branches: [main]
 
 jobs:
-  build-and-test:
+  build:
     runs-on: windows-latest
-    
+    permissions:
+      contents: read
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - uses: actions/checkout@v4
       
-    - name: Setup .NET 8.0
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: '8.0.x'
-        
-    - name: Restore dependencies
-      working-directory: './Nyt program til Nova'
-      run: dotnet restore NovaApp.sln
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
       
-    - name: Build solution
-      working-directory: './Nyt program til Nova'
-      run: dotnet build NovaApp.sln -c Release --no-restore
+      - name: Restore dependencies
+        run: dotnet restore NovaApp.sln
+        working-directory: Nyt program til Nova
       
-    - name: Run unit tests
-      working-directory: './Nyt program til Nova'
-      run: dotnet test NovaApp.sln -c Release --no-build --verbosity normal --logger "trx;LogFileName=test-results.trx"
+      - name: Build
+        run: dotnet build NovaApp.sln -c Release --no-restore
+        working-directory: Nyt program til Nova
       
-    - name: Upload test results
-      if: always()
-      uses: actions/upload-artifact@v4
-      with:
-        name: test-results
-        path: '**/test-results.trx'
-        
-    - name: Publish application
-      working-directory: './Nyt program til Nova'
-      run: |
-        dotnet publish src/Nova.Presentation/Nova.Presentation.csproj `
-          -c Release `
-          -r win-x64 `
-          --self-contained false `
-          -o publish `
-          --no-build
-          
-    - name: Upload build artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: nova-system-manager-build
-        path: './Nyt program til Nova/publish/**'
-        retention-days: 7
+      - name: Test
+        run: dotnet test NovaApp.sln -c Release --no-build --verbosity normal
+        working-directory: Nyt program til Nova
