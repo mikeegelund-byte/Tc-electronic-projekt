@@ -27,7 +27,8 @@
       <KeyBinding Gesture="Ctrl+C" Command="{Binding CopyPresetCommand}" />
     </Window.KeyBindings>
 
-    <DockPanel Margin="{StaticResource SpacingMedium}">
+    <Grid>
+        <DockPanel Margin="{StaticResource SpacingMedium}">
         <!-- Toolbar at Top -->
         <Border DockPanel.Dock="Top"
                 Background="{StaticResource BackgroundSecondary}"
@@ -42,14 +43,20 @@
                            Foreground="{StaticResource TextPrimary}"
                            VerticalAlignment="Center" />
                 <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8">
-                    <Button Content="🌙"
-                            Command="{Binding ToggleThemeCommand}"
-                            ToolTip.Tip="Toggle Dark/Light theme"
-                            FontSize="18"
+                    <Button Command="{Binding ToggleThemeCommand}"
+                            ToolTip.Tip="Toggle Dark/Light theme (Ctrl+T)"
                             Width="40"
                             Height="32"
+                            Padding="8"
                             AutomationProperties.Name="Toggle theme"
-                            AutomationProperties.HelpText="Switch between light and dark mode" />
+                            AutomationProperties.HelpText="Switch between light and dark mode">
+                        <PathIcon Width="16" Height="16">
+                            <PathIcon.Data>
+                                <!-- Moon icon -->
+                                M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z
+                            </PathIcon.Data>
+                        </PathIcon>
+                    </Button>
                 </StackPanel>
             </Grid>
         </Border>
@@ -104,14 +111,21 @@
                                               AutomationProperties.HelpText="Choose a MIDI port to connect to the Nova System pedal"/>
                                     
                                     <Button Grid.Column="1" 
-                                            Content="↻"
                                             Command="{Binding RefreshPortsCommand}"
                                             ToolTip.Tip="Refresh available MIDI ports (Ctrl+R)"
                                             Margin="8,0,0,0"
-                                            FontSize="18"
                                             Width="32"
+                                            Height="32"
+                                            Padding="6"
                                             AutomationProperties.Name="Refresh MIDI ports"
-                                            AutomationProperties.HelpText="Scan for available MIDI devices" />
+                                            AutomationProperties.HelpText="Scan for available MIDI devices">
+                                        <PathIcon Width="20" Height="20">
+                                            <PathIcon.Data>
+                                                <!-- Refresh/Reload icon -->
+                                                M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z
+                                            </PathIcon.Data>
+                                        </PathIcon>
+                                    </Button>
                                     
                                     <Button Grid.Column="2"
                                             Content="Connect"
@@ -200,4 +214,25 @@
             </TabItem>
         </TabControl>
     </DockPanel>
+    
+    <!-- Loading Overlay -->
+    <Border Background="#CC000000"
+            IsVisible="{Binding IsDownloading}"
+            ZIndex="999">
+        <StackPanel VerticalAlignment="Center" 
+                    HorizontalAlignment="Center"
+                    Spacing="16">
+            <ProgressBar IsIndeterminate="True"
+                        Width="300"
+                        Height="4"
+                        Foreground="{StaticResource AccentPrimary}"/>
+            <TextBlock Text="{Binding StatusMessage}"
+                      Foreground="White"
+                      FontSize="{StaticResource FontSizeLarge}"
+                      FontWeight="{StaticResource FontWeightSemiBold}"
+                      HorizontalAlignment="Center"
+                      AutomationProperties.LiveSetting="Polite"/>
+        </StackPanel>
+    </Border>
+</Grid>
 </Window>

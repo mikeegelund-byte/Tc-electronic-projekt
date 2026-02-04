@@ -1,32 +1,57 @@
-name: CI
+name: CI - Build and Test
 
 on:
   push:
-    branches: [main]
+    branches: [ main, develop ]
   pull_request:
-    branches: [main]
+    branches: [ main ]
+  workflow_dispatch:
 
 jobs:
-  build:
+  build-and-test:
     runs-on: windows-latest
-    permissions:
-      contents: read
+    
     steps:
-      - uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
       
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '8.0.x'
+    - name: Setup .NET 8.0
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
+        
+    - name: Restore dependencies
+      working-directory: './Nyt program til Nova'
+      run: dotnet restore NovaApp.sln
       
-      - name: Restore dependencies
-        run: dotnet restore NovaApp.sln
-        working-directory: Nyt program til Nova
+    - name: Build solution
+      working-directory: './Nyt program til Nova'
+      run: dotnet build -c Release --no-restore
       
-      - name: Build
-        run: dotnet build NovaApp.sln -c Release --no-restore
-        working-directory: Nyt program til Nova
+    - name: Run unit tests
+      working-directory: './Nyt program til Nova'
+      run: dotnet test -c Release --no-build --verbosity normal --logger "trx;LogFileName=test-results.trx"
       
-      - name: Test
-        run: dotnet test NovaApp.sln -c Release --no-build --verbosity normal
-        working-directory: Nyt program til Nova
+    - name: Upload test results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-results
+        path: '**/test-results.trx'
+        
+    - name: Publish application
+      working-directory: './Nyt program til Nova'
+      run: |
+        dotnet publish src/Nova.Presentation/Nova.Presentation.csproj `
+          -c Release `
+          -r win-x64 `
+          --self-contained false `
+          -o publish `
+          --no-build
+          
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: nova-system-manager-build
+        path: './Nyt program til Nova/publish/**'
+        retention-days: 7
