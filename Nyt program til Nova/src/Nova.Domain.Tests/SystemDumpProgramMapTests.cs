@@ -89,7 +89,7 @@ public class SystemDumpProgramMapTests
 
     private static byte[] CreateValidSystemDump()
     {
-        var sysex = new byte[526];
+        var sysex = new byte[527];
         sysex[0] = 0xF0;
         sysex[1] = 0x00;
         sysex[2] = 0x20;
@@ -98,7 +98,7 @@ public class SystemDumpProgramMapTests
         sysex[5] = 0x63;
         sysex[6] = 0x20;
         sysex[7] = 0x02;
-        sysex[525] = 0xF7;
+        sysex[526] = 0xF7;
         return sysex;
     }
 
@@ -111,3 +111,4 @@ public class SystemDumpProgramMapTests
         data[offset + 3] = (byte)(v1 / 32);
     }
 }
+
