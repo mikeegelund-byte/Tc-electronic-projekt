@@ -1,0 +1,17 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "dotnet test (NovaApp)",
+			"type": "shell",
+			"command": "dotnet",
+			"args": [
+				"test"
+			],
+			"problemMatcher": [
+				"$msCompile"
+			],
+			"group": "test"
+		}
+	]
+}

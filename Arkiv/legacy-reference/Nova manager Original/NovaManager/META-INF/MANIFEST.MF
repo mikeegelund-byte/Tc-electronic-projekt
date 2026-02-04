@@ -1,7 +1,0 @@
-Manifest-Version: 1.0
-Contributors: Matthieu Quignard
-Implementation-Version: 1
-Created-By: 1.6.0_20 (Apple Inc.)
-Specification-Version: 1.20.1
-Main-Class: nova/NovaManager
-
