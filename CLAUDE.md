@@ -4,6 +4,8 @@
 
 **Formål:** Desktop applikation til styring af TC Electronic Nova System guitar effects pedal via MIDI.
 
+**Location:** `C:\Projekter\Mikes preset app`
+
 **Tech Stack:**
 - C# .NET 8+ (pt. kører .NET 10)
 - Avalonia 11.x (cross-platform UI framework)
@@ -15,6 +17,33 @@
 - Application (Use Cases)
 - Domain (Business Logic)
 - Infrastructure (MIDI, File I/O)
+
+## Migration Historie
+
+**Migreret:** 2026-02-07
+**Fra:** `C:\Projekter\TC Electronic\Tc electronic projekt\Nyt program til Nova`
+**Til:** `C:\Projekter\Mikes preset app`
+
+**Rationale:** Oprydning af kæmpemæssigt rod i mapper, etablering af clean projekt struktur.
+
+**Hvad blev flyttet:**
+- ✅ 296 C# filer (kildekode + tests)
+- ✅ 26 dokumentations-filer (docs/ + root .md)
+- ✅ Git repository (fuld historik bevaret - 2214 filer i .git/)
+- ✅ Build configuration (NovaApp.sln, Directory.Build.props, global.json)
+- ✅ Scripts (setup.ps1, verify-commit.ps1)
+
+**Hvad blev efterladt (reference):**
+- Originalt materiale: `C:\Projekter\TC Electronic\Tc originalt materiale\` (PDFs, MIDI dumps)
+- Legacy Java projekt: `C:\Projekter\TC Electronic\Tc electronic projekt\Nova manager Original\`
+- Eksperimentel version: `C:\Projekter\TC Electronic\Tc electronic projekt\NovaMidiLab\`
+
+**Verification:**
+- ✅ Git historik intakt (alle commits bevaret, seneste: c9f24e3 Migration commit)
+- ✅ 458 tests (453 passing = 98.9%)
+- ✅ Solution bygger uden fejl (0 warnings, 0 errors)
+- ✅ Dokumentation komplet (26 filer)
+- ✅ Clean struktur (~330 filer vs. 1000+ før)
 
 ## MIDI Kommunikation - Kritisk Viden
 
@@ -111,7 +140,7 @@ Se `NovaSystem_MIDI_Implementation_Guide.md` for detaljeret protokol.
 
 ### Build & Run
 ```powershell
-cd "Nyt program til Nova"
+cd "C:\Projekter\Mikes preset app"
 dotnet build NovaApp.sln          # Build hele solution
 dotnet test NovaApp.sln            # Kør alle tests
 dotnet run --project src/Nova.Presentation  # Start app
@@ -180,16 +209,21 @@ dotnet run --project src/Nova.Presentation --verbosity detailed
 dotnet clean && dotnet build
 ```
 
-## Arkiv & Historie
+## Reference Materiale
 
-Historisk udviklings-materiale ligger i:
-- `C:\Projekter\TC Electronic\Arkiv fra TC electronic projekt\`
+**Originalt TC Electronic materiale:**
+- `C:\Projekter\TC Electronic\Tc originalt materiale\`
+  - Nova System Sysex Map.pdf
+  - TC Nova Manual.pdf
+  - MIDI dumps (.syx filer)
+  - Firmware updater
 
-Dette indeholder:
-- Tidligere design dokumenter
-- Completed tasks
-- Development notes
-- Session logs
+**Legacy projekter (kun til reference):**
+- `C:\Projekter\TC Electronic\Tc electronic projekt\Nova manager Original\` (Java version)
+- `C:\Projekter\TC Electronic\Tc electronic projekt\NovaMidiLab\` (eksperimentel C#)
+
+**Arkiv backups:**
+- `C:\Projekter\TC Electronic\Arkiv fra TC electronic projekt\` (backup fra 2026-02-04)
 
 ## Næste Skridt (opdateres løbende)
 
@@ -197,5 +231,5 @@ Se `docs/TROUBLESHOOTING_PLAN.md` for aktuel troubleshooting plan.
 
 ---
 
-*Sidst opdateret: 2026-02-06 22:55*
-*Claude Session: MIDI fixes, domain validation, XAML crash fix - UI integration incomplete*
+*Sidst opdateret: 2026-02-07 00:17*
+*Claude Session: Migration til clean projekt struktur - flyttet fra "Nyt program til Nova" til "Mikes preset app"*
