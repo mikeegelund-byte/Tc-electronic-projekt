@@ -13,20 +13,26 @@ public sealed class DryWetMidiPort : IMidiPort, IDisposable
     private OutputDevice? _outputDevice;
     private Channel<byte[]>? _sysExChannel;
     private Channel<byte[]>? _ccChannel;
+    private bool _handlersSubscribed = false;
 
     public string Name { get; private set; } = string.Empty;
+    public string? InputPortName { get; private set; }
+    public string? OutputPortName { get; private set; }
     public bool IsConnected => _inputDevice != null && _outputDevice != null;
 
-    public static List<string> GetAvailablePorts()
-    {
-        var inputs = InputDevice.GetAll().Select(d => d.Name).ToList();
-        var outputs = OutputDevice.GetAll().Select(d => d.Name).ToList();
-        
-        // Return ports that have both input AND output (bidirectional)
-        return inputs.Intersect(outputs).ToList();
-    }
+    public IReadOnlyList<string> GetAvailableInputPorts()
+        => InputDevice.GetAll()
+            .Select(d => d.Name)
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .ToList();
 
-    public Task<Result> ConnectAsync(string portName)
+    public IReadOnlyList<string> GetAvailableOutputPorts()
+        => OutputDevice.GetAll()
+            .Select(d => d.Name)
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .ToList();
+
+    public Task<Result> ConnectAsync(MidiPortSelection selection)
     {
         try
         {
@@ -39,22 +45,37 @@ public sealed class DryWetMidiPort : IMidiPort, IDisposable
             var inputDevices = InputDevice.GetAll();
             var outputDevices = OutputDevice.GetAll();
 
-            var input = inputDevices.FirstOrDefault(d => d.Name == portName);
-            var output = outputDevices.FirstOrDefault(d => d.Name == portName);
+            if (!selection.IsValid(out var selectionError))
+            {
+                return Task.FromResult(Result.Fail(selectionError));
+            }
+
+            var inputName = selection.InputPortName;
+            var outputName = selection.OutputPortName;
+
+            var input = FindInputDevice(inputDevices, inputName);
+            var output = FindOutputDevice(outputDevices, outputName);
 
             if (input == null || output == null)
             {
                 // Clean up any partial resources
                 input?.Dispose();
                 output?.Dispose();
-                return Task.FromResult(Result.Fail($"MIDI port '{portName}' not found"));
+
+                var missing = new List<string>();
+                if (input == null) missing.Add($"IN '{inputName}'");
+                if (output == null) missing.Add($"OUT '{outputName}'");
+
+                return Task.FromResult(Result.Fail($"MIDI port(s) not found: {string.Join(", ", missing)}"));
             }
 
             _inputDevice = input;
             _outputDevice = output;
             
             _inputDevice.StartEventsListening();
-            Name = portName;
+            InputPortName = inputName;
+            OutputPortName = outputName;
+            Name = $"IN: {InputPortName} / OUT: {OutputPortName}";
 
             return Task.FromResult(Result.Ok());
         }
@@ -66,6 +87,8 @@ public sealed class DryWetMidiPort : IMidiPort, IDisposable
             _inputDevice = null;
             _outputDevice = null;
             Name = string.Empty;
+            InputPortName = null;
+            OutputPortName = null;
             
             return Task.FromResult(Result.Fail($"Failed to connect: {ex.Message}"));
         }
@@ -75,13 +98,28 @@ public sealed class DryWetMidiPort : IMidiPort, IDisposable
     {
         try
         {
+            // Fjern event handler FØR dispose
+            if (_inputDevice != null && _handlersSubscribed)
+            {
+                _inputDevice.EventReceived -= OnEventReceived;
+                _handlersSubscribed = false;
+            }
+
+            // Luk channels for at afslutte async enumerations
+            _sysExChannel?.Writer.Complete();
+            _ccChannel?.Writer.Complete();
+
             _inputDevice?.StopEventsListening();
             _inputDevice?.Dispose();
             _outputDevice?.Dispose();
-            
+
             _inputDevice = null;
             _outputDevice = null;
+            _sysExChannel = null;
+            _ccChannel = null;
             Name = string.Empty;
+            InputPortName = null;
+            OutputPortName = null;
 
             return Task.FromResult(Result.Ok());
         }
@@ -119,8 +157,18 @@ public sealed class DryWetMidiPort : IMidiPort, IDisposable
         if (_inputDevice == null)
             throw new InvalidOperationException("Not connected");
 
-        _sysExChannel = Channel.CreateUnbounded<byte[]>();
-        _inputDevice.EventReceived += OnEventReceived;
+        // Initialiser channel én gang
+        if (_sysExChannel == null)
+        {
+            _sysExChannel = Channel.CreateUnbounded<byte[]>();
+        }
+
+        // Subscribe event handler én gang
+        if (!_handlersSubscribed)
+        {
+            _inputDevice.EventReceived += OnEventReceived;
+            _handlersSubscribed = true;
+        }
 
         return ReadSysExAsync(cancellationToken);
     }
@@ -129,23 +177,29 @@ public sealed class DryWetMidiPort : IMidiPort, IDisposable
     {
         if (e.Event is NormalSysExEvent sysEx)
         {
-            // DryWetMIDI returns data WITHOUT F0/F7, we add them back
-            var data = new byte[sysEx.Data.Length + 2];
-            data[0] = 0xF0;
-            Array.Copy(sysEx.Data, 0, data, 1, sysEx.Data.Length);
-            data[^1] = 0xF7;
+            if (_sysExChannel?.Writer != null)
+            {
+                // DryWetMIDI returns data WITHOUT F0/F7, we add them back
+                var data = new byte[sysEx.Data.Length + 2];
+                data[0] = 0xF0;
+                Array.Copy(sysEx.Data, 0, data, 1, sysEx.Data.Length);
+                data[^1] = 0xF7;
 
-            _sysExChannel?.Writer.TryWrite(data);
+                _sysExChannel.Writer.TryWrite(data);
+            }
         }
         else if (e.Event is ControlChangeEvent ccEvent)
         {
-            // MIDI CC format: [Status: 0xB0 + channel] [CC#: 0-127] [Value: 0-127]
-            var ccMessage = new byte[3];
-            ccMessage[0] = (byte)(0xB0 + ccEvent.Channel);  // Status byte with channel
-            ccMessage[1] = (byte)ccEvent.ControlNumber;    // CC number
-            ccMessage[2] = (byte)ccEvent.ControlValue;     // CC value
+            if (_ccChannel?.Writer != null)
+            {
+                // MIDI CC format: [Status: 0xB0 + channel] [CC#: 0-127] [Value: 0-127]
+                var ccMessage = new byte[3];
+                ccMessage[0] = (byte)(0xB0 + ccEvent.Channel);  // Status byte with channel
+                ccMessage[1] = (byte)ccEvent.ControlNumber;    // CC number
+                ccMessage[2] = (byte)ccEvent.ControlValue;     // CC value
 
-            _ccChannel?.Writer.TryWrite(ccMessage);
+                _ccChannel.Writer.TryWrite(ccMessage);
+            }
         }
     }
 
@@ -165,8 +219,18 @@ public sealed class DryWetMidiPort : IMidiPort, IDisposable
         if (_inputDevice == null)
             throw new InvalidOperationException("Not connected");
 
-        _ccChannel = Channel.CreateUnbounded<byte[]>();
-        _inputDevice.EventReceived += OnEventReceived;
+        // Initialiser channel én gang
+        if (_ccChannel == null)
+        {
+            _ccChannel = Channel.CreateUnbounded<byte[]>();
+        }
+
+        // Subscribe event handler én gang
+        if (!_handlersSubscribed)
+        {
+            _inputDevice.EventReceived += OnEventReceived;
+            _handlersSubscribed = true;
+        }
 
         return ReadCCAsync(cancellationToken);
     }
@@ -185,5 +249,17 @@ public sealed class DryWetMidiPort : IMidiPort, IDisposable
     public void Dispose()
     {
         DisconnectAsync().GetAwaiter().GetResult();
+    }
+
+    private static InputDevice? FindInputDevice(IEnumerable<InputDevice> devices, string name)
+    {
+        return devices.FirstOrDefault(d => d.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
+            ?? devices.FirstOrDefault(d => d.Name.IndexOf(name, StringComparison.OrdinalIgnoreCase) >= 0);
+    }
+
+    private static OutputDevice? FindOutputDevice(IEnumerable<OutputDevice> devices, string name)
+    {
+        return devices.FirstOrDefault(d => d.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
+            ?? devices.FirstOrDefault(d => d.Name.IndexOf(name, StringComparison.OrdinalIgnoreCase) >= 0);
     }
 }

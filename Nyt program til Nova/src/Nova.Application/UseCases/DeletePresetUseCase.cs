@@ -94,10 +94,15 @@ public sealed class DeletePresetUseCase : IDeletePresetUseCase
         var name = $"Init {slotNumber:D2}".PadRight(24);
         var nameBytes = System.Text.Encoding.ASCII.GetBytes(name);
         Array.Copy(nameBytes, 0, sysex, 9, 24);
-        
-        // Parameters bytes 34-517: all zero (default values)
-        // Already initialized to 0 by default
-        
+
+        // Set minimum valid parameter values (validated ranges)
+        Encode4ByteValue(sysex, 38, 500);   // TapTempo: 500ms (100-3000)
+        Encode4ByteValue(sysex, 86, 15);    // CompRelease: 15 (13-23)
+        Encode4ByteValue(sysex, 330, 50);   // ReverbDecay: 50 (1-200)
+        Encode4ByteValue(sysex, 418, 8);    // EqWidth1: 8 (5-12)
+        Encode4ByteValue(sysex, 430, 8);    // EqWidth2: 8 (5-12)
+        Encode4ByteValue(sysex, 442, 8);    // EqWidth3: 8 (5-12)
+
         // Calculate checksum (sum of bytes 34-517 & 0x7F)
         int checksum = 0;
         for (int i = 34; i <= 517; i++)
@@ -107,7 +112,18 @@ public sealed class DeletePresetUseCase : IDeletePresetUseCase
         sysex[518] = (byte)(checksum & 0x7F);
         
         sysex[520] = 0xF7; // SysEx end
-        
+
         return sysex;
+    }
+
+    /// <summary>
+    /// Encodes a 4-byte value into SysEx format (7-bit nibbles).
+    /// </summary>
+    private static void Encode4ByteValue(byte[] sysex, int offset, int value)
+    {
+        sysex[offset] = (byte)(value & 0x7F);
+        sysex[offset + 1] = (byte)((value >> 7) & 0x7F);
+        sysex[offset + 2] = (byte)((value >> 14) & 0x7F);
+        sysex[offset + 3] = (byte)((value >> 21) & 0x7F);
     }
 }

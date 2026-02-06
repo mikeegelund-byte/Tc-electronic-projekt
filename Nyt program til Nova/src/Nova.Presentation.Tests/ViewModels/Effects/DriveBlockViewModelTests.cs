@@ -83,7 +83,15 @@ public class DriveBlockViewModelTests
         // Preset name (bytes 9-24: "Test Preset     ")
         var nameBytes = System.Text.Encoding.ASCII.GetBytes("Test Preset         ".PadRight(24));
         Array.Copy(nameBytes, 0, sysex, 9, 24);
-        
+
+        // Set minimum valid parameter values (validated ranges)
+        Encode4ByteValue(sysex, 38, 500);   // TapTempo: 500ms (100-3000)
+        Encode4ByteValue(sysex, 86, 15);    // CompRelease: 15 (13-23)
+        Encode4ByteValue(sysex, 330, 50);   // ReverbDecay: 50 (1-200)
+        Encode4ByteValue(sysex, 418, 8);    // EqWidth1: 8 (5-12)
+        Encode4ByteValue(sysex, 430, 8);    // EqWidth2: 8 (5-12)
+        Encode4ByteValue(sysex, 442, 8);    // EqWidth3: 8 (5-12)
+
         // Drive parameters using 4-byte encoding
         Encode4ByteValue(sysex, 102, driveType); // DriveType
         Encode4ByteValue(sysex, 106, gain); // DriveGain

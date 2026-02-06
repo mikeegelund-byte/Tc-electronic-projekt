@@ -167,30 +167,6 @@ public class ExportPresetUseCaseTests
 
     private Preset CreateTestPreset(int number, string name)
     {
-        // Create a minimal valid SysEx message for testing
-        var sysex = new byte[521];
-        
-        // Header
-        sysex[0] = 0xF0;
-        sysex[1] = 0x00;
-        sysex[2] = 0x20;
-        sysex[3] = 0x1F;
-        sysex[4] = 0x00;
-        sysex[5] = 0x63;
-        sysex[6] = 0x20;
-        sysex[7] = 0x01;
-        
-        // Preset number
-        sysex[8] = (byte)number;
-        
-        // Preset name (24 ASCII chars)
-        var nameBytes = System.Text.Encoding.ASCII.GetBytes(name.PadRight(24));
-        Array.Copy(nameBytes, 0, sysex, 9, 24);
-        
-        // End marker
-        sysex[520] = 0xF7;
-        
-        var presetResult = Preset.FromSysEx(sysex);
-        return presetResult.Value;
+        return TestHelpers.CreateValidPreset(number, name);
     }
 }

@@ -31,6 +31,7 @@ Hvis fejl:
 - Gem konsol-/log-output
 - Sammenlign med `docs/MIDI_PROTOCOL.md`
 - Isolér fejl i `Nova.Midi` og `Nova.Infrastructure`
+- Bekræft MIDI IN/OUT ikke er byttet (MIDI OUT → pedal MIDI IN)
 
 ## 5) Hardware-edgecases
 - Test med/uden device tilsluttet
@@ -38,9 +39,10 @@ Hvis fejl:
 - Verificér SysEx checksum (520 bytes format)
 
 ## 6) Hypoteser (prioriteret)
-1. MIDI port enumeration og timeouts
-2. SysEx format mismatch (520 bytes)
-3. UI state sync i `Nova.Presentation`
+1. Forkert MIDI IN/OUT parring (MIDI 0/1 byttet)
+2. MIDI port enumeration og timeouts
+3. SysEx format mismatch (520 bytes)
+4. UI state sync i `Nova.Presentation`
 
 ## Acceptkriterier
 - Build og tests passerer lokalt

@@ -117,28 +117,6 @@ public class SaveBankUseCaseTests
 
     private byte[] CreateDummyPreset(int presetNumber)
     {
-        // Create a valid 521-byte preset SysEx message
-        var bytes = new byte[521];
-        bytes[0] = 0xF0;  // SysEx start
-        bytes[1] = 0x00;  // TC Electronic manufacturer ID
-        bytes[2] = 0x20;
-        bytes[3] = 0x1F;
-        bytes[4] = 0x00;  // Device ID
-        bytes[5] = 0x63;  // Nova System model ID
-        bytes[6] = 0x20;  // Dump message
-        bytes[7] = 0x01;  // Preset data type
-        bytes[8] = (byte)presetNumber;  // Preset number
-        
-        // Name (bytes 9-32): 24 ASCII characters
-        var name = $"Preset {presetNumber}".PadRight(24);
-        var nameBytes = System.Text.Encoding.ASCII.GetBytes(name);
-        Array.Copy(nameBytes, 0, bytes, 9, Math.Min(24, nameBytes.Length));
-        
-        // Fill remaining bytes with valid data (zeros are valid for most parameters)
-        // The Preset.FromSysEx() method doesn't validate checksums, just structure
-        
-        bytes[520] = 0xF7;  // SysEx end
-        
-        return bytes;
+        return TestHelpers.CreateValidPresetSysEx(presetNumber, $"Preset {presetNumber}");
     }
 }

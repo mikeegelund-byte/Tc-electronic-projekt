@@ -255,10 +255,22 @@ public class Preset
         // PARAMETER VALIDATION
         // ========================================
 
-        if (pitchFeedback1OrKey < 0 || pitchFeedback1OrKey > 100)
-            return Result.Fail($"PitchFeedback1OrKey value {pitchFeedback1OrKey} out of range (0-100)");
-        if (pitchFeedback2OrScale < 0 || pitchFeedback2OrScale > 100)
-            return Result.Fail($"PitchFeedback2OrScale value {pitchFeedback2OrScale} out of range (0-100)");
+        var validationResult = ValidateAllParameters(
+            tapTempo, routing,
+            compType, compRatio, compAttack, compRelease,
+            driveType, driveGain,
+            boostType, boostGain,
+            modType, modDepth, modTempo, modMix,
+            delayType, delayTime, delayTime2, delayTempo, delayFeedback, delayMix,
+            reverbType, reverbDecay, reverbPreDelay, reverbShape, reverbSize, reverbHiColor, reverbLoColor, reverbMix,
+            gateType, gateDamp, gateRelease,
+            eqWidth1, eqWidth2, eqWidth3,
+            pitchType, pitchDelay1, pitchDelay2,
+            pitchFeedback1OrKey, pitchFeedback2OrScale
+        );
+
+        if (validationResult.IsFailed)
+            return Result.Fail<Preset>(validationResult.Errors.Select(e => e.Message).ToList());
 
         return Result.Ok(new Preset
         {
@@ -344,6 +356,124 @@ public class Preset
             DelayEnabled = delayEnabled,
             ReverbEnabled = reverbEnabled
         });
+    }
+
+    private static Result ValidateAllParameters(
+        int tapTempo, int routing,
+        int compType, int compRatio, int compAttack, int compRelease,
+        int driveType, int driveGain,
+        int boostType, int boostGain,
+        int modType, int modDepth, int modTempo, int modMix,
+        int delayType, int delayTime, int delayTime2, int delayTempo, int delayFeedback, int delayMix,
+        int reverbType, int reverbDecay, int reverbPreDelay, int reverbShape, int reverbSize,
+        int reverbHiColor, int reverbLoColor, int reverbMix,
+        int gateType, int gateDamp, int gateRelease,
+        int eqWidth1, int eqWidth2, int eqWidth3,
+        int pitchType, int pitchDelay1, int pitchDelay2,
+        int pitchFeedback1OrKey, int pitchFeedback2OrScale)
+    {
+        var errors = new List<string>();
+
+        // Global parameters
+        if (tapTempo < 100 || tapTempo > 3000)
+            errors.Add($"TapTempo value {tapTempo} out of range (100-3000)");
+        if (routing < 0 || routing > 2)
+            errors.Add($"Routing value {routing} out of range (0-2)");
+
+        // COMP block
+        if (compType < 0 || compType > 2)
+            errors.Add($"CompType value {compType} out of range (0-2)");
+        if (compRatio < 0 || compRatio > 15)
+            errors.Add($"CompRatio value {compRatio} out of range (0-15)");
+        if (compAttack < 0 || compAttack > 16)
+            errors.Add($"CompAttack value {compAttack} out of range (0-16)");
+        if (compRelease < 13 || compRelease > 23)
+            errors.Add($"CompRelease value {compRelease} out of range (13-23)");
+
+        // DRIVE block
+        if (driveType < 0 || driveType > 6)
+            errors.Add($"DriveType value {driveType} out of range (0-6)");
+        if (driveGain < 0 || driveGain > 100)
+            errors.Add($"DriveGain value {driveGain} out of range (0-100)");
+
+        // BOOST block
+        if (boostType < 0 || boostType > 2)
+            errors.Add($"BoostType value {boostType} out of range (0-2)");
+        if (boostGain < 0 || boostGain > 30)
+            errors.Add($"BoostGain value {boostGain} out of range (0-30)");
+
+        // MOD block
+        if (modType < 0 || modType > 5)
+            errors.Add($"ModType value {modType} out of range (0-5)");
+        if (modDepth < 0 || modDepth > 100)
+            errors.Add($"ModDepth value {modDepth} out of range (0-100)");
+        if (modTempo < 0 || modTempo > 16)
+            errors.Add($"ModTempo value {modTempo} out of range (0-16)");
+        if (modMix < 0 || modMix > 100)
+            errors.Add($"ModMix value {modMix} out of range (0-100)");
+
+        // DELAY block
+        if (delayType < 0 || delayType > 5)
+            errors.Add($"DelayType value {delayType} out of range (0-5)");
+        if (delayTime < 0 || delayTime > 1800)
+            errors.Add($"DelayTime value {delayTime} out of range (0-1800)");
+        if (delayTime2 < 0 || delayTime2 > 1800)
+            errors.Add($"DelayTime2 value {delayTime2} out of range (0-1800)");
+        if (delayTempo < 0 || delayTempo > 16)
+            errors.Add($"DelayTempo value {delayTempo} out of range (0-16)");
+        if (delayFeedback < 0 || delayFeedback > 120)
+            errors.Add($"DelayFeedback value {delayFeedback} out of range (0-120)");
+        if (delayMix < 0 || delayMix > 100)
+            errors.Add($"DelayMix value {delayMix} out of range (0-100)");
+
+        // REVERB block
+        if (reverbType < 0 || reverbType > 3)
+            errors.Add($"ReverbType value {reverbType} out of range (0-3)");
+        if (reverbDecay < 1 || reverbDecay > 200)
+            errors.Add($"ReverbDecay value {reverbDecay} out of range (1-200)");
+        if (reverbPreDelay < 0 || reverbPreDelay > 100)
+            errors.Add($"ReverbPreDelay value {reverbPreDelay} out of range (0-100)");
+        if (reverbShape < 0 || reverbShape > 2)
+            errors.Add($"ReverbShape value {reverbShape} out of range (0-2)");
+        if (reverbSize < 0 || reverbSize > 7)
+            errors.Add($"ReverbSize value {reverbSize} out of range (0-7)");
+        if (reverbHiColor < 0 || reverbHiColor > 6)
+            errors.Add($"ReverbHiColor value {reverbHiColor} out of range (0-6)");
+        if (reverbLoColor < 0 || reverbLoColor > 6)
+            errors.Add($"ReverbLoColor value {reverbLoColor} out of range (0-6)");
+        if (reverbMix < 0 || reverbMix > 100)
+            errors.Add($"ReverbMix value {reverbMix} out of range (0-100)");
+
+        // EQ/GATE block
+        if (gateType < 0 || gateType > 1)
+            errors.Add($"GateType value {gateType} out of range (0-1)");
+        if (gateDamp < 0 || gateDamp > 90)
+            errors.Add($"GateDamp value {gateDamp} out of range (0-90)");
+        if (gateRelease < 0 || gateRelease > 200)
+            errors.Add($"GateRelease value {gateRelease} out of range (0-200)");
+        if (eqWidth1 < 5 || eqWidth1 > 12)
+            errors.Add($"EqWidth1 value {eqWidth1} out of range (5-12)");
+        if (eqWidth2 < 5 || eqWidth2 > 12)
+            errors.Add($"EqWidth2 value {eqWidth2} out of range (5-12)");
+        if (eqWidth3 < 5 || eqWidth3 > 12)
+            errors.Add($"EqWidth3 value {eqWidth3} out of range (5-12)");
+
+        // PITCH block
+        if (pitchType < 0 || pitchType > 4)
+            errors.Add($"PitchType value {pitchType} out of range (0-4)");
+        if (pitchDelay1 < 0 || pitchDelay1 > 50)
+            errors.Add($"PitchDelay1 value {pitchDelay1} out of range (0-50)");
+        if (pitchDelay2 < 0 || pitchDelay2 > 50)
+            errors.Add($"PitchDelay2 value {pitchDelay2} out of range (0-50)");
+        if (pitchFeedback1OrKey < 0 || pitchFeedback1OrKey > 100)
+            errors.Add($"PitchFeedback1OrKey value {pitchFeedback1OrKey} out of range (0-100)");
+        if (pitchFeedback2OrScale < 0 || pitchFeedback2OrScale > 100)
+            errors.Add($"PitchFeedback2OrScale value {pitchFeedback2OrScale} out of range (0-100)");
+
+        if (errors.Any())
+            return Result.Fail(string.Join("; ", errors));
+
+        return Result.Ok();
     }
 
     /// <summary>

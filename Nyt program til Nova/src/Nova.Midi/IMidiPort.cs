@@ -14,16 +14,36 @@ public interface IMidiPort
     string Name { get; }
 
     /// <summary>
+    /// Gets the connected MIDI input port name (from device OUT to app IN).
+    /// </summary>
+    string? InputPortName { get; }
+
+    /// <summary>
+    /// Gets the connected MIDI output port name (from app OUT to device IN).
+    /// </summary>
+    string? OutputPortName { get; }
+
+    /// <summary>
     /// Gets whether the port is currently connected.
     /// </summary>
     bool IsConnected { get; }
 
     /// <summary>
-    /// Connects to the MIDI port.
+    /// Connects to the MIDI input/output ports.
     /// </summary>
-    /// <param name="portName">Name of the port to connect to (e.g., "Nova System")</param>
+    /// <param name="selection">Input/Output port selection</param>
     /// <returns>Success or failure reason</returns>
-    Task<Result> ConnectAsync(string portName);
+    Task<Result> ConnectAsync(MidiPortSelection selection);
+
+    /// <summary>
+    /// Lists available MIDI input ports.
+    /// </summary>
+    IReadOnlyList<string> GetAvailableInputPorts();
+
+    /// <summary>
+    /// Lists available MIDI output ports.
+    /// </summary>
+    IReadOnlyList<string> GetAvailableOutputPorts();
 
     /// <summary>
     /// Disconnects from the MIDI port.

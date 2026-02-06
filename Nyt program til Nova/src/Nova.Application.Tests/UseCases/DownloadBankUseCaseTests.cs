@@ -41,38 +41,7 @@ public class DownloadBankUseCaseTests
     
     private byte[] CreateDummyPreset(int presetNumber)
     {
-        // Structure based on 06-sysex-formats.md (521 bytes confirmed in Phase 2)
-        // F0 00 20 1F 00 63 20 01 [Num] [Name:24] [Tap:4] ... [CS] F7
-        var bytes = new byte[521];
-        bytes[0] = 0xF0;
-        bytes[1] = 0x00; bytes[2] = 0x20; bytes[3] = 0x1F; // Header
-        bytes[4] = 0x00; bytes[5] = 0x63;
-        bytes[6] = 0x20; bytes[7] = 0x01;
-        bytes[8] = (byte)presetNumber;
-        
-        // Fill remaining payload (0s are valid for most parameters)
-        
-        // Checksum: Sum bytes 34 to 517
-        int sum = 0;
-        for (int i = 34; i <= 517; i++) sum += bytes[i];
-        
-        bytes[518] = (byte)(sum & 0x7F);
-        bytes[519] = 0xF7; // Oh wait, checksum is 518? 
-        // Let's re-read Preset.cs decoding logic or SysEx format from Phase 2
-        // Preset.cs doesn't calculate checksum in FromSysEx, it just checks length and fixed bytes.
-        // But ToSysEx or validation might be stricter.
-        
-        // Validating Preset.cs FromSysEx:
-        /*
-        if (sysex.Length != 521) ...
-        if (sysex[0] != 0xF0) ...
-        if (sysex[520] != 0xF7) ...
-        */
-        
-        // So byte 520 is F7.
-        bytes[520] = 0xF7;
-        
-        return bytes;
+        return TestHelpers.CreateValidPresetSysEx(presetNumber, $"Preset {presetNumber}");
     }
 }
 

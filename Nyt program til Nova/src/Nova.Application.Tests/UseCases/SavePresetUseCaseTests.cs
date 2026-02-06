@@ -141,36 +141,6 @@ public sealed class SavePresetUseCaseTests
 
     private Preset CreateValidPreset()
     {
-        // Create a valid 521-byte SysEx and parse it
-        var sysex = new byte[521];
-        sysex[0] = 0xF0;                              // Start
-        sysex[1] = 0x00; sysex[2] = 0x20; sysex[3] = 0x1F; // TC Electronic
-        sysex[4] = 0x00;                              // Device ID
-        sysex[5] = 0x63;                              // Nova System
-        sysex[6] = 0x20;                              // Dump
-        sysex[7] = 0x01;                              // Preset
-        sysex[8] = 0x20;                              // Number (32)
-        sysex[9] = 0x00;                              // Reserved
-        
-        // Name "Test Preset" (24 bytes)
-        var nameBytes = System.Text.Encoding.ASCII.GetBytes("Test Preset");
-        Array.Copy(nameBytes, 0, sysex, 10, nameBytes.Length);
-        
-        // Fill remaining bytes with valid data (simplified - all zeros is valid)
-        for (int i = 34; i < 518; i++)
-        {
-            sysex[i] = 0x00;
-        }
-        
-        // Calculate checksum (sum of bytes 34-517 & 0x7F)
-        int checksum = 0;
-        for (int i = 34; i <= 517; i++)
-        {
-            checksum += sysex[i];
-        }
-        sysex[518] = (byte)(checksum & 0x7F);
-        sysex[520] = 0xF7;                            // End
-        
-        return Preset.FromSysEx(sysex).Value;
+        return TestHelpers.CreateValidPreset(32, "Test Preset");
     }
 }

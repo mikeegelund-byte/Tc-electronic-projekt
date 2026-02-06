@@ -21,7 +21,48 @@ public class PresetTests
         var name = "Test Preset             ";
         for (int i = 0; i < 24; i++)
             sysex[9 + i] = (byte)name[i];
-        // ... rest of parameters ...
+
+        // Set minimum valid parameter values to pass validation
+        Encode4ByteValue(sysex, 38, 500);   // TapTempo: 500ms (100-3000)
+        Encode4ByteValue(sysex, 42, 0);     // Routing: 0 (0-2)
+        Encode4ByteValue(sysex, 70, 0);     // CompType: 0 (0-2)
+        Encode4ByteValue(sysex, 78, 0);     // CompRatio: 0 (0-15)
+        Encode4ByteValue(sysex, 82, 0);     // CompAttack: 0 (0-16)
+        Encode4ByteValue(sysex, 86, 15);    // CompRelease: 15 (13-23)
+        Encode4ByteValue(sysex, 102, 0);    // DriveType: 0 (0-6)
+        Encode4ByteValue(sysex, 106, 50);   // DriveGain: 50 (0-100)
+        Encode4ByteValue(sysex, 114, 0);    // BoostType: 0 (0-2)
+        Encode4ByteValue(sysex, 118, 15);   // BoostGain: 15 (0-30)
+        Encode4ByteValue(sysex, 198, 0);    // ModType: 0 (0-5)
+        Encode4ByteValue(sysex, 206, 50);   // ModDepth: 50 (0-100)
+        Encode4ByteValue(sysex, 210, 8);    // ModTempo: 8 (0-16)
+        Encode4ByteValue(sysex, 250, 50);   // ModMix: 50 (0-100)
+        Encode4ByteValue(sysex, 262, 0);    // DelayType: 0 (0-5)
+        Encode4ByteValue(sysex, 266, 500);  // DelayTime: 500 (0-1800)
+        Encode4ByteValue(sysex, 270, 500);  // DelayTime2: 500 (0-1800)
+        Encode4ByteValue(sysex, 274, 8);    // DelayTempo: 8 (0-16)
+        Encode4ByteValue(sysex, 282, 50);   // DelayFeedback: 50 (0-120)
+        Encode4ByteValue(sysex, 298, 50);   // DelayMix: 50 (0-100)
+        Encode4ByteValue(sysex, 326, 0);    // ReverbType: 0 (0-3)
+        Encode4ByteValue(sysex, 330, 50);   // ReverbDecay: 50 (1-200)
+        Encode4ByteValue(sysex, 334, 30);   // ReverbPreDelay: 30 (0-100)
+        Encode4ByteValue(sysex, 338, 1);    // ReverbShape: 1 (0-2)
+        Encode4ByteValue(sysex, 342, 3);    // ReverbSize: 3 (0-7)
+        Encode4ByteValue(sysex, 346, 3);    // ReverbHiColor: 3 (0-6)
+        Encode4ByteValue(sysex, 354, 3);    // ReverbLoColor: 3 (0-6)
+        Encode4ByteValue(sysex, 374, 50);   // ReverbMix: 50 (0-100)
+        Encode4ByteValue(sysex, 390, 0);    // GateType: 0 (0-1)
+        Encode4ByteValue(sysex, 398, 45);   // GateDamp: 45 (0-90)
+        Encode4ByteValue(sysex, 402, 100);  // GateRelease: 100 (0-200)
+        Encode4ByteValue(sysex, 418, 8);    // EqWidth1: 8 (5-12)
+        Encode4ByteValue(sysex, 430, 8);    // EqWidth2: 8 (5-12)
+        Encode4ByteValue(sysex, 442, 8);    // EqWidth3: 8 (5-12)
+        Encode4ByteValue(sysex, 454, 0);    // PitchType: 0 (0-4)
+        Encode4ByteValue(sysex, 474, 25);   // PitchDelay1: 25 (0-50)
+        Encode4ByteValue(sysex, 478, 25);   // PitchDelay2: 25 (0-50)
+        Encode4ByteValue(sysex, 482, 50);   // PitchFeedback1OrKey: 50 (0-100)
+        Encode4ByteValue(sysex, 486, 50);   // PitchFeedback2OrScale: 50 (0-100)
+
         sysex[520] = 0xF7;                  // SysEx end
 
         // Act
@@ -31,6 +72,14 @@ public class PresetTests
         result.IsSuccess.Should().BeTrue();
         result.Value.Number.Should().Be(31);
         result.Value.Name.Should().Be("Test Preset");
+    }
+
+    private static void Encode4ByteValue(byte[] sysex, int offset, int value)
+    {
+        sysex[offset] = (byte)(value & 0x7F);
+        sysex[offset + 1] = (byte)((value >> 7) & 0x7F);
+        sysex[offset + 2] = (byte)((value >> 14) & 0x7F);
+        sysex[offset + 3] = (byte)((value >> 21) & 0x7F);
     }
 
     [Fact]
@@ -130,6 +179,47 @@ public class PresetTests
         // Encode name (24 bytes, space-padded)
         var nameBytes = System.Text.Encoding.ASCII.GetBytes(name.PadRight(24));
         Array.Copy(nameBytes, 0, sysex, 9, 24);
+
+        // Set minimum valid parameter values to pass validation
+        Encode4ByteValue(sysex, 38, 500);   // TapTempo: 500ms (100-3000)
+        Encode4ByteValue(sysex, 42, 0);     // Routing: 0 (0-2)
+        Encode4ByteValue(sysex, 70, 0);     // CompType: 0 (0-2)
+        Encode4ByteValue(sysex, 78, 0);     // CompRatio: 0 (0-15)
+        Encode4ByteValue(sysex, 82, 0);     // CompAttack: 0 (0-16)
+        Encode4ByteValue(sysex, 86, 15);    // CompRelease: 15 (13-23)
+        Encode4ByteValue(sysex, 102, 0);    // DriveType: 0 (0-6)
+        Encode4ByteValue(sysex, 106, 50);   // DriveGain: 50 (0-100)
+        Encode4ByteValue(sysex, 114, 0);    // BoostType: 0 (0-2)
+        Encode4ByteValue(sysex, 118, 15);   // BoostGain: 15 (0-30)
+        Encode4ByteValue(sysex, 198, 0);    // ModType: 0 (0-5)
+        Encode4ByteValue(sysex, 206, 50);   // ModDepth: 50 (0-100)
+        Encode4ByteValue(sysex, 210, 8);    // ModTempo: 8 (0-16)
+        Encode4ByteValue(sysex, 250, 50);   // ModMix: 50 (0-100)
+        Encode4ByteValue(sysex, 262, 0);    // DelayType: 0 (0-5)
+        Encode4ByteValue(sysex, 266, 500);  // DelayTime: 500 (0-1800)
+        Encode4ByteValue(sysex, 270, 500);  // DelayTime2: 500 (0-1800)
+        Encode4ByteValue(sysex, 274, 8);    // DelayTempo: 8 (0-16)
+        Encode4ByteValue(sysex, 282, 50);   // DelayFeedback: 50 (0-120)
+        Encode4ByteValue(sysex, 298, 50);   // DelayMix: 50 (0-100)
+        Encode4ByteValue(sysex, 326, 0);    // ReverbType: 0 (0-3)
+        Encode4ByteValue(sysex, 330, 50);   // ReverbDecay: 50 (1-200)
+        Encode4ByteValue(sysex, 334, 30);   // ReverbPreDelay: 30 (0-100)
+        Encode4ByteValue(sysex, 338, 1);    // ReverbShape: 1 (0-2)
+        Encode4ByteValue(sysex, 342, 3);    // ReverbSize: 3 (0-7)
+        Encode4ByteValue(sysex, 346, 3);    // ReverbHiColor: 3 (0-6)
+        Encode4ByteValue(sysex, 354, 3);    // ReverbLoColor: 3 (0-6)
+        Encode4ByteValue(sysex, 374, 50);   // ReverbMix: 50 (0-100)
+        Encode4ByteValue(sysex, 390, 0);    // GateType: 0 (0-1)
+        Encode4ByteValue(sysex, 398, 45);   // GateDamp: 45 (0-90)
+        Encode4ByteValue(sysex, 402, 100);  // GateRelease: 100 (0-200)
+        Encode4ByteValue(sysex, 418, 8);    // EqWidth1: 8 (5-12)
+        Encode4ByteValue(sysex, 430, 8);    // EqWidth2: 8 (5-12)
+        Encode4ByteValue(sysex, 442, 8);    // EqWidth3: 8 (5-12)
+        Encode4ByteValue(sysex, 454, 0);    // PitchType: 0 (0-4)
+        Encode4ByteValue(sysex, 474, 25);   // PitchDelay1: 25 (0-50)
+        Encode4ByteValue(sysex, 478, 25);   // PitchDelay2: 25 (0-50)
+        Encode4ByteValue(sysex, 482, 50);   // PitchFeedback1OrKey: 50 (0-100)
+        Encode4ByteValue(sysex, 486, 50);   // PitchFeedback2OrScale: 50 (0-100)
 
         sysex[520] = 0xF7;
         return sysex;

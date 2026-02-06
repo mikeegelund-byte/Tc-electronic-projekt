@@ -32,17 +32,20 @@ public class DryWetMidiPortTests
     public void GetAvailablePorts_ReturnsListOfPortNames()
     {
         // This test may return empty list if no MIDI devices connected
-        var ports = DryWetMidiPort.GetAvailablePorts();
-        ports.Should().NotBeNull();
-        ports.Should().BeOfType<List<string>>();
-        // ports.Should().Contain(p => p.Contains("USB")); // Only if device connected
+        var port = new DryWetMidiPort();
+        var inputs = port.GetAvailableInputPorts();
+        var outputs = port.GetAvailableOutputPorts();
+        inputs.Should().NotBeNull();
+        outputs.Should().NotBeNull();
+        inputs.Should().BeOfType<List<string>>();
+        outputs.Should().BeOfType<List<string>>();
     }
 
     [Fact]
     public async Task ConnectAsync_WithInvalidPort_ReturnsFailure()
     {
         var port = new DryWetMidiPort();
-        var result = await port.ConnectAsync("NonExistent Port 12345");
+        var result = await port.ConnectAsync(new MidiPortSelection("NonExistent In 12345", "NonExistent Out 12345"));
         result.IsFailed.Should().BeTrue();
         result.Errors.Should().ContainSingle();
         result.Errors[0].Message.Should().Contain("not found");
@@ -53,7 +56,7 @@ public class DryWetMidiPortTests
     {
         // This would need a mock device - but we can at least test the error path
         var port = new DryWetMidiPort();
-        var result = await port.ConnectAsync("TestPort");
+        var result = await port.ConnectAsync(new MidiPortSelection("Test In", "Test Out"));
         // Should fail since port doesn't exist
         result.IsFailed.Should().BeTrue();
         port.Name.Should().BeEmpty(); // Name only set on success

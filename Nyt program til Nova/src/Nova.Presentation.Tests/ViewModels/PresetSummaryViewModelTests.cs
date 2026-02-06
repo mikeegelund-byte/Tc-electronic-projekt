@@ -82,23 +82,6 @@ public class PresetSummaryViewModelTests
 
     private static Preset CreateTestPreset(int number, string name)
     {
-        // Create minimal valid SysEx data for testing
-        var sysex = new byte[521];
-        sysex[0] = 0xF0;
-        sysex[1] = 0x00; sysex[2] = 0x20; sysex[3] = 0x1F; // TC Electronic
-        sysex[4] = 0x00; // Device ID
-        sysex[5] = 0x63; // Nova System
-        sysex[6] = 0x20; // Dump message ID
-        sysex[7] = 0x01; // Preset data type
-        sysex[8] = (byte)number; // Preset number
-        
-        // Add preset name (24 bytes starting at offset 9)
-        var nameBytes = System.Text.Encoding.ASCII.GetBytes(name.PadRight(24));
-        Array.Copy(nameBytes, 0, sysex, 9, Math.Min(24, nameBytes.Length));
-        
-        sysex[520] = 0xF7;
-
-        var result = Preset.FromSysEx(sysex);
-        return result.Value;
+        return TestHelpers.CreateValidPreset(number, name);
     }
 }

@@ -1,5 +1,6 @@
 using FluentResults;
 using System.Threading.Channels;
+using Nova.Midi;
 
 namespace Nova.Midi.Tests;
 
@@ -13,12 +14,16 @@ public class MockMidiPort : IMidiPort
     private readonly Channel<byte[]> _receiveChannel = Channel.CreateUnbounded<byte[]>();
     private readonly Channel<byte[]> _ccChannel = Channel.CreateUnbounded<byte[]>();
 
-    public string Name { get; set; } = "Mock Port";
+    public string Name { get; private set; } = string.Empty;
+    public string? InputPortName { get; private set; }
+    public string? OutputPortName { get; private set; }
     public bool IsConnected => _isConnected;
 
-    public Task<Result> ConnectAsync(string portName)
+    public Task<Result> ConnectAsync(MidiPortSelection selection)
     {
-        Name = portName;
+        InputPortName = selection.InputPortName;
+        OutputPortName = selection.OutputPortName;
+        Name = $"IN: {InputPortName} / OUT: {OutputPortName}";
         _isConnected = true;
         return Task.FromResult(Result.Ok());
     }
@@ -26,6 +31,9 @@ public class MockMidiPort : IMidiPort
     public Task<Result> DisconnectAsync()
     {
         _isConnected = false;
+        InputPortName = null;
+        OutputPortName = null;
+        Name = string.Empty;
         _receiveChannel.Writer.TryComplete();
         _ccChannel.Writer.TryComplete();
         return Task.FromResult(Result.Ok());
@@ -101,9 +109,9 @@ public class MockMidiPort : IMidiPort
         await _ccChannel.Writer.WriteAsync(ccMessage);
     }
 
-    public static IEnumerable<string> GetAvailableOutputPorts()
+    public IReadOnlyList<string> GetAvailableOutputPorts()
         => new[] { "Mock Output 1", "Mock Output 2" };
 
-    public static IEnumerable<string> GetAvailableInputPorts()
+    public IReadOnlyList<string> GetAvailableInputPorts()
         => new[] { "Mock Input 1", "Mock Input 2" };
 }

@@ -2,27 +2,34 @@
 
 ## IMidiPort interface (definition)
 ```csharp
-public interface IMidiPort : IAsyncDisposable
+public sealed record MidiPortSelection(string InputPortName, string OutputPortName);
+
+public interface IMidiPort
 {
-    /// Connect to named port
-    Task<Result<Unit>> ConnectAsync(string portName);
+    /// Connect to named input/output ports
+    Task<Result> ConnectAsync(MidiPortSelection selection);
     
     /// Disconnect
-    Task DisconnectAsync();
+    Task<Result> DisconnectAsync();
     
     /// Send SysEx, get result
-    Task<Result<Unit>> SendSysExAsync(byte[] data);
+    Task<Result> SendSysExAsync(byte[] data);
     
     /// Receive SysEx as stream (buffered)
     IAsyncEnumerable<byte[]> ReceiveSysExAsync();
+
+    /// Receive CC messages (3 bytes)
+    IAsyncEnumerable<byte[]> ReceiveCCAsync();
     
     /// List available ports
-    IEnumerable<string> EnumerateInputPorts();
-    IEnumerable<string> EnumerateOutputPorts();
+    IReadOnlyList<string> GetAvailableInputPorts();
+    IReadOnlyList<string> GetAvailableOutputPorts();
     
     /// Connection state
     bool IsConnected { get; }
-    string? ConnectedPortName { get; }
+    string? InputPortName { get; }
+    string? OutputPortName { get; }
+    string Name { get; } // "IN: X / OUT: Y"
 }
 ```
 
@@ -106,12 +113,13 @@ try {
 ## Port enumeration
 
 ### Windows 11 specifics
-- Input ports via `MidiInPort.GetAllPorts()`
-- Output ports via `MidiOutPort.GetAllPorts()`
-- Port names can be: "Nova System MIDI Out" (if driver installed)
-- or generic "USB MIDI device"
+- Input ports and output ports are separate device lists
+- Port names can be: "MIDI 0" / "MIDI 1", "Nova System MIDI Out", or generic "USB MIDI device"
+- App must show **two** dropdowns:
+  - MIDI OUT → pedalens MIDI IN
+  - MIDI IN → pedalens MIDI OUT
 
-**App must handle:** Display friendly names + filter by "Nova" keyword
+**App must handle:** Display friendly names, allow manual pairing, and avoid swapping IN/OUT.
 
 ---
 

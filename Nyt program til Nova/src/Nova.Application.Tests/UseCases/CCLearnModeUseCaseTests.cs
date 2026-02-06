@@ -1,5 +1,6 @@
 using FluentResults;
 using Nova.Application.UseCases;
+using Nova.Midi;
 using Nova.Midi.Tests;
 using Xunit;
 
@@ -12,7 +13,7 @@ public class CCLearnModeUseCaseTests
     {
         // Arrange
         var mockPort = new MockMidiPort();
-        await mockPort.ConnectAsync("Test Port");
+        await mockPort.ConnectAsync(new MidiPortSelection("Test In", "Test Out"));
         var useCase = new CCLearnModeUseCase(mockPort);
 
         // Act: Start learn mode (10 second timeout)
@@ -34,7 +35,7 @@ public class CCLearnModeUseCaseTests
     {
         // Arrange
         var mockPort = new MockMidiPort();
-        await mockPort.ConnectAsync("Test Port");
+        await mockPort.ConnectAsync(new MidiPortSelection("Test In", "Test Out"));
         var useCase = new CCLearnModeUseCase(mockPort);
 
         // Act: Start learn with 1 second timeout, don't send any CC
@@ -65,7 +66,7 @@ public class CCLearnModeUseCaseTests
     {
         // Arrange
         var mockPort = new MockMidiPort();
-        await mockPort.ConnectAsync("Test Port");
+        await mockPort.ConnectAsync(new MidiPortSelection("Test In", "Test Out"));
         var useCase = new CCLearnModeUseCase(mockPort);
         var cts = new CancellationTokenSource();
 
@@ -86,7 +87,7 @@ public class CCLearnModeUseCaseTests
     {
         // Arrange
         var mockPort = new MockMidiPort();
-        await mockPort.ConnectAsync("Test Port");
+        await mockPort.ConnectAsync(new MidiPortSelection("Test In", "Test Out"));
         var useCase = new CCLearnModeUseCase(mockPort);
 
         // Act
@@ -102,7 +103,7 @@ public class CCLearnModeUseCaseTests
     {
         // Arrange
         var mockPort = new MockMidiPort();
-        await mockPort.ConnectAsync("Test Port");
+        await mockPort.ConnectAsync(new MidiPortSelection("Test In", "Test Out"));
         var useCase = new CCLearnModeUseCase(mockPort);
 
         // Act: Start learn mode

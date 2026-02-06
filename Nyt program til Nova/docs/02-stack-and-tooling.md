@@ -5,7 +5,7 @@
 |-----------|------|---------|
 | **Sprog** | C# | .NET 8 LTS |
 | **UI Framework** | Avalonia | 11.x |
-| **MIDI Lib** | DryWetMIDI | 7.x |
+| **MIDI Lib** | DryWetMIDI | 8.0.3 |
 | **Test Framework** | xUnit | 2.6.x |
 | **Mocking** | Moq | 4.18.x |
 | **Logger** | Serilog | 3.x |
@@ -125,10 +125,8 @@ dotnet publish -c Release -r win-x64 --self-contained
 
 ---
 
-## CI/CD pipeline (senere)
-- GitHub Actions
-- Auto-run tests on PR
-- Build matrix (Win x64)
+## CI/CD pipeline (ikke aktiv i local-first)
+- CI er slået fra. GitHub bruges kun som backup.
 
 ---
 

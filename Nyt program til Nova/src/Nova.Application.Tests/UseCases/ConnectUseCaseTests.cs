@@ -14,16 +14,19 @@ public class ConnectUseCaseTests
     {
         // Arrange
         var midi = new Mock<IMidiPort>();
-        midi.Setup(m => m.ConnectAsync("Nova System")).ReturnsAsync(Result.Ok());
+        var selection = new MidiPortSelection("Nova System MIDI 1", "Nova System MIDI 0");
+        midi.Setup(m => m.ConnectAsync(It.Is<MidiPortSelection>(s =>
+                s.InputPortName == selection.InputPortName && s.OutputPortName == selection.OutputPortName)))
+            .ReturnsAsync(Result.Ok());
 
         var useCase = new ConnectUseCase(midi.Object);
 
         // Act
-        var result = await useCase.ExecuteAsync("Nova System");
+        var result = await useCase.ExecuteAsync(selection);
 
         // Assert
         result.IsSuccess.Should().BeTrue();
-        midi.Verify(m => m.ConnectAsync("Nova System"), Times.Once);
+        midi.Verify(m => m.ConnectAsync(It.IsAny<MidiPortSelection>()), Times.Once);
     }
 
     [Fact]
@@ -31,12 +34,14 @@ public class ConnectUseCaseTests
     {
         // Arrange
         var midi = new Mock<IMidiPort>();
-        midi.Setup(m => m.ConnectAsync("Bad Port")).ReturnsAsync(Result.Fail("Not found"));
+        var selection = new MidiPortSelection("Bad In", "Bad Out");
+        midi.Setup(m => m.ConnectAsync(It.IsAny<MidiPortSelection>()))
+            .ReturnsAsync(Result.Fail("Not found"));
 
         var useCase = new ConnectUseCase(midi.Object);
 
         // Act
-        var result = await useCase.ExecuteAsync("Bad Port");
+        var result = await useCase.ExecuteAsync(selection);
 
         // Assert
         result.IsFailed.Should().BeTrue();

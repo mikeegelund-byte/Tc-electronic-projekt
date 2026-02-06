@@ -102,15 +102,32 @@
                                            FontSize="{StaticResource FontSizeLarge}"
                                            Foreground="{StaticResource TextPrimary}"/>
                                 
-                                <Grid ColumnDefinitions="*,Auto,Auto" RowDefinitions="Auto">
-                                    <ComboBox ItemsSource="{Binding AvailablePorts}"
-                                              SelectedItem="{Binding SelectedPort}"
-                                              PlaceholderText="Select MIDI Port..."
-                                              HorizontalAlignment="Stretch"
-                                              AutomationProperties.Name="MIDI port selection"
-                                              AutomationProperties.HelpText="Choose a MIDI port to connect to the Nova System pedal"/>
+                                <Grid ColumnDefinitions="*,Auto,Auto" RowDefinitions="Auto,Auto" RowSpacing="8">
+                                    <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4">
+                                        <TextBlock Text="MIDI OUT (til pedalens MIDI IN)"
+                                                   Foreground="{StaticResource TextSecondary}" />
+                                        <ComboBox ItemsSource="{Binding AvailableOutputPorts}"
+                                                  SelectedItem="{Binding SelectedOutputPort}"
+                                                  PlaceholderText="Select MIDI OUT..."
+                                                  HorizontalAlignment="Stretch"
+                                                  AutomationProperties.Name="MIDI output port selection"
+                                                  AutomationProperties.HelpText="Choose a MIDI output port that goes to the Nova System pedal MIDI IN"/>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Row="1" Grid.Column="0" Spacing="4">
+                                        <TextBlock Text="MIDI IN (fra pedalens MIDI OUT)"
+                                                   Foreground="{StaticResource TextSecondary}" />
+                                        <ComboBox ItemsSource="{Binding AvailableInputPorts}"
+                                                  SelectedItem="{Binding SelectedInputPort}"
+                                                  PlaceholderText="Select MIDI IN..."
+                                                  HorizontalAlignment="Stretch"
+                                                  AutomationProperties.Name="MIDI input port selection"
+                                                  AutomationProperties.HelpText="Choose a MIDI input port that receives from the Nova System pedal MIDI OUT"/>
+                                    </StackPanel>
                                     
-                                    <Button Grid.Column="1" 
+                                    <Button Grid.Row="0"
+                                            Grid.RowSpan="2"
+                                            Grid.Column="1" 
                                             Command="{Binding RefreshPortsCommand}"
                                             ToolTip.Tip="Refresh available MIDI ports (Ctrl+R)"
                                             Margin="8,0,0,0"
@@ -118,7 +135,7 @@
                                             Height="32"
                                             Padding="6"
                                             AutomationProperties.Name="Refresh MIDI ports"
-                                            AutomationProperties.HelpText="Scan for available MIDI devices">
+                                            AutomationProperties.HelpText="Scan for available MIDI input/output devices">
                                         <PathIcon Width="20" Height="20">
                                             <PathIcon.Data>
                                                 <!-- Refresh/Reload icon -->
@@ -127,13 +144,15 @@
                                         </PathIcon>
                                     </Button>
                                     
-                                    <Button Grid.Column="2"
+                                    <Button Grid.Row="0"
+                                            Grid.RowSpan="2"
+                                            Grid.Column="2"
                                             Content="Connect"
                                             Command="{Binding ConnectCommand}"
                                             Margin="8,0,0,0"
                                             Width="100"
                                             AutomationProperties.Name="Connect to MIDI device"
-                                            AutomationProperties.HelpText="Establishes connection to selected MIDI port" />
+                                            AutomationProperties.HelpText="Establishes connection to selected MIDI input/output ports" />
                                 </Grid>
                                 
                                 <!-- Connected Status -->

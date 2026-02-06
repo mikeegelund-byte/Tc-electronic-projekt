@@ -66,18 +66,19 @@ public sealed class LoadBankUseCase
                 var presetResult = Preset.FromSysEx(presetData);
                 if (presetResult.IsFailed)
                 {
-                    _logger.Error("Failed to parse preset {Index}: {Errors}", 
-                        i, string.Join(", ", presetResult.Errors));
-                    return Result.Fail<int>($"Failed to parse preset {i}: {string.Join(", ", presetResult.Errors)}");
+                    var errorMsg = string.Join(", ", presetResult.Errors.Select(e => e.Message));
+                    _logger.Error("Failed to parse preset {Index}: {Errors}", i, errorMsg);
+                    return Result.Fail<int>($"Failed to parse preset {i}: {errorMsg}");
                 }
 
                 // Step 4: Send preset via MIDI
                 var sendResult = await _midiPort.SendSysExAsync(presetData);
                 if (sendResult.IsFailed)
                 {
-                    _logger.Error("Failed to send preset {Index} (number {Number}): {Errors}", 
-                        i, presetResult.Value.Number, string.Join(", ", sendResult.Errors));
-                    return Result.Fail<int>($"Failed to send preset {i}: {string.Join(", ", sendResult.Errors)}");
+                    var errorMsg = string.Join(", ", sendResult.Errors.Select(e => e.Message));
+                    _logger.Error("Failed to send preset {Index} (number {Number}): {Errors}",
+                        i, presetResult.Value.Number, errorMsg);
+                    return Result.Fail<int>($"Failed to send preset {i}: {errorMsg}");
                 }
 
                 presetsLoaded++;

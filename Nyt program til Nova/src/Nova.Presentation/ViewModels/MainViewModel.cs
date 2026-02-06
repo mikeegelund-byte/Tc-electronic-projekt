@@ -5,7 +5,6 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Nova.Application.UseCases;
 using Nova.Domain.Models;
-using Nova.Infrastructure.Midi;
 using Nova.Midi;
 
 namespace Nova.Presentation.ViewModels;
@@ -20,11 +19,18 @@ public partial class MainViewModel : ObservableObject
     private SystemDump? _currentSystemDump;
 
     [ObservableProperty]
-    private ObservableCollection<string> _availablePorts = new();
+    private ObservableCollection<string> _availableInputPorts = new();
+
+    [ObservableProperty]
+    private ObservableCollection<string> _availableOutputPorts = new();
 
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(ConnectCommand))]
-    private string? _selectedPort;
+    private string? _selectedInputPort;
+
+    [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(ConnectCommand))]
+    private string? _selectedOutputPort;
 
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(ConnectCommand), nameof(DownloadBankCommand))]
@@ -78,13 +84,45 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     private void RefreshPorts()
     {
-        AvailablePorts.Clear();
-        var ports = DryWetMidiPort.GetAvailablePorts();
-        foreach (var port in ports)
+        AvailableInputPorts.Clear();
+        AvailableOutputPorts.Clear();
+
+        var inputPorts = _midiPort.GetAvailableInputPorts();
+        var outputPorts = _midiPort.GetAvailableOutputPorts();
+
+        foreach (var port in inputPorts)
         {
-            AvailablePorts.Add(port);
+            AvailableInputPorts.Add(port);
         }
-        StatusMessage = $"Found {AvailablePorts.Count} MIDI port(s)";
+
+        foreach (var port in outputPorts)
+        {
+            AvailableOutputPorts.Add(port);
+        }
+
+        // Auto-pair MIDI 0/1 if present
+        if (string.IsNullOrWhiteSpace(SelectedOutputPort))
+        {
+            SelectedOutputPort = outputPorts.FirstOrDefault(p => p.Contains("MIDI 0", StringComparison.OrdinalIgnoreCase));
+        }
+
+        if (string.IsNullOrWhiteSpace(SelectedInputPort))
+        {
+            SelectedInputPort = inputPorts.FirstOrDefault(p => p.Contains("MIDI 1", StringComparison.OrdinalIgnoreCase));
+        }
+
+        // Clear selection if device disappeared
+        if (!string.IsNullOrWhiteSpace(SelectedInputPort) && !AvailableInputPorts.Contains(SelectedInputPort))
+        {
+            SelectedInputPort = null;
+        }
+
+        if (!string.IsNullOrWhiteSpace(SelectedOutputPort) && !AvailableOutputPorts.Contains(SelectedOutputPort))
+        {
+            SelectedOutputPort = null;
+        }
+
+        StatusMessage = $"Found {AvailableInputPorts.Count} MIDI IN / {AvailableOutputPorts.Count} MIDI OUT";
     }
 
     [RelayCommand]
@@ -102,15 +140,16 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand(CanExecute = nameof(CanConnect))]
     private async Task ConnectAsync()
     {
-        if (string.IsNullOrEmpty(SelectedPort)) return;
+        if (string.IsNullOrWhiteSpace(SelectedInputPort) || string.IsNullOrWhiteSpace(SelectedOutputPort)) return;
 
-        StatusMessage = $"Connecting to {SelectedPort}...";
-        var result = await _connectUseCase.ExecuteAsync(SelectedPort);
+        StatusMessage = $"Connecting (IN: {SelectedInputPort} / OUT: {SelectedOutputPort})...";
+        var selection = new MidiPortSelection(SelectedInputPort, SelectedOutputPort);
+        var result = await _connectUseCase.ExecuteAsync(selection);
 
         if (result.IsSuccess)
         {
             IsConnected = true;
-            StatusMessage = $"Connected to {SelectedPort}";
+            StatusMessage = $"Connected (IN: {SelectedInputPort} / OUT: {SelectedOutputPort})";
         }
         else
         {
@@ -118,7 +157,10 @@ public partial class MainViewModel : ObservableObject
         }
     }
 
-    private bool CanConnect() => !string.IsNullOrEmpty(SelectedPort) && !IsConnected;
+    private bool CanConnect()
+        => !IsConnected
+           && !string.IsNullOrWhiteSpace(SelectedInputPort)
+           && !string.IsNullOrWhiteSpace(SelectedOutputPort);
 
     [RelayCommand(CanExecute = nameof(CanDownload))]
     private async Task DownloadBankAsync()

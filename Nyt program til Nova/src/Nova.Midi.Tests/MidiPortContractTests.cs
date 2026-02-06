@@ -7,7 +7,7 @@ public class MidiPortContractTests
     {
         // Verify interface exists and has ConnectAsync
         var interfaceType = typeof(IMidiPort);
-        var method = interfaceType.GetMethod("ConnectAsync");
+        var method = interfaceType.GetMethod("ConnectAsync", new[] { typeof(MidiPortSelection) });
         Assert.NotNull(method);
     }
     
@@ -24,6 +24,22 @@ public class MidiPortContractTests
     {
         var interfaceType = typeof(IMidiPort);
         var method = interfaceType.GetMethod("ReceiveSysExAsync");
+        Assert.NotNull(method);
+    }
+
+    [Fact]
+    public void IMidiPort_HasGetAvailableInputPorts()
+    {
+        var interfaceType = typeof(IMidiPort);
+        var method = interfaceType.GetMethod("GetAvailableInputPorts");
+        Assert.NotNull(method);
+    }
+
+    [Fact]
+    public void IMidiPort_HasGetAvailableOutputPorts()
+    {
+        var interfaceType = typeof(IMidiPort);
+        var method = interfaceType.GetMethod("GetAvailableOutputPorts");
         Assert.NotNull(method);
     }
 }

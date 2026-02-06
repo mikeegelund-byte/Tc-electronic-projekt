@@ -12,8 +12,8 @@ public sealed class ConnectUseCase : IConnectUseCase
         _midiPort = midiPort;
     }
 
-    public Task<Result> ExecuteAsync(string portName)
+    public Task<Result> ExecuteAsync(MidiPortSelection selection)
     {
-        return _midiPort.ConnectAsync(portName);
+        return _midiPort.ConnectAsync(selection);
     }
 }

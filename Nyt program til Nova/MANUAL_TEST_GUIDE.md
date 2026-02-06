@@ -37,20 +37,23 @@ This guide provides step-by-step instructions for manually testing the Preset Vi
 3. **Expected Result:**
    - Application window opens with title "Nova System Manager"
    - Connection panel visible at top
-   - Status bar shows "Found X MIDI port(s)"
+   - Status bar shows "Found X MIDI IN / Y MIDI OUT"
 
 ### Step 2: Connect to Pedal
 
 1. In the MIDI Connection section:
-   - Click the MIDI port dropdown
-   - Select your USB MIDI Interface port (e.g., "USB MIDI Interface")
+   - Vælg **MIDI OUT** (til pedalens MIDI IN)
+   - Vælg **MIDI IN** (fra pedalens MIDI OUT)
+   - Hvis du ser “MIDI 0/1”, brug:
+     - MIDI OUT = **MIDI 0**
+     - MIDI IN = **MIDI 1**
 
 2. Click the **Connect** button
 
 3. **Expected Results:**
    - ✅ Connect button becomes inactive (grayed out)
    - ✅ Green indicator dot appears with "Connected" text
-   - ✅ Status bar shows "Connected to [port name]"
+   - ✅ Status bar shows "Connected (IN: ... / OUT: ...)"
    - ✅ Download Bank button becomes active
 
 ### Step 3: Download User Bank
@@ -127,6 +130,24 @@ Examine the "User Bank Presets (60)" section:
 
 ---
 
+## Hardware CLI Tests (optional)
+
+Kør fra `Nyt program til Nova`:
+
+```bash
+dotnet run --project src/Nova.HardwareTest -- --list-devices
+dotnet run --project src/Nova.HardwareTest -- --pair-test --midi-in="MIDI 1" --midi-out="MIDI 0"
+dotnet run --project src/Nova.HardwareTest -- --request-system-dump --midi-in="MIDI 1" --midi-out="MIDI 0"
+dotnet run --project src/Nova.HardwareTest -- --request-bank-dump --midi-in="MIDI 1" --midi-out="MIDI 0"
+dotnet run --project src/Nova.HardwareTest -- --roundtrip-bank --midi-in="MIDI 1" --midi-out="MIDI 0"
+dotnet run --project src/Nova.HardwareTest -- --cc-learn --midi-in="MIDI 1" --midi-out="MIDI 0"
+dotnet run --project src/Nova.HardwareTest -- --disconnect-reconnect --midi-in="MIDI 1" --midi-out="MIDI 0"
+```
+
+> Justér portnavne efter dine faktiske enheder. `MIDI OUT` skal gå til pedalens MIDI IN.
+
+---
+
 ## Expected Final State
 
 After completing all steps:
@@ -142,13 +163,21 @@ After completing all steps:
 ## Troubleshooting
 
 ### Port Not Found
-**Problem:** USB MIDI Interface doesn't appear in dropdown
+**Problem:** MIDI IN/OUT doesn't appear in dropdown
 
 **Solutions:**
 - Check physical MIDI cable connections
 - Verify USB MIDI Interface is powered on
 - Install/reinstall USB MIDI Interface drivers
 - Click the 🔄 Refresh button to re-scan ports
+
+### Wrong IN/OUT Pairing
+**Problem:** Connection succeeds but no data received or send fails
+
+**Solutions:**
+- Swap MIDI IN/OUT selections (MIDI OUT must go to pedal MIDI IN)
+- Confirm pedal device ID and MIDI channel
+- Try "MIDI 0" as OUT and "MIDI 1" as IN if available
 
 ### Connection Fails
 **Problem:** Connect button clicked but connection fails

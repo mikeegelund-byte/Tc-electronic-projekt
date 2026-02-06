@@ -14,7 +14,7 @@ public class RequestSystemDumpUseCaseTests
     {
         // Arrange
         var mockPort = new MockMidiPort();
-        await mockPort.ConnectAsync("Mock");  // Must connect first
+        await mockPort.ConnectAsync(new MidiPortSelection("Mock In", "Mock Out"));  // Must connect first
         mockPort.EnqueueResponse(CreateValidSystemDumpBytes());
 
         var useCase = new RequestSystemDumpUseCase(mockPort);
@@ -80,9 +80,11 @@ public class RequestSystemDumpUseCaseTests
 public class FailingSendMockMidiPort : IMidiPort
 {
     public string Name => "Failing Mock Port";
+    public string? InputPortName => "Mock In";
+    public string? OutputPortName => "Mock Out";
     public bool IsConnected => true;
 
-    public Task<Result> ConnectAsync(string portName) => Task.FromResult(Result.Ok());
+    public Task<Result> ConnectAsync(MidiPortSelection selection) => Task.FromResult(Result.Ok());
     public Task<Result> DisconnectAsync() => Task.FromResult(Result.Ok());
     
     public Task<Result> SendSysExAsync(byte[] sysex)
@@ -101,6 +103,12 @@ public class FailingSendMockMidiPort : IMidiPort
         return new AsyncEnumerableEmpty();
 #pragma warning restore CS1998
     }
+
+    public IReadOnlyList<string> GetAvailableInputPorts()
+        => new[] { "Mock In" };
+
+    public IReadOnlyList<string> GetAvailableOutputPorts()
+        => new[] { "Mock Out" };
 
     private class AsyncEnumerableEmpty : IAsyncEnumerable<byte[]>
     {

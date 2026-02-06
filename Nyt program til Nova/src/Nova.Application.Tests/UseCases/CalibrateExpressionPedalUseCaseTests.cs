@@ -1,5 +1,6 @@
 using FluentResults;
 using Nova.Application.UseCases;
+using Nova.Midi;
 using Nova.Midi.Tests;
 using Xunit;
 
@@ -12,7 +13,7 @@ public class CalibrateExpressionPedalUseCaseTests
     {
         // Arrange
         var mockPort = new MockMidiPort();
-        await mockPort.ConnectAsync("Test Port");
+        await mockPort.ConnectAsync(new MidiPortSelection("Test In", "Test Out"));
         var useCase = new CalibrateExpressionPedalUseCase(mockPort);
 
         // Simulate pedal sweep: 20, 50, 80, 100, 40
@@ -45,7 +46,7 @@ public class CalibrateExpressionPedalUseCaseTests
     {
         // Arrange
         var mockPort = new MockMidiPort();
-        await mockPort.ConnectAsync("Test Port");
+        await mockPort.ConnectAsync(new MidiPortSelection("Test In", "Test Out"));
         var useCase = new CalibrateExpressionPedalUseCase(mockPort);
 
         // Simulate full pedal range
@@ -88,7 +89,7 @@ public class CalibrateExpressionPedalUseCaseTests
     {
         // Arrange
         var mockPort = new MockMidiPort();
-        await mockPort.ConnectAsync("Test Port");
+        await mockPort.ConnectAsync(new MidiPortSelection("Test In", "Test Out"));
         var useCase = new CalibrateExpressionPedalUseCase(mockPort);
 
         // Act
@@ -104,7 +105,7 @@ public class CalibrateExpressionPedalUseCaseTests
     {
         // Arrange
         var mockPort = new MockMidiPort();
-        await mockPort.ConnectAsync("Test Port");
+        await mockPort.ConnectAsync(new MidiPortSelection("Test In", "Test Out"));
         var useCase = new CalibrateExpressionPedalUseCase(mockPort);
 
         // Don't send any CC messages

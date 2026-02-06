@@ -5,6 +5,7 @@
 Nova System Manager is a desktop application for managing presets and settings on your TC Electronic Nova System multi-effects pedal. Built with .NET 8 and Avalonia, it provides a modern, accessible interface for preset editing, file management, and MIDI configuration.
 
 Local-first note: This repository is developed and run on this PC. GitHub is used only as an off-site backup, not as the primary source of truth.
+LLM-arbejde: Se `AGENTS.md` i repo-roden for fuld kontekst og logregler.
 
 ---
 

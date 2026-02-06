@@ -28,7 +28,19 @@ public class SendTest
         Console.WriteLine($"📂 Loaded: {filePath} ({sysexData.Length} bytes)");
         Console.WriteLine($"   First bytes: {BitConverter.ToString(sysexData.Take(10).ToArray())}");
 
-        // Find USB MIDI Interface output
+        // Parse optional --midi-out=<name> flag
+        var midiOutArg = args.FirstOrDefault(a => a.StartsWith("--midi-out="));
+        string? midiOutName = midiOutArg != null ? midiOutArg.Split('=')[1] : null;
+        var midiOutIndexArg = args.FirstOrDefault(a => a.StartsWith("--midi-out-index="));
+        int? midiOutIndex = midiOutIndexArg != null && int.TryParse(midiOutIndexArg.Split('=')[1], out var mo) ? mo : null;
+
+        if (string.IsNullOrWhiteSpace(midiOutName) && !midiOutIndex.HasValue)
+        {
+            Console.WriteLine("\n❌ You must provide --midi-out or --midi-out-index.");
+            return;
+        }
+
+        // Enumerate output devices
         var outputDevices = OutputDevice.GetAll().ToList();
         Console.WriteLine("\nAvailable MIDI Output Devices:");
         for (int i = 0; i < outputDevices.Count; i++)
@@ -36,19 +48,42 @@ public class SendTest
             Console.WriteLine($"  [{i}] {outputDevices[i].Name}");
         }
 
-        var usbOutput = outputDevices.FirstOrDefault(d =>
-            d.Name.Contains("USB MIDI", StringComparison.OrdinalIgnoreCase));
-
-        if (usbOutput == null)
+        OutputDevice? chosen = null;
+        if (midiOutIndex.HasValue)
         {
-            Console.WriteLine("\n❌ USB MIDI Interface not found!");
+            if (midiOutIndex.Value < 0 || midiOutIndex.Value >= outputDevices.Count)
+            {
+                Console.WriteLine($"\n❌ MIDI OUT index {midiOutIndex.Value} out of range.");
+                return;
+            }
+            chosen = outputDevices[midiOutIndex.Value];
+        }
+        else if (!string.IsNullOrEmpty(midiOutName))
+        {
+            chosen = outputDevices.FirstOrDefault(d => d.Name.Equals(midiOutName, StringComparison.OrdinalIgnoreCase))
+                ?? outputDevices.FirstOrDefault(d => d.Name.IndexOf(midiOutName, StringComparison.OrdinalIgnoreCase) >= 0);
+            if (chosen == null)
+            {
+                Console.WriteLine($"\n❌ MIDI OUT device matching '{midiOutName}' not found.");
+                return;
+            }
+        }
+        else
+        {
+            Console.WriteLine("\n❌ MIDI OUT not specified.");
             return;
         }
 
-        Console.WriteLine($"\n✅ Using: {usbOutput.Name}");
+        if (chosen == null)
+        {
+            Console.WriteLine("\n❌ No MIDI output devices available. Please connect a MIDI output and retry.");
+            return;
+        }
+
+        Console.WriteLine($"\n✅ Using: {chosen.Name}");
 
         // Send SysEx
-        using (var output = usbOutput)
+        using (var output = chosen)
         {
             Console.WriteLine("\n📤 Sending SysEx to Nova System...");
 

@@ -167,61 +167,6 @@ public class PresetDetailViewModelTests
     /// </summary>
     private static byte[] CreateValidPresetSysEx(int presetNumber, string presetName)
     {
-        var sysex = new byte[521];
-        
-        // Header
-        sysex[0] = 0xF0;  // SysEx start
-        sysex[1] = 0x00;  // TC Electronic manufacturer ID
-        sysex[2] = 0x20;
-        sysex[3] = 0x1F;
-        sysex[4] = 0x00;  // Device ID
-        sysex[5] = 0x63;  // Nova System model ID
-        sysex[6] = 0x20;  // Message ID (Dump)
-        sysex[7] = 0x01;  // Data type (Preset)
-        sysex[8] = (byte)presetNumber;
-        
-        // Preset name (bytes 9-32, 24 ASCII chars)
-        var nameBytes = System.Text.Encoding.ASCII.GetBytes(presetName.PadRight(24));
-        Array.Copy(nameBytes, 0, sysex, 9, 24);
-        
-        // Set some default parameter values using 4-byte encoding
-        // TapTempo = 500ms (bytes 38-41)
-        Encode4ByteValue(sysex, 38, 500);
-        
-        // Routing = 0 (Semi-parallel) (bytes 42-45)
-        Encode4ByteValue(sysex, 42, 0);
-        
-        // LevelOutLeft = -10dB (bytes 46-49)
-        EncodeSignedDbValue(sysex, 46, -10);
-        
-        // LevelOutRight = -10dB (bytes 50-53)
-        EncodeSignedDbValue(sysex, 50, -10);
-        
-        // Enable some effects
-        Encode4ByteValue(sysex, 130, 1); // Compressor enabled
-        Encode4ByteValue(sysex, 194, 0); // Drive disabled
-        Encode4ByteValue(sysex, 258, 1); // Modulation enabled
-        Encode4ByteValue(sysex, 322, 1); // Delay enabled
-        Encode4ByteValue(sysex, 386, 0); // Reverb disabled
-        
-        // Footer
-        sysex[520] = 0xF7;  // SysEx end
-        
-        return sysex;
-    }
-
-    private static void Encode4ByteValue(byte[] sysex, int offset, int value)
-    {
-        sysex[offset] = (byte)(value & 0x7F);
-        sysex[offset + 1] = (byte)((value >> 7) & 0x7F);
-        sysex[offset + 2] = (byte)((value >> 14) & 0x7F);
-        sysex[offset + 3] = (byte)((value >> 21) & 0x7F);
-    }
-
-    private static void EncodeSignedDbValue(byte[] sysex, int offset, int value)
-    {
-        const int DB_ENCODING_OFFSET = 16777216; // 2^24 - offset used for encoding signed dB values
-        int encoded = value + DB_ENCODING_OFFSET;
-        Encode4ByteValue(sysex, offset, encoded);
+        return TestHelpers.CreateValidPresetSysEx(presetNumber, presetName);
     }
 }
