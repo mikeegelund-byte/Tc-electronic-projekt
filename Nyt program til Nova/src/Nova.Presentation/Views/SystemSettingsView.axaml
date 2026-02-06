@@ -98,7 +98,7 @@
 
       <!-- Action Buttons -->
       <StackPanel Orientation="Horizontal" 
-                  Spacing="{StaticResource SpacingMedium}" 
+                  Spacing="{StaticResource Spacing16}" 
                   Margin="0,20,0,0"
                   HorizontalAlignment="Left">
         <Button Content="Save to Pedal"

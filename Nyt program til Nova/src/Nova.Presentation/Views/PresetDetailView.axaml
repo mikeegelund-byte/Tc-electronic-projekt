@@ -13,7 +13,7 @@
             Padding="{StaticResource CardPadding}" 
             CornerRadius="{StaticResource BorderRadiusLarge}">
         <ScrollViewer VerticalScrollBarVisibility="Auto">
-            <StackPanel Spacing="{StaticResource SpacingMedium}">
+            <StackPanel Spacing="{StaticResource Spacing16}">
                 <!-- Header Section -->
                 <StackPanel Spacing="8">
                     <TextBlock Text="Preset Details" 
