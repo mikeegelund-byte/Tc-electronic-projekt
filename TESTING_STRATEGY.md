@@ -29,7 +29,7 @@ This document outlines the comprehensive testing strategy for the Nova System Ma
 ## 1. Unit Tests (80% Coverage)
 
 ### Current Status
-- **Total Tests**: 342 passing
+- **Total Tests**: 458 passing
   - Domain: 160 tests ✅
   - MIDI: 6 tests ✅
   - Infrastructure: 12 tests ✅
@@ -356,7 +356,7 @@ jobs:
 ## 8. Test Execution Schedule
 
 ### Continuous (Every Commit)
-- All unit tests (342 tests)
+- All unit tests (458 tests)
 - Build verification
 
 ### Before PR Merge

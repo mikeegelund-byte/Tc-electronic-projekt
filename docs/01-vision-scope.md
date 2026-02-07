@@ -1,5 +1,9 @@
 # Vision & Scope
 
+**STATUS:** MVP implementeret (453/458 tests passing). Dette dokument beskriver den oprindelige vision.
+
+---
+
 ## Vision
 Byg en moderne, native Windows 11‑app til TC Electronic Nova System, med Apple‑agtig UI og stabil MIDI, designet til at udvides modulært over tid.
 

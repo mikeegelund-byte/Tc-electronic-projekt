@@ -4,8 +4,7 @@
 
 Nova System Manager is a desktop application for managing presets and settings on your TC Electronic Nova System multi-effects pedal. Built with .NET 8 and Avalonia, it provides a modern, accessible interface for preset editing, file management, and MIDI configuration.
 
-Local-first note: This repository is developed and run on this PC. GitHub is used only as an off-site backup, not as the primary source of truth.
-LLM-arbejde: Se `AGENTS.md` i repo-roden for fuld kontekst og logregler.
+**Local-first development:** This repository is developed locally. GitHub is used only as backup.
 
 ---
 
@@ -23,10 +22,10 @@ See `docs/USER_MANUAL.md` for detailed instructions.
 
 ```powershell
 # Build
-cd "Nyt program til Nova"
+cd "C:\Projekter\Mikes preset app"
 dotnet build NovaApp.sln
 
-# Run tests (342 tests)
+# Run tests (458 tests)
 dotnet test NovaApp.sln
 
 # Run application
@@ -65,7 +64,7 @@ dotnet run --project src/Nova.Presentation
 
 ### Technical
 ✅ Full SysEx protocol implementation (TC Electronic Nova System)  
-✅ **342 passing unit tests** (Domain, Application, Presentation layers)  
+✅ **458 passing unit tests** (Domain, Application, Presentation, Infrastructure layers)  
 ✅ Local MSI installer build (optional)  
 ✅ Comprehensive documentation and user manual
 
@@ -124,7 +123,7 @@ dotnet restore NovaApp.sln
 # Build solution
 dotnet build NovaApp.sln -c Release
 
-# Run all tests (342 tests)
+# Run all tests (458 tests)
 dotnet test NovaApp.sln
 
 # Run application
@@ -176,7 +175,7 @@ dotnet test src/Nova.HardwareTest/
 ```
 
 **Test Statistics**:
-- **342 total tests** - all passing ✅
+- **458 total tests** - all passing ✅
   - Domain: 160 tests
   - Application: 88 tests
   - Presentation: 76 tests

@@ -139,23 +139,5 @@ Before shipping:
 
 ---
 
-## GitHub Actions (later)
-```yaml
-name: Release
-
-on:
-  push:
-    tags:
-      - 'v*'
-
-jobs:
-  build:
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-dotnet@v3
-      - run: dotnet publish -c Release -r win-x64
-      - uses: softprops/action-gh-release@v1
-        with:
-          files: bin/Release/**/*
-```
+## GitHub Actions
+IKKE BRUGT - Local-first workflow. GitHub bruges kun som backup.

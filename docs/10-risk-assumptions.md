@@ -1,5 +1,9 @@
 # Risici & Antagelser
 
+**MITIGATION STATUS:** De fleste kritiske risici er allerede håndteret (se CLAUDE.md for detaljer).
+
+---
+
 ## Antagelser (som skal holde for success)
 
 ### Hardware assumptions
@@ -153,22 +157,22 @@
 
 ---
 
-## Mitigation timeline
+## Mitigation Status (2026-02-07)
 
-### Before Modul 1 release
-- Checksum validation ✓
-- Timeout + retry logic ✓
-- SysEx buffering ✓
-- Error UI ✓
+### IMPLEMENTERET ✅
+- Checksum validation ✅ (Domain validation, commit 8e37993)
+- Timeout + retry logic ✅
+- SysEx buffering ✅ (DryWetMidiPort)
+- Error UI ✅
+- MIDI memory leaks fixed ✅ (commit 8e37993)
+- Event handler cleanup ✅ (DisconnectAsync)
 
-### Before Modul 6 release
-- Confirmation dialogs ✓
-- Undo/Redo ✓
-
-### Before Modul 10 release
-- Code signing ✓
-- Installer testing ✓
-- OS version check ✓
+### PENDING (Future)
+- Confirmation dialogs (preset overwrite)
+- Undo/Redo
+- Code signing (release phase)
+- Installer testing
+- OS version check
 
 ---
 

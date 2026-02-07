@@ -3,7 +3,7 @@
 ## Valgt stack
 | Komponent | Valg | Version |
 |-----------|------|---------|
-| **Sprog** | C# | .NET 8 LTS |
+| **Sprog** | C# | .NET 8 SDK |
 | **UI Framework** | Avalonia | 11.x |
 | **MIDI Lib** | DryWetMIDI | 8.0.3 |
 | **Test Framework** | xUnit | 2.6.x |
@@ -54,16 +54,23 @@
 
 ---
 
-## Projektstruktur (forventet)
+## Projektstruktur (aktuel)
 ```
-NovaApp/
-├── Nova.Presentation/                  # Avalonia UI, XAML, ViewModels
-├── Nova.Application/         # Use cases, commands
-├── Nova.Domain/              # Presets, params, validering
-├── Nova.Midi/                # DryWetMIDI wrapper, I/O
-├── Nova.Infrastructure/      # File I/O, config
-├── Nova.Tests/               # xUnit + Moq test suite
-└── NovaApp.sln                  # Solution file
+src/
+├── Nova.Presentation/          # Avalonia UI (79 tests)
+├── Nova.Presentation.Tests/
+├── Nova.Application/           # Use cases (97 tests)
+├── Nova.Application.Tests/
+├── Nova.Domain/                # Domain models (261 tests)
+├── Nova.Domain.Tests/
+├── Nova.Midi/                  # MIDI abstraction (8 tests)
+├── Nova.Midi.Tests/
+├── Nova.Infrastructure/        # MIDI + File I/O (13 tests)
+├── Nova.Infrastructure.Tests/
+├── Nova.Common/                # Shared utilities
+└── Nova.HardwareTest/          # Hardware integration tests
+
+NovaApp.sln                     # Solution file (root)
 ```
 
 ---

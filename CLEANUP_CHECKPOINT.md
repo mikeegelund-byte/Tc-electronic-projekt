@@ -1,0 +1,267 @@
+# CLEANUP CHECKPOINT - 2026-02-07
+
+## 🎯 PROJEKTETS NUVÆRENDE TILSTAND
+
+**Location:** `C:\Projekter\Mikes preset app`
+**Status:** Midtvejs i systematisk 3-trins oprydning
+**Git status:** Uncommitted changes (ændringer staged men ikke committed)
+
+---
+
+## ✅ HVAD ER GJORT (Færdige Tasks)
+
+### **MIGRATION KOMPLET** (Tasks #1-4)
+✅ Projektet flyttet fra `C:\Projekter\TC Electronic\Tc electronic projekt\Nyt program til Nova`
+✅ Git historik bevaret (2214 filer i .git/)
+✅ 458 tests (453 passing = 98.9%)
+✅ Build succesvol
+
+### **FØRSTE OPRYDNING** (Tasks #5-10)
+✅ Slettet 9 template filer (Class1.cs, UnitTest1.cs)
+✅ Slettet 9 backup filer (.bak, .backup, .disabled)
+✅ Slettet 5 TestResults mapper + 11 coverage filer
+✅ Opdateret .gitignore med backup/template excludes
+✅ Slettet tom installer/ mappe
+
+### **ROOT FILER ANALYSE KOMPLET** (Task #11)
+✅ SLETTET: `CHANGELOG.md` (duplikerede git log, outdated)
+✅ OPDATERET: `README.md` (rettet 4x "342→458 tests", rettet stier, slettet AGENTS.md ref)
+✅ OPDATERET: `MANUAL_TEST_GUIDE.md` (rettet 2x forældet sti)
+✅ OPDATERET: `TESTING_STRATEGY.md` (rettet "342→458 tests")
+✅ FLYTTET: `EFFECT_REFERENCE.md` → `docs/EFFECT_REFERENCE.md`
+
+---
+
+## 📋 NUVÆRENDE STRUKTUR
+
+```
+C:\Projekter\Mikes preset app\
+├── .git/                                    (2214 filer - git historik)
+├── .gitignore                               (opdateret)
+├── CLAUDE.md                                (AI memory - opdateret med migration)
+├── Directory.Build.props                    (MSBuild config)
+├── global.json                              (.NET SDK lock)
+├── MANUAL_TEST_GUIDE.md                     (opdateret stier)
+├── MIDI_PROTOCOL.md                         (SysEx spec)
+├── NovaApp.sln                              (VS solution)
+├── NovaSystem_MIDI_Implementation_Guide.md  (C# MIDI guide)
+├── README.md                                (opdateret: stier + test count)
+├── TESTING_STRATEGY.md                      (opdateret test count)
+│
+├── docs/                                    (19 filer nu - EFFECT_REFERENCE flyttet hertil)
+│   ├── 00-index.md
+│   ├── 01-vision-scope.md
+│   ├── 02-stack-and-tooling.md
+│   ├── 03-architecture.md
+│   ├── 04-testing-strategy.md
+│   ├── 05-midi-io-contract.md
+│   ├── 06-sysex-formats.md
+│   ├── 07-module-roadmap.md
+│   ├── 08-ui-guidelines.md
+│   ├── 09-release-installer.md
+│   ├── 10-risk-assumptions.md
+│   ├── 11-modul1-technical-detail.md
+│   ├── 12-environment-setup-checklist.md
+│   ├── 13-test-fixtures.md
+│   ├── 14-ready-for-implementation.md
+│   ├── EFFECT_REFERENCE.md                  (FLYTTET fra ROOT)
+│   ├── SYSEX_MAP_TABLES.md
+│   ├── TROUBLESHOOTING_PLAN.md
+│   └── USER_MANUAL.md
+│
+├── scripts/                                 (2 filer - IKKE ANALYSERET ENDNU)
+│   ├── setup.ps1
+│   └── verify-commit.ps1
+│
+└── src/                                     (180 C# filer efter cleanup)
+    ├── Nova.Application/
+    ├── Nova.Application.Tests/
+    ├── Nova.Common/
+    ├── Nova.Domain/
+    ├── Nova.Domain.Tests/
+    ├── Nova.HardwareTest/
+    ├── Nova.Infrastructure/
+    ├── Nova.Infrastructure.Tests/
+    ├── Nova.Midi/
+    ├── Nova.Midi.Tests/
+    ├── Nova.Presentation/
+    └── Nova.Presentation.Tests/
+```
+
+**Total:**
+- ROOT filer: 10 (.md + config)
+- docs/ filer: 19 (inkl. flyttet EFFECT_REFERENCE)
+- scripts/ filer: 2 (skal analyseres)
+- src/ C# filer: 180 (efter template cleanup)
+
+---
+
+## 🔄 NÆSTE OPGAVER (In Progress)
+
+### **Task #12: docs/ Mappe Analyse** ✅ COMPLETED
+**Resultat:** 4 filer slettet, 9 filer opdateret, 6 filer uændret
+
+**Hvad blev gjort:**
+1. SLETTET 4 outdated planning docs:
+   - `07-module-roadmap.md` (10 modulers udvikling - allerede færdig)
+   - `11-modul1-technical-detail.md` (implementation guide - færdigt)
+   - `12-environment-setup-checklist.md` (setup guide - projekt eksisterer)
+   - `14-ready-for-implementation.md` (pre-launch checklist - færdigt)
+
+2. OPDATERET 9 filer til nuværende status:
+   - `00-index.md` - Fjernet broken refs, tilføjet manglende docs
+   - `01-vision-scope.md` - Note: MVP implementeret
+   - `02-stack-and-tooling.md` - Opdateret projekt struktur
+   - `04-testing-strategy.md` - Opdateret test struktur, fjernet CI/CD
+   - `08-ui-guidelines.md` - Fjernet "Modul 1 MVP" sektion
+   - `09-release-installer.md` - Fjernet GitHub Actions
+   - `10-risk-assumptions.md` - Opdateret mitigation status
+   - `13-test-fixtures.md` - Opdateret fixture organisation
+   - `USER_MANUAL.md` - Marked DRAFT, warnings om ikke-implementerede features
+
+3. BEHOLD 6 tekniske reference docs (ingen ændringer):
+   - `03-architecture.md`, `05-midi-io-contract.md`, `06-sysex-formats.md`
+   - `EFFECT_REFERENCE.md`, `SYSEX_MAP_TABLES.md`, `TROUBLESHOOTING_PLAN.md`
+
+**Resultat:** 15 relevante docs filer (ned fra 19)
+
+### **Task #13: scripts/ Mappe Analyse** (PENDING)
+**Indhold:**
+- `setup.ps1` (21K) - Initial projekt setup (git init, .NET scaffolding)
+- `verify-commit.ps1` (1.9K) - Pre-commit hook til build+test
+
+**Forventet resultat:** Sandsynligvis SLET HELE scripts/ mappe
+- setup.ps1: Projekt ER allerede setup, irrelevant
+- verify-commit.ps1: IKKE installeret som git hook (kun .sample filer i .git/hooks/)
+
+### **Task #14: src/ Struktur Analyse** (PENDING)
+**Skal tjekke:**
+- .csproj filer konfiguration
+- Manglende README.md i projekter?
+- Korrekt projekt struktur
+
+### **Task #15: Gap-Analyse** (PENDING)
+**Identificer manglende professionelle dev standards:**
+- .editorconfig (kode formatering)
+- LICENSE fil
+- CONTRIBUTING.md
+- CODE_OF_CONDUCT.md (hvis open source)
+- Andre standard filer?
+
+### **Task #16: Eksekvér & Commit** (PENDING)
+Commit alle ændringer efter alle tasks er færdige.
+
+---
+
+## 📝 3-TRINS RAKET (Reminder)
+
+For HVER fil skal vurderes:
+
+**Trin 1 - Relevans:**
+- Relevant for app funktion eller udvikling?
+- Nej = SLET
+- Ja = BEHOLD
+- Usikker = OMSKRIV/SAMMENLÆG
+
+**Trin 2 - Standalone værdi:**
+- Gavner filen i sin nuværende eksistens?
+- Kan det forsvares at den står alene?
+- Ja = OPDATER titel til ny struktur
+- Nej = SAMMENLÆG med anden info
+
+**Trin 3 - Sandhed & Kvalitet:**
+- Er indholdet sandt for visionen?
+- Står der forældede ting?
+- Er filen placeret korrekt?
+- Er filformatet korrekt?
+- Er titlen retvisende?
+
+**Trin 3.5 - Gap-analyse:**
+- Mangler der instruktioner/guidelines/værktøjer som en professionel dev setup ville have?
+
+---
+
+## 🔍 VIGTIGE FUND FRA ROOT ANALYSE
+
+### ✅ **Beslutninger Taget:**
+
+**BEHOLD (uændret):**
+- `.gitignore` - Git config (opdateret med backup excludes)
+- `CLAUDE.md` - AI agent memory (opdateret med migration)
+- `Directory.Build.props` - MSBuild shared properties
+- `global.json` - .NET SDK version lock
+- `NovaApp.sln` - Visual Studio solution
+- `MIDI_PROTOCOL.md` - Teknisk SysEx spec
+- `NovaSystem_MIDI_Implementation_Guide.md` - Praktisk C# MIDI guide
+
+**OPDATERET:**
+- `README.md` - Rettet stier + test count (342→458)
+- `MANUAL_TEST_GUIDE.md` - Rettet forældede stier
+- `TESTING_STRATEGY.md` - Rettet test count
+
+**SLETTET:**
+- `CHANGELOG.md` - Duplikerede git log, outdated
+
+**FLYTTET:**
+- `EFFECT_REFERENCE.md` → `docs/EFFECT_REFERENCE.md` (bedre placering)
+
+---
+
+## 🚨 KENDTE PROBLEMER I docs/ (Skal fixes i Task #12)
+
+**Forældede stier fundet:**
+```
+docs/12-environment-setup-checklist.md:76:    "Nyt program til Nova"
+docs/12-environment-setup-checklist.md:197:   "Nyt program til Nova"
+docs/12-environment-setup-checklist.md:244:   "Nyt program til Nova"
+docs/14-ready-for-implementation.md:35:       "Nyt program til Nova"
+docs/TROUBLESHOOTING_PLAN.md:10:              "Nyt program til Nova"
+```
+
+**Alle skal rettes til:** `C:\Projekter\Mikes preset app`
+
+---
+
+## 🎯 GENOPTAG ARBEJDE MED:
+
+```powershell
+cd "C:\Projekter\Mikes preset app"
+
+# Læs denne checkpoint fil
+cat CLEANUP_CHECKPOINT.md
+
+# Tjek git status
+git status
+
+# Fortsæt Task #12 - docs/ analyse
+# Start med at rette forældede stier, derefter 3-trins analyse af hver fil
+```
+
+**Næste kommando:**
+"Fortsæt Task #12: Analyser docs/ mappen med 3-trins raket"
+
+---
+
+## 📊 STATISTIK
+
+**Slettet indtil nu:**
+- 1 CHANGELOG.md
+- 4 outdated docs (module roadmap, setup guides)
+- 9 template filer (Class1.cs, UnitTest1.cs)
+- 9 backup filer (.bak, .backup, .disabled)
+- 5 TestResults mapper
+- 11 coverage XML filer
+- 1 tom installer/ mappe
+**Total slettet:** 40 filer/mapper
+
+**Flyttet:** 1 fil (EFFECT_REFERENCE.md → docs/)
+
+**Opdateret:** 13 filer (README, MANUAL_TEST_GUIDE, TESTING_STRATEGY, .gitignore, 9x docs/)
+
+**Git status:** Uncommitted changes (alle ændringer staged)
+
+---
+
+**CHECKPOINT GEMT:** `C:\Projekter\Mikes preset app\CLEANUP_CHECKPOINT.md`
+**Dato:** 2026-02-07
+**Session:** Systematisk projekt oprydning - midtvejs

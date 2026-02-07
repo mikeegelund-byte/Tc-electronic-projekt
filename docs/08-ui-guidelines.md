@@ -158,15 +158,3 @@
 - Offer recovery: "Retry" button or "Select different port"
 - Never crash silently
 
----
-
-## Modul 1 MVP UI
-**Minimum for Modul 1:**
-- Window with title
-- Port picker
-- Connect button
-- Download Bank button
-- Status message area
-- (No presets list yet)
-
-**Keep it simple. More UI in Modul 2+.**

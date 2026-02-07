@@ -4,10 +4,10 @@ Denne plan bruges efter oprydningen for systematisk at finde og løse fejl i Nov
 
 ## 1) Baseline miljø-check
 - Kør `dotnet --info` og bekræft .NET 8 SDK + runtime.
-- Bekræft at repo-root er `C:\Users\mike_\Desktop\Tc electronic projekt`.
+- Bekræft at repo-root er `C:\Projekter\Mikes preset app`.
 
 ## 2) Ren build + tests
-Kør i `Nyt program til Nova`:
+Kør i `C:\Projekter\Mikes preset app`:
 ```powershell
 dotnet restore NovaApp.sln
 dotnet build NovaApp.sln -c Release

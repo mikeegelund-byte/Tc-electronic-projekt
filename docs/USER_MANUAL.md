@@ -1,6 +1,8 @@
 # Nova System Manager - User Manual
-**Version**: 1.0.0  
-**Last Updated**: February 3, 2026
+**Version**: 1.0.0 (DRAFT)
+**Last Updated**: February 7, 2026
+
+⚠️ **STATUS**: DRAFT - Ikke alle features implementeret endnu. Se CLAUDE.md for nuværende status.
 
 ---
 
@@ -59,14 +61,16 @@ Nova System Manager is a desktop application for managing presets and settings o
 
 ## Installation
 
-### Step 1: Download the Installer
+### Step 1: Build from Source
 
-1. Navigate to the [GitHub Releases page](https://github.com/mikeegelund-byte/Tc-electronic-projekt/releases)
-2. Download the latest `NovaSystemManager-v1.0.0.msi` file
+⚠️ **NOTE**: Installer ikke tilgængelig endnu (under udvikling).
 
-### Step 2: Run the Installer
+1. Clone repository eller build fra kildekode
+2. Kør: `dotnet run --project src/Nova.Presentation`
 
-1. Double-click the downloaded `.msi` file
+### Step 2: ~~Run the Installer~~ (FREMTIDIG FEATURE)
+
+1. ~~Double-click the downloaded `.msi` file~~
 2. If you see a security warning, click **"Run"** or **"Yes"**
 3. Follow the installation wizard:
    - Accept the license agreement

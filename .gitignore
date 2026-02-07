@@ -56,6 +56,8 @@ coverage/
 *.trx
 OpenCover/
 coverage.xml
+coverage.*.xml
+*.opencover.xml
 
 # ============================================================================
 # Publishing & Deployment
@@ -127,6 +129,18 @@ Thumbs.db
 *.midi
 *.syx.bak
 *.tmp
+
+# ============================================================================
+# Backup & Template Files (NO FALLBACK SAFETY)
+# ============================================================================
+
+*.bak
+*.backup
+*.disabled
+*.old
+*~
+Class1.cs
+UnitTest1.cs
 
 # ============================================================================
 # Nova System Specific

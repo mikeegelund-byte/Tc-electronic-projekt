@@ -1,7 +1,7 @@
 # Test Fixtures — Real SysEx Data
 
 ## Overview
-This document defines all test fixtures (real SysEx data) needed for Modul 1 testing. These are used to:
+This document defines test fixtures (real SysEx data) used across test projekter. These are used to:
 1. Parse real hardware responses
 2. Validate checksum calculations
 3. Mock MIDI I/O in unit tests
@@ -11,25 +11,32 @@ This document defines all test fixtures (real SysEx data) needed for Modul 1 tes
 
 ## Test Data Organization
 
+Fixtures organiseret per test projekt:
+
+**Domain Tests:**
 ```
-src/Nova.Domain.Tests/
-├── Fixtures/
-│   ├── BankDumps/
-│   │   ├── nova-bank-all-defaults.syx        (60 empty presets)
-│   │   ├── nova-bank-with-artist-presets.syx (artist bank from hardware)
-│   │   └── nova-bank-corrupted-preset5.syx   (for error testing)
-│   ├── PresetResponses/
-│   │   ├── preset-001-clean.bin               (single 520-byte preset)
-│   │   └── preset-001-bad-checksum.bin
-│   └── README.md                              (hex dumps for documentation)
+src/Nova.Domain.Tests/Fixtures/
+└── (raw SysEx data if needed)
 ```
 
-Raw hardware dumps (auto-generated) live under the hardware test tool and are ignored by Git:
-
+**Application Tests:**
 ```
-src/Nova.HardwareTest/
-└── Dumps/
-    └── nova-dump-YYYYMMDD-HHMMSS-msgNNN.syx
+src/Nova.Application.Tests/
+└── TestHelpers.cs
+    └── CreateValidPresetSysEx(number, name) - Factory for valid 521-byte SysEx
+```
+
+**Presentation Tests:**
+```
+src/Nova.Presentation.Tests/
+└── TestHelpers.cs
+    └── CreateValidPreset(number, name) - Factory for valid Preset objects
+```
+
+**Hardware Tests:**
+```
+src/Nova.HardwareTest/Dumps/
+└── nova-dump-YYYYMMDD-HHMMSS-msgNNN.syx (auto-generated, ignored by Git)
 ```
 
 ---

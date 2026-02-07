@@ -26,7 +26,7 @@ This guide provides step-by-step instructions for manually testing the Preset Vi
 
 1. Navigate to the project directory:
    ```bash
-   cd "Nyt program til Nova"
+   cd "C:\Projekter\Mikes preset app"
    ```
 
 2. Run the application:
@@ -132,7 +132,7 @@ Examine the "User Bank Presets (60)" section:
 
 ## Hardware CLI Tests (optional)
 
-Kør fra `Nyt program til Nova`:
+Kør fra `C:\Projekter\Mikes preset app`:
 
 ```bash
 dotnet run --project src/Nova.HardwareTest -- --list-devices

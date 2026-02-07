@@ -99,18 +99,12 @@ public async Task DownloadBankUseCase_RequestAndReceive_UpdatesViewModel()
 ---
 
 ## Test fixtures
-```
-Nova.Tests/
-├── Fixtures/
-│   ├── user-bank-dump-valid.syx
-│   ├── user-bank-dump-bad-checksum.syx
-│   ├── system-dump-valid.syx
-│   └── TestData.cs (helpers)
-└── Unit/
-    ├── SysExParsingTests.cs
-    ├── ChecksumValidationTests.cs
-    └── ...
-```
+Fixtures er organiseret per test projekt:
+- `Nova.Domain.Tests/Fixtures/` - SysEx dumps, presets
+- `Nova.Application.Tests/TestHelpers.cs` - CreateValidPresetSysEx()
+- `Nova.Presentation.Tests/TestHelpers.cs` - CreateValidPreset()
+
+Se `docs/13-test-fixtures.md` for detaljer.
 
 ---
 
@@ -140,17 +134,9 @@ dotnet test /p:CollectCoverage=true
 
 ---
 
-## CI/CD (GitHub Actions, later)
-```yaml
-on: [push, pull_request]
-jobs:
-  test:
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-dotnet@v3
-      - run: dotnet test
-```
+## CI/CD
+CI er slået fra. GitHub bruges kun som backup (local-first workflow).
+Se `CLAUDE.md` for backup procedure.
 
 ---
 
