@@ -236,8 +236,11 @@ public partial class MainViewModel : ObservableObject
             if (result.IsSuccess)
             {
                 var bank = result.Value;
-                StatusMessage = $"Downloaded {bank.Presets.Length} presets successfully";
-                DownloadProgress = 100;
+                var receivedCount = bank.Presets.Count(p => p != null);
+                StatusMessage = receivedCount == 60
+                    ? "Downloaded 60 presets successfully"
+                    : $"Downloaded {receivedCount}/60 presets (partial)";
+                DownloadProgress = (int)Math.Round(receivedCount / 60.0 * 100);
 
                 // Store the bank for later preset retrieval
                 _currentBank = bank;
