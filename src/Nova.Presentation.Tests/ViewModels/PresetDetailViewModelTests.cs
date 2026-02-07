@@ -79,15 +79,10 @@ public class PresetDetailViewModelTests
         {
             0 => "Overdrive",
             1 => "Distortion",
-            2 => "Fuzz",
-            3 => "Line6 Drive",
-            4 => "Custom",
-            5 => "Tube",
-            6 => "Metal",
             _ => "Unknown"
         });
         vm.Drive.Gain.Should().Be(Math.Clamp(preset.DriveGain, 0, 100));
-        vm.Drive.Level.Should().Be(Math.Clamp(preset.DriveLevel, -30, 20));
+        vm.Drive.Level.Should().Be(Math.Clamp(preset.DriveLevel, -100, 0));
         
         // Assert - Modulation parameters (subset available in ModulationBlockViewModel)
         vm.Modulation.Type.Should().Be(preset.ModType switch

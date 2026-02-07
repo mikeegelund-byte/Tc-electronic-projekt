@@ -70,21 +70,21 @@ public class OffsetDecodingHypothesisTests
     }
 
     [Fact]
-    public void Hypothesis_DriveLevel_ZeroValue_MapsToMinus30()
+    public void Hypothesis_DriveLevel_ZeroValue_MapsToMinus100()
     {
-        // DriveLevel: -30 to +20 dB
+        // DriveLevel: -100 to 0 dB
         // Hardware showed [0,0,0,0] = raw 0
         
-        // Try: actualDb = rawDecoded - 30
+        // Try: actualDb = rawDecoded - 100
         int rawZero = 0;
-        int actualDb = rawZero - 30;
+        int actualDb = rawZero - 100;
 
-        actualDb.Should().Be(-30, "DriveLevel at minimum");
+        actualDb.Should().Be(-100, "DriveLevel at minimum");
         
-        // Max would be: 50 - 30 = +20dB
-        int maxEncoded = 50;
-        int maxDb = maxEncoded - 30;
-        maxDb.Should().Be(20, "DriveLevel at maximum");
+        // Max would be: 100 - 100 = 0dB
+        int maxEncoded = 100;
+        int maxDb = maxEncoded - 100;
+        maxDb.Should().Be(0, "DriveLevel at maximum");
     }
 
     [Fact]
@@ -107,9 +107,9 @@ public class OffsetDecodingHypothesisTests
         int levelOutDb = levelOutRaw - 100;
         levelOutDb.Should().Be(-100);
 
-        // DriveLevel (-30 to +20): Uses PATTERN 2 ✅
+        // DriveLevel (-100 to 0): Uses PATTERN 2 ✅
         int driveLevelRaw = 0;
-        int driveLevelDb = driveLevelRaw - 30;
-        driveLevelDb.Should().Be(-30);
+        int driveLevelDb = driveLevelRaw - 100;
+        driveLevelDb.Should().Be(-100);
     }
 }

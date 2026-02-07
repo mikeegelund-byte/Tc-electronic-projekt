@@ -78,16 +78,16 @@ public class PresetOffsetDecodingTests
     public void FromSysEx_DriveLevel_DecodesCorrectly()
     {
         // Arrange: DriveLevel uses simple offset
-        // Hardware bytes [0, 0, 0, 0] → raw 0 → -30dB (minimum)
-        // Range: -30 to +20dB
+        // Hardware bytes [0, 0, 0, 0] → raw 0 → -100dB (minimum)
+        // Range: -100 to 0dB
 
         // Act
         var result = Preset.FromSysEx(_realPresetBytes);
 
         // Assert
         result.IsSuccess.Should().BeTrue();
-        result.Value.DriveLevel.Should().Be(-30,
-            "DriveLevel raw 0 should decode to -30dB (minimum)");
+        result.Value.DriveLevel.Should().Be(-100,
+            "DriveLevel raw 0 should decode to -100dB (minimum)");
     }
 
     // ========================================
@@ -217,15 +217,15 @@ public class PresetOffsetDecodingTests
     public void FromSysEx_GateThreshold_DecodesCorrectly()
     {
         // Arrange: GateThreshold uses simple offset
-        // Range: -90 to 0dB (zero at end)
+        // Range: -60 to 0dB (zero at end)
 
         // Act
         var result = Preset.FromSysEx(_realPresetBytes);
 
         // Assert
         result.IsSuccess.Should().BeTrue();
-        result.Value.GateThreshold.Should().BeInRange(-90, 0,
-            "GateThreshold is -90 to 0dB");
+        result.Value.GateThreshold.Should().BeInRange(-60, 0,
+            "GateThreshold is -60 to 0dB");
     }
 
     [Fact]
@@ -281,7 +281,7 @@ public class PresetOffsetDecodingTests
     public void FromSysEx_PitchLevel1_DecodesCorrectly()
     {
         // Arrange: PitchLevel1 uses large offset (2^24)
-        // Range: -12 to +12dB (zero in middle)
+        // Range: -100 to 0dB
 
         // Act
         var result = Preset.FromSysEx(_realPresetBytes);
@@ -296,7 +296,7 @@ public class PresetOffsetDecodingTests
     public void FromSysEx_PitchLevel2_DecodesCorrectly()
     {
         // Arrange: PitchLevel2 uses large offset (2^24)
-        // Range: -12 to +12dB (zero in middle)
+        // Range: -100 to 0dB
 
         // Act
         var result = Preset.FromSysEx(_realPresetBytes);

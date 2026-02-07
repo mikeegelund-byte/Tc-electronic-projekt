@@ -87,19 +87,25 @@ public class DriveBlockViewModelTests
         // Set minimum valid parameter values (validated ranges)
         Encode4ByteValue(sysex, 38, 500);   // TapTempo: 500ms (100-3000)
         Encode4ByteValue(sysex, 86, 15);    // CompRelease: 15 (13-23)
+        Encode4ByteValue(sysex, 90, 1);     // CompResponse: 1 (1-10)
+        Encode4ByteValue(sysex, 94, 1);     // CompDrive: 1 (1-20)
         Encode4ByteValue(sysex, 330, 50);   // ReverbDecay: 50 (1-200)
+        Encode4ByteValue(sysex, 410, 25);   // EqFreq1: 25 (25-113)
         Encode4ByteValue(sysex, 418, 8);    // EqWidth1: 8 (5-12)
+        Encode4ByteValue(sysex, 422, 35);   // EqFreq2: 35 (25-113)
         Encode4ByteValue(sysex, 430, 8);    // EqWidth2: 8 (5-12)
+        Encode4ByteValue(sysex, 434, 45);   // EqFreq3: 45 (25-113)
         Encode4ByteValue(sysex, 442, 8);    // EqWidth3: 8 (5-12)
 
         // Drive parameters using 4-byte encoding
-        Encode4ByteValue(sysex, 102, driveType); // DriveType
-        Encode4ByteValue(sysex, 106, gain); // DriveGain
+        Encode4ByteValue(sysex, 134, driveType); // DriveType
+        Encode4ByteValue(sysex, 138, gain); // DriveGain
+        Encode4ByteValue(sysex, 142, 50); // DriveTone
         
-        // Drive Level -30 to +20dB - needs signed encoding
+        // Drive Level -100 to 0dB - needs signed encoding
         const int LARGE_OFFSET = 16777216; // 2^24
         int levelEncoded = level + LARGE_OFFSET;
-        Encode4ByteValue(sysex, 110, levelEncoded); // DriveLevel
+        Encode4ByteValue(sysex, 190, levelEncoded); // DriveLevel
         
         Encode4ByteValue(sysex, 194, 1); // DriveEnabled
         

@@ -39,6 +39,10 @@ public class PresetValidationTests
         // LevelOutLeft/Right (bytes 46-53): 0dB
         Encode4ByteValue(sysex, 46, 0);
         Encode4ByteValue(sysex, 50, 0);
+        Encode4ByteValue(sysex, 54, 0);   // MapParameter: 0
+        Encode4ByteValue(sysex, 58, 0);   // MapMin: 0
+        Encode4ByteValue(sysex, 62, 50);  // MapMid: 50
+        Encode4ByteValue(sysex, 66, 100); // MapMax: 100
 
         // COMP parameters with safe values
         Encode4ByteValue(sysex, 70, 0);   // CompType: 0 (perc)
@@ -51,14 +55,14 @@ public class PresetValidationTests
         Encode4ByteValue(sysex, 98, 12);  // CompLevel: 12 (0dB with offset)
 
         // DRIVE parameters
-        Encode4ByteValue(sysex, 102, 0);  // DriveType: 0
-        Encode4ByteValue(sysex, 106, 50); // DriveGain: 50%
-        Encode4ByteValue(sysex, 110, 30); // DriveLevel: 30 (0dB with offset)
+        Encode4ByteValue(sysex, 134, 0);  // DriveType: 0
+        Encode4ByteValue(sysex, 138, 50); // DriveGain: 50%
+        Encode4ByteValue(sysex, 142, 50); // DriveTone: 50%
+        Encode4ByteValue(sysex, 190, 0);  // DriveLevel: raw 0 (min)
 
         // BOOST parameters
-        Encode4ByteValue(sysex, 114, 0);  // BoostType: 0
-        Encode4ByteValue(sysex, 118, 15); // BoostGain: 15dB
-        Encode4ByteValue(sysex, 122, 30); // BoostLevel: 30 (0dB with offset)
+        Encode4ByteValue(sysex, 182, 5);  // BoostLevel: 5dB
+        Encode4ByteValue(sysex, 186, 0);  // BoostEnabled: off
 
         // Effect enable flags (4-byte encoded boolean: 0=off, 1=on)
         Encode4ByteValue(sysex, 130, 0);  // CompressorEnabled: off
@@ -87,7 +91,7 @@ public class PresetValidationTests
         Encode4ByteValue(sysex, 286, 10); // DelayClipOrFeedback2: 10
         Encode4ByteValue(sysex, 290, 50); // DelayHiCut: 50
         Encode4ByteValue(sysex, 294, 50); // DelayLoCut: 50
-        Encode4ByteValue(sysex, 298, 50); // DelayMix: 50%
+        Encode4ByteValue(sysex, 314, 50); // DelayMix: 50%
 
         // REVERB parameters
         Encode4ByteValue(sysex, 326, 0);  // ReverbType: 0 (spring)
@@ -228,19 +232,19 @@ public class PresetValidationTests
     // ========================================
 
     [Theory]
-    [InlineData(7)]   // Above max (0-6)
-    [InlineData(20)]  // Way above max
+    [InlineData(2)]   // Above max (0-1)
+    [InlineData(10)]  // Way above max
     public void FromSysEx_DriveType_OutOfRange_ReturnsFailure(int invalidValue)
     {
         // Arrange
         var sysex = CreateValidPresetSysEx();
-        Encode4ByteValue(sysex, 102, invalidValue); // DriveType at bytes 102-105
+        Encode4ByteValue(sysex, 134, invalidValue); // DriveType at bytes 134-137
 
         // Act
         var result = Preset.FromSysEx(sysex);
 
         // Assert
-        result.IsFailed.Should().BeTrue("DriveType {0} is out of valid range 0-6", invalidValue);
+        result.IsFailed.Should().BeTrue("DriveType {0} is out of valid range 0-1", invalidValue);
         result.Errors.Should().Contain(e => e.Message.Contains("DriveType") || e.Message.Contains("drive") || e.Message.Contains("type"));
     }
 
@@ -251,7 +255,7 @@ public class PresetValidationTests
     {
         // Arrange
         var sysex = CreateValidPresetSysEx();
-        Encode4ByteValue(sysex, 106, invalidValue); // DriveGain at bytes 106-109
+        Encode4ByteValue(sysex, 138, invalidValue); // DriveGain at bytes 138-141
 
         // Act
         var result = Preset.FromSysEx(sysex);
@@ -262,41 +266,41 @@ public class PresetValidationTests
     }
 
     // ========================================
-    // BOOST BLOCK VALIDATION TESTS (3 params)
+    // DRIVE TONE VALIDATION TEST
     // ========================================
 
     [Theory]
-    [InlineData(3)]   // Above max (0-2)
-    [InlineData(10)]  // Way above max
-    public void FromSysEx_BoostType_OutOfRange_ReturnsFailure(int invalidValue)
+    [InlineData(101)] // Above max (0-100)
+    [InlineData(200)] // Way above max
+    public void FromSysEx_DriveTone_OutOfRange_ReturnsFailure(int invalidValue)
     {
         // Arrange
         var sysex = CreateValidPresetSysEx();
-        Encode4ByteValue(sysex, 114, invalidValue); // BoostType at bytes 114-117
+        Encode4ByteValue(sysex, 142, invalidValue); // DriveTone at bytes 142-145
 
         // Act
         var result = Preset.FromSysEx(sysex);
 
         // Assert
-        result.IsFailed.Should().BeTrue("BoostType {0} is out of valid range 0-2", invalidValue);
-        result.Errors.Should().Contain(e => e.Message.Contains("BoostType") || e.Message.Contains("boost") || e.Message.Contains("type"));
+        result.IsFailed.Should().BeTrue("DriveTone {0} is out of valid range 0-100", invalidValue);
+        result.Errors.Should().Contain(e => e.Message.Contains("DriveTone") || e.Message.Contains("drive") || e.Message.Contains("tone"));
     }
 
     [Theory]
-    [InlineData(31)]  // Above max (0-30)
+    [InlineData(11)]  // Above max (0-10)
     [InlineData(100)] // Way above max
-    public void FromSysEx_BoostGain_OutOfRange_ReturnsFailure(int invalidValue)
+    public void FromSysEx_BoostLevel_OutOfRange_ReturnsFailure(int invalidValue)
     {
         // Arrange
         var sysex = CreateValidPresetSysEx();
-        Encode4ByteValue(sysex, 118, invalidValue); // BoostGain at bytes 118-121
+        Encode4ByteValue(sysex, 182, invalidValue); // BoostLevel at bytes 182-185
 
         // Act
         var result = Preset.FromSysEx(sysex);
 
         // Assert
-        result.IsFailed.Should().BeTrue("BoostGain {0} is out of valid range 0-30", invalidValue);
-        result.Errors.Should().Contain(e => e.Message.Contains("BoostGain") || e.Message.Contains("gain"));
+        result.IsFailed.Should().BeTrue("BoostLevel {0} is out of valid range 0-10", invalidValue);
+        result.Errors.Should().Contain(e => e.Message.Contains("BoostLevel") || e.Message.Contains("boost") || e.Message.Contains("level"));
     }
 
     // ========================================

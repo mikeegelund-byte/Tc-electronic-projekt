@@ -33,8 +33,8 @@ public class DebugRawValuesTests
     [Fact(Skip = "Investigation only - used for debugging raw values")]
     public void Debug_BoostLevel()
     {
-        int raw = DecodeRaw(122);
-        // BoostLevel: -12 to +12 dB
+        int raw = DecodeRaw(182);
+        // BoostLevel: 0 to 10 dB
 
         // Test both strategies:
         int withLargeOffset = raw - 16777216;
@@ -60,10 +60,10 @@ public class DebugRawValuesTests
     public void Debug_GateThreshold()
     {
         int raw = DecodeRaw(394);
-        // GateThreshold: -90 to 0 dB
+        // GateThreshold: -60 to 0 dB
 
         int withLargeOffset = raw - 16777216;
-        int withSimpleOffset = raw + (-90);
+        int withSimpleOffset = raw + (-60);
 
         raw.Should().Be(999999, $"Raw: {raw}, Large: {withLargeOffset}, Simple: {withSimpleOffset}");
     }

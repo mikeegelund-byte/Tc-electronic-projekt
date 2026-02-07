@@ -75,17 +75,17 @@ public class OffsetDecodingTests
     [Fact]
     public void Investigate_DriveLevel_Encoding()
     {
-        // DriveLevel: -30 to +20 dB (bytes 110-113)
-        byte b0 = _realPresetBytes[110];
-        byte b1 = _realPresetBytes[111];
-        byte b2 = _realPresetBytes[112];
-        byte b3 = _realPresetBytes[113];
+        // DriveLevel: -100 to 0 dB (bytes 190-193)
+        byte b0 = _realPresetBytes[190];
+        byte b1 = _realPresetBytes[191];
+        byte b2 = _realPresetBytes[192];
+        byte b3 = _realPresetBytes[193];
 
         int raw = b0 | (b1 << 7) | (b2 << 14) | (b3 << 21);
 
         Console.WriteLine($"DriveLevel bytes: [{b0}, {b1}, {b2}, {b3}]");
         Console.WriteLine($"Raw decoded: {raw}");
-        Console.WriteLine($"Expected range: -30 to +20 dB");
+        Console.WriteLine($"Expected range: -100 to 0 dB");
     }
 
     [Fact]

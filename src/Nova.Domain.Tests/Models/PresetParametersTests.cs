@@ -249,8 +249,8 @@ public class PresetParametersTests
 
         // Assert
         result.IsSuccess.Should().BeTrue();
-        result.Value.CompResponse.Should().BeInRange(0, 20,
-            "COMP Response actual range TBD");
+        result.Value.CompResponse.Should().BeInRange(1, 10,
+            "COMP Response must be between 1 and 10");
     }
 
     [Fact]
@@ -263,8 +263,8 @@ public class PresetParametersTests
 
         // Assert
         result.IsSuccess.Should().BeTrue();
-        result.Value.CompDrive.Should().BeInRange(0, 30,
-            "COMP Drive actual range TBD");
+        result.Value.CompDrive.Should().BeInRange(1, 20,
+            "COMP Drive must be between 1 and 20");
     }
 
     [Fact]
@@ -282,29 +282,29 @@ public class PresetParametersTests
     }
 
     // ==================================
-    // DRIVE EFFECT PARAMETERS (bytes 102-113)
+    // DRIVE EFFECT PARAMETERS (bytes 134-193)
     // ==================================
 
     [Fact]
-    public void FromSysEx_ExtractsDriveType_FromBytes102To105()
+    public void FromSysEx_ExtractsDriveType_FromBytes134To137()
     {
         // Arrange - Already loaded in constructor
-        // Reference: Nova System Sysex Map.txt - bytes 102-105
-        // Range: 0-6 (overdrive/dist/fuzz/line6drive/custom/tube/metal)
+        // Reference: Nova System Sysex Map.txt - bytes 134-137
+        // Range: 0-1 (overdrive/distortion)
 
         // Act
         var result = Preset.FromSysEx(_realPresetBytes);
 
         // Assert
         result.IsSuccess.Should().BeTrue();
-        result.Value.DriveType.Should().BeInRange(0, 6, "drive type must be 0-6");
+        result.Value.DriveType.Should().BeInRange(0, 1, "drive type must be 0-1");
     }
 
     [Fact]
-    public void FromSysEx_ExtractsDriveGain_FromBytes106To109()
+    public void FromSysEx_ExtractsDriveGain_FromBytes138To141()
     {
         // Arrange - Already loaded in constructor
-        // Reference: Nova System Sysex Map.txt - bytes 106-109
+        // Reference: Nova System Sysex Map.txt - bytes 138-141
         // Range: 0-100 (gain percentage)
 
         // Act
@@ -316,59 +316,44 @@ public class PresetParametersTests
     }
 
     [Fact]
-    public void FromSysEx_ExtractsDriveLevel_FromBytes110To113()
+    public void FromSysEx_ExtractsDriveTone_FromBytes142To145()
     {
         // Arrange - Already loaded in constructor
-        // Reference: Nova System Sysex Map.txt - bytes 110-113
-        // Range: -30 to +20dB (may need offset decoding like COMP params)
+        // Reference: Nova System Sysex Map.txt - bytes 142-145
+        // Range: 0-100 (tone)
 
         // Act
         var result = Preset.FromSysEx(_realPresetBytes);
 
         // Assert
         result.IsSuccess.Should().BeTrue();
-        result.Value.DriveLevel.Should().BeInRange(-30, 20, "Drive Level must be between -30dB and +20dB");
+        result.Value.DriveTone.Should().BeInRange(0, 100, "drive tone must be 0-100");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsDriveLevel_FromBytes190To193()
+    {
+        // Arrange - Already loaded in constructor
+        // Reference: Nova System Sysex Map.txt - bytes 190-193
+        // Range: -100 to 0dB
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.DriveLevel.Should().BeInRange(-100, 0, "Drive Level must be between -100dB and 0dB");
     }
 
     // ==================================
-    // BOOST EFFECT PARAMETERS (bytes 114-193)
+    // BOOST EFFECT PARAMETERS (bytes 182-189)
     // ==================================
 
     [Fact]
-    public void FromSysEx_ExtractsBoostType_FromBytes114To117()
+    public void FromSysEx_ExtractsBoostLevel_FromBytes182To185()
     {
         // Arrange - Already loaded in constructor
-        // Reference: Nova System Sysex Map.txt - bytes 114-117
-        // Range: 0-2 (clean/mid/treble)
-
-        // Act
-        var result = Preset.FromSysEx(_realPresetBytes);
-
-        // Assert
-        result.IsSuccess.Should().BeTrue();
-        result.Value.BoostType.Should().BeInRange(0, 2, "boost type must be 0-2");
-    }
-
-    [Fact]
-    public void FromSysEx_ExtractsBoostGain_FromBytes118To121()
-    {
-        // Arrange - Already loaded in constructor
-        // Reference: Nova System Sysex Map.txt - bytes 118-121
-        // Range: 0-30dB
-
-        // Act
-        var result = Preset.FromSysEx(_realPresetBytes);
-
-        // Assert
-        result.IsSuccess.Should().BeTrue();
-        result.Value.BoostGain.Should().BeInRange(0, 30, "boost gain must be 0-30dB");
-    }
-
-    [Fact]
-    public void FromSysEx_ExtractsBoostLevel_FromBytes122To125()
-    {
-        // Arrange - Already loaded in constructor
-        // Reference: Nova System Sysex Map.txt - bytes 122-125
+        // Reference: Nova System Sysex Map.txt - bytes 182-185
         // Range: 0 to 10dB (unsigned)
 
         // Act
@@ -377,6 +362,21 @@ public class PresetParametersTests
         // Assert
         result.IsSuccess.Should().BeTrue();
         result.Value.BoostLevel.Should().BeInRange(0, 10, "Boost Level must be between 0dB and 10dB");
+    }
+
+    [Fact]
+    public void FromSysEx_ExtractsBoostEnabled_FromBytes186To189()
+    {
+        // Arrange - Already loaded in constructor
+        // Reference: Nova System Sysex Map.txt - bytes 186-189
+        // Range: 0-1 (off/on)
+
+        // Act
+        var result = Preset.FromSysEx(_realPresetBytes);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        // Bool property extracted successfully
     }
 
     // ==================================
@@ -643,10 +643,10 @@ public class PresetParametersTests
     }
 
     [Fact]
-    public void FromSysEx_ExtractsDelayMix_FromBytes298To301()
+    public void FromSysEx_ExtractsDelayMix_FromBytes314To317()
     {
         // Arrange - Already loaded in constructor
-        // Reference: Nova System Sysex Map.txt - bytes 298-301
+        // Reference: Nova System Sysex Map.txt - bytes 314-317
         // Range: 0-100%
 
         // Act

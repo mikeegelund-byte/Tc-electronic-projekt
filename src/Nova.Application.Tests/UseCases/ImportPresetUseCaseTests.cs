@@ -226,6 +226,10 @@ Tap Tempo: 500
 Routing: 0
 Level Out Left: -10
 Level Out Right: -10
+Map Parameter: 0
+Map Min: 0
+Map Mid: 50
+Map Max: 100
 
 # === EFFECT SWITCHES ===
 Compressor Enabled: False
@@ -233,6 +237,9 @@ Drive Enabled: True
 Modulation Enabled: False
 Delay Enabled: True
 Reverb Enabled: True
+EQ Enabled: True
+Gate Enabled: True
+Pitch Enabled: True
 
 # === COMPRESSOR ===
 Comp Type: 0
@@ -247,21 +254,22 @@ Comp Level: 0
 # === DRIVE ===
 Drive Type: 1
 Drive Gain: 50
+Drive Tone: 60
 Drive Level: -10
 
 # === BOOST ===
-Boost Type: 0
-Boost Gain: 15
 Boost Level: 5
+Boost Enabled: True
 
 # === MODULATION ===
 Mod Type: 0
-Mod Speed: 100
+Mod Speed: 60
 Mod Depth: 50
 Mod Tempo: 8
-Mod Hi Cut: 100
+Mod Hi Cut: 30
 Mod Feedback: 0
 Mod Delay Or Range: 10
+Mod Width: 50
 Mod Mix: 30
 
 # === DELAY ===
@@ -272,8 +280,12 @@ Delay Tempo: 8
 Delay Tempo2 Or Width: 50
 Delay Feedback: 50
 Delay Clip Or Feedback2: 10
-Delay Hi Cut: 100
+Delay Hi Cut: 30
 Delay Lo Cut: 20
+Delay Offset Or Pan1: 0
+Delay Sense Or Pan2: 0
+Delay Damp: 20
+Delay Release: 0
 Delay Mix: 40
 
 # === REVERB ===
@@ -301,10 +313,10 @@ Gate Release: 50
 EQ Freq 1: 50
 EQ Gain 1: 0
 EQ Width 1: 10
-EQ Freq 2: 100
+EQ Freq 2: 90
 EQ Gain 2: 3
 EQ Width 2: 10
-EQ Freq 3: 150
+EQ Freq 3: 110
 EQ Gain 3: -2
 EQ Width 3: 10
 
@@ -320,6 +332,9 @@ Pitch Feedback1 Or Key: 0
 Pitch Feedback2 Or Scale: 0
 Pitch Level 1: -10
 Pitch Level 2: -10
+Pitch Direction: 0
+Pitch Range: 1
+Pitch Mix: 50
 ";
     }
 

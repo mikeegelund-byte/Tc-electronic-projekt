@@ -11,11 +11,15 @@ public class Preset
     public string Name { get; private set; } = string.Empty;
     public byte[] RawSysEx { get; private set; } = Array.Empty<byte>();
 
-    // Global parameters (bytes 38-53)
+    // Global parameters (bytes 38-69)
     public int TapTempo { get; private set; }  // 100-3000ms (bytes 38-41)
     public int Routing { get; private set; }   // 0=Semi-parallel, 1=Serial, 2=Parallel (bytes 42-45)
     public int LevelOutLeft { get; private set; }  // -100 to 0dB (bytes 46-49)
     public int LevelOutRight { get; private set; } // -100 to 0dB (bytes 50-53)
+    public int MapParameter { get; private set; }  // Pedal mapping parameter (bytes 54-57)
+    public int MapMin { get; private set; }        // 0-100% (bytes 58-61)
+    public int MapMid { get; private set; }        // 0-100% (bytes 62-65)
+    public int MapMax { get; private set; }        // 0-100% (bytes 66-69)
 
     // Effect on/off switches
     public bool CompressorEnabled { get; private set; }  // bytes 130-133
@@ -23,6 +27,9 @@ public class Preset
     public bool ModulationEnabled { get; private set; }  // bytes 258-261
     public bool DelayEnabled { get; private set; }       // bytes 322-325
     public bool ReverbEnabled { get; private set; }      // bytes 386-389
+    public bool EqEnabled { get; private set; }          // bytes 406-409
+    public bool GateEnabled { get; private set; }        // bytes 450-453
+    public bool PitchEnabled { get; private set; }       // bytes 514-517
 
     // COMP (Compressor) effect parameters (bytes 70-129)
     public int CompType { get; private set; }       // 0=perc, 1=sustain, 2=advanced (bytes 70-73)
@@ -34,15 +41,13 @@ public class Preset
     public int CompDrive { get; private set; }      // 1-20 (bytes 94-97)
     public int CompLevel { get; private set; }      // -12 to +12dB (bytes 98-101)
 
-    // DRIVE effect parameters (bytes 102-193)
-    public int DriveType { get; private set; }      // 0-6 (overdrive/dist/fuzz/line6drive/custom/tube/metal) (bytes 102-105)
-    public int DriveGain { get; private set; }      // 0-100 (bytes 106-109)
-    public int DriveLevel { get; private set; }     // -30 to +20dB (bytes 110-113)
-
-    // BOOST effect parameters (bytes 114-125)
-    public int BoostType { get; private set; }      // 0-2 (clean/mid/treble) (bytes 114-117)
-    public int BoostGain { get; private set; }      // 0-30dB (bytes 118-121)
-    public int BoostLevel { get; private set; }     // 0 to 10dB (bytes 122-125) - unsigned per SYSEX_MAP_TABLES.md
+    // DRIVE effect parameters (bytes 134-193)
+    public int DriveType { get; private set; }      // 0-1 (overdrive/distortion) (bytes 134-137)
+    public int DriveGain { get; private set; }      // 0-100 (bytes 138-141)
+    public int DriveTone { get; private set; }      // 0-100 (bytes 142-145)
+    public int DriveLevel { get; private set; }     // -100 to 0dB (bytes 190-193)
+    public int BoostLevel { get; private set; }     // 0 to 10dB (bytes 182-185)
+    public bool BoostEnabled { get; private set; }  // bytes 186-189
 
     // MOD (Modulation) effect parameters (bytes 198-257)
     public int ModType { get; private set; }        // 0-5 (chorus/flanger/vibrato/phaser/tremolo/panner) (bytes 198-201)
@@ -52,6 +57,7 @@ public class Preset
     public int ModHiCut { get; private set; }       // 20Hz-20kHz table (bytes 214-217)
     public int ModFeedback { get; private set; }    // -100 to +100% (bytes 218-221)
     public int ModDelayOrRange { get; private set; } // Multi-function: Delay/Range/Type (bytes 222-225)
+    public int ModWidth { get; private set; }       // 0-100% (bytes 238-241)
     public int ModMix { get; private set; }         // 0-100% (bytes 250-253)
 
     // DELAY effect parameters (bytes 262-321)
@@ -64,7 +70,11 @@ public class Preset
     public int DelayClipOrFeedback2 { get; private set; } // Multi-function: Clip (analog/tape: 0-24dB) or Feedback2 (dual: 0-120%) (bytes 286-289)
     public int DelayHiCut { get; private set; }     // 20Hz-20kHz table (bytes 290-293)
     public int DelayLoCut { get; private set; }     // 20Hz-20kHz table (bytes 294-297)
-    public int DelayMix { get; private set; }       // 0-100% (bytes 298-301)
+    public int DelayOffsetOrPan1 { get; private set; } // Dynamic Offset (-200..200) or Dual Pan1 (-50..50) (bytes 298-301)
+    public int DelaySenseOrPan2 { get; private set; }  // Dynamic Sense (-50..0) or Dual Pan2 (-50..50) (bytes 302-305)
+    public int DelayDamp { get; private set; }      // 0-100 dB (bytes 306-309)
+    public int DelayRelease { get; private set; }   // 20-1000 ms table index (bytes 310-313)
+    public int DelayMix { get; private set; }       // 0-100% (bytes 314-317)
 
     // REVERB effect parameters (bytes 326-385)
     public int ReverbType { get; private set; }     // 0-3 (spring/hall/room/plate) (bytes 326-329)
@@ -108,6 +118,9 @@ public class Preset
     public int PitchFeedback2OrScale { get; private set; }  // 0-100% OR 0-13 Scale (bytes 486-489)
     public int PitchLevel1 { get; private set; }    // -100 to 0dB (bytes 490-493)
     public int PitchLevel2 { get; private set; }    // -100 to 0dB (bytes 494-497)
+    public int PitchDirection { get; private set; } // 0=Down, 1=Up (octaver/whammy) (bytes 494-497)
+    public int PitchRange { get; private set; }     // 1-2 octaves (octaver/whammy) (bytes 498-501)
+    public int PitchMix { get; private set; }       // 0-100% (bytes 502-505)
 
     private Preset() { }
 
@@ -158,6 +171,10 @@ public class Preset
         int routing = Decode4ByteValue(sysex, 42);
         int levelOutLeft = DecodeSignedDbValue(sysex, 46, -100, 0);
         int levelOutRight = DecodeSignedDbValue(sysex, 50, -100, 0);
+        int mapParameter = Decode4ByteValue(sysex, 54);
+        int mapMin = Decode4ByteValue(sysex, 58);
+        int mapMid = Decode4ByteValue(sysex, 62);
+        int mapMax = Decode4ByteValue(sysex, 66);
 
         // Extract COMP (Compressor) parameters (bytes 70-101)
         int compType = Decode4ByteValue(sysex, 70);
@@ -169,15 +186,13 @@ public class Preset
         int compDrive = Decode4ByteValue(sysex, 94);  // 0-12dB (unsigned)
         int compLevel = DecodeSignedDbValue(sysex, 98, -12, 12);  // -12 to +12dB
 
-        // Extract DRIVE effect parameters (bytes 102-113)
-        int driveType = Decode4ByteValue(sysex, 102);
-        int driveGain = Decode4ByteValue(sysex, 106);
-        int driveLevel = DecodeSignedDbValue(sysex, 110, -30, 20);  // -30 to +20dB (signed, simple offset)
-
-        // Extract BOOST effect parameters (bytes 114-125)
-        int boostType = Decode4ByteValue(sysex, 114);
-        int boostGain = Decode4ByteValue(sysex, 118);
-        int boostLevel = Decode4ByteValue(sysex, 122);  // 0-10 dB (unsigned per spec)
+        // Extract DRIVE effect parameters (bytes 134-193)
+        int driveType = Decode4ByteValue(sysex, 134);
+        int driveGain = Decode4ByteValue(sysex, 138);
+        int driveTone = Decode4ByteValue(sysex, 142);
+        int boostLevel = Decode4ByteValue(sysex, 182);
+        bool boostEnabled = Decode4ByteValue(sysex, 186) == 1;
+        int driveLevel = DecodeSignedDbValue(sysex, 190, -100, 0);
 
         // Extract MOD (Modulation) effect parameters (bytes 198-257)
         int modType = Decode4ByteValue(sysex, 198);
@@ -187,6 +202,7 @@ public class Preset
         int modHiCut = Decode4ByteValue(sysex, 214);
         int modFeedback = DecodeSignedDbValue(sysex, 218, -100, 100);  // -100 to +100%
         int modDelayOrRange = Decode4ByteValue(sysex, 222);
+        int modWidth = Decode4ByteValue(sysex, 238);
         int modMix = Decode4ByteValue(sysex, 250);
 
         // Extract DELAY effect parameters (bytes 262-321)
@@ -199,7 +215,27 @@ public class Preset
         int delayClipOrFeedback2 = Decode4ByteValue(sysex, 286);
         int delayHiCut = Decode4ByteValue(sysex, 290);
         int delayLoCut = Decode4ByteValue(sysex, 294);
-        int delayMix = Decode4ByteValue(sysex, 298);
+        int delayOffsetOrPan1;
+        int delaySenseOrPan2;
+        if (delayType == 3)
+        {
+            delayOffsetOrPan1 = DecodeSignedDbValue(sysex, 298, -200, 200);
+            delaySenseOrPan2 = DecodeSignedDbValue(sysex, 302, -50, 0);
+        }
+        else if (delayType == 4)
+        {
+            delayOffsetOrPan1 = DecodeSignedDbValue(sysex, 298, -50, 50);
+            delaySenseOrPan2 = DecodeSignedDbValue(sysex, 302, -50, 50);
+        }
+        else
+        {
+            delayOffsetOrPan1 = DecodeSignedDbValue(sysex, 298, -200, 200);
+            delaySenseOrPan2 = DecodeSignedDbValue(sysex, 302, -50, 50);
+        }
+
+        int delayDamp = Decode4ByteValue(sysex, 306);
+        int delayRelease = Decode4ByteValue(sysex, 310);
+        int delayMix = Decode4ByteValue(sysex, 314);
 
         // Extract REVERB effect parameters (bytes 326-385)
         int reverbType = Decode4ByteValue(sysex, 326);
@@ -221,7 +257,8 @@ public class Preset
         int gateThreshold = DecodeSignedDbValue(sysex, 394, -60, 0);  // -60 to 0dB
         int gateDamp = Decode4ByteValue(sysex, 398);
         int gateRelease = Decode4ByteValue(sysex, 402);
-        int eqFreq1 = Decode4ByteValue(sysex, 406);
+        bool eqEnabled = Decode4ByteValue(sysex, 406) == 1;
+        int eqFreq1 = Decode4ByteValue(sysex, 410);
         int eqGain1 = DecodeSignedDbValue(sysex, 414, -12, 12);  // -12 to +12dB
         int eqWidth1 = Decode4ByteValue(sysex, 418);
         int eqFreq2 = Decode4ByteValue(sysex, 422);
@@ -230,6 +267,7 @@ public class Preset
         int eqFreq3 = Decode4ByteValue(sysex, 434);
         int eqGain3 = DecodeSignedDbValue(sysex, 438, -12, 12);  // -12 to +12dB
         int eqWidth3 = Decode4ByteValue(sysex, 442);
+        bool gateEnabled = Decode4ByteValue(sysex, 450) == 1;
 
         // Extract PITCH effect parameters (bytes 454-513)
         int pitchType = Decode4ByteValue(sysex, 454);
@@ -242,7 +280,14 @@ public class Preset
         int pitchFeedback1OrKey = Decode4ByteValue(sysex, 482);
         int pitchFeedback2OrScale = Decode4ByteValue(sysex, 486);
         int pitchLevel1 = DecodeSignedDbValue(sysex, 490, -100, 0);  // -100 to 0dB
-        int pitchLevel2 = DecodeSignedDbValue(sysex, 494, -100, 0);  // -100 to 0dB
+        int pitchLevel2 = pitchType == 1 || pitchType == 2
+            ? 0
+            : DecodeSignedDbValue(sysex, 494, -100, 0);
+        int pitchDirection = pitchType == 1 || pitchType == 2
+            ? Decode4ByteValue(sysex, 494)
+            : 0;
+        int pitchRange = Decode4ByteValue(sysex, 498);
+        int pitchMix = Decode4ByteValue(sysex, 502);
 
         // Extract effect on/off switches (4-byte encoded boolean: 0x00=off, 0x01=on)
         bool compressorEnabled = Decode4ByteValue(sysex, 130) == 1;
@@ -250,23 +295,26 @@ public class Preset
         bool modulationEnabled = Decode4ByteValue(sysex, 258) == 1;
         bool delayEnabled = Decode4ByteValue(sysex, 322) == 1;
         bool reverbEnabled = Decode4ByteValue(sysex, 386) == 1;
+        bool pitchEnabled = Decode4ByteValue(sysex, 514) == 1;
 
         // ========================================
         // PARAMETER VALIDATION
         // ========================================
 
         var validationResult = ValidateAllParameters(
-            tapTempo, routing,
-            compType, compRatio, compAttack, compRelease,
-            driveType, driveGain,
-            boostType, boostGain,
-            modType, modDepth, modTempo, modMix,
-            delayType, delayTime, delayTime2, delayTempo, delayFeedback, delayMix,
-            reverbType, reverbDecay, reverbPreDelay, reverbShape, reverbSize, reverbHiColor, reverbLoColor, reverbMix,
-            gateType, gateDamp, gateRelease,
-            eqWidth1, eqWidth2, eqWidth3,
-            pitchType, pitchDelay1, pitchDelay2,
-            pitchFeedback1OrKey, pitchFeedback2OrScale
+            tapTempo, routing, levelOutLeft, levelOutRight,
+            mapParameter, mapMin, mapMid, mapMax,
+            compType, compThreshold, compRatio, compAttack, compRelease, compResponse, compDrive, compLevel,
+            driveType, driveGain, driveTone, driveLevel, boostLevel,
+            modType, modSpeed, modDepth, modTempo, modHiCut, modFeedback, modDelayOrRange, modWidth, modMix,
+            delayType, delayTime, delayTime2, delayTempo, delayTempo2OrWidth, delayFeedback, delayClipOrFeedback2,
+            delayHiCut, delayLoCut, delayOffsetOrPan1, delaySenseOrPan2, delayDamp, delayRelease, delayMix,
+            reverbType, reverbDecay, reverbPreDelay, reverbShape, reverbSize, reverbHiColor, reverbHiLevel,
+            reverbLoColor, reverbLoLevel, reverbRoomLevel, reverbLevel, reverbDiffuse, reverbMix,
+            gateType, gateThreshold, gateDamp, gateRelease,
+            eqFreq1, eqGain1, eqWidth1, eqFreq2, eqGain2, eqWidth2, eqFreq3, eqGain3, eqWidth3,
+            pitchType, pitchVoice1, pitchVoice2, pitchPan1, pitchPan2, pitchDelay1, pitchDelay2,
+            pitchFeedback1OrKey, pitchFeedback2OrScale, pitchLevel1, pitchLevel2, pitchDirection, pitchRange, pitchMix
         );
 
         if (validationResult.IsFailed)
@@ -281,6 +329,10 @@ public class Preset
             Routing = routing,
             LevelOutLeft = levelOutLeft,
             LevelOutRight = levelOutRight,
+            MapParameter = mapParameter,
+            MapMin = mapMin,
+            MapMid = mapMid,
+            MapMax = mapMax,
             CompType = compType,
             CompThreshold = compThreshold,
             CompRatio = compRatio,
@@ -291,10 +343,10 @@ public class Preset
             CompLevel = compLevel,
             DriveType = driveType,
             DriveGain = driveGain,
+            DriveTone = driveTone,
             DriveLevel = driveLevel,
-            BoostType = boostType,
-            BoostGain = boostGain,
             BoostLevel = boostLevel,
+            BoostEnabled = boostEnabled,
             ModType = modType,
             ModSpeed = modSpeed,
             ModDepth = modDepth,
@@ -302,6 +354,7 @@ public class Preset
             ModHiCut = modHiCut,
             ModFeedback = modFeedback,
             ModDelayOrRange = modDelayOrRange,
+            ModWidth = modWidth,
             ModMix = modMix,
             DelayType = delayType,
             DelayTime = delayTime,
@@ -312,6 +365,10 @@ public class Preset
             DelayClipOrFeedback2 = delayClipOrFeedback2,
             DelayHiCut = delayHiCut,
             DelayLoCut = delayLoCut,
+            DelayOffsetOrPan1 = delayOffsetOrPan1,
+            DelaySenseOrPan2 = delaySenseOrPan2,
+            DelayDamp = delayDamp,
+            DelayRelease = delayRelease,
             DelayMix = delayMix,
             ReverbType = reverbType,
             ReverbDecay = reverbDecay,
@@ -330,6 +387,7 @@ public class Preset
             GateThreshold = gateThreshold,
             GateDamp = gateDamp,
             GateRelease = gateRelease,
+            EqEnabled = eqEnabled,
             EqFreq1 = eqFreq1,
             EqGain1 = eqGain1,
             EqWidth1 = eqWidth1,
@@ -339,6 +397,7 @@ public class Preset
             EqFreq3 = eqFreq3,
             EqGain3 = eqGain3,
             EqWidth3 = eqWidth3,
+            GateEnabled = gateEnabled,
             PitchType = pitchType,
             PitchVoice1 = pitchVoice1,
             PitchVoice2 = pitchVoice2,
@@ -350,27 +409,33 @@ public class Preset
             PitchFeedback2OrScale = pitchFeedback2OrScale,
             PitchLevel1 = pitchLevel1,
             PitchLevel2 = pitchLevel2,
+            PitchDirection = pitchDirection,
+            PitchRange = pitchRange,
+            PitchMix = pitchMix,
             CompressorEnabled = compressorEnabled,
             DriveEnabled = driveEnabled,
             ModulationEnabled = modulationEnabled,
             DelayEnabled = delayEnabled,
-            ReverbEnabled = reverbEnabled
+            ReverbEnabled = reverbEnabled,
+            PitchEnabled = pitchEnabled
         });
     }
 
     private static Result ValidateAllParameters(
-        int tapTempo, int routing,
-        int compType, int compRatio, int compAttack, int compRelease,
-        int driveType, int driveGain,
-        int boostType, int boostGain,
-        int modType, int modDepth, int modTempo, int modMix,
-        int delayType, int delayTime, int delayTime2, int delayTempo, int delayFeedback, int delayMix,
-        int reverbType, int reverbDecay, int reverbPreDelay, int reverbShape, int reverbSize,
-        int reverbHiColor, int reverbLoColor, int reverbMix,
-        int gateType, int gateDamp, int gateRelease,
-        int eqWidth1, int eqWidth2, int eqWidth3,
-        int pitchType, int pitchDelay1, int pitchDelay2,
-        int pitchFeedback1OrKey, int pitchFeedback2OrScale)
+        int tapTempo, int routing, int levelOutLeft, int levelOutRight,
+        int mapParameter, int mapMin, int mapMid, int mapMax,
+        int compType, int compThreshold, int compRatio, int compAttack, int compRelease,
+        int compResponse, int compDrive, int compLevel,
+        int driveType, int driveGain, int driveTone, int driveLevel, int boostLevel,
+        int modType, int modSpeed, int modDepth, int modTempo, int modHiCut, int modFeedback, int modDelayOrRange, int modWidth, int modMix,
+        int delayType, int delayTime, int delayTime2, int delayTempo, int delayTempo2OrWidth, int delayFeedback, int delayClipOrFeedback2,
+        int delayHiCut, int delayLoCut, int delayOffsetOrPan1, int delaySenseOrPan2, int delayDamp, int delayRelease, int delayMix,
+        int reverbType, int reverbDecay, int reverbPreDelay, int reverbShape, int reverbSize, int reverbHiColor, int reverbHiLevel,
+        int reverbLoColor, int reverbLoLevel, int reverbRoomLevel, int reverbLevel, int reverbDiffuse, int reverbMix,
+        int gateType, int gateThreshold, int gateDamp, int gateRelease,
+        int eqFreq1, int eqGain1, int eqWidth1, int eqFreq2, int eqGain2, int eqWidth2, int eqFreq3, int eqGain3, int eqWidth3,
+        int pitchType, int pitchVoice1, int pitchVoice2, int pitchPan1, int pitchPan2, int pitchDelay1, int pitchDelay2,
+        int pitchFeedback1OrKey, int pitchFeedback2OrScale, int pitchLevel1, int pitchLevel2, int pitchDirection, int pitchRange, int pitchMix)
     {
         var errors = new List<string>();
 
@@ -379,36 +444,66 @@ public class Preset
             errors.Add($"TapTempo value {tapTempo} out of range (100-3000)");
         if (routing < 0 || routing > 2)
             errors.Add($"Routing value {routing} out of range (0-2)");
+        if (levelOutLeft < -100 || levelOutLeft > 0)
+            errors.Add($"LevelOutLeft value {levelOutLeft} out of range (-100 to 0)");
+        if (levelOutRight < -100 || levelOutRight > 0)
+            errors.Add($"LevelOutRight value {levelOutRight} out of range (-100 to 0)");
+        if (mapParameter < 0 || mapParameter > 127)
+            errors.Add($"MapParameter value {mapParameter} out of range (0-127)");
+        if (mapMin < 0 || mapMin > 100)
+            errors.Add($"MapMin value {mapMin} out of range (0-100)");
+        if (mapMid < 0 || mapMid > 100)
+            errors.Add($"MapMid value {mapMid} out of range (0-100)");
+        if (mapMax < 0 || mapMax > 100)
+            errors.Add($"MapMax value {mapMax} out of range (0-100)");
 
         // COMP block
         if (compType < 0 || compType > 2)
             errors.Add($"CompType value {compType} out of range (0-2)");
+        if (compThreshold < -30 || compThreshold > 0)
+            errors.Add($"CompThreshold value {compThreshold} out of range (-30 to 0)");
         if (compRatio < 0 || compRatio > 15)
             errors.Add($"CompRatio value {compRatio} out of range (0-15)");
         if (compAttack < 0 || compAttack > 16)
             errors.Add($"CompAttack value {compAttack} out of range (0-16)");
         if (compRelease < 13 || compRelease > 23)
             errors.Add($"CompRelease value {compRelease} out of range (13-23)");
+        if (compResponse < 1 || compResponse > 10)
+            errors.Add($"CompResponse value {compResponse} out of range (1-10)");
+        if (compDrive < 1 || compDrive > 20)
+            errors.Add($"CompDrive value {compDrive} out of range (1-20)");
+        if (compLevel < -12 || compLevel > 12)
+            errors.Add($"CompLevel value {compLevel} out of range (-12 to 12)");
 
         // DRIVE block
-        if (driveType < 0 || driveType > 6)
-            errors.Add($"DriveType value {driveType} out of range (0-6)");
+        if (driveType < 0 || driveType > 1)
+            errors.Add($"DriveType value {driveType} out of range (0-1)");
         if (driveGain < 0 || driveGain > 100)
             errors.Add($"DriveGain value {driveGain} out of range (0-100)");
-
-        // BOOST block
-        if (boostType < 0 || boostType > 2)
-            errors.Add($"BoostType value {boostType} out of range (0-2)");
-        if (boostGain < 0 || boostGain > 30)
-            errors.Add($"BoostGain value {boostGain} out of range (0-30)");
+        if (driveTone < 0 || driveTone > 100)
+            errors.Add($"DriveTone value {driveTone} out of range (0-100)");
+        if (driveLevel < -100 || driveLevel > 0)
+            errors.Add($"DriveLevel value {driveLevel} out of range (-100 to 0)");
+        if (boostLevel < 0 || boostLevel > 10)
+            errors.Add($"BoostLevel value {boostLevel} out of range (0-10)");
 
         // MOD block
         if (modType < 0 || modType > 5)
             errors.Add($"ModType value {modType} out of range (0-5)");
+        if (modSpeed < 0 || modSpeed > 81)
+            errors.Add($"ModSpeed value {modSpeed} out of range (0-81)");
         if (modDepth < 0 || modDepth > 100)
             errors.Add($"ModDepth value {modDepth} out of range (0-100)");
         if (modTempo < 0 || modTempo > 16)
             errors.Add($"ModTempo value {modTempo} out of range (0-16)");
+        if (modHiCut < 0 || modHiCut > 61)
+            errors.Add($"ModHiCut value {modHiCut} out of range (0-61)");
+        if (modFeedback < -100 || modFeedback > 100)
+            errors.Add($"ModFeedback value {modFeedback} out of range (-100 to 100)");
+        if (modDelayOrRange < 0 || modDelayOrRange > 500)
+            errors.Add($"ModDelayOrRange value {modDelayOrRange} out of range (0-500)");
+        if (modWidth < 0 || modWidth > 100)
+            errors.Add($"ModWidth value {modWidth} out of range (0-100)");
         if (modMix < 0 || modMix > 100)
             errors.Add($"ModMix value {modMix} out of range (0-100)");
 
@@ -421,8 +516,31 @@ public class Preset
             errors.Add($"DelayTime2 value {delayTime2} out of range (0-1800)");
         if (delayTempo < 0 || delayTempo > 16)
             errors.Add($"DelayTempo value {delayTempo} out of range (0-16)");
+        if (delayTempo2OrWidth < 0 || delayTempo2OrWidth > 100)
+            errors.Add($"DelayTempo2OrWidth value {delayTempo2OrWidth} out of range (0-100)");
         if (delayFeedback < 0 || delayFeedback > 120)
             errors.Add($"DelayFeedback value {delayFeedback} out of range (0-120)");
+        if (delayClipOrFeedback2 < 0 || delayClipOrFeedback2 > 120)
+            errors.Add($"DelayClipOrFeedback2 value {delayClipOrFeedback2} out of range (0-120)");
+        if (delayHiCut < 0 || delayHiCut > 61)
+            errors.Add($"DelayHiCut value {delayHiCut} out of range (0-61)");
+        if (delayLoCut < 0 || delayLoCut > 61)
+            errors.Add($"DelayLoCut value {delayLoCut} out of range (0-61)");
+        if (delayOffsetOrPan1 < -200 || delayOffsetOrPan1 > 200)
+            errors.Add($"DelayOffsetOrPan1 value {delayOffsetOrPan1} out of range (-200 to 200)");
+        if (delaySenseOrPan2 < -50 || delaySenseOrPan2 > 50)
+            errors.Add($"DelaySenseOrPan2 value {delaySenseOrPan2} out of range (-50 to 50)");
+        if (delayDamp < 0 || delayDamp > 100)
+            errors.Add($"DelayDamp value {delayDamp} out of range (0-100)");
+        if (delayType == 3)
+        {
+            if (delayRelease < 11 || delayRelease > 21)
+                errors.Add($"DelayRelease value {delayRelease} out of range (11-21)");
+        }
+        else if (delayRelease != 0)
+        {
+            errors.Add($"DelayRelease value {delayRelease} out of range (0 for non-dynamic)");
+        }
         if (delayMix < 0 || delayMix > 100)
             errors.Add($"DelayMix value {delayMix} out of range (0-100)");
 
@@ -439,36 +557,94 @@ public class Preset
             errors.Add($"ReverbSize value {reverbSize} out of range (0-7)");
         if (reverbHiColor < 0 || reverbHiColor > 6)
             errors.Add($"ReverbHiColor value {reverbHiColor} out of range (0-6)");
+        if (reverbHiLevel < -25 || reverbHiLevel > 25)
+            errors.Add($"ReverbHiLevel value {reverbHiLevel} out of range (-25 to 25)");
         if (reverbLoColor < 0 || reverbLoColor > 6)
             errors.Add($"ReverbLoColor value {reverbLoColor} out of range (0-6)");
+        if (reverbLoLevel < -25 || reverbLoLevel > 25)
+            errors.Add($"ReverbLoLevel value {reverbLoLevel} out of range (-25 to 25)");
+        if (reverbRoomLevel < -100 || reverbRoomLevel > 0)
+            errors.Add($"ReverbRoomLevel value {reverbRoomLevel} out of range (-100 to 0)");
+        if (reverbLevel < -100 || reverbLevel > 0)
+            errors.Add($"ReverbLevel value {reverbLevel} out of range (-100 to 0)");
+        if (reverbDiffuse < -25 || reverbDiffuse > 25)
+            errors.Add($"ReverbDiffuse value {reverbDiffuse} out of range (-25 to 25)");
         if (reverbMix < 0 || reverbMix > 100)
             errors.Add($"ReverbMix value {reverbMix} out of range (0-100)");
 
         // EQ/GATE block
         if (gateType < 0 || gateType > 1)
             errors.Add($"GateType value {gateType} out of range (0-1)");
+        if (gateThreshold < -60 || gateThreshold > 0)
+            errors.Add($"GateThreshold value {gateThreshold} out of range (-60 to 0)");
         if (gateDamp < 0 || gateDamp > 90)
             errors.Add($"GateDamp value {gateDamp} out of range (0-90)");
         if (gateRelease < 0 || gateRelease > 200)
             errors.Add($"GateRelease value {gateRelease} out of range (0-200)");
+        if (eqFreq1 < 25 || eqFreq1 > 113)
+            errors.Add($"EqFreq1 value {eqFreq1} out of range (25-113)");
+        if (eqGain1 < -12 || eqGain1 > 12)
+            errors.Add($"EqGain1 value {eqGain1} out of range (-12 to 12)");
         if (eqWidth1 < 5 || eqWidth1 > 12)
             errors.Add($"EqWidth1 value {eqWidth1} out of range (5-12)");
+        if (eqFreq2 < 25 || eqFreq2 > 113)
+            errors.Add($"EqFreq2 value {eqFreq2} out of range (25-113)");
+        if (eqGain2 < -12 || eqGain2 > 12)
+            errors.Add($"EqGain2 value {eqGain2} out of range (-12 to 12)");
         if (eqWidth2 < 5 || eqWidth2 > 12)
             errors.Add($"EqWidth2 value {eqWidth2} out of range (5-12)");
+        if (eqFreq3 < 25 || eqFreq3 > 113)
+            errors.Add($"EqFreq3 value {eqFreq3} out of range (25-113)");
+        if (eqGain3 < -12 || eqGain3 > 12)
+            errors.Add($"EqGain3 value {eqGain3} out of range (-12 to 12)");
         if (eqWidth3 < 5 || eqWidth3 > 12)
             errors.Add($"EqWidth3 value {eqWidth3} out of range (5-12)");
 
         // PITCH block
         if (pitchType < 0 || pitchType > 4)
             errors.Add($"PitchType value {pitchType} out of range (0-4)");
+        if (pitchVoice1 < -100 || pitchVoice1 > 100)
+            errors.Add($"PitchVoice1 value {pitchVoice1} out of range (-100 to 100)");
+        if (pitchVoice2 < -100 || pitchVoice2 > 100)
+            errors.Add($"PitchVoice2 value {pitchVoice2} out of range (-100 to 100)");
+        if (pitchPan1 < -50 || pitchPan1 > 50)
+            errors.Add($"PitchPan1 value {pitchPan1} out of range (-50 to 50)");
+        if (pitchPan2 < -50 || pitchPan2 > 50)
+            errors.Add($"PitchPan2 value {pitchPan2} out of range (-50 to 50)");
         if (pitchDelay1 < 0 || pitchDelay1 > 50)
             errors.Add($"PitchDelay1 value {pitchDelay1} out of range (0-50)");
         if (pitchDelay2 < 0 || pitchDelay2 > 50)
             errors.Add($"PitchDelay2 value {pitchDelay2} out of range (0-50)");
-        if (pitchFeedback1OrKey < 0 || pitchFeedback1OrKey > 100)
-            errors.Add($"PitchFeedback1OrKey value {pitchFeedback1OrKey} out of range (0-100)");
-        if (pitchFeedback2OrScale < 0 || pitchFeedback2OrScale > 100)
-            errors.Add($"PitchFeedback2OrScale value {pitchFeedback2OrScale} out of range (0-100)");
+        if (pitchType == 4)
+        {
+            if (pitchFeedback1OrKey < 0 || pitchFeedback1OrKey > 12)
+                errors.Add($"PitchFeedback1OrKey value {pitchFeedback1OrKey} out of range (0-12)");
+            if (pitchFeedback2OrScale < 0 || pitchFeedback2OrScale > 13)
+                errors.Add($"PitchFeedback2OrScale value {pitchFeedback2OrScale} out of range (0-13)");
+        }
+        else
+        {
+            if (pitchFeedback1OrKey < 0 || pitchFeedback1OrKey > 100)
+                errors.Add($"PitchFeedback1OrKey value {pitchFeedback1OrKey} out of range (0-100)");
+            if (pitchFeedback2OrScale < 0 || pitchFeedback2OrScale > 100)
+                errors.Add($"PitchFeedback2OrScale value {pitchFeedback2OrScale} out of range (0-100)");
+        }
+        if (pitchLevel1 < -100 || pitchLevel1 > 0)
+            errors.Add($"PitchLevel1 value {pitchLevel1} out of range (-100 to 0)");
+        if (pitchType == 1 || pitchType == 2)
+        {
+            if (pitchDirection < 0 || pitchDirection > 1)
+                errors.Add($"PitchDirection value {pitchDirection} out of range (0-1)");
+        }
+        else
+        {
+            if (pitchLevel2 < -100 || pitchLevel2 > 0)
+                errors.Add($"PitchLevel2 value {pitchLevel2} out of range (-100 to 0)");
+        }
+        if (pitchRange < 0 || pitchRange > 2)
+            errors.Add($"PitchRange value {pitchRange} out of range (0-2)");
+        if (pitchMix < 0 || pitchMix > 100)
+            errors.Add($"PitchMix value {pitchMix} out of range (0-100)");
 
         if (errors.Any())
             return Result.Fail(string.Join("; ", errors));

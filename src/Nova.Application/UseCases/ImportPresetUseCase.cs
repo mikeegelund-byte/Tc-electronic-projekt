@@ -170,6 +170,10 @@ public sealed class ImportPresetUseCase : IImportPresetUseCase
             Encode4ByteValue(sysex, 42, ParseInt(parameters, "Routing"));
             EncodeSignedDbValue(sysex, 46, ParseInt(parameters, "Level Out Left"), -100, 0);
             EncodeSignedDbValue(sysex, 50, ParseInt(parameters, "Level Out Right"), -100, 0);
+            Encode4ByteValue(sysex, 54, ParseInt(parameters, "Map Parameter"));
+            Encode4ByteValue(sysex, 58, ParseInt(parameters, "Map Min"));
+            Encode4ByteValue(sysex, 62, ParseInt(parameters, "Map Mid"));
+            Encode4ByteValue(sysex, 66, ParseInt(parameters, "Map Max"));
 
             // Compressor
             Encode4ByteValue(sysex, 70, ParseInt(parameters, "Comp Type"));
@@ -182,14 +186,14 @@ public sealed class ImportPresetUseCase : IImportPresetUseCase
             EncodeSignedDbValue(sysex, 98, ParseInt(parameters, "Comp Level"), -12, 12);
 
             // Drive
-            Encode4ByteValue(sysex, 102, ParseInt(parameters, "Drive Type"));
-            Encode4ByteValue(sysex, 106, ParseInt(parameters, "Drive Gain"));
-            EncodeSignedDbValue(sysex, 110, ParseInt(parameters, "Drive Level"), -30, 20);
+            Encode4ByteValue(sysex, 134, ParseInt(parameters, "Drive Type"));
+            Encode4ByteValue(sysex, 138, ParseInt(parameters, "Drive Gain"));
+            Encode4ByteValue(sysex, 142, ParseInt(parameters, "Drive Tone"));
+            EncodeSignedDbValue(sysex, 190, ParseInt(parameters, "Drive Level"), -100, 0);
 
             // Boost
-            Encode4ByteValue(sysex, 114, ParseInt(parameters, "Boost Type"));
-            Encode4ByteValue(sysex, 118, ParseInt(parameters, "Boost Gain"));
-            Encode4ByteValue(sysex, 122, ParseInt(parameters, "Boost Level"));
+            Encode4ByteValue(sysex, 182, ParseInt(parameters, "Boost Level"));
+            Encode4ByteValue(sysex, 186, ParseBool(parameters, "Boost Enabled") ? 1 : 0);
 
             // Effect switches
             Encode4ByteValue(sysex, 130, ParseBool(parameters, "Compressor Enabled") ? 1 : 0);
@@ -202,6 +206,7 @@ public sealed class ImportPresetUseCase : IImportPresetUseCase
             Encode4ByteValue(sysex, 214, ParseInt(parameters, "Mod Hi Cut"));
             EncodeSignedDbValue(sysex, 218, ParseInt(parameters, "Mod Feedback"), -100, 100);
             Encode4ByteValue(sysex, 222, ParseInt(parameters, "Mod Delay Or Range"));
+            Encode4ByteValue(sysex, 238, ParseInt(parameters, "Mod Width"));
             Encode4ByteValue(sysex, 250, ParseInt(parameters, "Mod Mix"));
 
             // Effect switches continued
@@ -218,7 +223,11 @@ public sealed class ImportPresetUseCase : IImportPresetUseCase
             Encode4ByteValue(sysex, 286, ParseInt(parameters, "Delay Clip Or Feedback2"));
             Encode4ByteValue(sysex, 290, ParseInt(parameters, "Delay Hi Cut"));
             Encode4ByteValue(sysex, 294, ParseInt(parameters, "Delay Lo Cut"));
-            Encode4ByteValue(sysex, 298, ParseInt(parameters, "Delay Mix"));
+            EncodeSignedDbValue(sysex, 298, ParseInt(parameters, "Delay Offset Or Pan1"), -200, 200);
+            EncodeSignedDbValue(sysex, 302, ParseInt(parameters, "Delay Sense Or Pan2"), -50, 50);
+            Encode4ByteValue(sysex, 306, ParseInt(parameters, "Delay Damp"));
+            Encode4ByteValue(sysex, 310, ParseInt(parameters, "Delay Release"));
+            Encode4ByteValue(sysex, 314, ParseInt(parameters, "Delay Mix"));
 
             // Effect switch
             Encode4ByteValue(sysex, 322, ParseBool(parameters, "Delay Enabled") ? 1 : 0);
@@ -248,7 +257,8 @@ public sealed class ImportPresetUseCase : IImportPresetUseCase
             Encode4ByteValue(sysex, 402, ParseInt(parameters, "Gate Release"));
 
             // EQ
-            Encode4ByteValue(sysex, 406, ParseInt(parameters, "EQ Freq 1"));
+            Encode4ByteValue(sysex, 406, ParseBool(parameters, "EQ Enabled") ? 1 : 0);
+            Encode4ByteValue(sysex, 410, ParseInt(parameters, "EQ Freq 1"));
             EncodeSignedDbValue(sysex, 414, ParseInt(parameters, "EQ Gain 1"), -12, 12);
             Encode4ByteValue(sysex, 418, ParseInt(parameters, "EQ Width 1"));
             Encode4ByteValue(sysex, 422, ParseInt(parameters, "EQ Freq 2"));
@@ -257,9 +267,11 @@ public sealed class ImportPresetUseCase : IImportPresetUseCase
             Encode4ByteValue(sysex, 434, ParseInt(parameters, "EQ Freq 3"));
             EncodeSignedDbValue(sysex, 438, ParseInt(parameters, "EQ Gain 3"), -12, 12);
             Encode4ByteValue(sysex, 442, ParseInt(parameters, "EQ Width 3"));
+            Encode4ByteValue(sysex, 450, ParseBool(parameters, "Gate Enabled") ? 1 : 0);
 
             // Pitch
-            Encode4ByteValue(sysex, 454, ParseInt(parameters, "Pitch Type"));
+            int pitchType = ParseInt(parameters, "Pitch Type");
+            Encode4ByteValue(sysex, 454, pitchType);
             EncodeSignedDbValue(sysex, 458, ParseInt(parameters, "Pitch Voice 1"), -100, 100);
             EncodeSignedDbValue(sysex, 462, ParseInt(parameters, "Pitch Voice 2"), -100, 100);
             EncodeSignedDbValue(sysex, 466, ParseInt(parameters, "Pitch Pan 1"), -50, 50);
@@ -269,7 +281,17 @@ public sealed class ImportPresetUseCase : IImportPresetUseCase
             Encode4ByteValue(sysex, 482, ParseInt(parameters, "Pitch Feedback1 Or Key"));
             Encode4ByteValue(sysex, 486, ParseInt(parameters, "Pitch Feedback2 Or Scale"));
             EncodeSignedDbValue(sysex, 490, ParseInt(parameters, "Pitch Level 1"), -100, 0);
-            EncodeSignedDbValue(sysex, 494, ParseInt(parameters, "Pitch Level 2"), -100, 0);
+            if (pitchType == 1 || pitchType == 2)
+            {
+                Encode4ByteValue(sysex, 494, ParseInt(parameters, "Pitch Direction"));
+            }
+            else
+            {
+                EncodeSignedDbValue(sysex, 494, ParseInt(parameters, "Pitch Level 2"), -100, 0);
+            }
+            Encode4ByteValue(sysex, 498, ParseInt(parameters, "Pitch Range"));
+            Encode4ByteValue(sysex, 502, ParseInt(parameters, "Pitch Mix"));
+            Encode4ByteValue(sysex, 514, ParseBool(parameters, "Pitch Enabled") ? 1 : 0);
 
             // End marker
             sysex[520] = 0xF7;
