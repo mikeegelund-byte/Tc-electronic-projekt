@@ -33,7 +33,7 @@ packages/
 *.swn
 *~
 *.idea/
-.vscode/
+# .vscode/ - NOW TRACKED (professional dev setup)
 .vs/
 *.DS_Store
 
@@ -141,6 +141,11 @@ Thumbs.db
 *~
 Class1.cs
 UnitTest1.cs
+
+# Backup archives
+*.zip
+.archive/
+backups/
 
 # ============================================================================
 # Nova System Specific

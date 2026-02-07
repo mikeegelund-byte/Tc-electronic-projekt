@@ -30,7 +30,7 @@ public class DebugRawValuesTests
         return b0 | (b1 << 7) | (b2 << 14) | (b3 << 21);
     }
 
-    [Fact]
+    [Fact(Skip = "Investigation only - used for debugging raw values")]
     public void Debug_BoostLevel()
     {
         int raw = DecodeRaw(122);
@@ -44,7 +44,7 @@ public class DebugRawValuesTests
         raw.Should().Be(999999, $"Raw: {raw}, Large: {withLargeOffset}, Simple: {withSimpleOffset}");
     }
 
-    [Fact]
+    [Fact(Skip = "Investigation only - used for debugging raw values")]
     public void Debug_CompThreshold()
     {
         int raw = DecodeRaw(74);
@@ -56,7 +56,7 @@ public class DebugRawValuesTests
         raw.Should().Be(999999, $"Raw: {raw}, Large: {withLargeOffset}, Simple: {withSimpleOffset}");
     }
 
-    [Fact]
+    [Fact(Skip = "Investigation only - used for debugging raw values")]
     public void Debug_GateThreshold()
     {
         int raw = DecodeRaw(394);
@@ -68,7 +68,7 @@ public class DebugRawValuesTests
         raw.Should().Be(999999, $"Raw: {raw}, Large: {withLargeOffset}, Simple: {withSimpleOffset}");
     }
 
-    [Fact]
+    [Fact(Skip = "Investigation only - used for debugging raw values")]
     public void Debug_ReverbLevel()
     {
         int raw = DecodeRaw(366);
@@ -80,7 +80,7 @@ public class DebugRawValuesTests
         raw.Should().Be(999999, $"Raw: {raw}, Large: {withLargeOffset}, Simple: {withSimpleOffset}");
     }
 
-    [Fact]
+    [Fact(Skip = "Investigation only - used for debugging raw values")]
     public void Debug_ModFeedback()
     {
         int raw = DecodeRaw(218);

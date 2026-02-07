@@ -13,7 +13,11 @@
       "Bash(Select-Object -ExpandProperty FullName)",
       "Bash(Out-File before_structure_docs.txt)",
       "Bash(git mv:*)",
-      "Bash(git config:*)"
+      "Bash(git config:*)",
+      "Bash(chmod:*)",
+      "Bash(du -sh:*)",
+      "Bash(xargs rm:*)",
+      "Bash(git gc:*)"
     ]
   }
 }
