@@ -6,6 +6,7 @@ using Nova.Application.UseCases;
 using Nova.Infrastructure.Midi;
 using Nova.Midi;
 using Nova.Presentation.ViewModels;
+using Serilog;
 
 namespace Nova.Presentation;
 
@@ -21,6 +22,14 @@ public partial class App : global::Avalonia.Application
     public override void OnFrameworkInitializationCompleted()
     {
         var services = new ServiceCollection();
+
+        var logger = new LoggerConfiguration()
+            .MinimumLevel.Debug()
+            .WriteTo.Console()
+            .CreateLogger();
+
+        Log.Logger = logger;
+        services.AddSingleton<ILogger>(logger);
         
         // Infrastructure
         services.AddSingleton<IMidiPort, DryWetMidiPort>();
@@ -28,7 +37,14 @@ public partial class App : global::Avalonia.Application
         // Application
         services.AddTransient<IConnectUseCase, ConnectUseCase>();
         services.AddTransient<IDownloadBankUseCase, DownloadBankUseCase>();
+        services.AddTransient<IRequestPresetUseCase, RequestPresetUseCase>();
         services.AddTransient<ISaveSystemDumpUseCase, SaveSystemDumpUseCase>();
+        services.AddTransient<ISavePresetUseCase, SavePresetUseCase>();
+        services.AddTransient<ISaveBankUseCase, SaveBankUseCase>();
+        services.AddTransient<ILoadBankUseCase, LoadBankUseCase>();
+        services.AddTransient<IExportPresetUseCase, ExportSyxPresetUseCase>();
+        services.AddTransient<IImportPresetUseCase, ImportPresetUseCase>();
+        services.AddTransient<ISendBankToHardwareUseCase, SendBankToHardwareUseCase>();
         services.AddTransient<IGetCCMappingsUseCase, GetCCMappingsUseCase>();
         services.AddTransient<IUpdateCCMappingUseCase, UpdateCCMappingUseCase>();
         

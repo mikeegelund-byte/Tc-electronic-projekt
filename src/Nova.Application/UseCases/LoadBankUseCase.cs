@@ -9,7 +9,7 @@ namespace Nova.Application.UseCases;
 /// Use case for loading a User Bank from a .syx file to the device.
 /// Reads the file and sends each preset to the device via MIDI.
 /// </summary>
-public sealed class LoadBankUseCase
+public sealed class LoadBankUseCase : ILoadBankUseCase
 {
     private readonly IMidiPort _midiPort;
     private readonly ILogger _logger;
@@ -26,8 +26,8 @@ public sealed class LoadBankUseCase
     /// <param name="filePath">Path to the .syx file to load</param>
     /// <param name="progress">Optional progress reporter (0-60 presets)</param>
     /// <param name="cancellationToken">Cancellation token</param>
-    /// <returns>Result with the number of presets loaded on success, or error on failure</returns>
-    public async Task<Result<int>> ExecuteAsync(
+    /// <returns>Result with the loaded UserBankDump on success, or error on failure</returns>
+    public async Task<Result<UserBankDump>> ExecuteAsync(
         string filePath,
         IProgress<int>? progress,
         CancellationToken cancellationToken)
@@ -40,7 +40,7 @@ public sealed class LoadBankUseCase
             if (!File.Exists(filePath))
             {
                 _logger.Error("File not found: {FilePath}", filePath);
-                return Result.Fail<int>($"File not found: {filePath}");
+                return Result.Fail<UserBankDump>($"File not found: {filePath}");
             }
 
             byte[] fileData = await File.ReadAllBytesAsync(filePath, cancellationToken);
@@ -49,13 +49,14 @@ public sealed class LoadBankUseCase
             const int expectedSize = 60 * 521;
             if (fileData.Length != expectedSize)
             {
-                _logger.Error("Invalid file size: expected {Expected} bytes, got {Actual}", 
+                _logger.Error("Invalid file size: expected {Expected} bytes, got {Actual}",
                     expectedSize, fileData.Length);
-                return Result.Fail<int>($"Invalid file size: expected {expectedSize} bytes, got {fileData.Length}");
+                return Result.Fail<UserBankDump>($"Invalid file size: expected {expectedSize} bytes, got {fileData.Length}");
             }
 
             // Step 3: Parse and send each preset
             int presetsLoaded = 0;
+            var presets = new List<Preset>();
             for (int i = 0; i < 60; i++)
             {
                 // Extract 521-byte preset
@@ -68,7 +69,7 @@ public sealed class LoadBankUseCase
                 {
                     var errorMsg = string.Join(", ", presetResult.Errors.Select(e => e.Message));
                     _logger.Error("Failed to parse preset {Index}: {Errors}", i, errorMsg);
-                    return Result.Fail<int>($"Failed to parse preset {i}: {errorMsg}");
+                    return Result.Fail<UserBankDump>($"Failed to parse preset {i}: {errorMsg}");
                 }
 
                 // Step 4: Send preset via MIDI
@@ -78,41 +79,48 @@ public sealed class LoadBankUseCase
                     var errorMsg = string.Join(", ", sendResult.Errors.Select(e => e.Message));
                     _logger.Error("Failed to send preset {Index} (number {Number}): {Errors}",
                         i, presetResult.Value.Number, errorMsg);
-                    return Result.Fail<int>($"Failed to send preset {i}: {errorMsg}");
+                    return Result.Fail<UserBankDump>($"Failed to send preset {i}: {errorMsg}");
                 }
 
                 presetsLoaded++;
-                
+                presets.Add(presetResult.Value);
+
                 // Step 5: Report progress
                 progress?.Report(presetsLoaded);
 
                 _logger.Debug("Sent preset {Index} (number {Number})", i, presetResult.Value.Number);
             }
 
-            _logger.Information("Successfully loaded {Count} presets from {FilePath}", 
+            _logger.Information("Successfully loaded {Count} presets from {FilePath}",
                 presetsLoaded, filePath);
 
-            return Result.Ok(presetsLoaded);
+            var bankResult = UserBankDump.FromPresets(presets);
+            if (bankResult.IsFailed)
+            {
+                return Result.Fail<UserBankDump>(bankResult.Errors);
+            }
+
+            return Result.Ok(bankResult.Value);
         }
         catch (OperationCanceledException)
         {
             _logger.Warning("Bank load operation was cancelled");
-            return Result.Fail<int>("Operation cancelled");
+            return Result.Fail<UserBankDump>("Operation cancelled");
         }
         catch (UnauthorizedAccessException ex)
         {
             _logger.Error(ex, "Access denied when reading from {FilePath}", filePath);
-            return Result.Fail<int>($"Access denied: {ex.Message}");
+            return Result.Fail<UserBankDump>($"Access denied: {ex.Message}");
         }
         catch (IOException ex)
         {
             _logger.Error(ex, "IO error when reading from {FilePath}", filePath);
-            return Result.Fail<int>($"File read error: {ex.Message}");
+            return Result.Fail<UserBankDump>($"File read error: {ex.Message}");
         }
         catch (Exception ex)
         {
             _logger.Error(ex, "Unexpected error loading bank from {FilePath}", filePath);
-            return Result.Fail<int>($"Unexpected error: {ex.Message}");
+            return Result.Fail<UserBankDump>($"Unexpected error: {ex.Message}");
         }
     }
 }

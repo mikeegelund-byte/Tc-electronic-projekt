@@ -9,10 +9,12 @@ namespace Nova.Presentation.ViewModels.Effects;
 /// </summary>
 public partial class EqGateBlockViewModel : ObservableObject
 {
+    [ObservableProperty] private string _type = "Hard";
     [ObservableProperty] private int _eqBand1Freq;
     [ObservableProperty] private int _eqBand2Freq;
     [ObservableProperty] private int _eqBand3Freq;
     [ObservableProperty] private bool _gateEnabled;
+    [ObservableProperty] private bool _isEnabled;
 
     private int _eqBand1Gain;
     public int EqBand1Gain
@@ -66,15 +68,22 @@ public partial class EqGateBlockViewModel : ObservableObject
     {
         if (preset == null) return;
 
-        // Note: EQ/Gate properties may need to be added to Preset model
-        // For now, show placeholder
-        EqBand1Freq = 100;
-        EqBand1Gain = Math.Clamp(0, -12, 12);
-        EqBand2Freq = 1000;
-        EqBand2Gain = Math.Clamp(0, -12, 12);
-        EqBand3Freq = 5000;
-        EqBand3Gain = Math.Clamp(0, -12, 12);
-        GateThreshold = Math.Clamp(-60, -60, 0);
-        GateEnabled = false;
+        Type = preset.GateType switch
+        {
+            0 => "Hard",
+            1 => "Soft",
+            _ => "Unknown"
+        };
+
+        EqBand1Freq = preset.EqFreq1;
+        EqBand1Gain = Math.Clamp(preset.EqGain1, -12, 12);
+        EqBand2Freq = preset.EqFreq2;
+        EqBand2Gain = Math.Clamp(preset.EqGain2, -12, 12);
+        EqBand3Freq = preset.EqFreq3;
+        EqBand3Gain = Math.Clamp(preset.EqGain3, -12, 12);
+        GateThreshold = Math.Clamp(preset.GateThreshold, -60, 0);
+
+        GateEnabled = true;
+        IsEnabled = GateEnabled;
     }
 }

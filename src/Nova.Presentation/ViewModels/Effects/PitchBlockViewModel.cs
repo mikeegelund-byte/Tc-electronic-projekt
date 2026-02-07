@@ -10,6 +10,13 @@ namespace Nova.Presentation.ViewModels.Effects;
 /// </summary>
 public partial class PitchBlockViewModel : ObservableObject
 {
+    private string _typeName = "Shifter";
+    public string TypeName
+    {
+        get => _typeName;
+        private set => SetProperty(ref _typeName, value);
+    }
+
     private int _type;
     public int Type
     {
@@ -18,7 +25,10 @@ public partial class PitchBlockViewModel : ObservableObject
         {
             if (value < 0 || value > 4)
                 throw new ArgumentOutOfRangeException(nameof(value), "Type must be between 0 and 4");
-            SetProperty(ref _type, value);
+            if (SetProperty(ref _type, value))
+            {
+                UpdateTypeName();
+            }
         }
     }
     
@@ -72,5 +82,18 @@ public partial class PitchBlockViewModel : ObservableObject
         Mix = Math.Clamp(preset.PitchLevel1 + 100, 0, 100); // Convert -100 to 0dB → 0-100%
         // Note: Preset doesn't have PitchEnabled, using placeholder
         IsEnabled = false;
+    }
+
+    private void UpdateTypeName()
+    {
+        TypeName = Type switch
+        {
+            0 => "Shifter",
+            1 => "Octaver",
+            2 => "Whammy",
+            3 => "Detune",
+            4 => "Intelligent",
+            _ => "Unknown"
+        };
     }
 }

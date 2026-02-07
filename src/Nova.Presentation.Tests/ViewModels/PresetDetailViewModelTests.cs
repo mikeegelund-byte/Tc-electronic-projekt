@@ -1,4 +1,6 @@
 using FluentAssertions;
+using Moq;
+using Nova.Application.UseCases;
 using Nova.Domain.Models;
 using Nova.Presentation.ViewModels;
 using Xunit;
@@ -11,7 +13,7 @@ public class PresetDetailViewModelTests
     public void InitialState_AllPropertiesAreDefault()
     {
         // Arrange & Act
-        var vm = new PresetDetailViewModel();
+        var vm = CreateViewModel();
 
         // Assert
         vm.PresetNumber.Should().Be(0);
@@ -33,7 +35,7 @@ public class PresetDetailViewModelTests
     public void LoadFromPreset_WithValidPreset_PopulatesAllProperties()
     {
         // Arrange
-        var vm = new PresetDetailViewModel();
+        var vm = CreateViewModel();
         var sysex = CreateValidPresetSysEx(
             presetNumber: 31,
             presetName: "Test Preset"
@@ -131,15 +133,15 @@ public class PresetDetailViewModelTests
         vm.Reverb.Level.Should().BeInRange(0, 100); // Clamped
         
         // Assert - Gate parameters (subset available in EqGateBlockViewModel)
-        vm.EqGate.GateThreshold.Should().Be(Math.Clamp(-60, -60, 0));
+        vm.EqGate.GateThreshold.Should().Be(Math.Clamp(preset.GateThreshold, -60, 0));
         
         // Assert - EQ parameters (subset available in EqGateBlockViewModel)
-        vm.EqGate.EqBand1Freq.Should().Be(100);
-        vm.EqGate.EqBand1Gain.Should().Be(Math.Clamp(0, -12, 12));
-        vm.EqGate.EqBand2Freq.Should().Be(1000);
-        vm.EqGate.EqBand2Gain.Should().Be(Math.Clamp(0, -12, 12));
-        vm.EqGate.EqBand3Freq.Should().Be(5000);
-        vm.EqGate.EqBand3Gain.Should().Be(Math.Clamp(0, -12, 12));
+        vm.EqGate.EqBand1Freq.Should().Be(preset.EqFreq1);
+        vm.EqGate.EqBand1Gain.Should().Be(Math.Clamp(preset.EqGain1, -12, 12));
+        vm.EqGate.EqBand2Freq.Should().Be(preset.EqFreq2);
+        vm.EqGate.EqBand2Gain.Should().Be(Math.Clamp(preset.EqGain2, -12, 12));
+        vm.EqGate.EqBand3Freq.Should().Be(preset.EqFreq3);
+        vm.EqGate.EqBand3Gain.Should().Be(Math.Clamp(preset.EqGain3, -12, 12));
         
         // Assert - Pitch parameters (subset available in PitchBlockViewModel)
         vm.Pitch.Type.Should().BeInRange(0, 4); // Clamped
@@ -151,7 +153,7 @@ public class PresetDetailViewModelTests
     public void LoadFromPreset_WithNull_DoesNotThrow()
     {
         // Arrange
-        var vm = new PresetDetailViewModel();
+        var vm = CreateViewModel();
 
         // Act
         var act = () => vm.LoadFromPreset(null);
@@ -168,5 +170,11 @@ public class PresetDetailViewModelTests
     private static byte[] CreateValidPresetSysEx(int presetNumber, string presetName)
     {
         return TestHelpers.CreateValidPresetSysEx(presetNumber, presetName);
+    }
+
+    private static PresetDetailViewModel CreateViewModel()
+    {
+        var savePresetUseCase = new Mock<ISavePresetUseCase>();
+        return new PresetDetailViewModel(savePresetUseCase.Object);
     }
 }

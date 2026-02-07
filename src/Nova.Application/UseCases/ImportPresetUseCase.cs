@@ -7,13 +7,23 @@ namespace Nova.Application.UseCases;
 /// <summary>
 /// Imports a TC Electronic Nova System preset from a human-readable .txt file.
 /// </summary>
-public sealed class ImportPresetUseCase
+public sealed class ImportPresetUseCase : IImportPresetUseCase
 {
     private readonly ILogger _logger;
 
     public ImportPresetUseCase(ILogger logger)
     {
         _logger = logger;
+    }
+
+    /// <summary>
+    /// Imports a preset from a .txt file with human-readable key-value pairs.
+    /// </summary>
+    /// <param name="filePath">The source file path</param>
+    /// <returns>Result with Preset on success or error message on failure</returns>
+    public async Task<Result<Preset>> ExecuteAsync(string filePath)
+    {
+        return await ExecuteAsync(filePath, CancellationToken.None);
     }
 
     /// <summary>

@@ -23,64 +23,50 @@
                    Text="MIDI Channel:" 
                    Foreground="{StaticResource TextSecondary}"
                    Margin="0,0,10,10" />
-        <TextBlock Grid.Row="0" Grid.Column="1" 
-                   Text="{Binding MidiChannel}"
-                   Foreground="{StaticResource TextPrimary}"
-                   Background="{StaticResource BackgroundTertiary}"
-                   Padding="8,4"
-                   Margin="0,0,0,10"
-                   AutomationProperties.Name="MIDI channel (read-only)"
-                   ToolTip.Tip="MIDI channel setting from hardware" />
+        <NumericUpDown Grid.Row="0" Grid.Column="1"
+                       Value="{Binding MidiChannel}"
+                       Minimum="0" Maximum="15"
+                       Increment="1"
+                       Margin="0,0,0,10"
+                       MinWidth="80"
+                       AutomationProperties.Name="MIDI channel"
+                       ToolTip.Tip="MIDI channel (0-15)" />
         
         <!-- Device ID -->
         <TextBlock Grid.Row="1" Grid.Column="0" 
                    Text="Device ID:" 
                    Foreground="{StaticResource TextSecondary}"
                    Margin="0,0,10,10" />
-        <TextBlock Grid.Row="1" Grid.Column="1" 
-                   Text="{Binding DeviceId}"
-                   Foreground="{StaticResource TextPrimary}"
-                   Background="{StaticResource BackgroundTertiary}"
-                   Padding="8,4"
-                   Margin="0,0,0,10"
-                   AutomationProperties.Name="Device ID (read-only)"
-                   ToolTip.Tip="Device identifier from hardware" />
+        <NumericUpDown Grid.Row="1" Grid.Column="1"
+                       Value="{Binding DeviceId}"
+                       Minimum="0" Maximum="127"
+                       Increment="1"
+                       Margin="0,0,0,10"
+                       MinWidth="80"
+                       AutomationProperties.Name="Device ID"
+                       ToolTip.Tip="Device identifier (0-127)" />
         
         <!-- MIDI Clock Enabled -->
         <TextBlock Grid.Row="2" Grid.Column="0" 
                    Text="MIDI Clock:" 
                    Foreground="{StaticResource TextSecondary}"
                    Margin="0,0,10,10" />
-        <TextBlock Grid.Row="2" Grid.Column="1" 
-                   Foreground="{StaticResource TextPrimary}"
-                   Background="{StaticResource BackgroundTertiary}"
-                   Padding="8,4"
-                   Margin="0,0,0,10"
-                   AutomationProperties.Name="MIDI clock status (read-only)">
-            <TextBlock.Text>
-                <MultiBinding StringFormat="{}">
-                    <Binding Path="MidiClockEnabled" />
-                </MultiBinding>
-            </TextBlock.Text>
-        </TextBlock>
+        <CheckBox Grid.Row="2" Grid.Column="1"
+                  IsChecked="{Binding MidiClockEnabled}"
+                  Content="Enabled"
+                  Margin="0,0,0,10"
+                  AutomationProperties.Name="MIDI clock" />
         
         <!-- MIDI Program Change Enabled -->
         <TextBlock Grid.Row="3" Grid.Column="0" 
                    Text="Program Change:" 
                    Foreground="{StaticResource TextSecondary}"
                    Margin="0,0,10,10" />
-        <TextBlock Grid.Row="3" Grid.Column="1" 
-                   Foreground="{StaticResource TextPrimary}"
-                   Background="{StaticResource BackgroundTertiary}"
-                   Padding="8,4"
-                   Margin="0,0,0,10"
-                   AutomationProperties.Name="Program change status (read-only)">
-            <TextBlock.Text>
-                <MultiBinding StringFormat="{}">
-                    <Binding Path="MidiProgramChangeEnabled" />
-                </MultiBinding>
-            </TextBlock.Text>
-        </TextBlock>
+        <CheckBox Grid.Row="3" Grid.Column="1"
+                  IsChecked="{Binding MidiProgramChangeEnabled}"
+                  Content="Enabled"
+                  Margin="0,0,0,10"
+                  AutomationProperties.Name="Program change" />
         
         <!-- Version -->
         <TextBlock Grid.Row="4" Grid.Column="0" 

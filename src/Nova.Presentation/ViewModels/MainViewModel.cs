@@ -37,6 +37,7 @@ public partial class MainViewModel : ObservableObject
     private bool _isConnected;
 
     [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(DownloadBankCommand), nameof(SaveSystemSettingsCommand))]
     private bool _isDownloading;
 
     [ObservableProperty]
@@ -49,10 +50,10 @@ public partial class MainViewModel : ObservableObject
     private PresetListViewModel _presetList = new();
 
     [ObservableProperty]
-    private PresetDetailViewModel _presetDetail = new();
+    private PresetDetailViewModel _presetDetail = null!;
 
     [ObservableProperty]
-    private FileManagerViewModel _fileManager = new();
+    private FileManagerViewModel _fileManager = null!;
 
     [ObservableProperty]
     private SystemSettingsViewModel _systemSettings = new();
@@ -61,16 +62,38 @@ public partial class MainViewModel : ObservableObject
         IMidiPort midiPort,
         IConnectUseCase connectUseCase,
         IDownloadBankUseCase downloadBankUseCase,
-        ISaveSystemDumpUseCase saveSystemDumpUseCase)
+        ISaveSystemDumpUseCase saveSystemDumpUseCase,
+        ISavePresetUseCase savePresetUseCase,
+        ISaveBankUseCase saveBankUseCase,
+        ILoadBankUseCase loadBankUseCase,
+        IExportPresetUseCase exportPresetUseCase,
+        IImportPresetUseCase importPresetUseCase,
+        ISendBankToHardwareUseCase sendBankUseCase)
     {
         _midiPort = midiPort;
         _connectUseCase = connectUseCase;
         _downloadBankUseCase = downloadBankUseCase;
         _saveSystemDumpUseCase = saveSystemDumpUseCase;
-        
+
+        PresetDetail = new PresetDetailViewModel(savePresetUseCase);
+        FileManager = new FileManagerViewModel(
+            saveBankUseCase,
+            loadBankUseCase,
+            exportPresetUseCase,
+            importPresetUseCase,
+            sendBankUseCase);
+
         // Auto-refresh ports on startup
         RefreshPorts();
-        
+
+        SystemSettings.PropertyChanged += (sender, e) =>
+        {
+            if (e.PropertyName == nameof(SystemSettingsViewModel.HasUnsavedChanges))
+            {
+                SaveSystemSettingsCommand.NotifyCanExecuteChanged();
+            }
+        };
+
         // Subscribe to preset selection changes
         PresetList.PropertyChanged += (sender, e) =>
         {
@@ -131,8 +154,8 @@ public partial class MainViewModel : ObservableObject
         var app = global::Avalonia.Application.Current;
         if (app != null)
         {
-            app.RequestedThemeVariant = app.RequestedThemeVariant == ThemeVariant.Dark 
-                ? ThemeVariant.Light 
+            app.RequestedThemeVariant = app.RequestedThemeVariant == ThemeVariant.Dark
+                ? ThemeVariant.Light
                 : ThemeVariant.Dark;
         }
     }
@@ -179,12 +202,15 @@ public partial class MainViewModel : ObservableObject
                 var bank = result.Value;
                 StatusMessage = $"Downloaded {bank.Presets.Length} presets successfully";
                 DownloadProgress = 100;
-                
+
                 // Store the bank for later preset retrieval
                 _currentBank = bank;
-                
+
                 // Load presets into list view
                 PresetList.LoadFromBank(bank);
+
+                // Keep FileManager in sync for upload/export
+                FileManager.LoadFromBank(bank);
             }
             else
             {
@@ -252,11 +278,11 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     private void CancelSystemChanges()
     {
-        // TODO: Implement when SystemSettings.RevertChanges is available
-        StatusMessage = "Cancel changes not yet implemented";
+        SystemSettings.RevertChanges();
+        StatusMessage = "System settings changes cancelled";
     }
 
-    private bool CanSaveSystemSettings() => !IsDownloading; // TODO: Add && SystemSettings.HasUnsavedChanges when available
+    private bool CanSaveSystemSettings() => !IsDownloading && SystemSettings.HasUnsavedChanges;
 
     private SystemDump CreateModifiedSystemDump(SystemDump original)
     {
@@ -272,7 +298,7 @@ public partial class MainViewModel : ObservableObject
 
         // Recalculate checksum (last byte before 0xF7)
         // For now, we assume SystemDump.FromSysEx will validate/fix this
-        
+
         return SystemDump.FromSysEx(modifiedSysEx).Value;
     }
 
@@ -282,25 +308,27 @@ public partial class MainViewModel : ObservableObject
     private void OnPresetSelectionChanged()
     {
         var selectedPreset = PresetList.SelectedPreset;
-        
+
         if (selectedPreset != null && _currentBank != null)
         {
             // Find the full preset in the bank
             var fullPreset = _currentBank.Presets.FirstOrDefault(p => p?.Number == selectedPreset.Number);
-            
+
             if (fullPreset != null)
             {
                 PresetDetail.LoadFromPreset(fullPreset);
+                FileManager.SetSelectedPreset(fullPreset);
             }
         }
         else
         {
             PresetDetail.LoadFromPreset(null);
+            FileManager.SetSelectedPreset(null);
         }
     }
 
     // ============= KEYBOARD SHORTCUTS (v1.0 placeholders) =============
-    
+
     /// <summary>
     /// Placeholder for Save Preset functionality (planned for v1.1).
     /// </summary>

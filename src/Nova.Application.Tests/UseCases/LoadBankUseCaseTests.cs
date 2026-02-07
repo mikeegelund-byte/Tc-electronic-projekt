@@ -2,6 +2,7 @@ using FluentAssertions;
 using FluentResults;
 using Moq;
 using Nova.Application.UseCases;
+using Nova.Domain.Models;
 using Nova.Midi;
 using Serilog;
 using Xunit;
@@ -64,14 +65,14 @@ public class LoadBankUseCaseTests
         }
 
         result.IsSuccess.Should().BeTrue();
-        result.Value.Should().Be(60);
+        result.Value.Should().BeOfType<UserBankDump>();
         
         // Verify all 60 presets were sent
         _midiPort.Verify(m => m.SendSysExAsync(It.IsAny<byte[]>()), Times.Exactly(60));
         
         // Verify progress was reported - with Progress<T> timing issues, we may not get all reports
         // Just verify the actual result - Progress<T> is for UI updates, not test assertions
-        result.Value.Should().Be(60, "60 presets loaded");
+        result.Value.Presets.Length.Should().Be(60, "60 presets loaded");
 
         lock (progressLock)
         {

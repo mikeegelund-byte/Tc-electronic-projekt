@@ -9,7 +9,7 @@ namespace Nova.Application.UseCases;
 /// Use case for saving the current User Bank to a .syx file.
 /// Downloads the bank from the device and writes it to disk in SysEx format.
 /// </summary>
-public sealed class SaveBankUseCase
+public sealed class SaveBankUseCase : ISaveBankUseCase
 {
     private readonly IDownloadBankUseCase _downloadBankUseCase;
     private readonly ILogger _logger;
@@ -58,7 +58,7 @@ public sealed class SaveBankUseCase
                 var presetSysExResult = preset.ToSysEx();
                 if (presetSysExResult.IsFailed)
                 {
-                    _logger.Error("Failed to serialize preset {Number}: {Errors}", 
+                    _logger.Error("Failed to serialize preset {Number}: {Errors}",
                         preset.Number, string.Join(", ", presetSysExResult.Errors));
                     return Result.Fail<string>($"Failed to serialize preset {preset.Number}");
                 }
@@ -69,7 +69,7 @@ public sealed class SaveBankUseCase
             // Step 3: Write to file with error handling
             await File.WriteAllBytesAsync(filePath, sysexData.ToArray(), cancellationToken);
 
-            _logger.Information("Successfully saved bank to {FilePath} ({Size} bytes)", 
+            _logger.Information("Successfully saved bank to {FilePath} ({Size} bytes)",
                 filePath, sysexData.Count);
 
             // Step 4: Return success

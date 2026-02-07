@@ -109,6 +109,40 @@
                     </StackPanel>
                 </Border>
 
+                <!-- Upload Preset Section -->
+                <Border Background="{StaticResource BackgroundPrimary}" 
+                        Padding="{StaticResource SpacingMedium}" 
+                        CornerRadius="{StaticResource BorderRadiusMedium}"
+                        IsVisible="{Binding HasPreset}">
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="Upload Preset" 
+                                   FontWeight="{StaticResource FontWeightBold}" 
+                                   Foreground="{StaticResource TextPrimary}"/>
+                        <Grid ColumnDefinitions="150,*,Auto" RowDefinitions="Auto">
+                            <TextBlock Grid.Column="0" 
+                                       Text="Target Slot:" 
+                                       Foreground="{StaticResource TextSecondary}"
+                                       VerticalAlignment="Center"/>
+                            <NumericUpDown Grid.Column="1" 
+                                           Value="{Binding TargetSlot}" 
+                                           Minimum="1" Maximum="60" 
+                                           Increment="1" FormatString="N0"
+                                           MinWidth="80" HorizontalAlignment="Left"
+                                           AutomationProperties.Name="Target slot number"
+                                           ToolTip.Tip="Slot number to upload to (1-60)" />
+                            <Button Grid.Column="2"
+                                    Content="Upload to Pedal"
+                                    Command="{Binding UploadPresetCommand}"
+                                    Padding="{StaticResource ButtonPadding}"
+                                    Margin="8,0,0,0"/>
+                        </Grid>
+                        <TextBlock Text="{Binding StatusMessage}"
+                                   Foreground="{StaticResource TextSecondary}"
+                                   TextWrapping="Wrap"
+                                   IsVisible="{Binding StatusMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
+                    </StackPanel>
+                </Border>
+
                 <!-- Compressor Section -->
                 <Border Background="{StaticResource BackgroundPrimary}" 
                         Padding="{StaticResource SpacingMedium}" 
@@ -221,6 +255,93 @@
                     </StackPanel>
                 </Border>
 
+                <!-- EQ/Gate Section -->
+                <Border Background="{StaticResource BackgroundPrimary}" 
+                        Padding="{StaticResource SpacingMedium}" 
+                        CornerRadius="{StaticResource BorderRadiusMedium}"
+                        IsVisible="{Binding HasPreset}">
+                    <StackPanel Spacing="8">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Ellipse Width="12" Height="12" 
+                                     Fill="{Binding EqGate.IsEnabled, Converter={StaticResource BoolToGreenGrayBrushConverter}}"
+                                     VerticalAlignment="Center" />
+                            <TextBlock Text="EQ/Gate" 
+                                       FontWeight="{StaticResource FontWeightBold}" 
+                                       Foreground="{StaticResource TextPrimary}"/>
+                        </StackPanel>
+                        <Grid ColumnDefinitions="150,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto">
+                            <TextBlock Grid.Row="0" Grid.Column="0" 
+                                       Text="Type:" 
+                                       Foreground="{StaticResource TextSecondary}"/>
+                            <TextBlock Grid.Row="0" Grid.Column="1" 
+                                       Text="{Binding EqGate.Type}" 
+                                       Foreground="{StaticResource TextPrimary}"/>
+
+                            <TextBlock Grid.Row="1" Grid.Column="0" 
+                                       Text="Gate Threshold:" 
+                                       Foreground="{StaticResource TextSecondary}"/>
+                            <StackPanel Grid.Row="1" Grid.Column="1" 
+                                        Orientation="Horizontal" 
+                                        Spacing="4">
+                                <NumericUpDown Value="{Binding EqGate.GateThreshold}" 
+                                               Minimum="-60" Maximum="0" 
+                                               Increment="1" FormatString="N0"
+                                               MinWidth="80"
+                                               AutomationProperties.Name="Gate threshold in decibels"
+                                               ToolTip.Tip="Gate threshold (-60 to 0 dB)" />
+                                <TextBlock Text="dB" 
+                                           VerticalAlignment="Center" 
+                                           Foreground="{StaticResource TextTertiary}" />
+                            </StackPanel>
+
+                            <TextBlock Grid.Row="2" Grid.Column="0" 
+                                       Text="EQ Gain 1:" 
+                                       Foreground="{StaticResource TextSecondary}"/>
+                            <StackPanel Grid.Row="2" Grid.Column="1" 
+                                        Orientation="Horizontal" 
+                                        Spacing="4">
+                                <NumericUpDown Value="{Binding EqGate.EqBand1Gain}" 
+                                               Minimum="-12" Maximum="12" 
+                                               Increment="1" FormatString="N0"
+                                               MinWidth="80" />
+                                <TextBlock Text="dB" 
+                                           VerticalAlignment="Center" 
+                                           Foreground="{StaticResource TextTertiary}" />
+                            </StackPanel>
+
+                            <TextBlock Grid.Row="3" Grid.Column="0" 
+                                       Text="EQ Gain 2:" 
+                                       Foreground="{StaticResource TextSecondary}"/>
+                            <StackPanel Grid.Row="3" Grid.Column="1" 
+                                        Orientation="Horizontal" 
+                                        Spacing="4">
+                                <NumericUpDown Value="{Binding EqGate.EqBand2Gain}" 
+                                               Minimum="-12" Maximum="12" 
+                                               Increment="1" FormatString="N0"
+                                               MinWidth="80" />
+                                <TextBlock Text="dB" 
+                                           VerticalAlignment="Center" 
+                                           Foreground="{StaticResource TextTertiary}" />
+                            </StackPanel>
+
+                            <TextBlock Grid.Row="4" Grid.Column="0" 
+                                       Text="EQ Gain 3:" 
+                                       Foreground="{StaticResource TextSecondary}"/>
+                            <StackPanel Grid.Row="4" Grid.Column="1" 
+                                        Orientation="Horizontal" 
+                                        Spacing="4">
+                                <NumericUpDown Value="{Binding EqGate.EqBand3Gain}" 
+                                               Minimum="-12" Maximum="12" 
+                                               Increment="1" FormatString="N0"
+                                               MinWidth="80" />
+                                <TextBlock Text="dB" 
+                                           VerticalAlignment="Center" 
+                                           Foreground="{StaticResource TextTertiary}" />
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
                 <!-- Modulation Section -->
                 <Border Background="{StaticResource BackgroundPrimary}" 
                         Padding="{StaticResource SpacingMedium}" 
@@ -283,6 +404,76 @@
                                                MinWidth="80"
                                                AutomationProperties.Name="Modulation mix percentage"
                                                ToolTip.Tip="Wet/dry mix (0-100%)" />
+                                <TextBlock Text="%" 
+                                           VerticalAlignment="Center" 
+                                           Foreground="{StaticResource TextTertiary}" />
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Pitch Section -->
+                <Border Background="{StaticResource BackgroundPrimary}" 
+                        Padding="{StaticResource SpacingMedium}" 
+                        CornerRadius="{StaticResource BorderRadiusMedium}"
+                        IsVisible="{Binding HasPreset}">
+                    <StackPanel Spacing="8">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Ellipse Width="12" Height="12" 
+                                     Fill="{Binding Pitch.IsEnabled, Converter={StaticResource BoolToGreenGrayBrushConverter}}"
+                                     VerticalAlignment="Center" />
+                            <TextBlock Text="Pitch" 
+                                       FontWeight="{StaticResource FontWeightBold}" 
+                                       Foreground="{StaticResource TextPrimary}"/>
+                        </StackPanel>
+                        <Grid ColumnDefinitions="150,*" RowDefinitions="Auto,Auto,Auto,Auto">
+                            <TextBlock Grid.Row="0" Grid.Column="0" 
+                                       Text="Type:" 
+                                       Foreground="{StaticResource TextSecondary}"/>
+                            <TextBlock Grid.Row="0" Grid.Column="1" 
+                                       Text="{Binding Pitch.TypeName}" 
+                                       Foreground="{StaticResource TextPrimary}"/>
+
+                            <TextBlock Grid.Row="1" Grid.Column="0" 
+                                       Text="Voice 1:" 
+                                       Foreground="{StaticResource TextSecondary}"/>
+                            <StackPanel Grid.Row="1" Grid.Column="1" 
+                                        Orientation="Horizontal" 
+                                        Spacing="4">
+                                <NumericUpDown Value="{Binding Pitch.Voice1}" 
+                                               Minimum="-100" Maximum="100" 
+                                               Increment="1" FormatString="N0"
+                                               MinWidth="80" />
+                                <TextBlock Text="cents" 
+                                           VerticalAlignment="Center" 
+                                           Foreground="{StaticResource TextTertiary}" />
+                            </StackPanel>
+
+                            <TextBlock Grid.Row="2" Grid.Column="0" 
+                                       Text="Voice 2:" 
+                                       Foreground="{StaticResource TextSecondary}"/>
+                            <StackPanel Grid.Row="2" Grid.Column="1" 
+                                        Orientation="Horizontal" 
+                                        Spacing="4">
+                                <NumericUpDown Value="{Binding Pitch.Voice2}" 
+                                               Minimum="-100" Maximum="100" 
+                                               Increment="1" FormatString="N0"
+                                               MinWidth="80" />
+                                <TextBlock Text="cents" 
+                                           VerticalAlignment="Center" 
+                                           Foreground="{StaticResource TextTertiary}" />
+                            </StackPanel>
+
+                            <TextBlock Grid.Row="3" Grid.Column="0" 
+                                       Text="Mix:" 
+                                       Foreground="{StaticResource TextSecondary}"/>
+                            <StackPanel Grid.Row="3" Grid.Column="1" 
+                                        Orientation="Horizontal" 
+                                        Spacing="4">
+                                <NumericUpDown Value="{Binding Pitch.Mix}" 
+                                               Minimum="0" Maximum="100" 
+                                               Increment="1" FormatString="N0"
+                                               MinWidth="80" />
                                 <TextBlock Text="%" 
                                            VerticalAlignment="Center" 
                                            Foreground="{StaticResource TextTertiary}" />

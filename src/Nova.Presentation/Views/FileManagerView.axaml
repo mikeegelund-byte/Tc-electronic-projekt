@@ -36,6 +36,14 @@
                             AutomationProperties.Name="Load bank from file"
                             AutomationProperties.HelpText="Import 60 presets from a file" />
                 </Grid>
+
+                <Button Content="Upload Bank to Pedal"
+                        Command="{Binding UploadBankToHardwareCommand}"
+                        HorizontalAlignment="Stretch"
+                        Padding="{StaticResource ButtonPadding}"
+                        Margin="0,8,0,0"
+                        AutomationProperties.Name="Upload bank to pedal"
+                        AutomationProperties.HelpText="Send all 60 presets to the connected pedal" />
             </StackPanel>
         </Border>
 
