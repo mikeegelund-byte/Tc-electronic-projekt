@@ -16,6 +16,7 @@ public partial class MainViewModel : ObservableObject
     private readonly IDownloadBankUseCase _downloadBankUseCase;
     private readonly IRequestSystemDumpUseCase _requestSystemDumpUseCase;
     private readonly ISaveSystemDumpUseCase _saveSystemDumpUseCase;
+    private readonly ISendBankToHardwareUseCase _sendBankUseCase;
     private UserBankDump? _currentBank;
     private SystemDump? _currentSystemDump;
 
@@ -34,11 +35,11 @@ public partial class MainViewModel : ObservableObject
     private string? _selectedOutputPort;
 
     [ObservableProperty]
-    [NotifyCanExecuteChangedFor(nameof(ConnectCommand), nameof(DownloadBankCommand), nameof(DownloadSystemSettingsCommand))]
+    [NotifyCanExecuteChangedFor(nameof(ConnectCommand), nameof(DownloadBankCommand), nameof(UploadBankCommand), nameof(DownloadSystemSettingsCommand))]
     private bool _isConnected;
 
     [ObservableProperty]
-    [NotifyCanExecuteChangedFor(nameof(DownloadBankCommand), nameof(DownloadSystemSettingsCommand), nameof(SaveSystemSettingsCommand))]
+    [NotifyCanExecuteChangedFor(nameof(DownloadBankCommand), nameof(UploadBankCommand), nameof(DownloadSystemSettingsCommand), nameof(SaveSystemSettingsCommand))]
     private bool _isDownloading;
 
     [ObservableProperty]
@@ -96,6 +97,7 @@ public partial class MainViewModel : ObservableObject
         _downloadBankUseCase = downloadBankUseCase;
         _requestSystemDumpUseCase = requestSystemDumpUseCase;
         _saveSystemDumpUseCase = saveSystemDumpUseCase;
+        _sendBankUseCase = sendBankUseCase;
 
         PresetDetail = new PresetDetailViewModel(savePresetUseCase);
         FileManager = new FileManagerViewModel(
@@ -244,6 +246,7 @@ public partial class MainViewModel : ObservableObject
 
                 // Store the bank for later preset retrieval
                 _currentBank = bank;
+                UploadBankCommand.NotifyCanExecuteChanged();
 
                 // Load presets into list view
                 PresetList.LoadFromBank(bank);
@@ -269,6 +272,48 @@ public partial class MainViewModel : ObservableObject
     }
 
     private bool CanDownload() => IsConnected && !IsDownloading;
+
+    [RelayCommand(CanExecute = nameof(CanUploadBank))]
+    private async Task UploadBankAsync()
+    {
+        if (_currentBank == null)
+        {
+            StatusMessage = "No bank loaded to upload";
+            return;
+        }
+
+        IsDownloading = true;
+        StatusMessage = "Uploading bank to pedal...";
+        DownloadProgress = 0;
+
+        try
+        {
+            var cts = new CancellationTokenSource(TimeSpan.FromMinutes(2));
+            var sendResult = await _sendBankUseCase.ExecuteAsync(_currentBank, cts.Token);
+
+            if (sendResult.IsSuccess)
+            {
+                StatusMessage = "Bank uploaded successfully (60 presets)";
+                DownloadProgress = 100;
+            }
+            else
+            {
+                StatusMessage = $"Upload failed: {sendResult.Errors.First().Message}";
+                DownloadProgress = 0;
+            }
+        }
+        catch (Exception ex)
+        {
+            StatusMessage = $"Error: {ex.Message}";
+            DownloadProgress = 0;
+        }
+        finally
+        {
+            IsDownloading = false;
+        }
+    }
+
+    private bool CanUploadBank() => IsConnected && !IsDownloading && _currentBank != null;
 
     [RelayCommand(CanExecute = nameof(CanDownload))]
     private async Task DownloadSystemSettingsAsync()

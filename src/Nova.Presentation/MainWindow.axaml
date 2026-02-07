@@ -19,7 +19,8 @@
       <KeyBinding Gesture="Ctrl+R" Command="{Binding RefreshPortsCommand}" />
       <KeyBinding Gesture="F5" Command="{Binding DownloadBankCommand}" />
       <KeyBinding Gesture="Ctrl+D" Command="{Binding DownloadBankCommand}" />
-      
+      <KeyBinding Gesture="Ctrl+U" Command="{Binding UploadBankCommand}" />
+
       <!-- New shortcuts (v1.0) -->
       <KeyBinding Gesture="Ctrl+S" Command="{Binding SavePresetCommand}" />
       <KeyBinding Gesture="Ctrl+Z" Command="{Binding UndoCommand}" />
@@ -207,6 +208,14 @@
                                         ToolTip.Tip="Download all 60 presets from pedal (F5 or Ctrl+D)"
                                         AutomationProperties.Name="Download user bank"
                                         AutomationProperties.HelpText="Downloads all 60 presets from the Nova System pedal (F5 or Ctrl+D)" />
+
+                                <Button Content="Upload Bank to Pedal"
+                                        Command="{Binding UploadBankCommand}"
+                                        HorizontalAlignment="Left"
+                                        Padding="{StaticResource ButtonPadding}"
+                                        ToolTip.Tip="Upload all presets to pedal (Ctrl+U)"
+                                        AutomationProperties.Name="Upload bank to pedal"
+                                        AutomationProperties.HelpText="Sends all 60 presets to Nova System pedal" />
                             </StackPanel>
                         </Border>
                         
