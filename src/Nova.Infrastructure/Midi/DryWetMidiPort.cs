@@ -71,7 +71,16 @@ public sealed class DryWetMidiPort : IMidiPort, IDisposable
 
             _inputDevice = input;
             _outputDevice = output;
-            
+
+            // Initialize channels before starting to listen
+            _sysExChannel = Channel.CreateUnbounded<byte[]>();
+            _ccChannel = Channel.CreateUnbounded<byte[]>();
+
+            // Subscribe event handler BEFORE starting to listen
+            _inputDevice.EventReceived += OnEventReceived;
+            _handlersSubscribed = true;
+
+            // Now safe to start listening - events won't be lost
             _inputDevice.StartEventsListening();
             InputPortName = inputName;
             OutputPortName = outputName;
@@ -81,7 +90,20 @@ public sealed class DryWetMidiPort : IMidiPort, IDisposable
         }
         catch (Exception ex)
         {
-            // Clean up on error
+            // Clean up on error - unsubscribe handler if it was subscribed
+            if (_inputDevice != null && _handlersSubscribed)
+            {
+                _inputDevice.EventReceived -= OnEventReceived;
+                _handlersSubscribed = false;
+            }
+
+            // Complete and null out channels
+            _sysExChannel?.Writer.Complete();
+            _ccChannel?.Writer.Complete();
+            _sysExChannel = null;
+            _ccChannel = null;
+
+            // Dispose devices
             _inputDevice?.Dispose();
             _outputDevice?.Dispose();
             _inputDevice = null;
@@ -89,7 +111,7 @@ public sealed class DryWetMidiPort : IMidiPort, IDisposable
             Name = string.Empty;
             InputPortName = null;
             OutputPortName = null;
-            
+
             return Task.FromResult(Result.Fail($"Failed to connect: {ex.Message}"));
         }
     }
@@ -154,21 +176,8 @@ public sealed class DryWetMidiPort : IMidiPort, IDisposable
 
     public IAsyncEnumerable<byte[]> ReceiveSysExAsync(CancellationToken cancellationToken = default)
     {
-        if (_inputDevice == null)
+        if (_inputDevice == null || _sysExChannel == null)
             throw new InvalidOperationException("Not connected");
-
-        // Initialiser channel én gang
-        if (_sysExChannel == null)
-        {
-            _sysExChannel = Channel.CreateUnbounded<byte[]>();
-        }
-
-        // Subscribe event handler én gang
-        if (!_handlersSubscribed)
-        {
-            _inputDevice.EventReceived += OnEventReceived;
-            _handlersSubscribed = true;
-        }
 
         return ReadSysExAsync(cancellationToken);
     }
@@ -216,21 +225,8 @@ public sealed class DryWetMidiPort : IMidiPort, IDisposable
 
     public IAsyncEnumerable<byte[]> ReceiveCCAsync(CancellationToken cancellationToken = default)
     {
-        if (_inputDevice == null)
+        if (_inputDevice == null || _ccChannel == null)
             throw new InvalidOperationException("Not connected");
-
-        // Initialiser channel én gang
-        if (_ccChannel == null)
-        {
-            _ccChannel = Channel.CreateUnbounded<byte[]>();
-        }
-
-        // Subscribe event handler én gang
-        if (!_handlersSubscribed)
-        {
-            _inputDevice.EventReceived += OnEventReceived;
-            _handlersSubscribed = true;
-        }
 
         return ReadCCAsync(cancellationToken);
     }
