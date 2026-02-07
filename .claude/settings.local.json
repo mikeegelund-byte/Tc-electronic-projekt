@@ -12,7 +12,8 @@
       "Bash(Get-ChildItem -Recurse -Filter *.md)",
       "Bash(Select-Object -ExpandProperty FullName)",
       "Bash(Out-File before_structure_docs.txt)",
-      "Bash(git mv:*)"
+      "Bash(git mv:*)",
+      "Bash(git config:*)"
     ]
   }
 }

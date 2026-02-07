@@ -5,7 +5,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentResults" Version="4.0.0" />
+    <PackageReference Include="FluentResults" />
   </ItemGroup>
 
   <PropertyGroup>

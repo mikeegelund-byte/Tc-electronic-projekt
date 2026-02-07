@@ -1,35 +1,32 @@
-#!/usr/bin/env pwsh
+#!/bin/bash
 # Pre-commit hook: Verify build + basic tests
 # Install: git config core.hooksPath .githooks
 
-$ErrorActionPreference = "Stop"
+echo "🔍 Pre-commit verification..."
 
-Write-Host "🔍 Pre-commit verification..." -ForegroundColor Cyan
-
-# 1. Check if solution exists
-if (-not (Test-Path "NovaApp.sln")) {
-    Write-Host "✅ No solution found, skipping build check" -ForegroundColor Yellow
+# Check if solution exists
+if [ ! -f "NovaApp.sln" ]; then
+    echo "✅ No solution found, skipping build check"
     exit 0
-}
+fi
 
-# 2. Build solution
-Write-Host "  Building solution..." -ForegroundColor Gray
-$buildResult = dotnet build NovaApp.sln --verbosity quiet --nologo 2>&1
-if ($LASTEXITCODE -ne 0) {
-    Write-Host "❌ Build failed. Commit rejected." -ForegroundColor Red
-    Write-Host $buildResult -ForegroundColor Red
+# Build solution
+echo "  Building solution..."
+dotnet build NovaApp.sln --verbosity quiet --nologo > /dev/null 2>&1
+if [ $? -ne 0 ]; then
+    echo "❌ Build failed. Commit rejected."
+    dotnet build NovaApp.sln --nologo
     exit 1
-}
+fi
 
-Write-Host "✅ Build successful" -ForegroundColor Green
+echo "✅ Build successful"
 
-# 3. Run fast tests (skip integration tests)
-Write-Host "  Running unit tests..." -ForegroundColor Gray
-$testResult = dotnet test NovaApp.sln --filter "Category!=Integration" --verbosity quiet --nologo 2>&1
-if ($LASTEXITCODE -ne 0) {
-    Write-Host "⚠️  Some tests failed, but allowing commit (review before push)" -ForegroundColor Yellow
-    Write-Host $testResult -ForegroundColor Yellow
-}
+# Run fast tests (skip integration tests)
+echo "  Running unit tests..."
+dotnet test NovaApp.sln --filter "Category!=Integration" --verbosity quiet --nologo > /dev/null 2>&1
+if [ $? -ne 0 ]; then
+    echo "⚠️  Some tests failed, but allowing commit (review before push)"
+fi
 
-Write-Host "✅ Pre-commit checks passed" -ForegroundColor Green
+echo "✅ Pre-commit checks passed"
 exit 0
