@@ -297,3 +297,32 @@ Se `docs/TROUBLESHOOTING/TRBL-TroubleshootingPlan.md` for aktuel troubleshooting
 
 *Sidst opdateret: 2026-02-07 (efter omfattende cleanup & standardisering)*
 *Claude Session: Professional development setup, documentation restructuring, og 100% test pass rate*
+
+## Morgens arbejde (2026-02-07)
+
+**UI/MIDI fixes & integration:**
+- ✅ Fixet XAML crash ved manglende converter: tilføjede `BoolToGreenGrayBrushConverter` i `src/Nova.Presentation/App.axaml` (appen starter nu korrekt).
+- ✅ Kablet System Dump flow op i UI:
+  - `RequestSystemDumpUseCase` implementerer nu interface.
+  - `MainViewModel.DownloadSystemSettingsAsync()` request’er system dump og loader `SystemSettings`, `MidiMapping`, `ProgramMapIn/Out`.
+  - Ny knap i System Settings: **Download from Pedal**.
+- ✅ MIDI Mapping + Program Map integreret i MainWindow:
+  - Nye tabs: **MIDI Mapping**, **Program Map In**, **Program Map Out**.
+  - DI wired: `IRequestSystemDumpUseCase`, `IGet/UpdateProgramMap(In|Out)UseCase` + viewmodels.
+- ✅ Preset manager gjort mere tydelig:
+  - “Connection” tab omdøbt til **Presets**.
+
+**Download Bank stabilitet:**
+- ✅ `DownloadBankUseCase` sender nu **Bank Dump request** aktivt (ikke kun passiv lytning).
+- ✅ Download stopper efter **3 sekunders inaktivitet** (idle timeout).
+- ✅ Partial dumps tilladt: UI viser “Downloaded X/60 presets (partial)” og spinner stopper.
+
+**Build/verification:**
+- ✅ `dotnet build` kørt uden fejl.
+
+**Commits & backup:**
+- `b49debb` – Wire system dump download and mapping UI (push til `backup/main`).
+- `7131e42` – Stop bank download on idle and allow partial dumps (push til `backup/main`).
+
+**Aktuelle observationer:**
+- Hvis dump stadig hænger: kan skyldes at hardware sender færre end 60 presets eller enkelte dumps fejler validering; nu stopper UI korrekt og viser partial.

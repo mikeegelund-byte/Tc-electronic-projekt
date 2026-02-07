@@ -8,6 +8,7 @@ namespace Nova.Application.UseCases;
 public sealed class DownloadBankUseCase : IDownloadBankUseCase
 {
     private readonly IMidiPort _midiPort;
+    private static readonly TimeSpan StartTimeout = TimeSpan.FromSeconds(10);
     private static readonly TimeSpan IdleTimeout = TimeSpan.FromSeconds(3);
     private const int ExpectedPresetCount = 60;
 
@@ -20,20 +21,20 @@ public sealed class DownloadBankUseCase : IDownloadBankUseCase
     {
         var request = SysExBuilder.BuildBankDumpRequest();
         var sendResult = await _midiPort.SendSysExAsync(request);
-        if (sendResult.IsFailed)
-        {
-            return Result.Fail(sendResult.Errors.First().Message);
-        }
+        var sendErrorMessage = sendResult.IsFailed
+            ? sendResult.Errors.First().Message
+            : null;
 
         var presetsByNumber = new Dictionary<int, Preset>();
-        using var idleCts = new CancellationTokenSource(IdleTimeout);
-        using var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, idleCts.Token);
+        using var receiveCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+        receiveCts.CancelAfter(StartTimeout);
 
         try
         {
-            await foreach (var sysex in _midiPort.ReceiveSysExAsync(linkedCts.Token))
+            await foreach (var sysex in _midiPort.ReceiveSysExAsync(receiveCts.Token))
             {
-                idleCts.CancelAfter(IdleTimeout);
+                // Once any data starts flowing, use a shorter idle timeout between messages.
+                receiveCts.CancelAfter(IdleTimeout);
 
                 var presetResult = Preset.FromSysEx(sysex);
                 if (presetResult.IsSuccess)
@@ -54,7 +55,9 @@ public sealed class DownloadBankUseCase : IDownloadBankUseCase
         {
             return cancellationToken.IsCancellationRequested
                 ? Result.Fail("Download cancelled")
-                : Result.Fail("No presets received from pedal");
+                : Result.Fail(sendErrorMessage != null
+                    ? $"Failed to send dump request: {sendErrorMessage}. No presets received."
+                    : "No presets received from pedal");
         }
 
         var bank = UserBankDump.Empty();
