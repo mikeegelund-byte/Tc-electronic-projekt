@@ -14,7 +14,7 @@ public class PresetRealDataTests
             "..", "..", "..", "..", "Nova.HardwareTest", "Dumps",
             "nova-dump-20260131-181507-msg001.syx");
 
-        var sysex = File.ReadAllBytes(sysexFile);
+        var sysex = TrimDoubleF7(File.ReadAllBytes(sysexFile));
 
         // Act
         var result = Preset.FromSysEx(sysex);
@@ -23,7 +23,7 @@ public class PresetRealDataTests
         result.IsSuccess.Should().BeTrue();
         result.Value.Number.Should().Be(31); // 0x1F = 31 decimal
         result.Value.Name.Should().NotBeNullOrEmpty();
-        result.Value.RawSysEx.Should().HaveCount(521);
+        result.Value.RawSysEx.Should().HaveCount(520);
     }
 
     [Fact]
@@ -47,7 +47,7 @@ public class PresetRealDataTests
 
         foreach (var file in presetFiles)
         {
-            var sysex = File.ReadAllBytes(file);
+            var sysex = TrimDoubleF7(File.ReadAllBytes(file));
             var result = Preset.FromSysEx(sysex);
 
             if (result.IsSuccess)
@@ -75,5 +75,15 @@ public class PresetRealDataTests
                 Console.WriteLine($"  - {failure}");
             }
         }
+    }
+
+    /// <summary>
+    /// Trims legacy 521-byte .syx files (with double F7 from DryWetMidi quirk) to spec-correct 520 bytes.
+    /// </summary>
+    private static byte[] TrimDoubleF7(byte[] sysex)
+    {
+        if (sysex.Length == 521 && sysex[519] == 0xF7 && sysex[520] == 0xF7)
+            return sysex[..520];
+        return sysex;
     }
 }

@@ -45,8 +45,8 @@ public sealed class LoadBankUseCase : ILoadBankUseCase
 
             byte[] fileData = await File.ReadAllBytesAsync(filePath, cancellationToken);
 
-            // Step 2: Validate file size (60 presets * 521 bytes = 31,260 bytes)
-            const int expectedSize = 60 * 521;
+            // Step 2: Validate file size (60 presets * 520 bytes = 31,200 bytes)
+            const int expectedSize = 60 * 520;
             if (fileData.Length != expectedSize)
             {
                 _logger.Error("Invalid file size: expected {Expected} bytes, got {Actual}",
@@ -59,9 +59,9 @@ public sealed class LoadBankUseCase : ILoadBankUseCase
             var presets = new List<Preset>();
             for (int i = 0; i < 60; i++)
             {
-                // Extract 521-byte preset
-                var presetData = new byte[521];
-                Array.Copy(fileData, i * 521, presetData, 0, 521);
+                // Extract 520-byte preset
+                var presetData = new byte[520];
+                Array.Copy(fileData, i * 520, presetData, 0, 520);
 
                 // Parse preset to validate it
                 var presetResult = Preset.FromSysEx(presetData);

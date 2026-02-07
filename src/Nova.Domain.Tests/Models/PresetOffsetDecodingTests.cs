@@ -18,7 +18,7 @@ public class PresetOffsetDecodingTests
             "..", "..", "..", "..", "Nova.HardwareTest", "Dumps",
             "nova-dump-20260131-181507-msg001.syx");
         var fullPath = Path.GetFullPath(fixturePath);
-        _realPresetBytes = File.ReadAllBytes(fullPath);
+        _realPresetBytes = TrimDoubleF7(File.ReadAllBytes(fullPath));
     }
 
     // ========================================
@@ -323,5 +323,15 @@ public class PresetOffsetDecodingTests
         result.IsSuccess.Should().BeTrue();
         result.Value.ModFeedback.Should().BeInRange(-100, 100,
             "ModFeedback is -100 to +100%");
+    }
+
+    /// <summary>
+    /// Trims legacy 521-byte .syx files (with double F7 from DryWetMidi quirk) to spec-correct 520 bytes.
+    /// </summary>
+    private static byte[] TrimDoubleF7(byte[] sysex)
+    {
+        if (sysex.Length == 521 && sysex[519] == 0xF7 && sysex[520] == 0xF7)
+            return sysex[..520];
+        return sysex;
     }
 }

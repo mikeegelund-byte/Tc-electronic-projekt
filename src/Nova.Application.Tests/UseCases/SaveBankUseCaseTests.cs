@@ -49,7 +49,7 @@ public class SaveBankUseCaseTests
         File.Exists(_testFilePath).Should().BeTrue();
 
         var fileContent = await File.ReadAllBytesAsync(_testFilePath);
-        fileContent.Length.Should().Be(31260); // 60 presets * 521 bytes
+        fileContent.Length.Should().Be(31200); // 60 presets * 520 bytes
 
         // Cleanup
         File.Delete(_testFilePath);
@@ -109,7 +109,7 @@ public class SaveBankUseCaseTests
         result.Value.Should().Be(_testFilePath);
         
         var fileContent = await File.ReadAllBytesAsync(_testFilePath);
-        fileContent.Length.Should().Be(31260); // New content, not old
+        fileContent.Length.Should().Be(31200); // New content, not old (60 presets * 520 bytes)
 
         // Cleanup
         File.Delete(_testFilePath);

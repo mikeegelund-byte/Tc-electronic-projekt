@@ -140,8 +140,8 @@ public sealed class ImportPresetUseCase : IImportPresetUseCase
     {
         try
         {
-            // Create a 521-byte SysEx message
-            var sysex = new byte[521];
+            // Create a 520-byte SysEx message (per TC Electronic spec)
+            var sysex = new byte[520];
 
             // Header (F0 00 20 1F 00 63 20 01)
             sysex[0] = 0xF0;
@@ -294,7 +294,7 @@ public sealed class ImportPresetUseCase : IImportPresetUseCase
             Encode4ByteValue(sysex, 514, ParseBool(parameters, "Pitch Enabled") ? 1 : 0);
 
             // End marker
-            sysex[520] = 0xF7;
+            sysex[519] = 0xF7;
 
             return Result.Ok(sysex);
         }

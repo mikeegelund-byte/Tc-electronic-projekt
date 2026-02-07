@@ -7,9 +7,9 @@ public static class SysExValidator
 {
     /// <summary>
     /// Calculates checksum for SysEx preset data.
-    /// Checksum = 7 LSBs of sum of parameter bytes (8-516).
+    /// Checksum = 7 LSBs of sum of parameter bytes (34-517 per TC spec = 484 bytes).
     /// </summary>
-    /// <param name="parameterData">Bytes 8-516 of preset (509 bytes)</param>
+    /// <param name="parameterData">Bytes 34-517 of preset (484 bytes)</param>
     /// <returns>Checksum value (0-127)</returns>
     public static byte CalculateChecksum(byte[] parameterData)
     {
@@ -40,12 +40,12 @@ public static class SysExValidator
         if (sysex[0] != 0xF0 || sysex[519] != 0xF7)
             return false;
 
-        // Extract parameter bytes (8-516)
-        var parameterData = new byte[509];
-        Array.Copy(sysex, 8, parameterData, 0, 509);
+        // Extract parameter bytes (34-517 per TC spec)
+        var parameterData = new byte[484];
+        Array.Copy(sysex, 34, parameterData, 0, 484);
 
         var expectedChecksum = CalculateChecksum(parameterData);
-        var actualChecksum = sysex[517];
+        var actualChecksum = sysex[518];
 
         return expectedChecksum == actualChecksum;
     }

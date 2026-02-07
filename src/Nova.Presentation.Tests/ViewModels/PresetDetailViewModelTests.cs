@@ -160,7 +160,7 @@ public class PresetDetailViewModelTests
     }
 
     /// <summary>
-    /// Helper method to create a valid 521-byte Nova System preset SysEx message
+    /// Helper method to create a valid 520-byte Nova System preset SysEx message
     /// </summary>
     private static byte[] CreateValidPresetSysEx(int presetNumber, string presetName)
     {

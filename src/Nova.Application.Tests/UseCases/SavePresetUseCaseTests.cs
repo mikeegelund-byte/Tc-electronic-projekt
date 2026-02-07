@@ -38,9 +38,9 @@ public sealed class SavePresetUseCaseTests
         // Assert
         result.IsSuccess.Should().BeTrue();
         _mockMidiPort.Verify(x => x.SendSysExAsync(It.Is<byte[]>(bytes =>
-            bytes.Length == 521 &&
+            bytes.Length == 520 &&
             bytes[0] == 0xF0 &&
-            bytes[520] == 0xF7 &&
+            bytes[519] == 0xF7 &&
             bytes[8] == 32)), Times.Once); // Verify slot number
     }
 
@@ -130,13 +130,13 @@ public sealed class SavePresetUseCaseTests
         // Assert
         result.IsSuccess.Should().BeTrue();
         _mockMidiPort.Verify(x => x.SendSysExAsync(It.Is<byte[]>(bytes =>
-            bytes.Length == 521 &&
+            bytes.Length == 520 &&
             bytes[0] == 0xF0 &&                          // Start marker
             bytes[1] == 0x00 && bytes[2] == 0x20 && bytes[3] == 0x1F && // TC Electronic ID
             bytes[5] == 0x63 &&                          // Nova System
             bytes[6] == 0x20 &&                          // Dump message
             bytes[7] == 0x01 &&                          // Preset type
-            bytes[520] == 0xF7)), Times.Once);           // End marker
+            bytes[519] == 0xF7)), Times.Once);           // End marker
     }
 
     private Preset CreateValidPreset()

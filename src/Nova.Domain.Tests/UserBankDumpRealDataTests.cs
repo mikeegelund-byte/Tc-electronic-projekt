@@ -20,7 +20,7 @@ public class UserBankDumpRealDataTests
         var presets = new List<Preset>();
         foreach (var path in allFiles)
         {
-            var sysex = File.ReadAllBytes(path);
+            var sysex = TrimDoubleF7(File.ReadAllBytes(path));
             var preset = Preset.FromSysEx(sysex);
 
             // Skip presets that fail validation (real dumps may contain invalid data)
@@ -70,7 +70,7 @@ public class UserBankDumpRealDataTests
 
         foreach (var file in allFiles)
         {
-            var sysex = File.ReadAllBytes(file);
+            var sysex = TrimDoubleF7(File.ReadAllBytes(file));
             var result = Preset.FromSysEx(sysex);
 
             if (result.IsSuccess)
@@ -109,6 +109,16 @@ public class UserBankDumpRealDataTests
         // Original bank unchanged (immutability) - only has preset1
         originalBank.Presets[preset1Index].Should().BeSameAs(preset1);
         originalBank.Presets[preset2Index].Should().BeNull();
+    }
+
+    /// <summary>
+    /// Trim legacy 521-byte .syx files (double F7) to spec-correct 520 bytes.
+    /// </summary>
+    private static byte[] TrimDoubleF7(byte[] sysex)
+    {
+        if (sysex.Length == 521 && sysex[519] == 0xF7 && sysex[520] == 0xF7)
+            return sysex[..520];
+        return sysex;
     }
 
     private static string GetHardwareTestDir()

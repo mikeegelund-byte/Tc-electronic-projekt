@@ -8,11 +8,11 @@ namespace Nova.Presentation.Tests;
 public static class TestHelpers
 {
     /// <summary>
-    /// Creates a valid 521-byte preset SysEx message with all parameters set to valid defaults
+    /// Creates a valid 520-byte preset SysEx message with all parameters set to valid defaults
     /// </summary>
     public static byte[] CreateValidPresetSysEx(int presetNumber = 31, string name = "Test Preset")
     {
-        var bytes = new byte[521];
+        var bytes = new byte[520];
 
         // Header
         bytes[0] = 0xF0;  // SysEx start
@@ -88,7 +88,7 @@ public static class TestHelpers
         }
         bytes[518] = (byte)(checksum & 0x7F);
 
-        bytes[520] = 0xF7;  // SysEx end
+        bytes[519] = 0xF7;  // SysEx end
 
         return bytes;
     }

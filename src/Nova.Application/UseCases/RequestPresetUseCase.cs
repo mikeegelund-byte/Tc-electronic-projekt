@@ -64,8 +64,8 @@ public sealed class RequestPresetUseCase : IRequestPresetUseCase
                 {
                     _logger.Debug("Received SysEx message: {Length} bytes", sysex.Length);
                     
-                    // Check if this is a valid preset response (521 bytes, F0/F7 markers)
-                    if (sysex.Length == 521 && sysex[0] == 0xF0 && sysex[520] == 0xF7)
+                    // Check if this is a valid preset response (520 bytes per TC spec, F0/F7 markers)
+                    if (sysex.Length == 520 && sysex[0] == 0xF0 && sysex[519] == 0xF7)
                     {
                         _logger.Debug("Valid preset SysEx received");
                         return sysex;

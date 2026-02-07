@@ -7,9 +7,8 @@ public class SysExValidatorTests
     [Fact]
     public void CalculateChecksum_KnownData_MatchesExpected()
     {
-        // Data from real hardware
-        var data = new byte[509];  // bytes 8-516 (509 bytes)
-        // Just fill with zeros for testing
+        // Data from real hardware (bytes 34-517 per TC spec = 484 bytes)
+        var data = new byte[484];
         Array.Fill(data, (byte)0x00);
 
         var checksum = SysExValidator.CalculateChecksum(data);
@@ -26,11 +25,11 @@ public class SysExValidatorTests
         preset[0] = 0xF0;
         preset[519] = 0xF7;
 
-        // Calculate correct checksum for bytes 8-516
-        var checksumData = new byte[509];  // bytes 8-516
-        Array.Copy(preset, 8, checksumData, 0, 509);
+        // Calculate correct checksum for bytes 34-517 (TC spec)
+        var checksumData = new byte[484];
+        Array.Copy(preset, 34, checksumData, 0, 484);
         var checksum = SysExValidator.CalculateChecksum(checksumData);
-        preset[517] = checksum;
+        preset[518] = checksum;
 
         var isValid = SysExValidator.ValidateChecksum(preset);
 
@@ -44,7 +43,7 @@ public class SysExValidatorTests
         Array.Fill(preset, (byte)0x00);
         preset[0] = 0xF0;
         preset[519] = 0xF7;
-        preset[517] = 0xFF;  // Wrong checksum
+        preset[518] = 0xFF;  // Wrong checksum
 
         var isValid = SysExValidator.ValidateChecksum(preset);
 

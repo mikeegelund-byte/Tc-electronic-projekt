@@ -4,6 +4,7 @@ using FluentResults;
 using Melanchall.DryWetMidi.Core;
 using Melanchall.DryWetMidi.Multimedia;
 using Nova.Midi;
+using Serilog;
 
 namespace Nova.Infrastructure.Midi;
 
@@ -186,14 +187,31 @@ public sealed class DryWetMidiPort : IMidiPort, IDisposable
     {
         if (e.Event is NormalSysExEvent sysEx)
         {
+            Log.Debug("MIDI SysEx received: Data.Length={DataLength}, EndsWithF7={EndsWithF7}, First10={First10}",
+                sysEx.Data.Length,
+                sysEx.Data.Length > 0 && sysEx.Data[^1] == 0xF7,
+                BitConverter.ToString(sysEx.Data.Length > 10 ? sysEx.Data[..10] : sysEx.Data));
+
             if (_sysExChannel?.Writer != null)
             {
-                // DryWetMIDI returns data WITHOUT F0/F7, we add them back
-                var data = new byte[sysEx.Data.Length + 2];
-                data[0] = 0xF0;
-                Array.Copy(sysEx.Data, 0, data, 1, sysEx.Data.Length);
-                data[^1] = 0xF7;
+                byte[] data;
+                if (sysEx.Data.Length > 0 && sysEx.Data[^1] == 0xF7)
+                {
+                    // DryWetMIDI Data already has F7 (strips F0 but keeps F7), just prepend F0
+                    data = new byte[sysEx.Data.Length + 1];
+                    data[0] = 0xF0;
+                    Array.Copy(sysEx.Data, 0, data, 1, sysEx.Data.Length);
+                }
+                else
+                {
+                    // Data has no F7, add both F0 and F7
+                    data = new byte[sysEx.Data.Length + 2];
+                    data[0] = 0xF0;
+                    Array.Copy(sysEx.Data, 0, data, 1, sysEx.Data.Length);
+                    data[^1] = 0xF7;
+                }
 
+                Log.Debug("MIDI SysEx framed: {FramedLength} bytes", data.Length);
                 _sysExChannel.Writer.TryWrite(data);
             }
         }

@@ -26,12 +26,12 @@ public class PresetParametersTests
 
         if (File.Exists(presetPath))
         {
-            _realPresetBytes = File.ReadAllBytes(presetPath);
+            _realPresetBytes = TrimDoubleF7(File.ReadAllBytes(presetPath));
         }
         else
         {
             // Fallback: minimal valid preset structure (all zeros for parameters)
-            _realPresetBytes = new byte[521];
+            _realPresetBytes = new byte[520];
             _realPresetBytes[0] = 0xF0;
             _realPresetBytes[1] = 0x00;
             _realPresetBytes[2] = 0x20;
@@ -41,7 +41,7 @@ public class PresetParametersTests
             _realPresetBytes[6] = 0x20;
             _realPresetBytes[7] = 0x01;
             _realPresetBytes[8] = 31; // Preset number
-            _realPresetBytes[520] = 0xF7;
+            _realPresetBytes[519] = 0xF7;
         }
     }
 
@@ -1176,5 +1176,15 @@ public class PresetParametersTests
         // Assert
         result.IsSuccess.Should().BeTrue();
         result.Value.PitchLevel2.Should().BeInRange(-100, 0, "Pitch Level 2 must be between -100dB and 0dB");
+    }
+
+    /// <summary>
+    /// Trims legacy 521-byte .syx files (with double F7 from DryWetMidi quirk) to spec-correct 520 bytes.
+    /// </summary>
+    private static byte[] TrimDoubleF7(byte[] sysex)
+    {
+        if (sysex.Length == 521 && sysex[519] == 0xF7 && sysex[520] == 0xF7)
+            return sysex[..520];
+        return sysex;
     }
 }

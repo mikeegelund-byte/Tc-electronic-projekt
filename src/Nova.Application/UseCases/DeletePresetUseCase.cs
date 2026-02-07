@@ -74,7 +74,7 @@ public sealed class DeletePresetUseCase : IDeletePresetUseCase
     /// </summary>
     private static byte[] CreateInitPresetSysEx(int slotNumber)
     {
-        var sysex = new byte[521];
+        var sysex = new byte[520];
         
         // SysEx header
         sysex[0] = 0xF0; // SysEx start
@@ -114,7 +114,7 @@ public sealed class DeletePresetUseCase : IDeletePresetUseCase
         }
         sysex[518] = (byte)(checksum & 0x7F);
         
-        sysex[520] = 0xF7; // SysEx end
+        sysex[519] = 0xF7; // SysEx end
 
         return sysex;
     }

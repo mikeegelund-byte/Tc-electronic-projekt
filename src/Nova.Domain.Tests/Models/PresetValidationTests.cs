@@ -15,7 +15,7 @@ public class PresetValidationTests
     /// </summary>
     private static byte[] CreateValidPresetSysEx()
     {
-        var sysex = new byte[521];
+        var sysex = new byte[520];
         sysex[0] = 0xF0;                                    // SysEx start
         sysex[1] = 0x00; sysex[2] = 0x20; sysex[3] = 0x1F; // TC Electronic ID
         sysex[4] = 0x00;                                    // Device ID
@@ -136,7 +136,7 @@ public class PresetValidationTests
         EncodeSignedDbValue(sysex, 490, 0);  // PitchLevel1: 0dB
         EncodeSignedDbValue(sysex, 494, 0);  // PitchLevel2: 0dB
 
-        sysex[520] = 0xF7; // SysEx end
+        sysex[519] = 0xF7; // SysEx end
         return sysex;
     }
 

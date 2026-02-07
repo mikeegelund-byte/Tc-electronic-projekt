@@ -4,6 +4,7 @@ using Moq;
 using Nova.Application.UseCases;
 using Nova.Domain.Models;
 using Nova.Midi;
+using Serilog;
 using Xunit;
 
 namespace Nova.Application.Tests.UseCases;
@@ -27,7 +28,11 @@ public class DownloadBankUseCaseTests
         midi.Setup(m => m.ReceiveSysExAsync(It.IsAny<CancellationToken>()))
             .Returns(presets.ToAsyncEnumerable());
 
-        var useCase = new DownloadBankUseCase(midi.Object);
+        // Setup mock for SendSysExAsync (bank dump request)
+        midi.Setup(m => m.SendSysExAsync(It.IsAny<byte[]>()))
+            .ReturnsAsync(Result.Ok());
+
+        var useCase = new DownloadBankUseCase(midi.Object, new Mock<ILogger>().Object);
 
         // Act
         var result = await useCase.ExecuteAsync(CancellationToken.None);

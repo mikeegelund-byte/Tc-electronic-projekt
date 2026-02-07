@@ -6,6 +6,7 @@ using CommunityToolkit.Mvvm.Input;
 using Nova.Application.UseCases;
 using Nova.Domain.Models;
 using Nova.Midi;
+using Serilog;
 
 namespace Nova.Presentation.ViewModels;
 
@@ -203,6 +204,7 @@ public partial class MainViewModel : ObservableObject
     {
         if (string.IsNullOrWhiteSpace(SelectedInputPort) || string.IsNullOrWhiteSpace(SelectedOutputPort)) return;
 
+        Log.Information("Connecting MIDI: IN='{InputPort}', OUT='{OutputPort}'", SelectedInputPort, SelectedOutputPort);
         StatusMessage = $"Connecting (IN: {SelectedInputPort} / OUT: {SelectedOutputPort})...";
         var selection = new MidiPortSelection(SelectedInputPort, SelectedOutputPort);
         var result = await _connectUseCase.ExecuteAsync(selection);

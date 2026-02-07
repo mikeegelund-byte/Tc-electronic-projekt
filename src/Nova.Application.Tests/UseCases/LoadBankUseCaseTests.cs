@@ -152,8 +152,8 @@ public class LoadBankUseCaseTests
 
     private byte[] CreateDummyPreset(int presetNumber)
     {
-        // Create a valid 521-byte preset SysEx message
-        var bytes = new byte[521];
+        // Create a valid 520-byte preset SysEx message
+        var bytes = new byte[520];
         bytes[0] = 0xF0;  // SysEx start
         bytes[1] = 0x00;  // TC Electronic manufacturer ID
         bytes[2] = 0x20;
@@ -217,7 +217,7 @@ public class LoadBankUseCaseTests
         Encode4ByteValue(bytes, 482, 50);   // PitchFeedback1OrKey: 50 (0-100)
         Encode4ByteValue(bytes, 486, 50);   // PitchFeedback2OrScale: 50 (0-100)
 
-        bytes[520] = 0xF7;  // SysEx end
+        bytes[519] = 0xF7;  // SysEx end
 
         return bytes;
     }
