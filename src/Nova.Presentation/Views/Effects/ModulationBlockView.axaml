@@ -1,0 +1,125 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Nova.Presentation.ViewModels.Effects"
+             x:Class="Nova.Presentation.Views.Effects.ModulationBlockView"
+             x:DataType="vm:ModulationBlockViewModel">
+
+  <Border Background="{StaticResource BackgroundPrimary}"
+          Padding="{StaticResource SpacingMedium}"
+          CornerRadius="{StaticResource BorderRadiusMedium}">
+    <StackPanel Spacing="8">
+      <StackPanel Orientation="Horizontal" Spacing="8">
+        <Ellipse Width="12" Height="12"
+                 Fill="{Binding IsEnabled, Converter={StaticResource BoolToGreenGrayBrushConverter}}"
+                 VerticalAlignment="Center" />
+        <TextBlock Text="Modulation"
+                   FontWeight="{StaticResource FontWeightBold}"
+                   Foreground="{StaticResource TextPrimary}"/>
+      </StackPanel>
+
+      <Grid ColumnDefinitions="160,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto">
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="Type:" Foreground="{StaticResource TextSecondary}"/>
+        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Type}" Foreground="{StaticResource TextPrimary}"/>
+
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Speed:" Foreground="{StaticResource TextSecondary}"/>
+        <NumericUpDown Grid.Row="1" Grid.Column="1" Value="{Binding Speed}" Minimum="0" Maximum="81" Increment="1" FormatString="N0" MinWidth="80" />
+
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="Depth:" Foreground="{StaticResource TextSecondary}"/>
+        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" Spacing="4">
+          <NumericUpDown Value="{Binding Depth}" Minimum="0" Maximum="100" Increment="1" FormatString="N0" MinWidth="80" />
+          <TextBlock Text="%" VerticalAlignment="Center" Foreground="{StaticResource TextTertiary}" />
+        </StackPanel>
+
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="Tempo:" Foreground="{StaticResource TextSecondary}"/>
+        <NumericUpDown Grid.Row="3" Grid.Column="1" Value="{Binding Tempo}" Minimum="0" Maximum="16" Increment="1" FormatString="N0" MinWidth="80" />
+
+        <TextBlock Grid.Row="4" Grid.Column="0" Text="Hi Cut:" Foreground="{StaticResource TextSecondary}"/>
+        <NumericUpDown Grid.Row="4" Grid.Column="1" Value="{Binding HiCut}" Minimum="0" Maximum="61" Increment="1" FormatString="N0" MinWidth="80" />
+
+        <TextBlock Grid.Row="5" Grid.Column="0" Text="Mix:" Foreground="{StaticResource TextSecondary}"/>
+        <StackPanel Grid.Row="5" Grid.Column="1" Orientation="Horizontal" Spacing="4">
+          <NumericUpDown Value="{Binding Mix}" Minimum="0" Maximum="100" Increment="1" FormatString="N0" MinWidth="80" />
+          <TextBlock Text="%" VerticalAlignment="Center" Foreground="{StaticResource TextTertiary}" />
+        </StackPanel>
+      </Grid>
+
+      <StackPanel Spacing="8" IsVisible="{Binding IsChorus}">
+        <TextBlock Text="Chorus" FontWeight="{StaticResource FontWeightSemiBold}" Foreground="{StaticResource TextPrimary}"/>
+        <Grid ColumnDefinitions="160,*" RowDefinitions="Auto">
+          <TextBlock Grid.Row="0" Grid.Column="0" Text="Delay:" Foreground="{StaticResource TextSecondary}"/>
+          <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Spacing="4">
+            <NumericUpDown Value="{Binding DelayOrRange}" Minimum="0" Maximum="500" Increment="1" FormatString="N0" MinWidth="80"
+                           ToolTip.Tip="Modulation delay in 0.1 ms steps" />
+            <TextBlock Text="(0.1ms)" VerticalAlignment="Center" Foreground="{StaticResource TextTertiary}" />
+          </StackPanel>
+        </Grid>
+      </StackPanel>
+
+      <StackPanel Spacing="8" IsVisible="{Binding IsFlanger}">
+        <TextBlock Text="Flanger" FontWeight="{StaticResource FontWeightSemiBold}" Foreground="{StaticResource TextPrimary}"/>
+        <Grid ColumnDefinitions="160,*" RowDefinitions="Auto,Auto">
+          <TextBlock Grid.Row="0" Grid.Column="0" Text="Delay:" Foreground="{StaticResource TextSecondary}"/>
+          <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Spacing="4">
+            <NumericUpDown Value="{Binding DelayOrRange}" Minimum="0" Maximum="500" Increment="1" FormatString="N0" MinWidth="80"
+                           ToolTip.Tip="Modulation delay in 0.1 ms steps" />
+            <TextBlock Text="(0.1ms)" VerticalAlignment="Center" Foreground="{StaticResource TextTertiary}" />
+          </StackPanel>
+
+          <TextBlock Grid.Row="1" Grid.Column="0" Text="Feedback:" Foreground="{StaticResource TextSecondary}"/>
+          <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Spacing="4">
+            <NumericUpDown Value="{Binding Feedback}" Minimum="-100" Maximum="100" Increment="1" FormatString="N0" MinWidth="80"
+                           ToolTip.Tip="Regeneration amount (-100 to 100%)" />
+            <TextBlock Text="%" VerticalAlignment="Center" Foreground="{StaticResource TextTertiary}" />
+          </StackPanel>
+        </Grid>
+      </StackPanel>
+
+      <StackPanel Spacing="8" IsVisible="{Binding IsVibrato}">
+        <TextBlock Text="Vibrato" FontWeight="{StaticResource FontWeightSemiBold}" Foreground="{StaticResource TextPrimary}"/>
+        <TextBlock Text="No additional parameters for Vibrato." Foreground="{StaticResource TextTertiary}"/>
+      </StackPanel>
+
+      <StackPanel Spacing="8" IsVisible="{Binding IsPhaser}">
+        <TextBlock Text="Phaser" FontWeight="{StaticResource FontWeightSemiBold}" Foreground="{StaticResource TextPrimary}"/>
+        <Grid ColumnDefinitions="160,*" RowDefinitions="Auto,Auto">
+          <TextBlock Grid.Row="0" Grid.Column="0" Text="Feedback:" Foreground="{StaticResource TextSecondary}"/>
+          <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Spacing="4">
+            <NumericUpDown Value="{Binding Feedback}" Minimum="-100" Maximum="100" Increment="1" FormatString="N0" MinWidth="80"
+                           ToolTip.Tip="Regeneration amount (-100 to 100%)" />
+            <TextBlock Text="%" VerticalAlignment="Center" Foreground="{StaticResource TextTertiary}" />
+          </StackPanel>
+
+          <TextBlock Grid.Row="1" Grid.Column="0" Text="Range:" Foreground="{StaticResource TextSecondary}"/>
+          <ComboBox Grid.Row="1" Grid.Column="1" SelectedIndex="{Binding DelayOrRange}" MinWidth="120"
+                    ToolTip.Tip="Sweep range (Low or High)">
+            <ComboBoxItem Content="Low" />
+            <ComboBoxItem Content="High" />
+          </ComboBox>
+        </Grid>
+      </StackPanel>
+
+      <StackPanel Spacing="8" IsVisible="{Binding IsTremolo}">
+        <TextBlock Text="Tremolo" FontWeight="{StaticResource FontWeightSemiBold}" Foreground="{StaticResource TextPrimary}"/>
+        <Grid ColumnDefinitions="160,*" RowDefinitions="Auto,Auto">
+          <TextBlock Grid.Row="0" Grid.Column="0" Text="Type:" Foreground="{StaticResource TextSecondary}"/>
+          <ComboBox Grid.Row="0" Grid.Column="1" SelectedIndex="{Binding DelayOrRange}" MinWidth="120">
+            <ComboBoxItem Content="Soft" />
+            <ComboBoxItem Content="Hard" />
+          </ComboBox>
+
+          <TextBlock Grid.Row="1" Grid.Column="0" Text="Width:" Foreground="{StaticResource TextSecondary}"/>
+          <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Spacing="4">
+            <NumericUpDown Value="{Binding Width}" Minimum="0" Maximum="100" Increment="1" FormatString="N0" MinWidth="80"
+                           ToolTip.Tip="Tremolo depth (0-100%)" />
+            <TextBlock Text="%" VerticalAlignment="Center" Foreground="{StaticResource TextTertiary}" />
+          </StackPanel>
+        </Grid>
+      </StackPanel>
+
+      <StackPanel Spacing="8" IsVisible="{Binding IsPanner}">
+        <TextBlock Text="Panner" FontWeight="{StaticResource FontWeightSemiBold}" Foreground="{StaticResource TextPrimary}"/>
+        <TextBlock Text="Depth controls pan width." Foreground="{StaticResource TextTertiary}"/>
+      </StackPanel>
+    </StackPanel>
+  </Border>
+</UserControl>

@@ -226,6 +226,18 @@
                 <views:FileManagerView DataContext="{Binding FileManager}" />
             </TabItem>
 
+            <!-- Library Tab -->
+            <TabItem Header="Library"
+                     AutomationProperties.Name="Preset library tab">
+                <views:LibraryView DataContext="{Binding Library}" />
+            </TabItem>
+
+            <!-- Tuner Tab -->
+            <TabItem Header="Tuner"
+                     AutomationProperties.Name="Tuner tab">
+                <views:TunerView DataContext="{Binding Tuner}" />
+            </TabItem>
+
             <!-- System Settings Tab -->
             <TabItem Header="System Settings"
                      AutomationProperties.Name="System configuration tab">

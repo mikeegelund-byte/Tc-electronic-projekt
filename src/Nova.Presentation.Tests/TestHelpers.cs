@@ -25,10 +25,10 @@ public static class TestHelpers
         bytes[7] = 0x01;  // Preset data type
         bytes[8] = (byte)presetNumber;  // Preset number
 
-        // Name (bytes 9-32): 24 ASCII characters
+        // Name (bytes 10-33): 24 ASCII characters (byte 9 reserved)
         var paddedName = name.Length > 24 ? name.Substring(0, 24) : name.PadRight(24);
         var nameBytes = System.Text.Encoding.ASCII.GetBytes(paddedName);
-        Array.Copy(nameBytes, 0, bytes, 9, Math.Min(24, nameBytes.Length));
+        Array.Copy(nameBytes, 0, bytes, 10, Math.Min(24, nameBytes.Length));
 
         // Set minimum valid parameter values to pass validation
         Encode4ByteValue(bytes, 38, 500);   // TapTempo: 500ms (100-3000)
@@ -53,6 +53,8 @@ public static class TestHelpers
         Encode4ByteValue(bytes, 266, 500);  // DelayTime: 500 (0-1800)
         Encode4ByteValue(bytes, 270, 500);  // DelayTime2: 500 (0-1800)
         Encode4ByteValue(bytes, 274, 8);    // DelayTempo: 8 (0-16)
+        Encode4ByteValue(bytes, 278, 0);    // DelayTempo2OrWidth: 0 (unused for clean)
+        Encode4ByteValue(bytes, 286, 0);    // DelayClipOrFeedback2: 0 (unused for clean)
         Encode4ByteValue(bytes, 282, 50);   // DelayFeedback: 50 (0-120)
         Encode4ByteValue(bytes, 314, 50);   // DelayMix: 50 (0-100)
         Encode4ByteValue(bytes, 326, 0);    // ReverbType: 0 (0-3)

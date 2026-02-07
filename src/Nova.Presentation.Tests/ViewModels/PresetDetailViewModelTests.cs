@@ -50,10 +50,10 @@ public class PresetDetailViewModelTests
         vm.PresetName.Should().Be("Test Preset");
         
         // Assert - Global parameters (should be clamped to valid ranges)
-        vm.TapTempo.Should().Be(Math.Clamp(preset.TapTempo, 0, 255));
-        vm.Routing.Should().Be(Math.Clamp(preset.Routing, 0, 7));
-        vm.LevelOutLeft.Should().Be(Math.Clamp(preset.LevelOutLeft, -20, 20));
-        vm.LevelOutRight.Should().Be(Math.Clamp(preset.LevelOutRight, -20, 20));
+        vm.TapTempo.Should().Be(Math.Clamp(preset.TapTempo, 100, 3000));
+        vm.Routing.Should().Be(Math.Clamp(preset.Routing, 0, 2));
+        vm.LevelOutLeft.Should().Be(Math.Clamp(preset.LevelOutLeft, -100, 0));
+        vm.LevelOutRight.Should().Be(Math.Clamp(preset.LevelOutRight, -100, 0));
         
         // Assert - Effect switches
         vm.Compressor.IsEnabled.Should().Be(preset.CompressorEnabled);
@@ -110,8 +110,8 @@ public class PresetDetailViewModelTests
             5 => "Ping-Pong",
             _ => "Unknown"
         });
-        vm.Delay.Time.Should().BeInRange(0, 2000); // Clamped
-        vm.Delay.Feedback.Should().BeInRange(0, 100); // Clamped
+        vm.Delay.Time.Should().BeInRange(0, 1800); // Clamped
+        vm.Delay.Feedback.Should().BeInRange(0, 120); // Clamped
         vm.Delay.Mix.Should().BeInRange(0, 100); // Clamped
         
         // Assert - Reverb parameters (subset available in ReverbBlockViewModel)
@@ -123,9 +123,9 @@ public class PresetDetailViewModelTests
             3 => "Plate",
             _ => "Unknown"
         });
-        vm.Reverb.Decay.Should().BeInRange(0, 100); // Clamped
-        vm.Reverb.PreDelay.Should().BeInRange(0, 200); // Clamped
-        vm.Reverb.Level.Should().BeInRange(0, 100); // Clamped
+        vm.Reverb.Decay.Should().BeInRange(1, 200); // Clamped
+        vm.Reverb.PreDelay.Should().BeInRange(0, 100); // Clamped
+        vm.Reverb.ReverbLevel.Should().BeInRange(-100, 0); // Clamped
         
         // Assert - Gate parameters (subset available in EqGateBlockViewModel)
         vm.EqGate.GateThreshold.Should().Be(Math.Clamp(preset.GateThreshold, -60, 0));

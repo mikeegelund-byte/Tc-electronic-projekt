@@ -80,9 +80,9 @@ public class DriveBlockViewModelTests
         // Preset number (byte 8)
         sysex[8] = 0x00;
         
-        // Preset name (bytes 9-24: "Test Preset     ")
+        // Preset name (bytes 10-33: "Test Preset     ")
         var nameBytes = System.Text.Encoding.ASCII.GetBytes("Test Preset         ".PadRight(24));
-        Array.Copy(nameBytes, 0, sysex, 9, 24);
+        Array.Copy(nameBytes, 0, sysex, 10, 24);
 
         // Set minimum valid parameter values (validated ranges)
         Encode4ByteValue(sysex, 38, 500);   // TapTempo: 500ms (100-3000)

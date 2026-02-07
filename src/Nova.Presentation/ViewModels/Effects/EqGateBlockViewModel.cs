@@ -14,6 +14,7 @@ public partial class EqGateBlockViewModel : ObservableObject
     [ObservableProperty] private int _eqBand2Freq;
     [ObservableProperty] private int _eqBand3Freq;
     [ObservableProperty] private bool _gateEnabled;
+    [ObservableProperty] private bool _eqEnabled;
     [ObservableProperty] private bool _isEnabled;
 
     private int _eqBand1Gain;
@@ -64,6 +65,66 @@ public partial class EqGateBlockViewModel : ObservableObject
         }
     }
 
+    private int _gateDamp;
+    public int GateDamp
+    {
+        get => _gateDamp;
+        set
+        {
+            if (value < 0 || value > 90)
+                throw new ArgumentOutOfRangeException(nameof(value), "Gate Damp must be between 0 and 90 dB");
+            SetProperty(ref _gateDamp, value);
+        }
+    }
+
+    private int _gateRelease;
+    public int GateRelease
+    {
+        get => _gateRelease;
+        set
+        {
+            if (value < 0 || value > 200)
+                throw new ArgumentOutOfRangeException(nameof(value), "Gate Release must be between 0 and 200 dB/s");
+            SetProperty(ref _gateRelease, value);
+        }
+    }
+
+    private int _eqBand1Width;
+    public int EqBand1Width
+    {
+        get => _eqBand1Width;
+        set
+        {
+            if (value < 5 || value > 12)
+                throw new ArgumentOutOfRangeException(nameof(value), "EQ Band 1 Width must be between 5 and 12");
+            SetProperty(ref _eqBand1Width, value);
+        }
+    }
+
+    private int _eqBand2Width;
+    public int EqBand2Width
+    {
+        get => _eqBand2Width;
+        set
+        {
+            if (value < 5 || value > 12)
+                throw new ArgumentOutOfRangeException(nameof(value), "EQ Band 2 Width must be between 5 and 12");
+            SetProperty(ref _eqBand2Width, value);
+        }
+    }
+
+    private int _eqBand3Width;
+    public int EqBand3Width
+    {
+        get => _eqBand3Width;
+        set
+        {
+            if (value < 5 || value > 12)
+                throw new ArgumentOutOfRangeException(nameof(value), "EQ Band 3 Width must be between 5 and 12");
+            SetProperty(ref _eqBand3Width, value);
+        }
+    }
+
     public void LoadFromPreset(Preset? preset)
     {
         if (preset == null) return;
@@ -77,13 +138,29 @@ public partial class EqGateBlockViewModel : ObservableObject
 
         EqBand1Freq = preset.EqFreq1;
         EqBand1Gain = Math.Clamp(preset.EqGain1, -12, 12);
+        EqBand1Width = Math.Clamp(preset.EqWidth1, 5, 12);
         EqBand2Freq = preset.EqFreq2;
         EqBand2Gain = Math.Clamp(preset.EqGain2, -12, 12);
+        EqBand2Width = Math.Clamp(preset.EqWidth2, 5, 12);
         EqBand3Freq = preset.EqFreq3;
         EqBand3Gain = Math.Clamp(preset.EqGain3, -12, 12);
+        EqBand3Width = Math.Clamp(preset.EqWidth3, 5, 12);
         GateThreshold = Math.Clamp(preset.GateThreshold, -60, 0);
+        GateDamp = Math.Clamp(preset.GateDamp, 0, 90);
+        GateRelease = Math.Clamp(preset.GateRelease, 0, 200);
 
-        GateEnabled = true;
-        IsEnabled = GateEnabled;
+        GateEnabled = preset.GateEnabled;
+        EqEnabled = preset.EqEnabled;
+        IsEnabled = GateEnabled || EqEnabled;
+    }
+
+    partial void OnGateEnabledChanged(bool value)
+    {
+        IsEnabled = value || EqEnabled;
+    }
+
+    partial void OnEqEnabledChanged(bool value)
+    {
+        IsEnabled = value || GateEnabled;
     }
 }

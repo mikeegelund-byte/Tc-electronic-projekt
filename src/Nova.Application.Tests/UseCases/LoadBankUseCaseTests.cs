@@ -164,10 +164,10 @@ public class LoadBankUseCaseTests
         bytes[7] = 0x01;  // Preset data type
         bytes[8] = (byte)presetNumber;  // Preset number
         
-        // Name (bytes 9-32): 24 ASCII characters
+        // Name (bytes 10-33): 24 ASCII characters (byte 9 reserved)
         var name = $"Preset {presetNumber}".PadRight(24);
         var nameBytes = System.Text.Encoding.ASCII.GetBytes(name);
-        Array.Copy(nameBytes, 0, bytes, 9, Math.Min(24, nameBytes.Length));
+        Array.Copy(nameBytes, 0, bytes, 10, Math.Min(24, nameBytes.Length));
 
         // Fill with minimum valid parameter values to pass validation
         Encode4ByteValue(bytes, 38, 500);   // TapTempo: 500ms (100-3000)

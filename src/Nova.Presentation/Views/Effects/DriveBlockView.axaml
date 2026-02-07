@@ -1,0 +1,53 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Nova.Presentation.ViewModels.Effects"
+             x:Class="Nova.Presentation.Views.Effects.DriveBlockView"
+             x:DataType="vm:DriveBlockViewModel">
+
+  <Border Background="{StaticResource BackgroundPrimary}"
+          Padding="{StaticResource SpacingMedium}"
+          CornerRadius="{StaticResource BorderRadiusMedium}">
+    <StackPanel Spacing="8">
+      <StackPanel Orientation="Horizontal" Spacing="8">
+        <Ellipse Width="12" Height="12"
+                 Fill="{Binding IsEnabled, Converter={StaticResource BoolToGreenGrayBrushConverter}}"
+                 VerticalAlignment="Center" />
+        <TextBlock Text="Drive"
+                   FontWeight="{StaticResource FontWeightBold}"
+                   Foreground="{StaticResource TextPrimary}"/>
+      </StackPanel>
+
+      <Grid ColumnDefinitions="160,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto">
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="Type:" Foreground="{StaticResource TextSecondary}"/>
+        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Type}" Foreground="{StaticResource TextPrimary}"/>
+
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Gain:" Foreground="{StaticResource TextSecondary}"/>
+        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Spacing="4">
+          <NumericUpDown Value="{Binding Gain}" Minimum="0" Maximum="100" Increment="1" FormatString="N0" MinWidth="80" />
+          <TextBlock Text="%" VerticalAlignment="Center" Foreground="{StaticResource TextTertiary}" />
+        </StackPanel>
+
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="Tone:" Foreground="{StaticResource TextSecondary}"/>
+        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" Spacing="4">
+          <NumericUpDown Value="{Binding Tone}" Minimum="0" Maximum="100" Increment="1" FormatString="N0" MinWidth="80" />
+          <TextBlock Text="%" VerticalAlignment="Center" Foreground="{StaticResource TextTertiary}" />
+        </StackPanel>
+
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="Level:" Foreground="{StaticResource TextSecondary}"/>
+        <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal" Spacing="4">
+          <NumericUpDown Value="{Binding Level}" Minimum="-100" Maximum="0" Increment="1" FormatString="N0" MinWidth="80" />
+          <TextBlock Text="dB" VerticalAlignment="Center" Foreground="{StaticResource TextTertiary}" />
+        </StackPanel>
+
+        <TextBlock Grid.Row="4" Grid.Column="0" Text="Boost Level:" Foreground="{StaticResource TextSecondary}"/>
+        <StackPanel Grid.Row="4" Grid.Column="1" Orientation="Horizontal" Spacing="4">
+          <NumericUpDown Value="{Binding BoostLevel}" Minimum="0" Maximum="10" Increment="1" FormatString="N0" MinWidth="80" />
+          <TextBlock Text="dB" VerticalAlignment="Center" Foreground="{StaticResource TextTertiary}" />
+        </StackPanel>
+
+        <TextBlock Grid.Row="5" Grid.Column="0" Text="Boost Enabled:" Foreground="{StaticResource TextSecondary}"/>
+        <CheckBox Grid.Row="5" Grid.Column="1" IsChecked="{Binding BoostEnabled}" Content="Enabled" />
+      </Grid>
+    </StackPanel>
+  </Border>
+</UserControl>

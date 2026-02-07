@@ -156,14 +156,14 @@ public sealed class ImportPresetUseCase : IImportPresetUseCase
             // Preset Number (byte 8)
             sysex[8] = (byte)ParseInt(parameters, "Preset Number");
 
-            // Preset Name (bytes 9-32 = 24 ASCII chars)
+            // Preset Name (bytes 10-33 = 24 ASCII chars; byte 9 reserved)
             var name = parameters["Preset Name"];
             if (name.Length > 24)
             {
                 name = name.Substring(0, 24);
             }
             var nameBytes = System.Text.Encoding.ASCII.GetBytes(name.PadRight(24));
-            Array.Copy(nameBytes, 0, sysex, 9, 24);
+            Array.Copy(nameBytes, 0, sysex, 10, 24);
 
             // Global parameters
             Encode4ByteValue(sysex, 38, ParseInt(parameters, "Tap Tempo"));

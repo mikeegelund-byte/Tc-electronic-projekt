@@ -19,26 +19,26 @@ public sealed class PresetDetailViewModelGlobalTests
     public void TapTempo_WithValueBelowMin_ThrowsArgumentOutOfRangeException()
     {
         var vm = CreateViewModel();
-        Action act = () => vm.TapTempo = -1;
+        Action act = () => vm.TapTempo = 99;
         act.Should().Throw<ArgumentOutOfRangeException>()
-            .WithMessage("*TapTempo must be between 0 and 255*");
+            .WithMessage("*TapTempo must be between 100 and 3000*");
     }
 
     [Fact]
     public void TapTempo_WithValueAboveMax_ThrowsArgumentOutOfRangeException()
     {
         var vm = CreateViewModel();
-        Action act = () => vm.TapTempo = 256;
+        Action act = () => vm.TapTempo = 3001;
         act.Should().Throw<ArgumentOutOfRangeException>()
-            .WithMessage("*TapTempo must be between 0 and 255*");
+            .WithMessage("*TapTempo must be between 100 and 3000*");
     }
 
     [Fact]
     public void Routing_WithValidValue_Sets()
     {
         var vm = CreateViewModel();
-        vm.Routing = 3;
-        vm.Routing.Should().Be(3);
+        vm.Routing = 2;
+        vm.Routing.Should().Be(2);
     }
 
     [Fact]
@@ -47,68 +47,68 @@ public sealed class PresetDetailViewModelGlobalTests
         var vm = CreateViewModel();
         Action act = () => vm.Routing = -1;
         act.Should().Throw<ArgumentOutOfRangeException>()
-            .WithMessage("*Routing must be between 0 and 7*");
+            .WithMessage("*Routing must be between 0 and 2*");
     }
 
     [Fact]
     public void Routing_WithValueAboveMax_ThrowsArgumentOutOfRangeException()
     {
         var vm = CreateViewModel();
-        Action act = () => vm.Routing = 8;
+        Action act = () => vm.Routing = 3;
         act.Should().Throw<ArgumentOutOfRangeException>()
-            .WithMessage("*Routing must be between 0 and 7*");
+            .WithMessage("*Routing must be between 0 and 2*");
     }
 
     [Fact]
     public void LevelOutLeft_WithValidValue_Sets()
     {
         var vm = CreateViewModel();
-        vm.LevelOutLeft = 5;
-        vm.LevelOutLeft.Should().Be(5);
+        vm.LevelOutLeft = -10;
+        vm.LevelOutLeft.Should().Be(-10);
     }
 
     [Fact]
     public void LevelOutLeft_WithValueBelowMin_ThrowsArgumentOutOfRangeException()
     {
         var vm = CreateViewModel();
-        Action act = () => vm.LevelOutLeft = -21;
+        Action act = () => vm.LevelOutLeft = -101;
         act.Should().Throw<ArgumentOutOfRangeException>()
-            .WithMessage("*LevelOutLeft must be between -20 and 20*");
+            .WithMessage("*LevelOutLeft must be between -100 and 0*");
     }
 
     [Fact]
     public void LevelOutLeft_WithValueAboveMax_ThrowsArgumentOutOfRangeException()
     {
         var vm = CreateViewModel();
-        Action act = () => vm.LevelOutLeft = 21;
+        Action act = () => vm.LevelOutLeft = 1;
         act.Should().Throw<ArgumentOutOfRangeException>()
-            .WithMessage("*LevelOutLeft must be between -20 and 20*");
+            .WithMessage("*LevelOutLeft must be between -100 and 0*");
     }
 
     [Fact]
     public void LevelOutRight_WithValidValue_Sets()
     {
         var vm = CreateViewModel();
-        vm.LevelOutRight = 10;
-        vm.LevelOutRight.Should().Be(10);
+        vm.LevelOutRight = -20;
+        vm.LevelOutRight.Should().Be(-20);
     }
 
     [Fact]
     public void LevelOutRight_WithValueBelowMin_ThrowsArgumentOutOfRangeException()
     {
         var vm = CreateViewModel();
-        Action act = () => vm.LevelOutRight = -21;
+        Action act = () => vm.LevelOutRight = -101;
         act.Should().Throw<ArgumentOutOfRangeException>()
-            .WithMessage("*LevelOutRight must be between -20 and 20*");
+            .WithMessage("*LevelOutRight must be between -100 and 0*");
     }
 
     [Fact]
     public void LevelOutRight_WithValueAboveMax_ThrowsArgumentOutOfRangeException()
     {
         var vm = CreateViewModel();
-        Action act = () => vm.LevelOutRight = 21;
+        Action act = () => vm.LevelOutRight = 1;
         act.Should().Throw<ArgumentOutOfRangeException>()
-            .WithMessage("*LevelOutRight must be between -20 and 20*");
+            .WithMessage("*LevelOutRight must be between -100 and 0*");
     }
 
     private static PresetDetailViewModel CreateViewModel()

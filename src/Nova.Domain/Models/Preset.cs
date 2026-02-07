@@ -161,10 +161,10 @@ public class Preset
         // Extract preset number (byte 8)
         int presetNumber = sysex[8];
 
-        // Extract preset name (bytes 9-32 = 24 ASCII chars)
+        // Extract preset name (bytes 10-33 = 24 ASCII chars; byte 9 is reserved)
         var nameBytes = new byte[24];
-        Array.Copy(sysex, 9, nameBytes, 0, 24);
-        var presetName = System.Text.Encoding.ASCII.GetString(nameBytes).TrimEnd();
+        Array.Copy(sysex, 10, nameBytes, 0, 24);
+        var presetName = System.Text.Encoding.ASCII.GetString(nameBytes).TrimEnd('\0', ' ');
 
         // Extract parameters (Nova System uses 4-byte nibble encoding)
         int tapTempo = Decode4ByteValue(sysex, 38);
@@ -172,6 +172,11 @@ public class Preset
         int levelOutLeft = DecodeSignedDbValue(sysex, 46, -100, 0);
         int levelOutRight = DecodeSignedDbValue(sysex, 50, -100, 0);
         int mapParameter = Decode4ByteValue(sysex, 54);
+        if (mapParameter > 127)
+        {
+            // Some dumps use 0x00FFFFFF as an "unset" sentinel for map parameter.
+            mapParameter = 0;
+        }
         int mapMin = Decode4ByteValue(sysex, 58);
         int mapMid = Decode4ByteValue(sysex, 62);
         int mapMax = Decode4ByteValue(sysex, 66);
@@ -183,7 +188,7 @@ public class Preset
         int compAttack = Decode4ByteValue(sysex, 82);
         int compRelease = Decode4ByteValue(sysex, 86);
         int compResponse = Decode4ByteValue(sysex, 90);
-        int compDrive = Decode4ByteValue(sysex, 94);  // 0-12dB (unsigned)
+        int compDrive = Decode4ByteValue(sysex, 94);  // 1-20 (unsigned)
         int compLevel = DecodeSignedDbValue(sysex, 98, -12, 12);  // -12 to +12dB
 
         // Extract DRIVE effect parameters (bytes 134-193)
@@ -201,7 +206,13 @@ public class Preset
         int modTempo = Decode4ByteValue(sysex, 210);
         int modHiCut = Decode4ByteValue(sysex, 214);
         int modFeedback = DecodeSignedDbValue(sysex, 218, -100, 100);  // -100 to +100%
-        int modDelayOrRange = Decode4ByteValue(sysex, 222);
+        int modDelayOrRangeRaw = Decode4ByteValue(sysex, 222);
+        int modDelayOrRange = modType switch
+        {
+            0 or 1 => modDelayOrRangeRaw,                 // Chorus/Flanger: Delay (0-500)
+            3 or 4 => Math.Clamp(modDelayOrRangeRaw, 0, 1), // Phaser/Tremolo: Range/Type (0-1)
+            _ => 0                                         // Vibrato/Panner: unused
+        };
         int modWidth = Decode4ByteValue(sysex, 238);
         int modMix = Decode4ByteValue(sysex, 250);
 
@@ -210,9 +221,21 @@ public class Preset
         int delayTime = Decode4ByteValue(sysex, 266);
         int delayTime2 = Decode4ByteValue(sysex, 270);
         int delayTempo = Decode4ByteValue(sysex, 274);
-        int delayTempo2OrWidth = Decode4ByteValue(sysex, 278);
+        int delayTempo2OrWidthRaw = Decode4ByteValue(sysex, 278);
+        int delayTempo2OrWidth = delayType switch
+        {
+            4 => Math.Clamp(delayTempo2OrWidthRaw, 0, 16),  // Dual: Tempo2
+            5 => Math.Clamp(delayTempo2OrWidthRaw, 0, 100), // Ping-Pong: Width
+            _ => 0
+        };
         int delayFeedback = Decode4ByteValue(sysex, 282);
-        int delayClipOrFeedback2 = Decode4ByteValue(sysex, 286);
+        int delayClipOrFeedback2Raw = Decode4ByteValue(sysex, 286);
+        int delayClipOrFeedback2 = delayType switch
+        {
+            1 or 2 => Math.Clamp(delayClipOrFeedback2Raw, 0, 24),   // Analog/Tape: Clip
+            4 => Math.Clamp(delayClipOrFeedback2Raw, 0, 120),       // Dual: Feedback2
+            _ => 0
+        };
         int delayHiCut = Decode4ByteValue(sysex, 290);
         int delayLoCut = Decode4ByteValue(sysex, 294);
         int delayOffsetOrPan1;
@@ -229,8 +252,8 @@ public class Preset
         }
         else
         {
-            delayOffsetOrPan1 = DecodeSignedDbValue(sysex, 298, -200, 200);
-            delaySenseOrPan2 = DecodeSignedDbValue(sysex, 302, -50, 50);
+            delayOffsetOrPan1 = 0;
+            delaySenseOrPan2 = 0;
         }
 
         int delayDamp = Decode4ByteValue(sysex, 306);
@@ -271,14 +294,22 @@ public class Preset
 
         // Extract PITCH effect parameters (bytes 454-513)
         int pitchType = Decode4ByteValue(sysex, 454);
-        int pitchVoice1 = DecodeSignedDbValue(sysex, 458, -100, 100);  // -100 to +100 cents
-        int pitchVoice2 = DecodeSignedDbValue(sysex, 462, -100, 100);  // -100 to +100 cents
+        int pitchVoice1Raw = DecodeSignedDbValue(sysex, 458, -100, 100);  // -100 to +100 cents
+        int pitchVoice2Raw = DecodeSignedDbValue(sysex, 462, -100, 100);  // -100 to +100 cents
+        int pitchVoice1 = pitchType == 4
+            ? Math.Clamp(pitchVoice1Raw, -13, 13)
+            : Math.Clamp(pitchVoice1Raw, -100, 100);
+        int pitchVoice2 = pitchType == 4
+            ? Math.Clamp(pitchVoice2Raw, -13, 13)
+            : Math.Clamp(pitchVoice2Raw, -100, 100);
         int pitchPan1 = DecodeSignedDbValue(sysex, 466, -50, 50);  // -50 to +50
         int pitchPan2 = DecodeSignedDbValue(sysex, 470, -50, 50);  // -50 to +50
         int pitchDelay1 = Decode4ByteValue(sysex, 474);
         int pitchDelay2 = Decode4ByteValue(sysex, 478);
-        int pitchFeedback1OrKey = Decode4ByteValue(sysex, 482);
-        int pitchFeedback2OrScale = Decode4ByteValue(sysex, 486);
+        int pitchFeedback1OrKeyRaw = Decode4ByteValue(sysex, 482);
+        int pitchFeedback2OrScaleRaw = Decode4ByteValue(sysex, 486);
+        int pitchFeedback1OrKey = pitchFeedback1OrKeyRaw;
+        int pitchFeedback2OrScale = pitchFeedback2OrScaleRaw;
         int pitchLevel1 = DecodeSignedDbValue(sysex, 490, -100, 0);  // -100 to 0dB
         int pitchLevel2 = pitchType == 1 || pitchType == 2
             ? 0
@@ -286,7 +317,9 @@ public class Preset
         int pitchDirection = pitchType == 1 || pitchType == 2
             ? Decode4ByteValue(sysex, 494)
             : 0;
-        int pitchRange = Decode4ByteValue(sysex, 498);
+        int pitchRange = pitchType == 1 || pitchType == 2
+            ? Decode4ByteValue(sysex, 498)
+            : 0;
         int pitchMix = Decode4ByteValue(sysex, 502);
 
         // Extract effect on/off switches (4-byte encoded boolean: 0x00=off, 0x01=on)
@@ -468,10 +501,10 @@ public class Preset
             errors.Add($"CompAttack value {compAttack} out of range (0-16)");
         if (compRelease < 13 || compRelease > 23)
             errors.Add($"CompRelease value {compRelease} out of range (13-23)");
-        if (compResponse < 1 || compResponse > 10)
-            errors.Add($"CompResponse value {compResponse} out of range (1-10)");
-        if (compDrive < 1 || compDrive > 20)
-            errors.Add($"CompDrive value {compDrive} out of range (1-20)");
+        if (compResponse < 0 || compResponse > 10)
+            errors.Add($"CompResponse value {compResponse} out of range (0-10)");
+        if (compDrive < 0 || compDrive > 20)
+            errors.Add($"CompDrive value {compDrive} out of range (0-20)");
         if (compLevel < -12 || compLevel > 12)
             errors.Add($"CompLevel value {compLevel} out of range (-12 to 12)");
 
@@ -500,8 +533,30 @@ public class Preset
             errors.Add($"ModHiCut value {modHiCut} out of range (0-61)");
         if (modFeedback < -100 || modFeedback > 100)
             errors.Add($"ModFeedback value {modFeedback} out of range (-100 to 100)");
-        if (modDelayOrRange < 0 || modDelayOrRange > 500)
-            errors.Add($"ModDelayOrRange value {modDelayOrRange} out of range (0-500)");
+        if (modType == 0 || modType == 1)
+        {
+            // Chorus/Flanger: Delay 0-50ms in 0.1ms steps (0-500)
+            if (modDelayOrRange < 0 || modDelayOrRange > 500)
+                errors.Add($"ModDelayOrRange value {modDelayOrRange} out of range (0-500)");
+        }
+        else if (modType == 3)
+        {
+            // Phaser: Range (0=Low, 1=High)
+            if (modDelayOrRange < 0 || modDelayOrRange > 1)
+                errors.Add($"ModDelayOrRange value {modDelayOrRange} out of range (0-1) for Phaser");
+        }
+        else if (modType == 4)
+        {
+            // Tremolo: Type (0=Soft, 1=Hard)
+            if (modDelayOrRange < 0 || modDelayOrRange > 1)
+                errors.Add($"ModDelayOrRange value {modDelayOrRange} out of range (0-1) for Tremolo");
+        }
+        else
+        {
+            // Vibrato/Panner: unused in spec, allow 0 to avoid invalidating real dumps
+            if (modDelayOrRange != 0)
+                errors.Add($"ModDelayOrRange value {modDelayOrRange} out of range (expected 0 for Mod type {modType})");
+        }
         if (modWidth < 0 || modWidth > 100)
             errors.Add($"ModWidth value {modWidth} out of range (0-100)");
         if (modMix < 0 || modMix > 100)
@@ -516,20 +571,61 @@ public class Preset
             errors.Add($"DelayTime2 value {delayTime2} out of range (0-1800)");
         if (delayTempo < 0 || delayTempo > 16)
             errors.Add($"DelayTempo value {delayTempo} out of range (0-16)");
-        if (delayTempo2OrWidth < 0 || delayTempo2OrWidth > 100)
-            errors.Add($"DelayTempo2OrWidth value {delayTempo2OrWidth} out of range (0-100)");
+        if (delayType == 4)
+        {
+            if (delayTempo2OrWidth < 0 || delayTempo2OrWidth > 16)
+                errors.Add($"DelayTempo2OrWidth value {delayTempo2OrWidth} out of range (0-16) for Dual");
+        }
+        else if (delayType == 5)
+        {
+            if (delayTempo2OrWidth < 0 || delayTempo2OrWidth > 100)
+                errors.Add($"DelayTempo2OrWidth value {delayTempo2OrWidth} out of range (0-100) for Ping-Pong");
+        }
+        else if (delayTempo2OrWidth != 0)
+        {
+            errors.Add($"DelayTempo2OrWidth value {delayTempo2OrWidth} out of range (expected 0 for Delay type {delayType})");
+        }
         if (delayFeedback < 0 || delayFeedback > 120)
             errors.Add($"DelayFeedback value {delayFeedback} out of range (0-120)");
-        if (delayClipOrFeedback2 < 0 || delayClipOrFeedback2 > 120)
-            errors.Add($"DelayClipOrFeedback2 value {delayClipOrFeedback2} out of range (0-120)");
+        if (delayType == 1 || delayType == 2)
+        {
+            if (delayClipOrFeedback2 < 0 || delayClipOrFeedback2 > 24)
+                errors.Add($"DelayClipOrFeedback2 value {delayClipOrFeedback2} out of range (0-24) for Analog/Tape");
+        }
+        else if (delayType == 4)
+        {
+            if (delayClipOrFeedback2 < 0 || delayClipOrFeedback2 > 120)
+                errors.Add($"DelayClipOrFeedback2 value {delayClipOrFeedback2} out of range (0-120) for Dual");
+        }
+        else if (delayClipOrFeedback2 != 0)
+        {
+            errors.Add($"DelayClipOrFeedback2 value {delayClipOrFeedback2} out of range (expected 0 for Delay type {delayType})");
+        }
         if (delayHiCut < 0 || delayHiCut > 61)
             errors.Add($"DelayHiCut value {delayHiCut} out of range (0-61)");
         if (delayLoCut < 0 || delayLoCut > 61)
             errors.Add($"DelayLoCut value {delayLoCut} out of range (0-61)");
-        if (delayOffsetOrPan1 < -200 || delayOffsetOrPan1 > 200)
-            errors.Add($"DelayOffsetOrPan1 value {delayOffsetOrPan1} out of range (-200 to 200)");
-        if (delaySenseOrPan2 < -50 || delaySenseOrPan2 > 50)
-            errors.Add($"DelaySenseOrPan2 value {delaySenseOrPan2} out of range (-50 to 50)");
+        if (delayType == 3)
+        {
+            if (delayOffsetOrPan1 < -200 || delayOffsetOrPan1 > 200)
+                errors.Add($"DelayOffsetOrPan1 value {delayOffsetOrPan1} out of range (-200 to 200) for Dynamic");
+            if (delaySenseOrPan2 < -50 || delaySenseOrPan2 > 0)
+                errors.Add($"DelaySenseOrPan2 value {delaySenseOrPan2} out of range (-50 to 0) for Dynamic");
+        }
+        else if (delayType == 4)
+        {
+            if (delayOffsetOrPan1 < -50 || delayOffsetOrPan1 > 50)
+                errors.Add($"DelayOffsetOrPan1 value {delayOffsetOrPan1} out of range (-50 to 50) for Dual");
+            if (delaySenseOrPan2 < -50 || delaySenseOrPan2 > 50)
+                errors.Add($"DelaySenseOrPan2 value {delaySenseOrPan2} out of range (-50 to 50) for Dual");
+        }
+        else
+        {
+            if (delayOffsetOrPan1 != 0)
+                errors.Add($"DelayOffsetOrPan1 value {delayOffsetOrPan1} out of range (expected 0 for Delay type {delayType})");
+            if (delaySenseOrPan2 != 0)
+                errors.Add($"DelaySenseOrPan2 value {delaySenseOrPan2} out of range (expected 0 for Delay type {delayType})");
+        }
         if (delayDamp < 0 || delayDamp > 100)
             errors.Add($"DelayDamp value {delayDamp} out of range (0-100)");
         if (delayType == 3)
@@ -581,20 +677,20 @@ public class Preset
             errors.Add($"GateDamp value {gateDamp} out of range (0-90)");
         if (gateRelease < 0 || gateRelease > 200)
             errors.Add($"GateRelease value {gateRelease} out of range (0-200)");
-        if (eqFreq1 < 25 || eqFreq1 > 113)
-            errors.Add($"EqFreq1 value {eqFreq1} out of range (25-113)");
+        if (eqFreq1 < 25 || eqFreq1 > 210)
+            errors.Add($"EqFreq1 value {eqFreq1} out of range (25-210)");
         if (eqGain1 < -12 || eqGain1 > 12)
             errors.Add($"EqGain1 value {eqGain1} out of range (-12 to 12)");
         if (eqWidth1 < 5 || eqWidth1 > 12)
             errors.Add($"EqWidth1 value {eqWidth1} out of range (5-12)");
-        if (eqFreq2 < 25 || eqFreq2 > 113)
-            errors.Add($"EqFreq2 value {eqFreq2} out of range (25-113)");
+        if (eqFreq2 < 25 || eqFreq2 > 210)
+            errors.Add($"EqFreq2 value {eqFreq2} out of range (25-210)");
         if (eqGain2 < -12 || eqGain2 > 12)
             errors.Add($"EqGain2 value {eqGain2} out of range (-12 to 12)");
         if (eqWidth2 < 5 || eqWidth2 > 12)
             errors.Add($"EqWidth2 value {eqWidth2} out of range (5-12)");
-        if (eqFreq3 < 25 || eqFreq3 > 113)
-            errors.Add($"EqFreq3 value {eqFreq3} out of range (25-113)");
+        if (eqFreq3 < 25 || eqFreq3 > 210)
+            errors.Add($"EqFreq3 value {eqFreq3} out of range (25-210)");
         if (eqGain3 < -12 || eqGain3 > 12)
             errors.Add($"EqGain3 value {eqGain3} out of range (-12 to 12)");
         if (eqWidth3 < 5 || eqWidth3 > 12)
@@ -603,10 +699,20 @@ public class Preset
         // PITCH block
         if (pitchType < 0 || pitchType > 4)
             errors.Add($"PitchType value {pitchType} out of range (0-4)");
-        if (pitchVoice1 < -100 || pitchVoice1 > 100)
-            errors.Add($"PitchVoice1 value {pitchVoice1} out of range (-100 to 100)");
-        if (pitchVoice2 < -100 || pitchVoice2 > 100)
-            errors.Add($"PitchVoice2 value {pitchVoice2} out of range (-100 to 100)");
+        if (pitchType == 4)
+        {
+            if (pitchVoice1 < -13 || pitchVoice1 > 13)
+                errors.Add($"PitchVoice1 value {pitchVoice1} out of range (-13 to 13) for Intelligent");
+            if (pitchVoice2 < -13 || pitchVoice2 > 13)
+                errors.Add($"PitchVoice2 value {pitchVoice2} out of range (-13 to 13) for Intelligent");
+        }
+        else
+        {
+            if (pitchVoice1 < -100 || pitchVoice1 > 100)
+                errors.Add($"PitchVoice1 value {pitchVoice1} out of range (-100 to 100)");
+            if (pitchVoice2 < -100 || pitchVoice2 > 100)
+                errors.Add($"PitchVoice2 value {pitchVoice2} out of range (-100 to 100)");
+        }
         if (pitchPan1 < -50 || pitchPan1 > 50)
             errors.Add($"PitchPan1 value {pitchPan1} out of range (-50 to 50)");
         if (pitchPan2 < -50 || pitchPan2 > 50)
@@ -635,14 +741,20 @@ public class Preset
         {
             if (pitchDirection < 0 || pitchDirection > 1)
                 errors.Add($"PitchDirection value {pitchDirection} out of range (0-1)");
+            if (pitchRange < 1 || pitchRange > 2)
+                errors.Add($"PitchRange value {pitchRange} out of range (1-2) for Octaver/Whammy");
+            if (pitchLevel2 != 0)
+                errors.Add($"PitchLevel2 value {pitchLevel2} out of range (expected 0 for Octaver/Whammy)");
         }
         else
         {
             if (pitchLevel2 < -100 || pitchLevel2 > 0)
                 errors.Add($"PitchLevel2 value {pitchLevel2} out of range (-100 to 0)");
+            if (pitchDirection != 0)
+                errors.Add($"PitchDirection value {pitchDirection} out of range (expected 0 for non-Octaver/Whammy)");
+            if (pitchRange != 0)
+                errors.Add($"PitchRange value {pitchRange} out of range (expected 0 for non-Octaver/Whammy)");
         }
-        if (pitchRange < 0 || pitchRange > 2)
-            errors.Add($"PitchRange value {pitchRange} out of range (0-2)");
         if (pitchMix < 0 || pitchMix > 100)
             errors.Add($"PitchMix value {pitchMix} out of range (0-100)");
 

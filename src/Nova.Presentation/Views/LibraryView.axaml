@@ -1,0 +1,66 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Nova.Presentation.ViewModels"
+             x:Class="Nova.Presentation.Views.LibraryView"
+             x:DataType="vm:LibraryViewModel">
+
+  <StackPanel Spacing="{StaticResource Spacing16}">
+    <Border Background="{StaticResource BackgroundSecondary}"
+            Padding="{StaticResource CardPadding}"
+            CornerRadius="{StaticResource BorderRadiusLarge}">
+      <StackPanel Spacing="8">
+        <TextBlock Text="Preset Library" FontWeight="{StaticResource FontWeightBold}" FontSize="{StaticResource FontSizeLarge}" Foreground="{StaticResource TextPrimary}" />
+
+        <TextBlock Text="Search" Foreground="{StaticResource TextSecondary}" />
+        <TextBox Text="{Binding SearchText}" Watermark="Search by name or tag" />
+
+        <TextBlock Text="Name Override (optional)" Foreground="{StaticResource TextSecondary}" />
+        <TextBox Text="{Binding NameInput}" Watermark="Use selected preset name by default" />
+
+        <TextBlock Text="Tags (comma-separated)" Foreground="{StaticResource TextSecondary}" />
+        <TextBox Text="{Binding TagsInput}" Watermark="ambient, lead, clean" />
+
+        <WrapPanel>
+          <Button Content="Refresh" Command="{Binding RefreshLibraryCommand}" Padding="{StaticResource ButtonPadding}" Margin="0,0,8,8" />
+          <Button Content="Save Selected Preset" Command="{Binding SaveCurrentPresetCommand}" Padding="{StaticResource ButtonPadding}" Margin="0,0,8,8" />
+          <Button Content="Import .syx" Command="{Binding ImportPresetCommand}" Padding="{StaticResource ButtonPadding}" Margin="0,0,8,8" />
+        </WrapPanel>
+      </StackPanel>
+    </Border>
+
+    <Border Background="{StaticResource BackgroundSecondary}"
+            Padding="{StaticResource CardPadding}"
+            CornerRadius="{StaticResource BorderRadiusLarge}">
+      <StackPanel Spacing="8">
+        <TextBlock Text="Library Presets" FontWeight="{StaticResource FontWeightBold}" FontSize="{StaticResource FontSizeLarge}" Foreground="{StaticResource TextPrimary}" />
+
+        <ListBox ItemsSource="{Binding Presets}" SelectedItem="{Binding SelectedPreset}">
+          <ListBox.ItemTemplate>
+            <DataTemplate>
+              <StackPanel Spacing="2">
+                <TextBlock Text="{Binding Name}" FontWeight="{StaticResource FontWeightSemiBold}" Foreground="{StaticResource TextPrimary}" />
+                <TextBlock Text="{Binding TagsDisplay}" Foreground="{StaticResource TextSecondary}" />
+                <TextBlock Text="{Binding UpdatedAtUtc, StringFormat='Updated {0:yyyy-MM-dd}'}" Foreground="{StaticResource TextTertiary}" />
+              </StackPanel>
+            </DataTemplate>
+          </ListBox.ItemTemplate>
+        </ListBox>
+
+        <WrapPanel>
+          <Button Content="Load to Editor" Command="{Binding LoadPresetCommand}" Padding="{StaticResource ButtonPadding}" Margin="0,0,8,8" />
+          <Button Content="Export" Command="{Binding ExportPresetCommand}" Padding="{StaticResource ButtonPadding}" Margin="0,0,8,8" />
+          <Button Content="Delete" Command="{Binding DeletePresetCommand}" Padding="{StaticResource ButtonPadding}" Margin="0,0,8,8" />
+        </WrapPanel>
+      </StackPanel>
+    </Border>
+
+    <Border Background="{StaticResource BackgroundSecondary}"
+            Padding="{StaticResource CardPadding}"
+            CornerRadius="{StaticResource BorderRadiusLarge}">
+      <StackPanel Spacing="4">
+        <TextBlock Text="Library Status" FontWeight="{StaticResource FontWeightBold}" FontSize="{StaticResource FontSizeLarge}" Foreground="{StaticResource TextPrimary}" />
+        <TextBlock Text="{Binding StatusMessage}" Foreground="{StaticResource TextSecondary}" TextWrapping="Wrap" />
+      </StackPanel>
+    </Border>
+  </StackPanel>
+</UserControl>

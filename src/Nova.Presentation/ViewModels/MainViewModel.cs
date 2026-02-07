@@ -56,6 +56,12 @@ public partial class MainViewModel : ObservableObject
     private FileManagerViewModel _fileManager = null!;
 
     [ObservableProperty]
+    private LibraryViewModel _library = null!;
+
+    [ObservableProperty]
+    private TunerViewModel _tuner = new();
+
+    [ObservableProperty]
     private SystemSettingsViewModel _systemSettings = new();
 
     public MainViewModel(
@@ -68,7 +74,8 @@ public partial class MainViewModel : ObservableObject
         ILoadBankUseCase loadBankUseCase,
         IExportPresetUseCase exportPresetUseCase,
         IImportPresetUseCase importPresetUseCase,
-        ISendBankToHardwareUseCase sendBankUseCase)
+        ISendBankToHardwareUseCase sendBankUseCase,
+        Nova.Application.Library.ILibraryRepository libraryRepository)
     {
         _midiPort = midiPort;
         _connectUseCase = connectUseCase;
@@ -83,8 +90,13 @@ public partial class MainViewModel : ObservableObject
             importPresetUseCase,
             sendBankUseCase);
 
+        Library = new LibraryViewModel(libraryRepository);
+
         // Auto-refresh ports on startup
         RefreshPorts();
+
+        // Load library on startup
+        _ = Library.RefreshLibraryCommand.ExecuteAsync(null);
 
         SystemSettings.PropertyChanged += (sender, e) =>
         {
@@ -101,6 +113,12 @@ public partial class MainViewModel : ObservableObject
             {
                 OnPresetSelectionChanged();
             }
+        };
+
+        Library.PresetLoaded += preset =>
+        {
+            PresetDetail.LoadFromPreset(preset);
+            FileManager.SetSelectedPreset(preset);
         };
     }
 
@@ -318,12 +336,14 @@ public partial class MainViewModel : ObservableObject
             {
                 PresetDetail.LoadFromPreset(fullPreset);
                 FileManager.SetSelectedPreset(fullPreset);
+                Library.SetSelectedPreset(fullPreset);
             }
         }
         else
         {
             PresetDetail.LoadFromPreset(null);
             FileManager.SetSelectedPreset(null);
+            Library.SetSelectedPreset(null);
         }
     }
 

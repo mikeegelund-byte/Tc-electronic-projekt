@@ -1,6 +1,7 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:vm="using:Nova.Presentation.ViewModels"
+             xmlns:effects="using:Nova.Presentation.Views.Effects"
              xmlns:converters="using:Nova.Presentation.Converters"
              x:Class="Nova.Presentation.Views.PresetDetailView"
              x:DataType="vm:PresetDetailViewModel">
@@ -49,28 +50,30 @@
                                    FontWeight="{StaticResource FontWeightBold}" 
                                    Foreground="{StaticResource TextPrimary}"
                                    Margin="0,0,0,4"/>
-                        <Grid ColumnDefinitions="150,*" RowDefinitions="Auto,Auto,Auto,Auto">
+                        <Grid ColumnDefinitions="150,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
                             <TextBlock Grid.Row="0" Grid.Column="0" 
                                        Text="Tap Tempo:" 
                                        Foreground="{StaticResource TextSecondary}"/>
-                            <NumericUpDown Grid.Row="0" Grid.Column="1" 
-                                           Value="{Binding TapTempo}" 
-                                           Minimum="0" Maximum="255" 
-                                           Increment="1" FormatString="N0"
-                                           MinWidth="80" HorizontalAlignment="Left"
-                                           AutomationProperties.Name="Tap tempo value"
-                                           ToolTip.Tip="Tap tempo setting (0-255)" />
+                            <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Spacing="4">
+                                <NumericUpDown Value="{Binding TapTempo}" 
+                                               Minimum="100" Maximum="3000" 
+                                               Increment="1" FormatString="N0"
+                                               MinWidth="80" HorizontalAlignment="Left"
+                                               AutomationProperties.Name="Tap tempo value"
+                                               ToolTip.Tip="Tap tempo setting (100-3000 ms)" />
+                                <TextBlock Text="ms" VerticalAlignment="Center" Foreground="{StaticResource TextTertiary}" />
+                            </StackPanel>
                             
                             <TextBlock Grid.Row="1" Grid.Column="0" 
                                        Text="Routing:" 
                                        Foreground="{StaticResource TextSecondary}"/>
                             <NumericUpDown Grid.Row="1" Grid.Column="1" 
                                            Value="{Binding Routing}" 
-                                           Minimum="0" Maximum="7" 
+                                           Minimum="0" Maximum="2" 
                                            Increment="1" FormatString="N0"
                                            MinWidth="80" HorizontalAlignment="Left"
                                            AutomationProperties.Name="Signal routing configuration"
-                                           ToolTip.Tip="Routing configuration (0-7)" />
+                                           ToolTip.Tip="Routing configuration (0=Semi, 1=Serial, 2=Parallel)" />
                             
                             <TextBlock Grid.Row="2" Grid.Column="0" 
                                        Text="Level Out Left:" 
@@ -79,11 +82,11 @@
                                         Orientation="Horizontal" 
                                         Spacing="4">
                                 <NumericUpDown Value="{Binding LevelOutLeft}" 
-                                               Minimum="-20" Maximum="20" 
+                                               Minimum="-100" Maximum="0" 
                                                Increment="1" FormatString="N0"
                                                MinWidth="80"
                                                AutomationProperties.Name="Level output left in decibels"
-                                               ToolTip.Tip="Left channel output level (-20 to +20 dB)" />
+                                               ToolTip.Tip="Left channel output level (-100 to 0 dB)" />
                                 <TextBlock Text="dB" 
                                            VerticalAlignment="Center" 
                                            Foreground="{StaticResource TextTertiary}" />
@@ -96,16 +99,111 @@
                                         Orientation="Horizontal" 
                                         Spacing="4">
                                 <NumericUpDown Value="{Binding LevelOutRight}" 
-                                               Minimum="-20" Maximum="20" 
+                                               Minimum="-100" Maximum="0" 
                                                Increment="1" FormatString="N0"
                                                MinWidth="80"
                                                AutomationProperties.Name="Level output right in decibels"
-                                               ToolTip.Tip="Right channel output level (-20 to +20 dB)" />
+                                               ToolTip.Tip="Right channel output level (-100 to 0 dB)" />
                                 <TextBlock Text="dB" 
                                            VerticalAlignment="Center" 
                                            Foreground="{StaticResource TextTertiary}" />
                             </StackPanel>
+
+                            <TextBlock Grid.Row="4" Grid.Column="0"
+                                       Text="Map Parameter:"
+                                       Foreground="{StaticResource TextSecondary}"/>
+                            <NumericUpDown Grid.Row="4" Grid.Column="1"
+                                           Value="{Binding MapParameter}"
+                                           Minimum="0" Maximum="127"
+                                           Increment="1" FormatString="N0"
+                                           MinWidth="80" HorizontalAlignment="Left"
+                                           ToolTip.Tip="Expression pedal mapped parameter (0-127)" />
+
+                            <TextBlock Grid.Row="5" Grid.Column="0"
+                                       Text="Map Min:"
+                                       Foreground="{StaticResource TextSecondary}"/>
+                            <StackPanel Grid.Row="5" Grid.Column="1" Orientation="Horizontal" Spacing="4">
+                                <NumericUpDown Value="{Binding MapMin}"
+                                               Minimum="0" Maximum="100"
+                                               Increment="1" FormatString="N0"
+                                               MinWidth="80" />
+                                <TextBlock Text="%" VerticalAlignment="Center" Foreground="{StaticResource TextTertiary}" />
+                            </StackPanel>
+
+                            <TextBlock Grid.Row="6" Grid.Column="0"
+                                       Text="Map Mid:"
+                                       Foreground="{StaticResource TextSecondary}"/>
+                            <StackPanel Grid.Row="6" Grid.Column="1" Orientation="Horizontal" Spacing="4">
+                                <NumericUpDown Value="{Binding MapMid}"
+                                               Minimum="0" Maximum="100"
+                                               Increment="1" FormatString="N0"
+                                               MinWidth="80" />
+                                <TextBlock Text="%" VerticalAlignment="Center" Foreground="{StaticResource TextTertiary}" />
+                            </StackPanel>
+
+                            <TextBlock Grid.Row="7" Grid.Column="0"
+                                       Text="Map Max:"
+                                       Foreground="{StaticResource TextSecondary}"/>
+                            <StackPanel Grid.Row="7" Grid.Column="1" Orientation="Horizontal" Spacing="4">
+                                <NumericUpDown Value="{Binding MapMax}"
+                                               Minimum="0" Maximum="100"
+                                               Increment="1" FormatString="N0"
+                                               MinWidth="80" />
+                                <TextBlock Text="%" VerticalAlignment="Center" Foreground="{StaticResource TextTertiary}" />
+                            </StackPanel>
                         </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Routing Visualizer -->
+                <Border Background="{StaticResource BackgroundPrimary}"
+                        Padding="{StaticResource SpacingMedium}"
+                        CornerRadius="{StaticResource BorderRadiusMedium}"
+                        IsVisible="{Binding HasPreset}">
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="Routing"
+                                   FontWeight="{StaticResource FontWeightBold}"
+                                   Foreground="{StaticResource TextPrimary}"/>
+
+                        <StackPanel IsVisible="{Binding IsRoutingSerial}">
+                            <TextBlock Text="Serial" Foreground="{StaticResource TextSecondary}"/>
+                            <TextBlock Text="Input → Drive → Boost → Comp → Gate → EQ → Mod → Pitch → Delay → Reverb → Output"
+                                       FontFamily="{StaticResource FontMonospace}"
+                                       Foreground="{StaticResource TextTertiary}"
+                                       TextWrapping="Wrap"/>
+                        </StackPanel>
+
+                        <StackPanel IsVisible="{Binding IsRoutingSemiParallel}">
+                            <TextBlock Text="Semi-Parallel" Foreground="{StaticResource TextSecondary}"/>
+                            <TextBlock Text="Input → Drive → Boost → Comp → Gate → EQ → Mod → Pitch → ┬→ Delay →┐"
+                                       FontFamily="{StaticResource FontMonospace}"
+                                       Foreground="{StaticResource TextTertiary}"
+                                       TextWrapping="Wrap"/>
+                            <TextBlock Text="                                         └→ Reverb →┘"
+                                       FontFamily="{StaticResource FontMonospace}"
+                                       Foreground="{StaticResource TextTertiary}"
+                                       TextWrapping="Wrap"/>
+                        </StackPanel>
+
+                        <StackPanel IsVisible="{Binding IsRoutingParallel}">
+                            <TextBlock Text="Parallel" Foreground="{StaticResource TextSecondary}"/>
+                            <TextBlock Text="Input → Drive → Boost → Comp → Gate → EQ → ┬→ Mod →┐"
+                                       FontFamily="{StaticResource FontMonospace}"
+                                       Foreground="{StaticResource TextTertiary}"
+                                       TextWrapping="Wrap"/>
+                            <TextBlock Text="                                         ├→ Pitch →┤"
+                                       FontFamily="{StaticResource FontMonospace}"
+                                       Foreground="{StaticResource TextTertiary}"
+                                       TextWrapping="Wrap"/>
+                            <TextBlock Text="                                         ├→ Delay →┤"
+                                       FontFamily="{StaticResource FontMonospace}"
+                                       Foreground="{StaticResource TextTertiary}"
+                                       TextWrapping="Wrap"/>
+                            <TextBlock Text="                                         └→ Reverb →┘"
+                                       FontFamily="{StaticResource FontMonospace}"
+                                       Foreground="{StaticResource TextTertiary}"
+                                       TextWrapping="Wrap"/>
+                        </StackPanel>
                     </StackPanel>
                 </Border>
 
@@ -143,479 +241,15 @@
                     </StackPanel>
                 </Border>
 
-                <!-- Compressor Section -->
-                <Border Background="{StaticResource BackgroundPrimary}" 
-                        Padding="{StaticResource SpacingMedium}" 
-                        CornerRadius="{StaticResource BorderRadiusMedium}"
-                        IsVisible="{Binding HasPreset}">
-                    <StackPanel Spacing="8">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Ellipse Width="12" Height="12" 
-                                     Fill="{Binding Compressor.IsEnabled, Converter={StaticResource BoolToGreenGrayBrushConverter}}"
-                                     VerticalAlignment="Center" />
-                            <TextBlock Text="Compressor" 
-                                       FontWeight="{StaticResource FontWeightBold}" 
-                                       Foreground="{StaticResource TextPrimary}"/>
-                        </StackPanel>
-                        <Grid ColumnDefinitions="150,*" RowDefinitions="Auto,Auto,Auto">
-                            <TextBlock Grid.Row="0" Grid.Column="0" 
-                                       Text="Type:" 
-                                       Foreground="{StaticResource TextSecondary}"/>
-                            <TextBlock Grid.Row="0" Grid.Column="1" 
-                                       Text="{Binding Compressor.Type}" 
-                                       Foreground="{StaticResource TextPrimary}"/>
-                            
-                            <TextBlock Grid.Row="1" Grid.Column="0" 
-                                       Text="Drive:" 
-                                       Foreground="{StaticResource TextSecondary}"/>
-                            <NumericUpDown Grid.Row="1" Grid.Column="1" 
-                                           Value="{Binding Compressor.Drive}" 
-                                           Minimum="1" Maximum="20" 
-                                           Increment="1" FormatString="N0"
-                                           MinWidth="80" HorizontalAlignment="Left"
-                                           AutomationProperties.Name="Compressor drive amount"
-                                           ToolTip.Tip="Drive amount (1-20)" />
-                            
-                            <TextBlock Grid.Row="2" Grid.Column="0" 
-                                       Text="Level:" 
-                                       Foreground="{StaticResource TextSecondary}"/>
-                            <StackPanel Grid.Row="2" Grid.Column="1" 
-                                        Orientation="Horizontal" 
-                                        Spacing="4">
-                                <NumericUpDown Value="{Binding Compressor.Level}" 
-                                               Minimum="-12" Maximum="12" 
-                                               Increment="1" FormatString="N0"
-                                               MinWidth="80"
-                                               AutomationProperties.Name="Compressor level in decibels"
-                                               ToolTip.Tip="Output level (-12 to +12 dB)" />
-                                <TextBlock Text="dB" 
-                                           VerticalAlignment="Center" 
-                                           Foreground="{StaticResource TextTertiary}" />
-                            </StackPanel>
-                        </Grid>
-                    </StackPanel>
-                </Border>
-
-                <!-- Drive Section -->
-                <Border Background="{StaticResource BackgroundPrimary}" 
-                        Padding="{StaticResource SpacingMedium}" 
-                        CornerRadius="{StaticResource BorderRadiusMedium}"
-                        IsVisible="{Binding HasPreset}">
-                    <StackPanel Spacing="8">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Ellipse Width="12" Height="12" 
-                                     Fill="{Binding Drive.IsEnabled, Converter={StaticResource BoolToGreenGrayBrushConverter}}"
-                                     VerticalAlignment="Center" />
-                            <TextBlock Text="Drive" 
-                                       FontWeight="{StaticResource FontWeightBold}" 
-                                       Foreground="{StaticResource TextPrimary}"/>
-                        </StackPanel>
-                        <Grid ColumnDefinitions="150,*" RowDefinitions="Auto,Auto,Auto">
-                            <TextBlock Grid.Row="0" Grid.Column="0" 
-                                       Text="Type:" 
-                                       Foreground="{StaticResource TextSecondary}"/>
-                            <TextBlock Grid.Row="0" Grid.Column="1" 
-                                       Text="{Binding Drive.Type}" 
-                                       Foreground="{StaticResource TextPrimary}"/>
-                            
-                            <TextBlock Grid.Row="1" Grid.Column="0" 
-                                       Text="Gain:" 
-                                       Foreground="{StaticResource TextSecondary}"/>
-                            <StackPanel Grid.Row="1" Grid.Column="1" 
-                                        Orientation="Horizontal" 
-                                        Spacing="4">
-                                <NumericUpDown Value="{Binding Drive.Gain}" 
-                                               Minimum="0" Maximum="100" 
-                                               Increment="1" FormatString="N0"
-                                               MinWidth="80"
-                                               AutomationProperties.Name="Drive gain percentage"
-                                               ToolTip.Tip="Gain amount (0-100%)" />
-                                <TextBlock Text="%" 
-                                           VerticalAlignment="Center" 
-                                           Foreground="{StaticResource TextTertiary}" />
-                            </StackPanel>
-                            
-                            <TextBlock Grid.Row="2" Grid.Column="0" 
-                                       Text="Level:" 
-                                       Foreground="{StaticResource TextSecondary}"/>
-                            <StackPanel Grid.Row="2" Grid.Column="1" 
-                                        Orientation="Horizontal" 
-                                        Spacing="4">
-                                <NumericUpDown Value="{Binding Drive.Level}" 
-                                               Minimum="-30" Maximum="20" 
-                                               Increment="1" FormatString="N0"
-                                               MinWidth="80"
-                                               AutomationProperties.Name="Drive level in decibels"
-                                               ToolTip.Tip="Output level (-30 to +20 dB)" />
-                                <TextBlock Text="dB" 
-                                           VerticalAlignment="Center" 
-                                           Foreground="{StaticResource TextTertiary}" />
-                            </StackPanel>
-                        </Grid>
-                    </StackPanel>
-                </Border>
-
-                <!-- EQ/Gate Section -->
-                <Border Background="{StaticResource BackgroundPrimary}" 
-                        Padding="{StaticResource SpacingMedium}" 
-                        CornerRadius="{StaticResource BorderRadiusMedium}"
-                        IsVisible="{Binding HasPreset}">
-                    <StackPanel Spacing="8">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Ellipse Width="12" Height="12" 
-                                     Fill="{Binding EqGate.IsEnabled, Converter={StaticResource BoolToGreenGrayBrushConverter}}"
-                                     VerticalAlignment="Center" />
-                            <TextBlock Text="EQ/Gate" 
-                                       FontWeight="{StaticResource FontWeightBold}" 
-                                       Foreground="{StaticResource TextPrimary}"/>
-                        </StackPanel>
-                        <Grid ColumnDefinitions="150,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto">
-                            <TextBlock Grid.Row="0" Grid.Column="0" 
-                                       Text="Type:" 
-                                       Foreground="{StaticResource TextSecondary}"/>
-                            <TextBlock Grid.Row="0" Grid.Column="1" 
-                                       Text="{Binding EqGate.Type}" 
-                                       Foreground="{StaticResource TextPrimary}"/>
-
-                            <TextBlock Grid.Row="1" Grid.Column="0" 
-                                       Text="Gate Threshold:" 
-                                       Foreground="{StaticResource TextSecondary}"/>
-                            <StackPanel Grid.Row="1" Grid.Column="1" 
-                                        Orientation="Horizontal" 
-                                        Spacing="4">
-                                <NumericUpDown Value="{Binding EqGate.GateThreshold}" 
-                                               Minimum="-60" Maximum="0" 
-                                               Increment="1" FormatString="N0"
-                                               MinWidth="80"
-                                               AutomationProperties.Name="Gate threshold in decibels"
-                                               ToolTip.Tip="Gate threshold (-60 to 0 dB)" />
-                                <TextBlock Text="dB" 
-                                           VerticalAlignment="Center" 
-                                           Foreground="{StaticResource TextTertiary}" />
-                            </StackPanel>
-
-                            <TextBlock Grid.Row="2" Grid.Column="0" 
-                                       Text="EQ Gain 1:" 
-                                       Foreground="{StaticResource TextSecondary}"/>
-                            <StackPanel Grid.Row="2" Grid.Column="1" 
-                                        Orientation="Horizontal" 
-                                        Spacing="4">
-                                <NumericUpDown Value="{Binding EqGate.EqBand1Gain}" 
-                                               Minimum="-12" Maximum="12" 
-                                               Increment="1" FormatString="N0"
-                                               MinWidth="80" />
-                                <TextBlock Text="dB" 
-                                           VerticalAlignment="Center" 
-                                           Foreground="{StaticResource TextTertiary}" />
-                            </StackPanel>
-
-                            <TextBlock Grid.Row="3" Grid.Column="0" 
-                                       Text="EQ Gain 2:" 
-                                       Foreground="{StaticResource TextSecondary}"/>
-                            <StackPanel Grid.Row="3" Grid.Column="1" 
-                                        Orientation="Horizontal" 
-                                        Spacing="4">
-                                <NumericUpDown Value="{Binding EqGate.EqBand2Gain}" 
-                                               Minimum="-12" Maximum="12" 
-                                               Increment="1" FormatString="N0"
-                                               MinWidth="80" />
-                                <TextBlock Text="dB" 
-                                           VerticalAlignment="Center" 
-                                           Foreground="{StaticResource TextTertiary}" />
-                            </StackPanel>
-
-                            <TextBlock Grid.Row="4" Grid.Column="0" 
-                                       Text="EQ Gain 3:" 
-                                       Foreground="{StaticResource TextSecondary}"/>
-                            <StackPanel Grid.Row="4" Grid.Column="1" 
-                                        Orientation="Horizontal" 
-                                        Spacing="4">
-                                <NumericUpDown Value="{Binding EqGate.EqBand3Gain}" 
-                                               Minimum="-12" Maximum="12" 
-                                               Increment="1" FormatString="N0"
-                                               MinWidth="80" />
-                                <TextBlock Text="dB" 
-                                           VerticalAlignment="Center" 
-                                           Foreground="{StaticResource TextTertiary}" />
-                            </StackPanel>
-                        </Grid>
-                    </StackPanel>
-                </Border>
-
-                <!-- Modulation Section -->
-                <Border Background="{StaticResource BackgroundPrimary}" 
-                        Padding="{StaticResource SpacingMedium}" 
-                        CornerRadius="{StaticResource BorderRadiusMedium}"
-                        IsVisible="{Binding HasPreset}">
-                    <StackPanel Spacing="8">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Ellipse Width="12" Height="12" 
-                                     Fill="{Binding Modulation.IsEnabled, Converter={StaticResource BoolToGreenGrayBrushConverter}}"
-                                     VerticalAlignment="Center" />
-                            <TextBlock Text="Modulation" 
-                                       FontWeight="{StaticResource FontWeightBold}" 
-                                       Foreground="{StaticResource TextPrimary}"/>
-                        </StackPanel>
-                        <Grid ColumnDefinitions="150,*" RowDefinitions="Auto,Auto,Auto,Auto">
-                            <TextBlock Grid.Row="0" Grid.Column="0" 
-                                       Text="Type:" 
-                                       Foreground="{StaticResource TextSecondary}"/>
-                            <TextBlock Grid.Row="0" Grid.Column="1" 
-                                       Text="{Binding Modulation.Type}" 
-                                       Foreground="{StaticResource TextPrimary}"/>
-                            
-                            <TextBlock Grid.Row="1" Grid.Column="0" 
-                                       Text="Speed:" 
-                                       Foreground="{StaticResource TextSecondary}"/>
-                            <NumericUpDown Grid.Row="1" Grid.Column="1" 
-                                           Value="{Binding Modulation.Speed}" 
-                                           Minimum="0" Maximum="81" 
-                                           Increment="1" FormatString="N0"
-                                           MinWidth="80" HorizontalAlignment="Left"
-                                           AutomationProperties.Name="Modulation speed"
-                                           ToolTip.Tip="Modulation speed (0-81)" />
-                            
-                            <TextBlock Grid.Row="2" Grid.Column="0" 
-                                       Text="Depth:" 
-                                       Foreground="{StaticResource TextSecondary}"/>
-                            <StackPanel Grid.Row="2" Grid.Column="1" 
-                                        Orientation="Horizontal" 
-                                        Spacing="4">
-                                <NumericUpDown Value="{Binding Modulation.Depth}" 
-                                               Minimum="0" Maximum="100" 
-                                               Increment="1" FormatString="N0"
-                                               MinWidth="80"
-                                               AutomationProperties.Name="Modulation depth percentage"
-                                               ToolTip.Tip="Modulation depth (0-100%)" />
-                                <TextBlock Text="%" 
-                                           VerticalAlignment="Center" 
-                                           Foreground="{StaticResource TextTertiary}" />
-                            </StackPanel>
-                            
-                            <TextBlock Grid.Row="3" Grid.Column="0" 
-                                       Text="Mix:" 
-                                       Foreground="{StaticResource TextSecondary}"/>
-                            <StackPanel Grid.Row="3" Grid.Column="1" 
-                                        Orientation="Horizontal" 
-                                        Spacing="4">
-                                <NumericUpDown Value="{Binding Modulation.Mix}" 
-                                               Minimum="0" Maximum="100" 
-                                               Increment="1" FormatString="N0"
-                                               MinWidth="80"
-                                               AutomationProperties.Name="Modulation mix percentage"
-                                               ToolTip.Tip="Wet/dry mix (0-100%)" />
-                                <TextBlock Text="%" 
-                                           VerticalAlignment="Center" 
-                                           Foreground="{StaticResource TextTertiary}" />
-                            </StackPanel>
-                        </Grid>
-                    </StackPanel>
-                </Border>
-
-                <!-- Pitch Section -->
-                <Border Background="{StaticResource BackgroundPrimary}" 
-                        Padding="{StaticResource SpacingMedium}" 
-                        CornerRadius="{StaticResource BorderRadiusMedium}"
-                        IsVisible="{Binding HasPreset}">
-                    <StackPanel Spacing="8">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Ellipse Width="12" Height="12" 
-                                     Fill="{Binding Pitch.IsEnabled, Converter={StaticResource BoolToGreenGrayBrushConverter}}"
-                                     VerticalAlignment="Center" />
-                            <TextBlock Text="Pitch" 
-                                       FontWeight="{StaticResource FontWeightBold}" 
-                                       Foreground="{StaticResource TextPrimary}"/>
-                        </StackPanel>
-                        <Grid ColumnDefinitions="150,*" RowDefinitions="Auto,Auto,Auto,Auto">
-                            <TextBlock Grid.Row="0" Grid.Column="0" 
-                                       Text="Type:" 
-                                       Foreground="{StaticResource TextSecondary}"/>
-                            <TextBlock Grid.Row="0" Grid.Column="1" 
-                                       Text="{Binding Pitch.TypeName}" 
-                                       Foreground="{StaticResource TextPrimary}"/>
-
-                            <TextBlock Grid.Row="1" Grid.Column="0" 
-                                       Text="Voice 1:" 
-                                       Foreground="{StaticResource TextSecondary}"/>
-                            <StackPanel Grid.Row="1" Grid.Column="1" 
-                                        Orientation="Horizontal" 
-                                        Spacing="4">
-                                <NumericUpDown Value="{Binding Pitch.Voice1}" 
-                                               Minimum="-100" Maximum="100" 
-                                               Increment="1" FormatString="N0"
-                                               MinWidth="80" />
-                                <TextBlock Text="cents" 
-                                           VerticalAlignment="Center" 
-                                           Foreground="{StaticResource TextTertiary}" />
-                            </StackPanel>
-
-                            <TextBlock Grid.Row="2" Grid.Column="0" 
-                                       Text="Voice 2:" 
-                                       Foreground="{StaticResource TextSecondary}"/>
-                            <StackPanel Grid.Row="2" Grid.Column="1" 
-                                        Orientation="Horizontal" 
-                                        Spacing="4">
-                                <NumericUpDown Value="{Binding Pitch.Voice2}" 
-                                               Minimum="-100" Maximum="100" 
-                                               Increment="1" FormatString="N0"
-                                               MinWidth="80" />
-                                <TextBlock Text="cents" 
-                                           VerticalAlignment="Center" 
-                                           Foreground="{StaticResource TextTertiary}" />
-                            </StackPanel>
-
-                            <TextBlock Grid.Row="3" Grid.Column="0" 
-                                       Text="Mix:" 
-                                       Foreground="{StaticResource TextSecondary}"/>
-                            <StackPanel Grid.Row="3" Grid.Column="1" 
-                                        Orientation="Horizontal" 
-                                        Spacing="4">
-                                <NumericUpDown Value="{Binding Pitch.Mix}" 
-                                               Minimum="0" Maximum="100" 
-                                               Increment="1" FormatString="N0"
-                                               MinWidth="80" />
-                                <TextBlock Text="%" 
-                                           VerticalAlignment="Center" 
-                                           Foreground="{StaticResource TextTertiary}" />
-                            </StackPanel>
-                        </Grid>
-                    </StackPanel>
-                </Border>
-
-                <!-- Delay Section -->
-                <Border Background="{StaticResource BackgroundPrimary}" 
-                        Padding="{StaticResource SpacingMedium}" 
-                        CornerRadius="{StaticResource BorderRadiusMedium}"
-                        IsVisible="{Binding HasPreset}">
-                    <StackPanel Spacing="8">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Ellipse Width="12" Height="12" 
-                                     Fill="{Binding Delay.IsEnabled, Converter={StaticResource BoolToGreenGrayBrushConverter}}"
-                                     VerticalAlignment="Center" />
-                            <TextBlock Text="Delay" 
-                                       FontWeight="{StaticResource FontWeightBold}" 
-                                       Foreground="{StaticResource TextPrimary}"/>
-                        </StackPanel>
-                        <Grid ColumnDefinitions="150,*" RowDefinitions="Auto,Auto,Auto,Auto">
-                            <TextBlock Grid.Row="0" Grid.Column="0" 
-                                       Text="Type:" 
-                                       Foreground="{StaticResource TextSecondary}"/>
-                            <TextBlock Grid.Row="0" Grid.Column="1" 
-                                       Text="{Binding Delay.Type}" 
-                                       Foreground="{StaticResource TextPrimary}"/>
-                            
-                            <TextBlock Grid.Row="1" Grid.Column="0" 
-                                       Text="Time:" 
-                                       Foreground="{StaticResource TextSecondary}"/>
-                            <StackPanel Grid.Row="1" Grid.Column="1" 
-                                        Orientation="Horizontal" 
-                                        Spacing="4">
-                                <NumericUpDown Value="{Binding Delay.Time}" 
-                                               Minimum="0" Maximum="2000" 
-                                               Increment="10" FormatString="N0"
-                                               MinWidth="80"
-                                               AutomationProperties.Name="Delay time in milliseconds"
-                                               ToolTip.Tip="Delay time (0-2000 ms)" />
-                                <TextBlock Text="ms" 
-                                           VerticalAlignment="Center" 
-                                           Foreground="{StaticResource TextTertiary}" />
-                            </StackPanel>
-                            
-                            <TextBlock Grid.Row="2" Grid.Column="0" 
-                                       Text="Feedback:" 
-                                       Foreground="{StaticResource TextSecondary}"/>
-                            <StackPanel Grid.Row="2" Grid.Column="1" 
-                                        Orientation="Horizontal" 
-                                        Spacing="4">
-                                <NumericUpDown Value="{Binding Delay.Feedback}" 
-                                               Minimum="0" Maximum="100" 
-                                               Increment="1" FormatString="N0"
-                                               MinWidth="80"
-                                               AutomationProperties.Name="Delay feedback percentage"
-                                               ToolTip.Tip="Feedback amount (0-100%)" />
-                                <TextBlock Text="%" 
-                                           VerticalAlignment="Center" 
-                                           Foreground="{StaticResource TextTertiary}" />
-                            </StackPanel>
-                            
-                            <TextBlock Grid.Row="3" Grid.Column="0" 
-                                       Text="Mix:" 
-                                       Foreground="{StaticResource TextSecondary}"/>
-                            <StackPanel Grid.Row="3" Grid.Column="1" 
-                                        Orientation="Horizontal" 
-                                        Spacing="4">
-                                <NumericUpDown Value="{Binding Delay.Mix}" 
-                                               Minimum="0" Maximum="100" 
-                                               Increment="1" FormatString="N0"
-                                               MinWidth="80"
-                                               AutomationProperties.Name="Delay mix percentage"
-                                               ToolTip.Tip="Wet/dry mix (0-100%)" />
-                                <TextBlock Text="%" 
-                                           VerticalAlignment="Center" 
-                                           Foreground="{StaticResource TextTertiary}" />
-                            </StackPanel>
-                        </Grid>
-                    </StackPanel>
-                </Border>
-
-                <!-- Reverb Section -->
-                <Border Background="{StaticResource BackgroundPrimary}" 
-                        Padding="{StaticResource SpacingMedium}" 
-                        CornerRadius="{StaticResource BorderRadiusMedium}"
-                        IsVisible="{Binding HasPreset}">
-                    <StackPanel Spacing="8">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Ellipse Width="12" Height="12" 
-                                     Fill="{Binding Reverb.IsEnabled, Converter={StaticResource BoolToGreenGrayBrushConverter}}"
-                                     VerticalAlignment="Center" />
-                            <TextBlock Text="Reverb" 
-                                       FontWeight="{StaticResource FontWeightBold}" 
-                                       Foreground="{StaticResource TextPrimary}"/>
-                        </StackPanel>
-                        <Grid ColumnDefinitions="150,*" RowDefinitions="Auto,Auto,Auto">
-                            <TextBlock Grid.Row="0" Grid.Column="0" 
-                                       Text="Type:" 
-                                       Foreground="{StaticResource TextSecondary}"/>
-                            <TextBlock Grid.Row="0" Grid.Column="1" 
-                                       Text="{Binding Reverb.Type}" 
-                                       Foreground="{StaticResource TextPrimary}"/>
-                            
-                            <TextBlock Grid.Row="1" Grid.Column="0" 
-                                       Text="Decay:" 
-                                       Foreground="{StaticResource TextSecondary}"/>
-                            <StackPanel Grid.Row="1" Grid.Column="1" 
-                                        Orientation="Horizontal" 
-                                        Spacing="4">
-                                <NumericUpDown Value="{Binding Reverb.Decay}" 
-                                               Minimum="0" Maximum="100" 
-                                               Increment="1" FormatString="N0"
-                                               MinWidth="80"
-                                               AutomationProperties.Name="Reverb decay percentage"
-                                               ToolTip.Tip="Decay time (0-100%)" />
-                                <TextBlock Text="%" 
-                                           VerticalAlignment="Center" 
-                                           Foreground="{StaticResource TextTertiary}" />
-                            </StackPanel>
-                            
-                            <TextBlock Grid.Row="2" Grid.Column="0" 
-                                       Text="Level:" 
-                                       Foreground="{StaticResource TextSecondary}"/>
-                            <StackPanel Grid.Row="2" Grid.Column="1" 
-                                        Orientation="Horizontal" 
-                                        Spacing="4">
-                                <NumericUpDown Value="{Binding Reverb.Level}" 
-                                               Minimum="0" Maximum="100" 
-                                               Increment="1" FormatString="N0"
-                                               MinWidth="80"
-                                               AutomationProperties.Name="Reverb level percentage"
-                                               ToolTip.Tip="Output level (0-100%)" />
-                                <TextBlock Text="%" 
-                                           VerticalAlignment="Center" 
-                                           Foreground="{StaticResource TextTertiary}" />
-                            </StackPanel>
-                        </Grid>
-                    </StackPanel>
-                </Border>
+                <StackPanel Spacing="{StaticResource Spacing16}" IsVisible="{Binding HasPreset}">
+                    <effects:CompressorBlockView DataContext="{Binding Compressor}" />
+                    <effects:DriveBlockView DataContext="{Binding Drive}" />
+                    <effects:EqGateBlockView DataContext="{Binding EqGate}" />
+                    <effects:ModulationBlockView DataContext="{Binding Modulation}" />
+                    <effects:PitchBlockView DataContext="{Binding Pitch}" />
+                    <effects:DelayBlockView DataContext="{Binding Delay}" />
+                    <effects:ReverbBlockView DataContext="{Binding Reverb}" />
+                </StackPanel>
             </StackPanel>
         </ScrollViewer>
     </Border>

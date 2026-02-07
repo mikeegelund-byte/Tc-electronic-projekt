@@ -90,15 +90,18 @@ public sealed class DeletePresetUseCase : IDeletePresetUseCase
         // Reserved byte (void)
         sysex[9] = 0x00;
         
-        // Preset name at bytes 9-32 (24 chars): "Init 01", "Init 02", etc.
+        // Preset name at bytes 10-33 (24 chars): "Init 01", "Init 02", etc.
         var name = $"Init {slotNumber:D2}".PadRight(24);
         var nameBytes = System.Text.Encoding.ASCII.GetBytes(name);
-        Array.Copy(nameBytes, 0, sysex, 9, 24);
+        Array.Copy(nameBytes, 0, sysex, 10, 24);
 
         // Set minimum valid parameter values (validated ranges)
         Encode4ByteValue(sysex, 38, 500);   // TapTempo: 500ms (100-3000)
         Encode4ByteValue(sysex, 86, 15);    // CompRelease: 15 (13-23)
         Encode4ByteValue(sysex, 330, 50);   // ReverbDecay: 50 (1-200)
+        Encode4ByteValue(sysex, 410, 25);   // EqFreq1: 25 (25-210)
+        Encode4ByteValue(sysex, 422, 25);   // EqFreq2: 25 (25-210)
+        Encode4ByteValue(sysex, 434, 25);   // EqFreq3: 25 (25-210)
         Encode4ByteValue(sysex, 418, 8);    // EqWidth1: 8 (5-12)
         Encode4ByteValue(sysex, 430, 8);    // EqWidth2: 8 (5-12)
         Encode4ByteValue(sysex, 442, 8);    // EqWidth3: 8 (5-12)

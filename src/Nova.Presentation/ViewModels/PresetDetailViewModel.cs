@@ -27,8 +27,8 @@ public partial class PresetDetailViewModel : ObservableObject
         get => _tapTempo;
         set
         {
-            if (value < 0 || value > 255)
-                throw new ArgumentOutOfRangeException(nameof(value), "TapTempo must be between 0 and 255");
+            if (value < 100 || value > 3000)
+                throw new ArgumentOutOfRangeException(nameof(value), "TapTempo must be between 100 and 3000");
             SetProperty(ref _tapTempo, value);
         }
     }
@@ -39,9 +39,14 @@ public partial class PresetDetailViewModel : ObservableObject
         get => _routing;
         set
         {
-            if (value < 0 || value > 7)
-                throw new ArgumentOutOfRangeException(nameof(value), "Routing must be between 0 and 7");
-            SetProperty(ref _routing, value);
+            if (value < 0 || value > 2)
+                throw new ArgumentOutOfRangeException(nameof(value), "Routing must be between 0 and 2");
+            if (SetProperty(ref _routing, value))
+            {
+                OnPropertyChanged(nameof(IsRoutingSemiParallel));
+                OnPropertyChanged(nameof(IsRoutingSerial));
+                OnPropertyChanged(nameof(IsRoutingParallel));
+            }
         }
     }
 
@@ -51,8 +56,8 @@ public partial class PresetDetailViewModel : ObservableObject
         get => _levelOutLeft;
         set
         {
-            if (value < -20 || value > 20)
-                throw new ArgumentOutOfRangeException(nameof(value), "LevelOutLeft must be between -20 and 20");
+            if (value < -100 || value > 0)
+                throw new ArgumentOutOfRangeException(nameof(value), "LevelOutLeft must be between -100 and 0");
             SetProperty(ref _levelOutLeft, value);
         }
     }
@@ -63,13 +68,64 @@ public partial class PresetDetailViewModel : ObservableObject
         get => _levelOutRight;
         set
         {
-            if (value < -20 || value > 20)
-                throw new ArgumentOutOfRangeException(nameof(value), "LevelOutRight must be between -20 and 20");
+            if (value < -100 || value > 0)
+                throw new ArgumentOutOfRangeException(nameof(value), "LevelOutRight must be between -100 and 0");
             SetProperty(ref _levelOutRight, value);
         }
     }
 
+    private int _mapParameter;
+    public int MapParameter
+    {
+        get => _mapParameter;
+        set
+        {
+            if (value < 0 || value > 127)
+                throw new ArgumentOutOfRangeException(nameof(value), "MapParameter must be between 0 and 127");
+            SetProperty(ref _mapParameter, value);
+        }
+    }
+
+    private int _mapMin;
+    public int MapMin
+    {
+        get => _mapMin;
+        set
+        {
+            if (value < 0 || value > 100)
+                throw new ArgumentOutOfRangeException(nameof(value), "MapMin must be between 0 and 100");
+            SetProperty(ref _mapMin, value);
+        }
+    }
+
+    private int _mapMid;
+    public int MapMid
+    {
+        get => _mapMid;
+        set
+        {
+            if (value < 0 || value > 100)
+                throw new ArgumentOutOfRangeException(nameof(value), "MapMid must be between 0 and 100");
+            SetProperty(ref _mapMid, value);
+        }
+    }
+
+    private int _mapMax;
+    public int MapMax
+    {
+        get => _mapMax;
+        set
+        {
+            if (value < 0 || value > 100)
+                throw new ArgumentOutOfRangeException(nameof(value), "MapMax must be between 0 and 100");
+            SetProperty(ref _mapMax, value);
+        }
+    }
+
     public bool HasPreset => !string.IsNullOrEmpty(PresetName);
+    public bool IsRoutingSemiParallel => Routing == 0;
+    public bool IsRoutingSerial => Routing == 1;
+    public bool IsRoutingParallel => Routing == 2;
 
     public DriveBlockViewModel Drive { get; } = new();
     public CompressorBlockViewModel Compressor { get; } = new();
@@ -98,10 +154,14 @@ public partial class PresetDetailViewModel : ObservableObject
             PresetNumber = 0;
             TargetSlot = 1;
             StatusMessage = "";
-            TapTempo = 0;
+            TapTempo = 100;
             Routing = 0;
-            LevelOutLeft = 0;
-            LevelOutRight = 0;
+            LevelOutLeft = -100;
+            LevelOutRight = -100;
+            MapParameter = 0;
+            MapMin = 0;
+            MapMid = 0;
+            MapMax = 0;
             UploadPresetCommand.NotifyCanExecuteChanged();
             return;
         }
@@ -111,10 +171,14 @@ public partial class PresetDetailViewModel : ObservableObject
         PresetNumber = preset.Number;
         TargetSlot = preset.Number;
         StatusMessage = "";
-        TapTempo = Math.Clamp(preset.TapTempo, 0, 255);
-        Routing = Math.Clamp(preset.Routing, 0, 7);
-        LevelOutLeft = Math.Clamp(preset.LevelOutLeft, -20, 20);
-        LevelOutRight = Math.Clamp(preset.LevelOutRight, -20, 20);
+        TapTempo = Math.Clamp(preset.TapTempo, 100, 3000);
+        Routing = Math.Clamp(preset.Routing, 0, 2);
+        LevelOutLeft = Math.Clamp(preset.LevelOutLeft, -100, 0);
+        LevelOutRight = Math.Clamp(preset.LevelOutRight, -100, 0);
+        MapParameter = Math.Clamp(preset.MapParameter, 0, 127);
+        MapMin = Math.Clamp(preset.MapMin, 0, 100);
+        MapMid = Math.Clamp(preset.MapMid, 0, 100);
+        MapMax = Math.Clamp(preset.MapMax, 0, 100);
 
         // Load all effect blocks
         Drive.LoadFromPreset(preset);

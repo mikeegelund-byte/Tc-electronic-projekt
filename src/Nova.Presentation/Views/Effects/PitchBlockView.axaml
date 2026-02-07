@@ -1,0 +1,109 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Nova.Presentation.ViewModels.Effects"
+             x:Class="Nova.Presentation.Views.Effects.PitchBlockView"
+             x:DataType="vm:PitchBlockViewModel">
+
+  <Border Background="{StaticResource BackgroundPrimary}"
+          Padding="{StaticResource SpacingMedium}"
+          CornerRadius="{StaticResource BorderRadiusMedium}">
+    <StackPanel Spacing="8">
+      <StackPanel Orientation="Horizontal" Spacing="8">
+        <Ellipse Width="12" Height="12"
+                 Fill="{Binding IsEnabled, Converter={StaticResource BoolToGreenGrayBrushConverter}}"
+                 VerticalAlignment="Center" />
+        <TextBlock Text="Pitch"
+                   FontWeight="{StaticResource FontWeightBold}"
+                   Foreground="{StaticResource TextPrimary}"/>
+      </StackPanel>
+
+      <Grid ColumnDefinitions="160,*" RowDefinitions="Auto,Auto">
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="Type:" Foreground="{StaticResource TextSecondary}"/>
+        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding TypeName}" Foreground="{StaticResource TextPrimary}"/>
+
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Mix:" Foreground="{StaticResource TextSecondary}"/>
+        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Spacing="4">
+          <NumericUpDown Value="{Binding Mix}" Minimum="0" Maximum="100" Increment="1" FormatString="N0" MinWidth="80" />
+          <TextBlock Text="%" VerticalAlignment="Center" Foreground="{StaticResource TextTertiary}" />
+        </StackPanel>
+      </Grid>
+
+      <StackPanel Spacing="8" IsVisible="{Binding IsPedalPitch}">
+        <TextBlock Text="Pedal Pitch" FontWeight="{StaticResource FontWeightSemiBold}" Foreground="{StaticResource TextPrimary}"/>
+        <Grid ColumnDefinitions="160,*" RowDefinitions="Auto,Auto">
+          <TextBlock Grid.Row="0" Grid.Column="0" Text="Direction:" Foreground="{StaticResource TextSecondary}"/>
+          <ComboBox Grid.Row="0" Grid.Column="1" SelectedIndex="{Binding Direction}" MinWidth="120"
+                    ToolTip.Tip="Pedal pitch direction">
+            <ComboBoxItem Content="Down" />
+            <ComboBoxItem Content="Up" />
+          </ComboBox>
+
+          <TextBlock Grid.Row="1" Grid.Column="0" Text="Range:" Foreground="{StaticResource TextSecondary}"/>
+          <NumericUpDown Grid.Row="1" Grid.Column="1" Value="{Binding Range}" Minimum="1" Maximum="2" Increment="1" FormatString="N0" MinWidth="80"
+                         ToolTip.Tip="Pedal pitch range (1-2)" />
+        </Grid>
+      </StackPanel>
+
+      <StackPanel Spacing="8" IsVisible="{Binding HasVoices}">
+        <TextBlock Text="Voices" FontWeight="{StaticResource FontWeightSemiBold}" Foreground="{StaticResource TextPrimary}"/>
+        <Grid ColumnDefinitions="160,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto">
+          <TextBlock Grid.Row="0" Grid.Column="0" Text="Voice 1:" Foreground="{StaticResource TextSecondary}"/>
+          <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Spacing="4">
+            <NumericUpDown Value="{Binding Voice1}" Minimum="-100" Maximum="100" Increment="1" FormatString="N0" MinWidth="80" IsVisible="{Binding IsNotIntelligent}" />
+            <NumericUpDown Value="{Binding Voice1}" Minimum="-13" Maximum="13" Increment="1" FormatString="N0" MinWidth="80" IsVisible="{Binding IsIntelligent}" />
+            <TextBlock Text="cents" VerticalAlignment="Center" Foreground="{StaticResource TextTertiary}" IsVisible="{Binding IsNotIntelligent}" />
+            <TextBlock Text="deg" VerticalAlignment="Center" Foreground="{StaticResource TextTertiary}" IsVisible="{Binding IsIntelligent}" />
+          </StackPanel>
+
+          <TextBlock Grid.Row="1" Grid.Column="0" Text="Voice 2:" Foreground="{StaticResource TextSecondary}"/>
+          <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Spacing="4">
+            <NumericUpDown Value="{Binding Voice2}" Minimum="-100" Maximum="100" Increment="1" FormatString="N0" MinWidth="80" IsVisible="{Binding IsNotIntelligent}" />
+            <NumericUpDown Value="{Binding Voice2}" Minimum="-13" Maximum="13" Increment="1" FormatString="N0" MinWidth="80" IsVisible="{Binding IsIntelligent}" />
+            <TextBlock Text="cents" VerticalAlignment="Center" Foreground="{StaticResource TextTertiary}" IsVisible="{Binding IsNotIntelligent}" />
+            <TextBlock Text="deg" VerticalAlignment="Center" Foreground="{StaticResource TextTertiary}" IsVisible="{Binding IsIntelligent}" />
+          </StackPanel>
+
+          <TextBlock Grid.Row="2" Grid.Column="0" Text="Pan 1:" Foreground="{StaticResource TextSecondary}"/>
+          <NumericUpDown Grid.Row="2" Grid.Column="1" Value="{Binding Pan1}" Minimum="-50" Maximum="50" Increment="1" FormatString="N0" MinWidth="80" />
+
+          <TextBlock Grid.Row="3" Grid.Column="0" Text="Pan 2:" Foreground="{StaticResource TextSecondary}"/>
+          <NumericUpDown Grid.Row="3" Grid.Column="1" Value="{Binding Pan2}" Minimum="-50" Maximum="50" Increment="1" FormatString="N0" MinWidth="80" />
+
+          <TextBlock Grid.Row="4" Grid.Column="0" Text="Delay 1:" Foreground="{StaticResource TextSecondary}"/>
+          <StackPanel Grid.Row="4" Grid.Column="1" Orientation="Horizontal" Spacing="4">
+            <NumericUpDown Value="{Binding Delay1}" Minimum="0" Maximum="50" Increment="1" FormatString="N0" MinWidth="80" />
+            <TextBlock Text="ms" VerticalAlignment="Center" Foreground="{StaticResource TextTertiary}" />
+          </StackPanel>
+
+          <TextBlock Grid.Row="5" Grid.Column="0" Text="Delay 2:" Foreground="{StaticResource TextSecondary}"/>
+          <StackPanel Grid.Row="5" Grid.Column="1" Orientation="Horizontal" Spacing="4">
+            <NumericUpDown Value="{Binding Delay2}" Minimum="0" Maximum="50" Increment="1" FormatString="N0" MinWidth="80" />
+            <TextBlock Text="ms" VerticalAlignment="Center" Foreground="{StaticResource TextTertiary}" />
+          </StackPanel>
+
+          <TextBlock Grid.Row="6" Grid.Column="0" Text="Feedback 1:" Foreground="{StaticResource TextSecondary}" IsVisible="{Binding IsNotIntelligent}"/>
+          <TextBlock Grid.Row="6" Grid.Column="0" Text="Key:" Foreground="{StaticResource TextSecondary}" IsVisible="{Binding IsIntelligent}"/>
+          <NumericUpDown Grid.Row="6" Grid.Column="1" Value="{Binding Feedback1OrKey}" Minimum="0" Maximum="100" Increment="1" FormatString="N0" MinWidth="80"
+                         IsVisible="{Binding IsNotIntelligent}" ToolTip.Tip="Feedback amount for voice 1 (0-100%)" />
+          <NumericUpDown Grid.Row="6" Grid.Column="1" Value="{Binding Feedback1OrKey}" Minimum="0" Maximum="12" Increment="1" FormatString="N0" MinWidth="80"
+                         IsVisible="{Binding IsIntelligent}" ToolTip.Tip="Key for intelligent mode (0-12)" />
+        </Grid>
+
+        <Grid ColumnDefinitions="160,*" RowDefinitions="Auto,Auto">
+          <TextBlock Grid.Row="0" Grid.Column="0" Text="Feedback 2:" Foreground="{StaticResource TextSecondary}" IsVisible="{Binding IsNotIntelligent}"/>
+          <TextBlock Grid.Row="0" Grid.Column="0" Text="Scale:" Foreground="{StaticResource TextSecondary}" IsVisible="{Binding IsIntelligent}"/>
+          <NumericUpDown Grid.Row="0" Grid.Column="1" Value="{Binding Feedback2OrScale}" Minimum="0" Maximum="100" Increment="1" FormatString="N0" MinWidth="80"
+                         IsVisible="{Binding IsNotIntelligent}" ToolTip.Tip="Feedback amount for voice 2 (0-100%)" />
+          <NumericUpDown Grid.Row="0" Grid.Column="1" Value="{Binding Feedback2OrScale}" Minimum="0" Maximum="13" Increment="1" FormatString="N0" MinWidth="80"
+                         IsVisible="{Binding IsIntelligent}" ToolTip.Tip="Scale selection for intelligent mode (0-13)" />
+
+          <TextBlock Grid.Row="1" Grid.Column="0" Text="Level 1 / Level 2:" Foreground="{StaticResource TextSecondary}"/>
+          <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Spacing="8">
+            <NumericUpDown Value="{Binding Level1}" Minimum="-100" Maximum="0" Increment="1" FormatString="N0" MinWidth="70" />
+            <NumericUpDown Value="{Binding Level2}" Minimum="-100" Maximum="0" Increment="1" FormatString="N0" MinWidth="70" />
+          </StackPanel>
+        </Grid>
+      </StackPanel>
+    </StackPanel>
+  </Border>
+</UserControl>

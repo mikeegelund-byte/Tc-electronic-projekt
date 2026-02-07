@@ -21,7 +21,7 @@ public class DelayBlockViewModelTests
         var vm = new DelayBlockViewModel();
         var action = () => vm.Time = -1;
         action.Should().Throw<ArgumentOutOfRangeException>()
-            .WithMessage("*Time must be between 0 and 2000 ms*");
+            .WithMessage("*Time must be between 0 and 1800 ms*");
     }
 
     [Fact]
@@ -30,7 +30,7 @@ public class DelayBlockViewModelTests
         var vm = new DelayBlockViewModel();
         var action = () => vm.Time = 2001;
         action.Should().Throw<ArgumentOutOfRangeException>()
-            .WithMessage("*Time must be between 0 and 2000 ms*");
+            .WithMessage("*Time must be between 0 and 1800 ms*");
     }
 
     [Fact]
@@ -47,16 +47,16 @@ public class DelayBlockViewModelTests
         var vm = new DelayBlockViewModel();
         var action = () => vm.Feedback = -1;
         action.Should().Throw<ArgumentOutOfRangeException>()
-            .WithMessage("*Feedback must be between 0 and 100%*");
+            .WithMessage("*Feedback must be between 0 and 120%*");
     }
 
     [Fact]
     public void Feedback_WithValueAboveMax_ThrowsArgumentOutOfRangeException()
     {
         var vm = new DelayBlockViewModel();
-        var action = () => vm.Feedback = 101;
+        var action = () => vm.Feedback = 121;
         action.Should().Throw<ArgumentOutOfRangeException>()
-            .WithMessage("*Feedback must be between 0 and 100%*");
+            .WithMessage("*Feedback must be between 0 and 120%*");
     }
 
     [Fact]

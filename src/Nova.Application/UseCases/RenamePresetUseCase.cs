@@ -49,12 +49,12 @@ public sealed class RenamePresetUseCase : IRenamePresetUseCase
             _logger.Information("Renaming preset from '{OldName}' to '{NewName}' in slot {SlotNumber}", 
                 preset.Name, newName, preset.Number);
 
-            // Get current preset SysEx and modify name bytes (9-32 = 24 ASCII chars)
+            // Get current preset SysEx and modify name bytes (10-33 = 24 ASCII chars; byte 9 reserved)
             var sysexData = preset.ToSysEx().Value;
             
             // Pad name to 24 chars and encode as ASCII
             var nameBytes = System.Text.Encoding.ASCII.GetBytes(newName.PadRight(24));
-            Array.Copy(nameBytes, 0, sysexData, 9, 24);
+            Array.Copy(nameBytes, 0, sysexData, 10, 24);
 
             // Recalculate checksum (bytes 34-517 & 0x7F)
             int checksum = 0;

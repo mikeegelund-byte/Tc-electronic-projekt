@@ -2,7 +2,9 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Microsoft.Extensions.DependencyInjection;
+using Nova.Application.Library;
 using Nova.Application.UseCases;
+using Nova.Infrastructure.Library;
 using Nova.Infrastructure.Midi;
 using Nova.Midi;
 using Nova.Presentation.ViewModels;
@@ -33,6 +35,7 @@ public partial class App : global::Avalonia.Application
         
         // Infrastructure
         services.AddSingleton<IMidiPort, DryWetMidiPort>();
+        services.AddSingleton<ILibraryRepository, FileSystemLibraryRepository>();
         
         // Application
         services.AddTransient<IConnectUseCase, ConnectUseCase>();

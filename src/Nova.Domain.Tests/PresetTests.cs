@@ -17,10 +17,10 @@ public class PresetTests
         sysex[6] = 0x20;                    // Message ID (Dump)
         sysex[7] = 0x01;                    // Data Type (Preset)
         sysex[8] = 0x1F;                    // Preset number (31)
-        // Bytes 9-32 = preset name (24 ASCII chars)
+        // Bytes 10-33 = preset name (24 ASCII chars; byte 9 reserved)
         var name = "Test Preset             ";
         for (int i = 0; i < 24; i++)
-            sysex[9 + i] = (byte)name[i];
+            sysex[10 + i] = (byte)name[i];
 
         // Set minimum valid parameter values to pass validation
         Encode4ByteValue(sysex, 38, 500);   // TapTempo: 500ms (100-3000)
@@ -185,7 +185,7 @@ public class PresetTests
 
         // Encode name (24 bytes, space-padded)
         var nameBytes = System.Text.Encoding.ASCII.GetBytes(name.PadRight(24));
-        Array.Copy(nameBytes, 0, sysex, 9, 24);
+        Array.Copy(nameBytes, 0, sysex, 10, 24);
 
         // Set minimum valid parameter values to pass validation
         Encode4ByteValue(sysex, 38, 500);   // TapTempo: 500ms (100-3000)

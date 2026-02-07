@@ -27,7 +27,7 @@ public class PresetValidationTests
         // Preset name (24 bytes ASCII)
         var name = "Test Preset             ";
         for (int i = 0; i < 24; i++)
-            sysex[9 + i] = (byte)name[i];
+            sysex[10 + i] = (byte)name[i];
 
         // Set safe default values for parameters that need validation
         // TapTempo (bytes 38-41): 500ms (safe mid-range value)
@@ -37,8 +37,8 @@ public class PresetValidationTests
         Encode4ByteValue(sysex, 42, 0);
 
         // LevelOutLeft/Right (bytes 46-53): 0dB
-        Encode4ByteValue(sysex, 46, 0);
-        Encode4ByteValue(sysex, 50, 0);
+        EncodeSignedDbValue(sysex, 46, 0);
+        EncodeSignedDbValue(sysex, 50, 0);
         Encode4ByteValue(sysex, 54, 0);   // MapParameter: 0
         Encode4ByteValue(sysex, 58, 0);   // MapMin: 0
         Encode4ByteValue(sysex, 62, 50);  // MapMid: 50
@@ -46,19 +46,19 @@ public class PresetValidationTests
 
         // COMP parameters with safe values
         Encode4ByteValue(sysex, 70, 0);   // CompType: 0 (perc)
-        Encode4ByteValue(sysex, 74, 0);   // CompThreshold: 0 (needs offset decoding)
+        EncodeSignedDbValue(sysex, 74, 0);   // CompThreshold: 0dB
         Encode4ByteValue(sysex, 78, 1);   // CompRatio: 1
         Encode4ByteValue(sysex, 82, 5);   // CompAttack: 5
         Encode4ByteValue(sysex, 86, 15);  // CompRelease: 15
         Encode4ByteValue(sysex, 90, 5);   // CompResponse: 5
         Encode4ByteValue(sysex, 94, 10);  // CompDrive: 10
-        Encode4ByteValue(sysex, 98, 12);  // CompLevel: 12 (0dB with offset)
+        EncodeSignedDbValue(sysex, 98, 0);  // CompLevel: 0dB
 
         // DRIVE parameters
         Encode4ByteValue(sysex, 134, 0);  // DriveType: 0
         Encode4ByteValue(sysex, 138, 50); // DriveGain: 50%
         Encode4ByteValue(sysex, 142, 50); // DriveTone: 50%
-        Encode4ByteValue(sysex, 190, 0);  // DriveLevel: raw 0 (min)
+        EncodeSignedDbValue(sysex, 190, 0);  // DriveLevel: 0dB
 
         // BOOST parameters
         Encode4ByteValue(sysex, 182, 5);  // BoostLevel: 5dB
@@ -77,7 +77,7 @@ public class PresetValidationTests
         Encode4ByteValue(sysex, 206, 50); // ModDepth: 50%
         Encode4ByteValue(sysex, 210, 8);  // ModTempo: 8
         Encode4ByteValue(sysex, 214, 50); // ModHiCut: 50 (table lookup)
-        Encode4ByteValue(sysex, 218, 50); // ModFeedback: 50 (with offset)
+        EncodeSignedDbValue(sysex, 218, 0); // ModFeedback: 0%
         Encode4ByteValue(sysex, 222, 25); // ModDelayOrRange: 25
         Encode4ByteValue(sysex, 250, 50); // ModMix: 50%
 
@@ -86,9 +86,9 @@ public class PresetValidationTests
         Encode4ByteValue(sysex, 266, 500); // DelayTime: 500ms
         Encode4ByteValue(sysex, 270, 500); // DelayTime2: 500ms
         Encode4ByteValue(sysex, 274, 8);  // DelayTempo: 8
-        Encode4ByteValue(sysex, 278, 8);  // DelayTempo2OrWidth: 8
+        Encode4ByteValue(sysex, 278, 0);  // DelayTempo2OrWidth: 0 (unused for clean)
         Encode4ByteValue(sysex, 282, 50); // DelayFeedback: 50%
-        Encode4ByteValue(sysex, 286, 10); // DelayClipOrFeedback2: 10
+        Encode4ByteValue(sysex, 286, 0); // DelayClipOrFeedback2: 0 (unused for clean)
         Encode4ByteValue(sysex, 290, 50); // DelayHiCut: 50
         Encode4ByteValue(sysex, 294, 50); // DelayLoCut: 50
         Encode4ByteValue(sysex, 314, 50); // DelayMix: 50%
@@ -100,41 +100,41 @@ public class PresetValidationTests
         Encode4ByteValue(sysex, 338, 1);  // ReverbShape: 1
         Encode4ByteValue(sysex, 342, 3);  // ReverbSize: 3
         Encode4ByteValue(sysex, 346, 3);  // ReverbHiColor: 3
-        Encode4ByteValue(sysex, 350, 25); // ReverbHiLevel: 25 (0dB with offset)
+        EncodeSignedDbValue(sysex, 350, 0); // ReverbHiLevel: 0dB
         Encode4ByteValue(sysex, 354, 3);  // ReverbLoColor: 3
-        Encode4ByteValue(sysex, 358, 25); // ReverbLoLevel: 25 (0dB with offset)
-        Encode4ByteValue(sysex, 362, 0);  // ReverbRoomLevel: 0 (0dB)
-        Encode4ByteValue(sysex, 366, 0);  // ReverbLevel: 0 (0dB)
-        Encode4ByteValue(sysex, 370, 25); // ReverbDiffuse: 25 (0dB with offset)
+        EncodeSignedDbValue(sysex, 358, 0); // ReverbLoLevel: 0dB
+        EncodeSignedDbValue(sysex, 362, 0);  // ReverbRoomLevel: 0dB
+        EncodeSignedDbValue(sysex, 366, 0);  // ReverbLevel: 0dB
+        EncodeSignedDbValue(sysex, 370, 0); // ReverbDiffuse: 0dB
         Encode4ByteValue(sysex, 374, 50); // ReverbMix: 50%
 
         // EQ/GATE parameters
         Encode4ByteValue(sysex, 390, 0);  // GateType: 0 (hard)
-        Encode4ByteValue(sysex, 394, 30); // GateThreshold: 30 (-30dB)
+        EncodeSignedDbValue(sysex, 394, -30); // GateThreshold: -30dB
         Encode4ByteValue(sysex, 398, 45); // GateDamp: 45dB
         Encode4ByteValue(sysex, 402, 100); // GateRelease: 100 dB/s
         Encode4ByteValue(sysex, 410, 25); // EqFreq1: 25 (table)
-        Encode4ByteValue(sysex, 414, 12); // EqGain1: 12 (0dB)
+        EncodeSignedDbValue(sysex, 414, 0); // EqGain1: 0dB
         Encode4ByteValue(sysex, 418, 8);  // EqWidth1: 8
         Encode4ByteValue(sysex, 422, 35); // EqFreq2: 35
-        Encode4ByteValue(sysex, 426, 12); // EqGain2: 12
+        EncodeSignedDbValue(sysex, 426, 0); // EqGain2: 0dB
         Encode4ByteValue(sysex, 430, 8);  // EqWidth2: 8
         Encode4ByteValue(sysex, 434, 45); // EqFreq3: 45
-        Encode4ByteValue(sysex, 438, 12); // EqGain3: 12
+        EncodeSignedDbValue(sysex, 438, 0); // EqGain3: 0dB
         Encode4ByteValue(sysex, 442, 8);  // EqWidth3: 8
 
         // PITCH parameters
         Encode4ByteValue(sysex, 454, 0);  // PitchType: 0 (shifter)
-        Encode4ByteValue(sysex, 458, 100); // PitchVoice1: 100 (0 cents with offset)
-        Encode4ByteValue(sysex, 462, 100); // PitchVoice2: 100
-        Encode4ByteValue(sysex, 466, 50); // PitchPan1: 50 (center)
-        Encode4ByteValue(sysex, 470, 50); // PitchPan2: 50
+        EncodeSignedDbValue(sysex, 458, 0); // PitchVoice1: 0 cents
+        EncodeSignedDbValue(sysex, 462, 0); // PitchVoice2: 0 cents
+        EncodeSignedDbValue(sysex, 466, 0); // PitchPan1: center
+        EncodeSignedDbValue(sysex, 470, 0); // PitchPan2: center
         Encode4ByteValue(sysex, 474, 10); // PitchDelay1: 10ms
         Encode4ByteValue(sysex, 478, 10); // PitchDelay2: 10ms
         Encode4ByteValue(sysex, 482, 50); // PitchFeedback1OrKey: 50
         Encode4ByteValue(sysex, 486, 50); // PitchFeedback2OrScale: 50
-        Encode4ByteValue(sysex, 490, 0);  // PitchLevel1: 0 (0dB)
-        Encode4ByteValue(sysex, 494, 0);  // PitchLevel2: 0
+        EncodeSignedDbValue(sysex, 490, 0);  // PitchLevel1: 0dB
+        EncodeSignedDbValue(sysex, 494, 0);  // PitchLevel2: 0dB
 
         sysex[520] = 0xF7; // SysEx end
         return sysex;
@@ -150,6 +150,12 @@ public class PresetValidationTests
         sysex[offset + 1] = (byte)((value >> 7) & 0x7F);
         sysex[offset + 2] = (byte)((value >> 14) & 0x7F);
         sysex[offset + 3] = (byte)((value >> 21) & 0x7F); // MSB
+    }
+
+    private static void EncodeSignedDbValue(byte[] sysex, int offset, int value)
+    {
+        const int largeOffset = 16777216; // 2^24
+        Encode4ByteValue(sysex, offset, value + largeOffset);
     }
 
     // ========================================
@@ -471,7 +477,7 @@ public class PresetValidationTests
     {
         // Arrange
         var sysex = CreateValidPresetSysEx();
-        Encode4ByteValue(sysex, 298, invalidValue); // DelayMix at bytes 298-301
+        Encode4ByteValue(sysex, 314, invalidValue); // DelayMix at bytes 314-317
 
         // Act
         var result = Preset.FromSysEx(sysex);

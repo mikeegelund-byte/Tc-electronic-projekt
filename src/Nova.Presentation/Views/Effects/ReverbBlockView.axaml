@@ -1,0 +1,83 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Nova.Presentation.ViewModels.Effects"
+             x:Class="Nova.Presentation.Views.Effects.ReverbBlockView"
+             x:DataType="vm:ReverbBlockViewModel">
+
+  <Border Background="{StaticResource BackgroundPrimary}"
+          Padding="{StaticResource SpacingMedium}"
+          CornerRadius="{StaticResource BorderRadiusMedium}">
+    <StackPanel Spacing="8">
+      <StackPanel Orientation="Horizontal" Spacing="8">
+        <Ellipse Width="12" Height="12"
+                 Fill="{Binding IsEnabled, Converter={StaticResource BoolToGreenGrayBrushConverter}}"
+                 VerticalAlignment="Center" />
+        <TextBlock Text="Reverb"
+                   FontWeight="{StaticResource FontWeightBold}"
+                   Foreground="{StaticResource TextPrimary}"/>
+      </StackPanel>
+
+      <Grid ColumnDefinitions="160,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="Type:" Foreground="{StaticResource TextSecondary}"/>
+        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Type}" Foreground="{StaticResource TextPrimary}"/>
+
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Decay:" Foreground="{StaticResource TextSecondary}"/>
+        <NumericUpDown Grid.Row="1" Grid.Column="1" Value="{Binding Decay}" Minimum="1" Maximum="200" Increment="1" FormatString="N0" MinWidth="80" />
+
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="Pre-Delay:" Foreground="{StaticResource TextSecondary}"/>
+        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" Spacing="4">
+          <NumericUpDown Value="{Binding PreDelay}" Minimum="0" Maximum="100" Increment="1" FormatString="N0" MinWidth="80" />
+          <TextBlock Text="ms" VerticalAlignment="Center" Foreground="{StaticResource TextTertiary}" />
+        </StackPanel>
+
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="Shape:" Foreground="{StaticResource TextSecondary}"/>
+        <NumericUpDown Grid.Row="3" Grid.Column="1" Value="{Binding Shape}" Minimum="0" Maximum="2" Increment="1" FormatString="N0" MinWidth="80" />
+
+        <TextBlock Grid.Row="4" Grid.Column="0" Text="Size:" Foreground="{StaticResource TextSecondary}"/>
+        <NumericUpDown Grid.Row="4" Grid.Column="1" Value="{Binding Size}" Minimum="0" Maximum="7" Increment="1" FormatString="N0" MinWidth="80" />
+
+        <TextBlock Grid.Row="5" Grid.Column="0" Text="Hi Color:" Foreground="{StaticResource TextSecondary}"/>
+        <NumericUpDown Grid.Row="5" Grid.Column="1" Value="{Binding HiColor}" Minimum="0" Maximum="6" Increment="1" FormatString="N0" MinWidth="80" />
+
+        <TextBlock Grid.Row="6" Grid.Column="0" Text="Hi Level:" Foreground="{StaticResource TextSecondary}"/>
+        <StackPanel Grid.Row="6" Grid.Column="1" Orientation="Horizontal" Spacing="4">
+          <NumericUpDown Value="{Binding HiLevel}" Minimum="-25" Maximum="25" Increment="1" FormatString="N0" MinWidth="80" />
+          <TextBlock Text="dB" VerticalAlignment="Center" Foreground="{StaticResource TextTertiary}" />
+        </StackPanel>
+
+        <TextBlock Grid.Row="7" Grid.Column="0" Text="Lo Color:" Foreground="{StaticResource TextSecondary}"/>
+        <NumericUpDown Grid.Row="7" Grid.Column="1" Value="{Binding LoColor}" Minimum="0" Maximum="6" Increment="1" FormatString="N0" MinWidth="80" />
+
+        <TextBlock Grid.Row="8" Grid.Column="0" Text="Lo Level:" Foreground="{StaticResource TextSecondary}"/>
+        <StackPanel Grid.Row="8" Grid.Column="1" Orientation="Horizontal" Spacing="4">
+          <NumericUpDown Value="{Binding LoLevel}" Minimum="-25" Maximum="25" Increment="1" FormatString="N0" MinWidth="80" />
+          <TextBlock Text="dB" VerticalAlignment="Center" Foreground="{StaticResource TextTertiary}" />
+        </StackPanel>
+
+        <TextBlock Grid.Row="9" Grid.Column="0" Text="Room Level:" Foreground="{StaticResource TextSecondary}"/>
+        <StackPanel Grid.Row="9" Grid.Column="1" Orientation="Horizontal" Spacing="4">
+          <NumericUpDown Value="{Binding RoomLevel}" Minimum="-100" Maximum="0" Increment="1" FormatString="N0" MinWidth="80" />
+          <TextBlock Text="dB" VerticalAlignment="Center" Foreground="{StaticResource TextTertiary}" />
+        </StackPanel>
+
+        <TextBlock Grid.Row="10" Grid.Column="0" Text="Reverb Level:" Foreground="{StaticResource TextSecondary}"/>
+        <StackPanel Grid.Row="10" Grid.Column="1" Orientation="Horizontal" Spacing="4">
+          <NumericUpDown Value="{Binding ReverbLevel}" Minimum="-100" Maximum="0" Increment="1" FormatString="N0" MinWidth="80" />
+          <TextBlock Text="dB" VerticalAlignment="Center" Foreground="{StaticResource TextTertiary}" />
+        </StackPanel>
+
+        <TextBlock Grid.Row="11" Grid.Column="0" Text="Diffuse:" Foreground="{StaticResource TextSecondary}"/>
+        <StackPanel Grid.Row="11" Grid.Column="1" Orientation="Horizontal" Spacing="4">
+          <NumericUpDown Value="{Binding Diffuse}" Minimum="-25" Maximum="25" Increment="1" FormatString="N0" MinWidth="80" />
+          <TextBlock Text="dB" VerticalAlignment="Center" Foreground="{StaticResource TextTertiary}" />
+        </StackPanel>
+
+        <TextBlock Grid.Row="12" Grid.Column="0" Text="Mix:" Foreground="{StaticResource TextSecondary}"/>
+        <StackPanel Grid.Row="12" Grid.Column="1" Orientation="Horizontal" Spacing="4">
+          <NumericUpDown Value="{Binding Mix}" Minimum="0" Maximum="100" Increment="1" FormatString="N0" MinWidth="80" />
+          <TextBlock Text="%" VerticalAlignment="Center" Foreground="{StaticResource TextTertiary}" />
+        </StackPanel>
+      </Grid>
+    </StackPanel>
+  </Border>
+</UserControl>

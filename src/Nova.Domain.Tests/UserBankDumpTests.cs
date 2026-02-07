@@ -104,7 +104,7 @@ public class UserBankDumpTests
         // Preset name (24 bytes ASCII)
         var name = $"Preset {presetNumber}".PadRight(24);
         for (int i = 0; i < 24; i++)
-            sysex[9 + i] = (byte)name[i];
+            sysex[10 + i] = (byte)name[i];
 
         // Set safe default values for parameters that need validation
         Encode4ByteValue(sysex, 38, 500);   // TapTempo: 500ms (100-3000)

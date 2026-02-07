@@ -107,10 +107,10 @@ public static class SendRenamedBank
                 // Update slot number (byte 8)
                 sysex[8] = (byte)slotNumber;
 
-                // Set name (bytes 9-32 = 24 ASCII chars)
+                // Set name (bytes 10-33 = 24 ASCII chars; byte 9 reserved)
                 var newName = $"Preset {slotNumber}";
                 var nameBytes = System.Text.Encoding.ASCII.GetBytes(newName.PadRight(24));
-                Array.Copy(nameBytes, 0, sysex, 9, 24);
+                Array.Copy(nameBytes, 0, sysex, 10, 24);
 
                 // Recalculate checksum (sum bytes 34-517 & 0x7F) -> byte 518
                 int checksum = 0;

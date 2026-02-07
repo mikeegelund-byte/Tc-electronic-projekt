@@ -1,0 +1,24 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Nova.Presentation.ViewModels"
+             x:Class="Nova.Presentation.Views.TunerView"
+             x:DataType="vm:TunerViewModel">
+
+  <Border Background="{StaticResource BackgroundSecondary}"
+          Padding="{StaticResource CardPadding}"
+          CornerRadius="{StaticResource BorderRadiusLarge}">
+    <StackPanel Spacing="12">
+      <TextBlock Text="Tuner" FontWeight="{StaticResource FontWeightBold}" FontSize="{StaticResource FontSizeLarge}" Foreground="{StaticResource TextPrimary}" />
+
+      <StackPanel Spacing="4" HorizontalAlignment="Center">
+        <TextBlock Text="{Binding Note}" FontSize="{StaticResource FontSizeXLarge}" FontWeight="{StaticResource FontWeightBold}" Foreground="{StaticResource TextPrimary}" />
+        <TextBlock Text="{Binding Frequency, StringFormat='{}{0:F1} Hz'}" Foreground="{StaticResource TextSecondary}" />
+        <TextBlock Text="{Binding Cents, StringFormat='{}{0} cents'}" Foreground="{StaticResource TextSecondary}" />
+      </StackPanel>
+
+      <ProgressBar Minimum="0" Maximum="100" Value="{Binding CentsOffset}" Height="6" />
+
+      <TextBlock Text="{Binding StatusMessage}" Foreground="{StaticResource TextTertiary}" TextWrapping="Wrap" />
+    </StackPanel>
+  </Border>
+</UserControl>

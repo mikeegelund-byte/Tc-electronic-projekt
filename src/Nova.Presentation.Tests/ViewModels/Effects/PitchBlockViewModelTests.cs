@@ -47,7 +47,7 @@ public class PitchBlockViewModelTests
         var vm = new PitchBlockViewModel();
         var action = () => vm.Voice1 = -101;
         action.Should().Throw<ArgumentOutOfRangeException>()
-            .WithMessage("*Voice1 must be between -100 and +100 cents*");
+            .WithMessage("*Voice1 must be between -100 and 100*");
     }
 
     [Fact]
@@ -56,7 +56,7 @@ public class PitchBlockViewModelTests
         var vm = new PitchBlockViewModel();
         var action = () => vm.Voice1 = 101;
         action.Should().Throw<ArgumentOutOfRangeException>()
-            .WithMessage("*Voice1 must be between -100 and +100 cents*");
+            .WithMessage("*Voice1 must be between -100 and 100*");
     }
 
     [Fact]
@@ -73,7 +73,7 @@ public class PitchBlockViewModelTests
         var vm = new PitchBlockViewModel();
         var action = () => vm.Voice2 = -101;
         action.Should().Throw<ArgumentOutOfRangeException>()
-            .WithMessage("*Voice2 must be between -100 and +100 cents*");
+            .WithMessage("*Voice2 must be between -100 and 100*");
     }
 
     [Fact]
@@ -82,7 +82,7 @@ public class PitchBlockViewModelTests
         var vm = new PitchBlockViewModel();
         var action = () => vm.Voice2 = 101;
         action.Should().Throw<ArgumentOutOfRangeException>()
-            .WithMessage("*Voice2 must be between -100 and +100 cents*");
+            .WithMessage("*Voice2 must be between -100 and 100*");
     }
 
     [Fact]

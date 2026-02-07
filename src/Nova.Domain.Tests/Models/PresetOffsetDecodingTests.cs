@@ -77,17 +77,16 @@ public class PresetOffsetDecodingTests
     [Fact]
     public void FromSysEx_DriveLevel_DecodesCorrectly()
     {
-        // Arrange: DriveLevel uses simple offset
-        // Hardware bytes [0, 0, 0, 0] → raw 0 → -100dB (minimum)
-        // Range: -100 to 0dB
+        // Arrange: DriveLevel uses large offset (2^24)
+        // Hardware bytes [106, 127, 127, 7] → raw 16777194 → -22dB
 
         // Act
         var result = Preset.FromSysEx(_realPresetBytes);
 
         // Assert
         result.IsSuccess.Should().BeTrue();
-        result.Value.DriveLevel.Should().Be(-100,
-            "DriveLevel raw 0 should decode to -100dB (minimum)");
+        result.Value.DriveLevel.Should().Be(-22,
+            "DriveLevel should decode from raw 16777194 to -22dB");
     }
 
     // ========================================

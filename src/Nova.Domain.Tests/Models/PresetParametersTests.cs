@@ -249,8 +249,8 @@ public class PresetParametersTests
 
         // Assert
         result.IsSuccess.Should().BeTrue();
-        result.Value.CompResponse.Should().BeInRange(1, 10,
-            "COMP Response must be between 1 and 10");
+        result.Value.CompResponse.Should().BeInRange(0, 10,
+            "COMP Response must be between 0 and 10");
     }
 
     [Fact]
@@ -263,8 +263,8 @@ public class PresetParametersTests
 
         // Assert
         result.IsSuccess.Should().BeTrue();
-        result.Value.CompDrive.Should().BeInRange(1, 20,
-            "COMP Drive must be between 1 and 20");
+        result.Value.CompDrive.Should().BeInRange(0, 20,
+            "COMP Drive must be between 0 and 20");
     }
 
     [Fact]
