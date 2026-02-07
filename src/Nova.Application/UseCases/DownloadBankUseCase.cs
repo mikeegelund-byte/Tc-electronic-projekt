@@ -1,4 +1,5 @@
 using FluentResults;
+using Nova.Domain.Midi;
 using Nova.Domain.Models;
 using Nova.Midi;
 
@@ -15,8 +16,12 @@ public sealed class DownloadBankUseCase : IDownloadBankUseCase
 
     public async Task<Result<UserBankDump>> ExecuteAsync(CancellationToken cancellationToken)
     {
-        // Ideally send request here, but we listen passively or actively
-        // _midiPort.SendSysExAsync(SysExBuilder.BuildBankDumpRequest());
+        var request = SysExBuilder.BuildBankDumpRequest();
+        var sendResult = await _midiPort.SendSysExAsync(request);
+        if (sendResult.IsFailed)
+        {
+            return Result.Fail(sendResult.Errors.First().Message);
+        }
 
         var receivedPresets = new List<Preset>();
 

@@ -41,6 +41,7 @@ public partial class App : global::Avalonia.Application
         services.AddTransient<IConnectUseCase, ConnectUseCase>();
         services.AddTransient<IDownloadBankUseCase, DownloadBankUseCase>();
         services.AddTransient<IRequestPresetUseCase, RequestPresetUseCase>();
+        services.AddTransient<IRequestSystemDumpUseCase, RequestSystemDumpUseCase>();
         services.AddTransient<ISaveSystemDumpUseCase, SaveSystemDumpUseCase>();
         services.AddTransient<ISavePresetUseCase, SavePresetUseCase>();
         services.AddTransient<ISaveBankUseCase, SaveBankUseCase>();
@@ -50,10 +51,16 @@ public partial class App : global::Avalonia.Application
         services.AddTransient<ISendBankToHardwareUseCase, SendBankToHardwareUseCase>();
         services.AddTransient<IGetCCMappingsUseCase, GetCCMappingsUseCase>();
         services.AddTransient<IUpdateCCMappingUseCase, UpdateCCMappingUseCase>();
+        services.AddTransient<IGetProgramMapInUseCase, GetProgramMapInUseCase>();
+        services.AddTransient<IUpdateProgramMapInUseCase, UpdateProgramMapInUseCase>();
+        services.AddTransient<IGetProgramMapOutUseCase, GetProgramMapOutUseCase>();
+        services.AddTransient<IUpdateProgramMapOutUseCase, UpdateProgramMapOutUseCase>();
         
         // ViewModels
         services.AddTransient<MainViewModel>();
         services.AddTransient<CCMappingViewModel>();
+        services.AddTransient<ProgramMapInViewModel>();
+        services.AddTransient<ProgramMapOutViewModel>();
         
         Services = services.BuildServiceProvider();
 

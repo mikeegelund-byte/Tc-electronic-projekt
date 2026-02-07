@@ -1,5 +1,6 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:converters="using:Nova.Presentation.Converters"
              x:Class="Nova.Presentation.App"
              RequestedThemeVariant="Default">
 
@@ -8,6 +9,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceInclude Source="/Styles/Colors.axaml" />
             </ResourceDictionary.MergedDictionaries>
+            <converters:BoolToGreenGrayBrushConverter x:Key="BoolToGreenGrayBrushConverter" />
         </ResourceDictionary>
     </Application.Resources>
 
@@ -16,12 +18,4 @@
         <StyleInclude Source="/Styles/Animations.axaml"/>
         <StyleInclude Source="/Styles/NovaTheme.axaml"/>
     </Application.Styles>
-    
-    <Application.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceInclude Source="/Styles/Colors.axaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Application.Resources>
 </Application>

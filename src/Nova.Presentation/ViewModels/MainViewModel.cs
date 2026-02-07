@@ -14,6 +14,7 @@ public partial class MainViewModel : ObservableObject
     private readonly IMidiPort _midiPort;
     private readonly IConnectUseCase _connectUseCase;
     private readonly IDownloadBankUseCase _downloadBankUseCase;
+    private readonly IRequestSystemDumpUseCase _requestSystemDumpUseCase;
     private readonly ISaveSystemDumpUseCase _saveSystemDumpUseCase;
     private UserBankDump? _currentBank;
     private SystemDump? _currentSystemDump;
@@ -33,11 +34,11 @@ public partial class MainViewModel : ObservableObject
     private string? _selectedOutputPort;
 
     [ObservableProperty]
-    [NotifyCanExecuteChangedFor(nameof(ConnectCommand), nameof(DownloadBankCommand))]
+    [NotifyCanExecuteChangedFor(nameof(ConnectCommand), nameof(DownloadBankCommand), nameof(DownloadSystemSettingsCommand))]
     private bool _isConnected;
 
     [ObservableProperty]
-    [NotifyCanExecuteChangedFor(nameof(DownloadBankCommand), nameof(SaveSystemSettingsCommand))]
+    [NotifyCanExecuteChangedFor(nameof(DownloadBankCommand), nameof(DownloadSystemSettingsCommand), nameof(SaveSystemSettingsCommand))]
     private bool _isDownloading;
 
     [ObservableProperty]
@@ -64,10 +65,20 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty]
     private SystemSettingsViewModel _systemSettings = new();
 
+    [ObservableProperty]
+    private CCMappingViewModel _midiMapping = null!;
+
+    [ObservableProperty]
+    private ProgramMapInViewModel _programMapIn = null!;
+
+    [ObservableProperty]
+    private ProgramMapOutViewModel _programMapOut = null!;
+
     public MainViewModel(
         IMidiPort midiPort,
         IConnectUseCase connectUseCase,
         IDownloadBankUseCase downloadBankUseCase,
+        IRequestSystemDumpUseCase requestSystemDumpUseCase,
         ISaveSystemDumpUseCase saveSystemDumpUseCase,
         ISavePresetUseCase savePresetUseCase,
         ISaveBankUseCase saveBankUseCase,
@@ -75,11 +86,15 @@ public partial class MainViewModel : ObservableObject
         IExportPresetUseCase exportPresetUseCase,
         IImportPresetUseCase importPresetUseCase,
         ISendBankToHardwareUseCase sendBankUseCase,
-        Nova.Application.Library.ILibraryRepository libraryRepository)
+        Nova.Application.Library.ILibraryRepository libraryRepository,
+        CCMappingViewModel midiMappingViewModel,
+        ProgramMapInViewModel programMapInViewModel,
+        ProgramMapOutViewModel programMapOutViewModel)
     {
         _midiPort = midiPort;
         _connectUseCase = connectUseCase;
         _downloadBankUseCase = downloadBankUseCase;
+        _requestSystemDumpUseCase = requestSystemDumpUseCase;
         _saveSystemDumpUseCase = saveSystemDumpUseCase;
 
         PresetDetail = new PresetDetailViewModel(savePresetUseCase);
@@ -91,6 +106,9 @@ public partial class MainViewModel : ObservableObject
             sendBankUseCase);
 
         Library = new LibraryViewModel(libraryRepository);
+        MidiMapping = midiMappingViewModel;
+        ProgramMapIn = programMapInViewModel;
+        ProgramMapOut = programMapOutViewModel;
 
         // Auto-refresh ports on startup
         RefreshPorts();
@@ -207,7 +225,7 @@ public partial class MainViewModel : ObservableObject
     private async Task DownloadBankAsync()
     {
         IsDownloading = true;
-        StatusMessage = "Waiting for User Bank dump from pedal...";
+        StatusMessage = "Requesting User Bank dump from pedal...";
         DownloadProgress = 0;
 
         try
@@ -252,9 +270,40 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand(CanExecute = nameof(CanDownload))]
     private async Task DownloadSystemSettingsAsync()
     {
-        // TODO: Implement when IRequestSystemDumpUseCase is available
-        await Task.CompletedTask;
-        StatusMessage = "System settings download not yet implemented";
+        IsDownloading = true;
+        StatusMessage = "Requesting system dump from pedal...";
+        DownloadProgress = 0;
+
+        try
+        {
+            var result = await _requestSystemDumpUseCase.ExecuteAsync(timeoutMs: 10000);
+
+            if (result.IsSuccess)
+            {
+                var dump = result.Value;
+                _currentSystemDump = dump;
+                SystemSettings.LoadFromDump(dump);
+                await MidiMapping.LoadFromDump(dump);
+                await ProgramMapIn.LoadFromDump(dump);
+                await ProgramMapOut.LoadFromDump(dump);
+                StatusMessage = "System dump loaded successfully";
+                DownloadProgress = 100;
+            }
+            else
+            {
+                StatusMessage = $"Error: {result.Errors.First().Message}";
+                DownloadProgress = 0;
+            }
+        }
+        catch (Exception ex)
+        {
+            StatusMessage = $"Error: {ex.Message}";
+            DownloadProgress = 0;
+        }
+        finally
+        {
+            IsDownloading = false;
+        }
     }
 
     [RelayCommand(CanExecute = nameof(CanSaveSystemSettings))]

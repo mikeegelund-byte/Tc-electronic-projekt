@@ -87,6 +87,12 @@
                   Spacing="{StaticResource Spacing16}" 
                   Margin="0,20,0,0"
                   HorizontalAlignment="Left">
+        <Button Content="Download from Pedal"
+                Command="{Binding $parent[Window].((vm:MainViewModel)DataContext).DownloadSystemSettingsCommand}"
+                Padding="{StaticResource ButtonPadding}"
+                AutomationProperties.Name="Download system settings from pedal"
+                AutomationProperties.HelpText="Request system dump from Nova System hardware" />
+
         <Button Content="Save to Pedal"
                 Command="{Binding $parent[Window].((vm:MainViewModel)DataContext).SaveSystemSettingsCommand}"
                 Padding="{StaticResource ButtonPadding}"

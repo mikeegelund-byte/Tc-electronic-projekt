@@ -87,8 +87,8 @@
         <!-- Main Content with Tab Control -->
         <TabControl>
             <!-- Connection Tab -->
-            <TabItem Header="Connection"
-                     AutomationProperties.Name="Connection and MIDI settings tab">
+            <TabItem Header="Presets"
+                     AutomationProperties.Name="Preset manager tab">
                 <Grid ColumnDefinitions="*,16,400" RowDefinitions="*">
                     <!-- Left Side: Connection, Bank Operations, and Preset List -->
                     <StackPanel Grid.Column="0" Spacing="16">
@@ -196,7 +196,7 @@
                                            FontSize="{StaticResource FontSizeLarge}"
                                            Foreground="{StaticResource TextPrimary}"/>
                                 
-                                <TextBlock Text="Trigger 'Send Dump' from your Nova System pedal (UTILITY → MIDI → Send Dump)"
+                                <TextBlock Text="Click Download User Bank to request a dump from your Nova System. If nothing happens, use UTILITY → MIDI → Send Dump on the pedal."
                                            Foreground="{StaticResource TextTertiary}"
                                            TextWrapping="Wrap"/>
                                 
@@ -236,6 +236,24 @@
             <TabItem Header="Tuner"
                      AutomationProperties.Name="Tuner tab">
                 <views:TunerView DataContext="{Binding Tuner}" />
+            </TabItem>
+
+            <!-- MIDI Mapping Tab -->
+            <TabItem Header="MIDI Mapping"
+                     AutomationProperties.Name="MIDI mapping tab">
+                <views:MidiMappingView DataContext="{Binding MidiMapping}" />
+            </TabItem>
+
+            <!-- Program Map In Tab -->
+            <TabItem Header="Program Map In"
+                     AutomationProperties.Name="Program map in tab">
+                <views:ProgramMapInView DataContext="{Binding ProgramMapIn}" />
+            </TabItem>
+
+            <!-- Program Map Out Tab -->
+            <TabItem Header="Program Map Out"
+                     AutomationProperties.Name="Program map out tab">
+                <views:ProgramMapOutView DataContext="{Binding ProgramMapOut}" />
             </TabItem>
 
             <!-- System Settings Tab -->
