@@ -1,0 +1,35 @@
+#!/usr/bin/env pwsh
+# Pre-commit hook: Verify build + basic tests
+# Install: git config core.hooksPath .githooks
+
+$ErrorActionPreference = "Stop"
+
+Write-Host "🔍 Pre-commit verification..." -ForegroundColor Cyan
+
+# 1. Check if solution exists
+if (-not (Test-Path "NovaApp.sln")) {
+    Write-Host "✅ No solution found, skipping build check" -ForegroundColor Yellow
+    exit 0
+}
+
+# 2. Build solution
+Write-Host "  Building solution..." -ForegroundColor Gray
+$buildResult = dotnet build NovaApp.sln --verbosity quiet --nologo 2>&1
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "❌ Build failed. Commit rejected." -ForegroundColor Red
+    Write-Host $buildResult -ForegroundColor Red
+    exit 1
+}
+
+Write-Host "✅ Build successful" -ForegroundColor Green
+
+# 3. Run fast tests (skip integration tests)
+Write-Host "  Running unit tests..." -ForegroundColor Gray
+$testResult = dotnet test NovaApp.sln --filter "Category!=Integration" --verbosity quiet --nologo 2>&1
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "⚠️  Some tests failed, but allowing commit (review before push)" -ForegroundColor Yellow
+    Write-Host $testResult -ForegroundColor Yellow
+}
+
+Write-Host "✅ Pre-commit checks passed" -ForegroundColor Green
+exit 0

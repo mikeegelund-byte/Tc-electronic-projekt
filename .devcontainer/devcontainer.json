@@ -1,0 +1,16 @@
+{
+  "name": "Nova System Manager",
+  "image": "mcr.microsoft.com/dotnet/sdk:8.0",
+  "features": {
+    "ghcr.io/devcontainers/features/git:1": {}
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-dotnettools.csharp",
+        "editorconfig.editorconfig"
+      ]
+    }
+  },
+  "postCreateCommand": "dotnet restore NovaApp.sln"
+}

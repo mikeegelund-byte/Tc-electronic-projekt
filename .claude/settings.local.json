@@ -3,7 +3,16 @@
     "allow": [
       "Bash(git rm:*)",
       "Bash(dotnet:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(ls:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nCleanup: Systematisk projekt oprydning efter migration\n\nSLETTET \\(42 filer/mapper\\):\n- 1 CHANGELOG.md \\(duplikerede git log\\)\n- 4 outdated docs \\(module roadmap, implementation guides\\)\n- 2 scripts \\(setup.ps1, verify-commit.ps1 - aldrig brugt\\)\n- 9 template filer \\(Class1.cs, UnitTest1.cs\\)\n- 9 backup filer \\(.bak, .backup, .disabled\\)\n- 5 TestResults mapper + 11 coverage filer\n- 1 tom installer/ mappe\n\nOPDATERET \\(13 filer\\):\n- README, MANUAL_TEST_GUIDE, TESTING_STRATEGY \\(rettet stier + test count\\)\n- .gitignore \\(backup/template excludes\\)\n- 9x docs/ filer \\(fjernet outdated content, opdateret til nuværende status\\)\n\nFLYTTET:\n- EFFECT_REFERENCE.md → docs/ \\(bedre organisering\\)\n\nVERIFIED:\n- src/ struktur: KORREKT \\(Clean Architecture, net8.0, 12 projekter\\)\n- 453/458 tests passing \\(98.9%\\)\n- Alle ændringer staged og verificeret\n\nRationale: Fjern pre-implementation planning docs for færdigt projekt.\nProjektet er migreret, implementeret, og fungerer - cleanup af legacy materiale.\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git commit:*)",
+      "Bash(git archive:*)",
+      "Bash(dir:*)",
+      "Bash(Get-ChildItem -Recurse -Filter *.md)",
+      "Bash(Select-Object -ExpandProperty FullName)",
+      "Bash(Out-File before_structure_docs.txt)",
+      "Bash(git mv:*)"
     ]
   }
 }

@@ -1,0 +1,32 @@
+#!/usr/bin/env pwsh
+# Commit message validation
+# Enforce conventional commit format
+
+param($commitMsgFile)
+
+$commitMsg = Get-Content $commitMsgFile -Raw
+
+# Allow conventional commit format: type(scope): message
+# Examples: feat(midi): add new parser, fix(ui): resolve layout bug
+$pattern = "^(feat|fix|docs|style|refactor|test|chore|perf|ci|build|revert)(\(.+\))?: .{10,}"
+
+if ($commitMsg -notmatch $pattern) {
+    Write-Host "❌ Invalid commit message format!" -ForegroundColor Red
+    Write-Host ""
+    Write-Host "Commit messages must follow: type(scope): description" -ForegroundColor Yellow
+    Write-Host ""
+    Write-Host "Valid types:" -ForegroundColor Cyan
+    Write-Host "  feat     - New feature" -ForegroundColor Gray
+    Write-Host "  fix      - Bug fix" -ForegroundColor Gray
+    Write-Host "  docs     - Documentation only" -ForegroundColor Gray
+    Write-Host "  refactor - Code change (no new feature or fix)" -ForegroundColor Gray
+    Write-Host "  test     - Add/update tests" -ForegroundColor Gray
+    Write-Host "  chore    - Maintenance tasks" -ForegroundColor Gray
+    Write-Host ""
+    Write-Host "Example: feat(midi): add SysEx validation" -ForegroundColor Green
+    Write-Host ""
+    Write-Host "To bypass this check (not recommended): git commit --no-verify" -ForegroundColor DarkGray
+    exit 1
+}
+
+exit 0
