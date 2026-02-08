@@ -154,6 +154,32 @@ public partial class EqGateBlockViewModel : ObservableObject
         IsEnabled = GateEnabled || EqEnabled;
     }
 
+    public void WriteToPreset(Preset preset)
+    {
+        if (preset == null) return;
+
+        preset.GateType = Type switch
+        {
+            "Soft" => 1,
+            _ => 0
+        };
+
+        preset.EqFreq1 = EqBand1Freq;
+        preset.EqGain1 = EqBand1Gain;
+        preset.EqWidth1 = EqBand1Width;
+        preset.EqFreq2 = EqBand2Freq;
+        preset.EqGain2 = EqBand2Gain;
+        preset.EqWidth2 = EqBand2Width;
+        preset.EqFreq3 = EqBand3Freq;
+        preset.EqGain3 = EqBand3Gain;
+        preset.EqWidth3 = EqBand3Width;
+        preset.GateThreshold = GateThreshold;
+        preset.GateDamp = GateDamp;
+        preset.GateRelease = GateRelease;
+        preset.GateEnabled = GateEnabled;
+        preset.EqEnabled = EqEnabled;
+    }
+
     partial void OnGateEnabledChanged(bool value)
     {
         IsEnabled = value || EqEnabled;

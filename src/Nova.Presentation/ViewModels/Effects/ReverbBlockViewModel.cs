@@ -196,4 +196,24 @@ public partial class ReverbBlockViewModel : ObservableObject
         OnPropertyChanged(nameof(IsRoom));
         OnPropertyChanged(nameof(IsPlate));
     }
+
+    public void WriteToPreset(Preset preset)
+    {
+        if (preset == null) return;
+
+        preset.ReverbType = TypeId;
+        preset.ReverbDecay = Decay;
+        preset.ReverbPreDelay = PreDelay;
+        preset.ReverbShape = Shape;
+        preset.ReverbSize = Size;
+        preset.ReverbHiColor = HiColor;
+        preset.ReverbHiLevel = HiLevel;
+        preset.ReverbLoColor = LoColor;
+        preset.ReverbLoLevel = LoLevel;
+        preset.ReverbRoomLevel = RoomLevel;
+        preset.ReverbLevel = ReverbLevel;
+        preset.ReverbDiffuse = Diffuse;
+        preset.ReverbMix = Mix;
+        preset.ReverbEnabled = IsEnabled;
+    }
 }

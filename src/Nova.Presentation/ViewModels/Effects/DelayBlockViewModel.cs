@@ -215,4 +215,25 @@ public partial class DelayBlockViewModel : ObservableObject
         OnPropertyChanged(nameof(IsDual));
         OnPropertyChanged(nameof(IsPingPong));
     }
+
+    public void WriteToPreset(Preset preset)
+    {
+        if (preset == null) return;
+
+        preset.DelayType = TypeId;
+        preset.DelayTime = Time;
+        preset.DelayTime2 = Time2;
+        preset.DelayTempo = Tempo;
+        preset.DelayTempo2OrWidth = Tempo2OrWidth;
+        preset.DelayFeedback = Feedback;
+        preset.DelayClipOrFeedback2 = ClipOrFeedback2;
+        preset.DelayHiCut = HiCut;
+        preset.DelayLoCut = LoCut;
+        preset.DelayOffsetOrPan1 = OffsetOrPan1;
+        preset.DelaySenseOrPan2 = SenseOrPan2;
+        preset.DelayDamp = Damp;
+        preset.DelayRelease = Release;
+        preset.DelayMix = Mix;
+        preset.DelayEnabled = IsEnabled;
+    }
 }

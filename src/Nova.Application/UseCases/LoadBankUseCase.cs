@@ -45,13 +45,25 @@ public sealed class LoadBankUseCase : ILoadBankUseCase
 
             byte[] fileData = await File.ReadAllBytesAsync(filePath, cancellationToken);
 
-            // Step 2: Validate file size (60 presets * 520 bytes = 31,200 bytes)
-            const int expectedSize = 60 * 520;
-            if (fileData.Length != expectedSize)
+            // Step 2: Validate file size — accept both 520-byte (spec) and 521-byte (legacy) formats
+            const int specPresetSize = 520;
+            const int legacyPresetSize = 521;
+            int presetSize;
+
+            if (fileData.Length == 60 * specPresetSize)
             {
-                _logger.Error("Invalid file size: expected {Expected} bytes, got {Actual}",
-                    expectedSize, fileData.Length);
-                return Result.Fail<UserBankDump>($"Invalid file size: expected {expectedSize} bytes, got {fileData.Length}");
+                presetSize = specPresetSize;
+            }
+            else if (fileData.Length == 60 * legacyPresetSize)
+            {
+                _logger.Information("Loading legacy 521-byte format bank file ({Actual} bytes)", fileData.Length);
+                presetSize = legacyPresetSize;
+            }
+            else
+            {
+                _logger.Error("Invalid file size: expected {Expected} or {Legacy} bytes, got {Actual}",
+                    60 * specPresetSize, 60 * legacyPresetSize, fileData.Length);
+                return Result.Fail<UserBankDump>($"Invalid file size: expected {60 * specPresetSize} or {60 * legacyPresetSize} bytes, got {fileData.Length}");
             }
 
             // Step 3: Parse and send each preset
@@ -59,9 +71,9 @@ public sealed class LoadBankUseCase : ILoadBankUseCase
             var presets = new List<Preset>();
             for (int i = 0; i < 60; i++)
             {
-                // Extract 520-byte preset
-                var presetData = new byte[520];
-                Array.Copy(fileData, i * 520, presetData, 0, 520);
+                // Extract preset (Preset.FromSysEx handles 521→520 trimming automatically)
+                var presetData = new byte[presetSize];
+                Array.Copy(fileData, i * presetSize, presetData, 0, presetSize);
 
                 // Parse preset to validate it
                 var presetResult = Preset.FromSysEx(presetData);

@@ -149,4 +149,20 @@ public partial class ModulationBlockViewModel : ObservableObject
         OnPropertyChanged(nameof(IsTremolo));
         OnPropertyChanged(nameof(IsPanner));
     }
+
+    public void WriteToPreset(Preset preset)
+    {
+        if (preset == null) return;
+
+        preset.ModType = TypeId;
+        preset.ModSpeed = Speed;
+        preset.ModDepth = Depth;
+        preset.ModTempo = Tempo;
+        preset.ModHiCut = HiCut;
+        preset.ModFeedback = Feedback;
+        preset.ModDelayOrRange = DelayOrRange;
+        preset.ModWidth = Width;
+        preset.ModMix = Mix;
+        preset.ModulationEnabled = IsEnabled;
+    }
 }

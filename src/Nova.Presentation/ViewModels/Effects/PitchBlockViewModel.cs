@@ -274,6 +274,36 @@ public partial class PitchBlockViewModel : ObservableObject
         IsEnabled = preset.PitchEnabled;
     }
 
+    public void WriteToPreset(Preset preset)
+    {
+        if (preset == null) return;
+
+        preset.PitchType = Type;
+        preset.PitchVoice1 = Voice1;
+        preset.PitchVoice2 = Voice2;
+        preset.PitchPan1 = Pan1;
+        preset.PitchPan2 = Pan2;
+        preset.PitchDelay1 = Delay1;
+        preset.PitchDelay2 = Delay2;
+        preset.PitchFeedback1OrKey = Feedback1OrKey;
+        preset.PitchFeedback2OrScale = Feedback2OrScale;
+        preset.PitchLevel1 = Level1;
+        if (Type == 1 || Type == 2)
+        {
+            preset.PitchDirection = Direction;
+            preset.PitchRange = Range;
+            preset.PitchLevel2 = 0;
+        }
+        else
+        {
+            preset.PitchDirection = 0;
+            preset.PitchRange = 0;
+            preset.PitchLevel2 = Level2;
+        }
+        preset.PitchMix = Mix;
+        preset.PitchEnabled = IsEnabled;
+    }
+
     private void UpdateTypeName()
     {
         TypeName = Type switch

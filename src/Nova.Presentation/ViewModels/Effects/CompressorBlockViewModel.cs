@@ -129,4 +129,19 @@ public partial class CompressorBlockViewModel : ObservableObject
         OnPropertyChanged(nameof(IsAdvanced));
         OnPropertyChanged(nameof(IsPercussiveOrSustaining));
     }
+
+    public void WriteToPreset(Preset preset)
+    {
+        if (preset == null) return;
+
+        preset.CompType = TypeId;
+        preset.CompThreshold = Threshold;
+        preset.CompRatio = Ratio;
+        preset.CompAttack = Attack;
+        preset.CompRelease = Release;
+        preset.CompResponse = Response;
+        preset.CompDrive = Drive;
+        preset.CompLevel = Level;
+        preset.CompressorEnabled = IsEnabled;
+    }
 }

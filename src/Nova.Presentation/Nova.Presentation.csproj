@@ -21,6 +21,9 @@
     <PackageReference Include="CommunityToolkit.Mvvm" />
     <PackageReference Include="Melanchall.DryWetMidi" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
+    <PackageReference Include="Serilog" />
+    <PackageReference Include="Serilog.Sinks.Console" />
+    <PackageReference Include="Serilog.Sinks.File" />
   </ItemGroup>
 
   <ItemGroup>

@@ -8,6 +8,7 @@ using Nova.Infrastructure.Library;
 using Nova.Infrastructure.Midi;
 using Nova.Midi;
 using Nova.Presentation.ViewModels;
+using System.IO;
 using Serilog;
 
 namespace Nova.Presentation;
@@ -25,10 +26,16 @@ public partial class App : global::Avalonia.Application
     {
         var services = new ServiceCollection();
 
+        var logPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "nova.log");
+
         var logger = new LoggerConfiguration()
             .MinimumLevel.Debug()
             .WriteTo.Console()
+            .WriteTo.File(logPath,
+                outputTemplate: "{Timestamp:HH:mm:ss.fff} [{Level:u3}] {Message:lj}{NewLine}{Exception}")
             .CreateLogger();
+
+        logger.Information("Nova app starting. Log path: {LogPath}", logPath);
 
         Log.Logger = logger;
         services.AddSingleton<ILogger>(logger);
@@ -58,6 +65,7 @@ public partial class App : global::Avalonia.Application
         
         // ViewModels
         services.AddTransient<MainViewModel>();
+        services.AddTransient<PresetDetailViewModel>();
         services.AddTransient<CCMappingViewModel>();
         services.AddTransient<ProgramMapInViewModel>();
         services.AddTransient<ProgramMapOutViewModel>();

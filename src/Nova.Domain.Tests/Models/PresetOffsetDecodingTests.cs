@@ -116,7 +116,7 @@ public class PresetOffsetDecodingTests
     public void FromSysEx_LevelOutLeft_DecodesCorrectly()
     {
         // Arrange: LevelOutLeft uses simple offset
-        // Hardware bytes [0, 0, 0, 0] → raw 0 → -100dB (minimum)
+        // Hardware bytes [0, 0, 0, 0] → raw 0 → 0dB
         // Range: -100 to 0dB
 
         // Act
@@ -124,15 +124,15 @@ public class PresetOffsetDecodingTests
 
         // Assert
         result.IsSuccess.Should().BeTrue();
-        result.Value.LevelOutLeft.Should().Be(-100,
-            "LevelOutLeft raw 0 should decode to -100dB (minimum)");
+        result.Value.LevelOutLeft.Should().Be(0,
+            "LevelOutLeft raw 0 should decode to 0dB");
     }
 
     [Fact]
     public void FromSysEx_LevelOutRight_DecodesCorrectly()
     {
         // Arrange: LevelOutRight uses simple offset
-        // Hardware bytes [0, 0, 0, 0] → raw 0 → -100dB (minimum)
+        // Hardware bytes [0, 0, 0, 0] → raw 0 → 0dB
         // Range: -100 to 0dB
 
         // Act
@@ -140,8 +140,8 @@ public class PresetOffsetDecodingTests
 
         // Assert
         result.IsSuccess.Should().BeTrue();
-        result.Value.LevelOutRight.Should().Be(-100,
-            "LevelOutRight raw 0 should decode to -100dB (minimum)");
+        result.Value.LevelOutRight.Should().Be(0,
+            "LevelOutRight raw 0 should decode to 0dB");
     }
 
     // ========================================

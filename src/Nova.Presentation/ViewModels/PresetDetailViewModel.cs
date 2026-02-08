@@ -198,10 +198,45 @@ public partial class PresetDetailViewModel : ObservableObject
     [ObservableProperty]
     private string _statusMessage = "";
 
+    /// <summary>
+    /// Writes all ViewModel state back into the current Preset, then returns it.
+    /// Call this before uploading to ensure all edits are encoded into SysEx.
+    /// </summary>
+    private Preset? BuildModifiedPreset()
+    {
+        if (_currentPreset == null) return null;
+
+        // Write global parameters
+        _currentPreset.Name = PresetName;
+        _currentPreset.Number = PresetNumber;
+        _currentPreset.TapTempo = TapTempo;
+        _currentPreset.Routing = Routing;
+        _currentPreset.LevelOutLeft = LevelOutLeft;
+        _currentPreset.LevelOutRight = LevelOutRight;
+        _currentPreset.MapParameter = MapParameter;
+        _currentPreset.MapMin = MapMin;
+        _currentPreset.MapMid = MapMid;
+        _currentPreset.MapMax = MapMax;
+
+        // Write all effect blocks
+        Drive.WriteToPreset(_currentPreset);
+        Compressor.WriteToPreset(_currentPreset);
+        EqGate.WriteToPreset(_currentPreset);
+        Modulation.WriteToPreset(_currentPreset);
+        Pitch.WriteToPreset(_currentPreset);
+        Delay.WriteToPreset(_currentPreset);
+        Reverb.WriteToPreset(_currentPreset);
+
+        return _currentPreset;
+    }
+
     [RelayCommand(CanExecute = nameof(CanUploadPreset))]
     private async Task UploadPresetAsync()
     {
         if (_currentPreset == null) return;
+
+        // Write all UI changes back into the Preset before sending
+        BuildModifiedPreset();
 
         StatusMessage = $"Uploading preset to slot {TargetSlot}...";
 

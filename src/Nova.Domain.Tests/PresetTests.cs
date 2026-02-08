@@ -89,6 +89,14 @@ public class PresetTests
         sysex[offset + 3] = (byte)((value >> 21) & 0x7F);
     }
 
+    private static void SetChecksum(byte[] sysex)
+    {
+        int checksum = 0;
+        for (int i = 34; i <= 517; i++)
+            checksum += sysex[i];
+        sysex[518] = (byte)(checksum & 0x7F);
+    }
+
     [Fact]
     public void FromSysEx_InvalidLength_ReturnsFailure()
     {
@@ -235,6 +243,7 @@ public class PresetTests
         Encode4ByteValue(sysex, 482, 50);   // PitchFeedback1OrKey: 50 (0-100)
         Encode4ByteValue(sysex, 486, 50);   // PitchFeedback2OrScale: 50 (0-100)
 
+        SetChecksum(sysex);
         sysex[519] = 0xF7;
         return sysex;
     }

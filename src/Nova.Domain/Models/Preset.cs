@@ -7,120 +7,120 @@ namespace Nova.Domain.Models;
 /// </summary>
 public class Preset
 {
-    public int Number { get; private set; }
-    public string Name { get; private set; } = string.Empty;
-    public byte[] RawSysEx { get; private set; } = Array.Empty<byte>();
+    public int Number { get; set; }
+    public string Name { get; set; } = string.Empty;
+    public byte[] RawSysEx { get; set; } = Array.Empty<byte>();
 
     // Global parameters (bytes 38-69)
-    public int TapTempo { get; private set; }  // 100-3000ms (bytes 38-41)
-    public int Routing { get; private set; }   // 0=Semi-parallel, 1=Serial, 2=Parallel (bytes 42-45)
-    public int LevelOutLeft { get; private set; }  // -100 to 0dB (bytes 46-49)
-    public int LevelOutRight { get; private set; } // -100 to 0dB (bytes 50-53)
-    public int MapParameter { get; private set; }  // Pedal mapping parameter (bytes 54-57)
-    public int MapMin { get; private set; }        // 0-100% (bytes 58-61)
-    public int MapMid { get; private set; }        // 0-100% (bytes 62-65)
-    public int MapMax { get; private set; }        // 0-100% (bytes 66-69)
+    public int TapTempo { get; set; }  // 100-3000ms (bytes 38-41)
+    public int Routing { get; set; }   // 0=Semi-parallel, 1=Serial, 2=Parallel (bytes 42-45)
+    public int LevelOutLeft { get; set; }  // -100 to 0dB (bytes 46-49)
+    public int LevelOutRight { get; set; } // -100 to 0dB (bytes 50-53)
+    public int MapParameter { get; set; }  // Pedal mapping parameter (bytes 54-57)
+    public int MapMin { get; set; }        // 0-100% (bytes 58-61)
+    public int MapMid { get; set; }        // 0-100% (bytes 62-65)
+    public int MapMax { get; set; }        // 0-100% (bytes 66-69)
 
     // Effect on/off switches
-    public bool CompressorEnabled { get; private set; }  // bytes 130-133
-    public bool DriveEnabled { get; private set; }       // bytes 194-197
-    public bool ModulationEnabled { get; private set; }  // bytes 258-261
-    public bool DelayEnabled { get; private set; }       // bytes 322-325
-    public bool ReverbEnabled { get; private set; }      // bytes 386-389
-    public bool EqEnabled { get; private set; }          // bytes 406-409
-    public bool GateEnabled { get; private set; }        // bytes 450-453
-    public bool PitchEnabled { get; private set; }       // bytes 514-517
+    public bool CompressorEnabled { get; set; }  // bytes 130-133
+    public bool DriveEnabled { get; set; }       // bytes 194-197
+    public bool ModulationEnabled { get; set; }  // bytes 258-261
+    public bool DelayEnabled { get; set; }       // bytes 322-325
+    public bool ReverbEnabled { get; set; }      // bytes 386-389
+    public bool EqEnabled { get; set; }          // bytes 406-409
+    public bool GateEnabled { get; set; }        // bytes 450-453
+    public bool PitchEnabled { get; set; }       // bytes 514-517
 
     // COMP (Compressor) effect parameters (bytes 70-129)
-    public int CompType { get; private set; }       // 0=perc, 1=sustain, 2=advanced (bytes 70-73)
-    public int CompThreshold { get; private set; }  // -30 to 0dB (bytes 74-77)
-    public int CompRatio { get; private set; }      // 0=Off, 1-15=ratios (bytes 78-81)
-    public int CompAttack { get; private set; }     // 0-16 table index (bytes 82-85)
-    public int CompRelease { get; private set; }    // 13-23 table index (bytes 86-89)
-    public int CompResponse { get; private set; }   // 1-10 (bytes 90-93)
-    public int CompDrive { get; private set; }      // 1-20 (bytes 94-97)
-    public int CompLevel { get; private set; }      // -12 to +12dB (bytes 98-101)
+    public int CompType { get; set; }       // 0=perc, 1=sustain, 2=advanced (bytes 70-73)
+    public int CompThreshold { get; set; }  // -30 to 0dB (bytes 74-77)
+    public int CompRatio { get; set; }      // 0=Off, 1-15=ratios (bytes 78-81)
+    public int CompAttack { get; set; }     // 0-16 table index (bytes 82-85)
+    public int CompRelease { get; set; }    // 13-23 table index (bytes 86-89)
+    public int CompResponse { get; set; }   // 1-10 (bytes 90-93)
+    public int CompDrive { get; set; }      // 1-20 (bytes 94-97)
+    public int CompLevel { get; set; }      // -12 to +12dB (bytes 98-101)
 
     // DRIVE effect parameters (bytes 134-193)
-    public int DriveType { get; private set; }      // 0-1 (overdrive/distortion) (bytes 134-137)
-    public int DriveGain { get; private set; }      // 0-100 (bytes 138-141)
-    public int DriveTone { get; private set; }      // 0-100 (bytes 142-145)
-    public int DriveLevel { get; private set; }     // -100 to 0dB (bytes 190-193)
-    public int BoostLevel { get; private set; }     // 0 to 10dB (bytes 182-185)
-    public bool BoostEnabled { get; private set; }  // bytes 186-189
+    public int DriveType { get; set; }      // 0-1 (overdrive/distortion) (bytes 134-137)
+    public int DriveGain { get; set; }      // 0-100 (bytes 138-141)
+    public int DriveTone { get; set; }      // 0-100 (bytes 142-145)
+    public int DriveLevel { get; set; }     // -100 to 0dB (bytes 190-193)
+    public int BoostLevel { get; set; }     // 0 to 10dB (bytes 182-185)
+    public bool BoostEnabled { get; set; }  // bytes 186-189
 
     // MOD (Modulation) effect parameters (bytes 198-257)
-    public int ModType { get; private set; }        // 0-5 (chorus/flanger/vibrato/phaser/tremolo/panner) (bytes 198-201)
-    public int ModSpeed { get; private set; }       // 0.050-20Hz table (bytes 202-205)
-    public int ModDepth { get; private set; }       // 0-100% (bytes 206-209)
-    public int ModTempo { get; private set; }       // 0-16 table (ignore, 2 to 1/32T) (bytes 210-213)
-    public int ModHiCut { get; private set; }       // 20Hz-20kHz table (bytes 214-217)
-    public int ModFeedback { get; private set; }    // -100 to +100% (bytes 218-221)
-    public int ModDelayOrRange { get; private set; } // Multi-function: Delay/Range/Type (bytes 222-225)
-    public int ModWidth { get; private set; }       // 0-100% (bytes 238-241)
-    public int ModMix { get; private set; }         // 0-100% (bytes 250-253)
+    public int ModType { get; set; }        // 0-5 (chorus/flanger/vibrato/phaser/tremolo/panner) (bytes 198-201)
+    public int ModSpeed { get; set; }       // 0.050-20Hz table (bytes 202-205)
+    public int ModDepth { get; set; }       // 0-100% (bytes 206-209)
+    public int ModTempo { get; set; }       // 0-16 table (ignore, 2 to 1/32T) (bytes 210-213)
+    public int ModHiCut { get; set; }       // 20Hz-20kHz table (bytes 214-217)
+    public int ModFeedback { get; set; }    // -100 to +100% (bytes 218-221)
+    public int ModDelayOrRange { get; set; } // Multi-function: Delay/Range/Type (bytes 222-225)
+    public int ModWidth { get; set; }       // 0-100% (bytes 238-241)
+    public int ModMix { get; set; }         // 0-100% (bytes 250-253)
 
     // DELAY effect parameters (bytes 262-321)
-    public int DelayType { get; private set; }      // 0-5 (clean/analog/tape/dynamic/dual/ping-pong) (bytes 262-265)
-    public int DelayTime { get; private set; }      // 0-1800ms (bytes 266-269)
-    public int DelayTime2 { get; private set; }     // 0-1800ms (dual mode) (bytes 270-273)
-    public int DelayTempo { get; private set; }     // 0-16 table (ignore, 2 to 1/32T) (bytes 274-277)
-    public int DelayTempo2OrWidth { get; private set; } // Multi-function: Tempo2 (dual: 0-16) or Width (ping: 0-100%) (bytes 278-281)
-    public int DelayFeedback { get; private set; }  // 0-120% (bytes 282-285)
-    public int DelayClipOrFeedback2 { get; private set; } // Multi-function: Clip (analog/tape: 0-24dB) or Feedback2 (dual: 0-120%) (bytes 286-289)
-    public int DelayHiCut { get; private set; }     // 20Hz-20kHz table (bytes 290-293)
-    public int DelayLoCut { get; private set; }     // 20Hz-20kHz table (bytes 294-297)
-    public int DelayOffsetOrPan1 { get; private set; } // Dynamic Offset (-200..200) or Dual Pan1 (-50..50) (bytes 298-301)
-    public int DelaySenseOrPan2 { get; private set; }  // Dynamic Sense (-50..0) or Dual Pan2 (-50..50) (bytes 302-305)
-    public int DelayDamp { get; private set; }      // 0-100 dB (bytes 306-309)
-    public int DelayRelease { get; private set; }   // 20-1000 ms table index (bytes 310-313)
-    public int DelayMix { get; private set; }       // 0-100% (bytes 314-317)
+    public int DelayType { get; set; }      // 0-5 (clean/analog/tape/dynamic/dual/ping-pong) (bytes 262-265)
+    public int DelayTime { get; set; }      // 0-1800ms (bytes 266-269)
+    public int DelayTime2 { get; set; }     // 0-1800ms (dual mode) (bytes 270-273)
+    public int DelayTempo { get; set; }     // 0-16 table (ignore, 2 to 1/32T) (bytes 274-277)
+    public int DelayTempo2OrWidth { get; set; } // Multi-function: Tempo2 (dual: 0-16) or Width (ping: 0-100%) (bytes 278-281)
+    public int DelayFeedback { get; set; }  // 0-120% (bytes 282-285)
+    public int DelayClipOrFeedback2 { get; set; } // Multi-function: Clip (analog/tape: 0-24dB) or Feedback2 (dual: 0-120%) (bytes 286-289)
+    public int DelayHiCut { get; set; }     // 20Hz-20kHz table (bytes 290-293)
+    public int DelayLoCut { get; set; }     // 20Hz-20kHz table (bytes 294-297)
+    public int DelayOffsetOrPan1 { get; set; } // Dynamic Offset (-200..200) or Dual Pan1 (-50..50) (bytes 298-301)
+    public int DelaySenseOrPan2 { get; set; }  // Dynamic Sense (-50..0) or Dual Pan2 (-50..50) (bytes 302-305)
+    public int DelayDamp { get; set; }      // 0-100 dB (bytes 306-309)
+    public int DelayRelease { get; set; }   // 20-1000 ms table index (bytes 310-313)
+    public int DelayMix { get; set; }       // 0-100% (bytes 314-317)
 
     // REVERB effect parameters (bytes 326-385)
-    public int ReverbType { get; private set; }     // 0-3 (spring/hall/room/plate) (bytes 326-329)
-    public int ReverbDecay { get; private set; }    // 1-200 (0.1-20s by 0.1s) (bytes 330-333)
-    public int ReverbPreDelay { get; private set; } // 0-100ms (bytes 334-337)
-    public int ReverbShape { get; private set; }    // 0-2 (round/curved/square) (bytes 338-341)
-    public int ReverbSize { get; private set; }     // 0-7 (box/.../huge) (bytes 342-345)
-    public int ReverbHiColor { get; private set; }  // 0-6 (wool/.../glass) (bytes 346-349)
-    public int ReverbHiLevel { get; private set; }  // -25 to +25dB (bytes 350-353)
-    public int ReverbLoColor { get; private set; }  // 0-6 (thick/.../nobass) (bytes 354-357)
-    public int ReverbLoLevel { get; private set; }  // -25 to +25dB (bytes 358-361)
-    public int ReverbRoomLevel { get; private set; } // -100 to 0dB (bytes 362-365)
-    public int ReverbLevel { get; private set; }    // -100 to 0dB (bytes 366-369)
-    public int ReverbDiffuse { get; private set; }  // -25 to +25dB (bytes 370-373)
-    public int ReverbMix { get; private set; }      // 0-100% (bytes 374-377)
+    public int ReverbType { get; set; }     // 0-3 (spring/hall/room/plate) (bytes 326-329)
+    public int ReverbDecay { get; set; }    // 1-200 (0.1-20s by 0.1s) (bytes 330-333)
+    public int ReverbPreDelay { get; set; } // 0-100ms (bytes 334-337)
+    public int ReverbShape { get; set; }    // 0-2 (round/curved/square) (bytes 338-341)
+    public int ReverbSize { get; set; }     // 0-7 (box/.../huge) (bytes 342-345)
+    public int ReverbHiColor { get; set; }  // 0-6 (wool/.../glass) (bytes 346-349)
+    public int ReverbHiLevel { get; set; }  // -25 to +25dB (bytes 350-353)
+    public int ReverbLoColor { get; set; }  // 0-6 (thick/.../nobass) (bytes 354-357)
+    public int ReverbLoLevel { get; set; }  // -25 to +25dB (bytes 358-361)
+    public int ReverbRoomLevel { get; set; } // -100 to 0dB (bytes 362-365)
+    public int ReverbLevel { get; set; }    // -100 to 0dB (bytes 366-369)
+    public int ReverbDiffuse { get; set; }  // -25 to +25dB (bytes 370-373)
+    public int ReverbMix { get; set; }      // 0-100% (bytes 374-377)
 
     // EQ/GATE parameters (bytes 390-453)
-    public int GateType { get; private set; }       // 0-1 (hard/soft) (bytes 390-393)
-    public int GateThreshold { get; private set; }  // -60 to 0dB (bytes 394-397)
-    public int GateDamp { get; private set; }       // 0-90dB (bytes 398-401)
-    public int GateRelease { get; private set; }    // 0-200 dB/s (bytes 402-405)
-    public int EqFreq1 { get; private set; }        // 41Hz-20kHz table (bytes 410-413)
-    public int EqGain1 { get; private set; }        // -12 to +12dB (bytes 414-417)
-    public int EqWidth1 { get; private set; }       // 0.3-1.6 oct table (bytes 418-421)
-    public int EqFreq2 { get; private set; }        // 41Hz-20kHz table (bytes 422-425)
-    public int EqGain2 { get; private set; }        // -12 to +12dB (bytes 426-429)
-    public int EqWidth2 { get; private set; }       // 0.3-1.6 oct table (bytes 430-433)
-    public int EqFreq3 { get; private set; }        // 41Hz-20kHz table (bytes 434-437)
-    public int EqGain3 { get; private set; }        // -12 to +12dB (bytes 438-441)
-    public int EqWidth3 { get; private set; }       // 0.3-1.6 oct table (bytes 442-445)
+    public int GateType { get; set; }       // 0-1 (hard/soft) (bytes 390-393)
+    public int GateThreshold { get; set; }  // -60 to 0dB (bytes 394-397)
+    public int GateDamp { get; set; }       // 0-90dB (bytes 398-401)
+    public int GateRelease { get; set; }    // 0-200 dB/s (bytes 402-405)
+    public int EqFreq1 { get; set; }        // 41Hz-20kHz table (bytes 410-413)
+    public int EqGain1 { get; set; }        // -12 to +12dB (bytes 414-417)
+    public int EqWidth1 { get; set; }       // 0.3-1.6 oct table (bytes 418-421)
+    public int EqFreq2 { get; set; }        // 41Hz-20kHz table (bytes 422-425)
+    public int EqGain2 { get; set; }        // -12 to +12dB (bytes 426-429)
+    public int EqWidth2 { get; set; }       // 0.3-1.6 oct table (bytes 430-433)
+    public int EqFreq3 { get; set; }        // 41Hz-20kHz table (bytes 434-437)
+    public int EqGain3 { get; set; }        // -12 to +12dB (bytes 438-441)
+    public int EqWidth3 { get; set; }       // 0.3-1.6 oct table (bytes 442-445)
 
     // PITCH effect parameters (bytes 454-513)
-    public int PitchType { get; private set; }      // 0-4 (shifter/octaver/whammy/detune/intelligent) (bytes 454-457)
-    public int PitchVoice1 { get; private set; }    // -100 to +100 cents OR -13 to +13 degrees (bytes 458-461)
-    public int PitchVoice2 { get; private set; }    // -100 to +100 cents OR -13 to +13 degrees (bytes 462-465)
-    public int PitchPan1 { get; private set; }      // -50 to +50 (50L to 50R) (bytes 466-469)
-    public int PitchPan2 { get; private set; }      // -50 to +50 (50L to 50R) (bytes 470-473)
-    public int PitchDelay1 { get; private set; }    // 0-50ms (bytes 474-477)
-    public int PitchDelay2 { get; private set; }    // 0-50ms (bytes 478-481)
-    public int PitchFeedback1OrKey { get; private set; }    // 0-100% OR 0-12 Key (bytes 482-485)
-    public int PitchFeedback2OrScale { get; private set; }  // 0-100% OR 0-13 Scale (bytes 486-489)
-    public int PitchLevel1 { get; private set; }    // -100 to 0dB (bytes 490-493)
-    public int PitchLevel2 { get; private set; }    // -100 to 0dB (bytes 494-497)
-    public int PitchDirection { get; private set; } // 0=Down, 1=Up (octaver/whammy) (bytes 494-497)
-    public int PitchRange { get; private set; }     // 1-2 octaves (octaver/whammy) (bytes 498-501)
-    public int PitchMix { get; private set; }       // 0-100% (bytes 502-505)
+    public int PitchType { get; set; }      // 0-4 (shifter/octaver/whammy/detune/intelligent) (bytes 454-457)
+    public int PitchVoice1 { get; set; }    // -100 to +100 cents OR -13 to +13 degrees (bytes 458-461)
+    public int PitchVoice2 { get; set; }    // -100 to +100 cents OR -13 to +13 degrees (bytes 462-465)
+    public int PitchPan1 { get; set; }      // -50 to +50 (50L to 50R) (bytes 466-469)
+    public int PitchPan2 { get; set; }      // -50 to +50 (50L to 50R) (bytes 470-473)
+    public int PitchDelay1 { get; set; }    // 0-50ms (bytes 474-477)
+    public int PitchDelay2 { get; set; }    // 0-50ms (bytes 478-481)
+    public int PitchFeedback1OrKey { get; set; }    // 0-100% OR 0-12 Key (bytes 482-485)
+    public int PitchFeedback2OrScale { get; set; }  // 0-100% OR 0-13 Scale (bytes 486-489)
+    public int PitchLevel1 { get; set; }    // -100 to 0dB (bytes 490-493)
+    public int PitchLevel2 { get; set; }    // -100 to 0dB (bytes 494-497)
+    public int PitchDirection { get; set; } // 0=Down, 1=Up (octaver/whammy) (bytes 494-497)
+    public int PitchRange { get; set; }     // 1-2 octaves (octaver/whammy) (bytes 498-501)
+    public int PitchMix { get; set; }       // 0-100% (bytes 502-505)
 
     private Preset() { }
 
@@ -132,6 +132,10 @@ public class Preset
     /// <returns>Success with Preset or Failure with error messages</returns>
     public static Result<Preset> FromSysEx(byte[] sysex)
     {
+        // Handle legacy 521-byte format (double F7 from old DryWetMidi bug)
+        if (sysex.Length == 521 && sysex[519] == 0xF7 && sysex[520] == 0xF7)
+            sysex = sysex[..520];
+
         // Validate length (520 bytes per TC Electronic spec: F0 + 518 data + F7)
         if (sysex.Length != 520)
             return Result.Fail($"Invalid preset length: expected 520 bytes, got {sysex.Length}");
@@ -349,9 +353,8 @@ public class Preset
             pitchType, pitchVoice1, pitchVoice2, pitchPan1, pitchPan2, pitchDelay1, pitchDelay2,
             pitchFeedback1OrKey, pitchFeedback2OrScale, pitchLevel1, pitchLevel2, pitchDirection, pitchRange, pitchMix
         );
-
         if (validationResult.IsFailed)
-            return Result.Fail<Preset>(validationResult.Errors.Select(e => e.Message).ToList());
+            return Result.Fail(validationResult.Errors);
 
         return Result.Ok(new Preset
         {
@@ -764,17 +767,163 @@ public class Preset
         return Result.Ok();
     }
 
-    /// <summary>
-    /// Serializes the preset back to a 520-byte SysEx message.
-    /// Simply returns the stored RawSysEx since we preserve original bytes.
-    /// </summary>
-    /// <returns>Result with 520-byte SysEx or error</returns>
     public Result<byte[]> ToSysEx()
     {
-        if (RawSysEx == null || RawSysEx.Length != 520)
-            return Result.Fail("Preset has no valid RawSysEx data");
+        var sysex = new byte[520];
 
-        return Result.Ok(RawSysEx);
+        // Copy original raw bytes as base (preserves any bytes we don't explicitly encode)
+        if (RawSysEx != null && RawSysEx.Length == 520)
+            Array.Copy(RawSysEx, sysex, 520);
+
+        // Header
+        sysex[0] = 0xF0;
+        sysex[1] = 0x00; sysex[2] = 0x20; sysex[3] = 0x1F; // TC Electronic
+        sysex[4] = 0x00; // Device ID
+        sysex[5] = 0x63; // Nova System
+        sysex[6] = 0x20; // Dump
+        sysex[7] = 0x01; // Preset
+        sysex[8] = (byte)Number;
+
+        // Name (bytes 10-33: 24 ASCII chars, byte 9 reserved)
+        var paddedName = (Name ?? "").Length > 24 ? Name!.Substring(0, 24) : (Name ?? "").PadRight(24);
+        var nameBytes = System.Text.Encoding.ASCII.GetBytes(paddedName);
+        Array.Copy(nameBytes, 0, sysex, 10, 24);
+
+        // Global parameters
+        Encode4ByteValue(sysex, 38, TapTempo);
+        Encode4ByteValue(sysex, 42, Routing);
+        EncodeSignedDbValue(sysex, 46, LevelOutLeft);
+        EncodeSignedDbValue(sysex, 50, LevelOutRight);
+        Encode4ByteValue(sysex, 54, MapParameter);
+        Encode4ByteValue(sysex, 58, MapMin);
+        Encode4ByteValue(sysex, 62, MapMid);
+        Encode4ByteValue(sysex, 66, MapMax);
+
+        // COMP parameters
+        Encode4ByteValue(sysex, 70, CompType);
+        EncodeSignedDbValue(sysex, 74, CompThreshold);
+        Encode4ByteValue(sysex, 78, CompRatio);
+        Encode4ByteValue(sysex, 82, CompAttack);
+        Encode4ByteValue(sysex, 86, CompRelease);
+        Encode4ByteValue(sysex, 90, CompResponse);
+        Encode4ByteValue(sysex, 94, CompDrive);
+        EncodeSignedDbValue(sysex, 98, CompLevel);
+
+        // Effect on/off switches
+        Encode4ByteValue(sysex, 130, CompressorEnabled ? 1 : 0);
+
+        // DRIVE parameters
+        Encode4ByteValue(sysex, 134, DriveType);
+        Encode4ByteValue(sysex, 138, DriveGain);
+        Encode4ByteValue(sysex, 142, DriveTone);
+        Encode4ByteValue(sysex, 182, BoostLevel);
+        Encode4ByteValue(sysex, 186, BoostEnabled ? 1 : 0);
+        EncodeSignedDbValue(sysex, 190, DriveLevel);
+        Encode4ByteValue(sysex, 194, DriveEnabled ? 1 : 0);
+
+        // MOD parameters
+        Encode4ByteValue(sysex, 198, ModType);
+        Encode4ByteValue(sysex, 202, ModSpeed);
+        Encode4ByteValue(sysex, 206, ModDepth);
+        Encode4ByteValue(sysex, 210, ModTempo);
+        Encode4ByteValue(sysex, 214, ModHiCut);
+        EncodeSignedDbValue(sysex, 218, ModFeedback);
+        Encode4ByteValue(sysex, 222, ModDelayOrRange);
+        Encode4ByteValue(sysex, 238, ModWidth);
+        Encode4ByteValue(sysex, 250, ModMix);
+        Encode4ByteValue(sysex, 258, ModulationEnabled ? 1 : 0);
+
+        // DELAY parameters
+        Encode4ByteValue(sysex, 262, DelayType);
+        Encode4ByteValue(sysex, 266, DelayTime);
+        Encode4ByteValue(sysex, 270, DelayTime2);
+        Encode4ByteValue(sysex, 274, DelayTempo);
+        Encode4ByteValue(sysex, 278, DelayTempo2OrWidth);
+        Encode4ByteValue(sysex, 282, DelayFeedback);
+        Encode4ByteValue(sysex, 286, DelayClipOrFeedback2);
+        Encode4ByteValue(sysex, 290, DelayHiCut);
+        Encode4ByteValue(sysex, 294, DelayLoCut);
+        if (DelayType == 3)
+        {
+            EncodeSignedDbValue(sysex, 298, DelayOffsetOrPan1);
+            EncodeSignedDbValue(sysex, 302, DelaySenseOrPan2);
+        }
+        else if (DelayType == 4)
+        {
+            EncodeSignedDbValue(sysex, 298, DelayOffsetOrPan1);
+            EncodeSignedDbValue(sysex, 302, DelaySenseOrPan2);
+        }
+        Encode4ByteValue(sysex, 306, DelayDamp);
+        Encode4ByteValue(sysex, 310, DelayRelease);
+        Encode4ByteValue(sysex, 314, DelayMix);
+        Encode4ByteValue(sysex, 322, DelayEnabled ? 1 : 0);
+
+        // REVERB parameters
+        Encode4ByteValue(sysex, 326, ReverbType);
+        Encode4ByteValue(sysex, 330, ReverbDecay);
+        Encode4ByteValue(sysex, 334, ReverbPreDelay);
+        Encode4ByteValue(sysex, 338, ReverbShape);
+        Encode4ByteValue(sysex, 342, ReverbSize);
+        Encode4ByteValue(sysex, 346, ReverbHiColor);
+        EncodeSignedDbValue(sysex, 350, ReverbHiLevel);
+        Encode4ByteValue(sysex, 354, ReverbLoColor);
+        EncodeSignedDbValue(sysex, 358, ReverbLoLevel);
+        EncodeSignedDbValue(sysex, 362, ReverbRoomLevel);
+        EncodeSignedDbValue(sysex, 366, ReverbLevel);
+        EncodeSignedDbValue(sysex, 370, ReverbDiffuse);
+        Encode4ByteValue(sysex, 374, ReverbMix);
+        Encode4ByteValue(sysex, 386, ReverbEnabled ? 1 : 0);
+
+        // EQ/GATE parameters
+        Encode4ByteValue(sysex, 390, GateType);
+        EncodeSignedDbValue(sysex, 394, GateThreshold);
+        Encode4ByteValue(sysex, 398, GateDamp);
+        Encode4ByteValue(sysex, 402, GateRelease);
+        Encode4ByteValue(sysex, 406, EqEnabled ? 1 : 0);
+        Encode4ByteValue(sysex, 410, EqFreq1);
+        EncodeSignedDbValue(sysex, 414, EqGain1);
+        Encode4ByteValue(sysex, 418, EqWidth1);
+        Encode4ByteValue(sysex, 422, EqFreq2);
+        EncodeSignedDbValue(sysex, 426, EqGain2);
+        Encode4ByteValue(sysex, 430, EqWidth2);
+        Encode4ByteValue(sysex, 434, EqFreq3);
+        EncodeSignedDbValue(sysex, 438, EqGain3);
+        Encode4ByteValue(sysex, 442, EqWidth3);
+        Encode4ByteValue(sysex, 450, GateEnabled ? 1 : 0);
+
+        // PITCH parameters
+        Encode4ByteValue(sysex, 454, PitchType);
+        EncodeSignedDbValue(sysex, 458, PitchVoice1);
+        EncodeSignedDbValue(sysex, 462, PitchVoice2);
+        EncodeSignedDbValue(sysex, 466, PitchPan1);
+        EncodeSignedDbValue(sysex, 470, PitchPan2);
+        Encode4ByteValue(sysex, 474, PitchDelay1);
+        Encode4ByteValue(sysex, 478, PitchDelay2);
+        Encode4ByteValue(sysex, 482, PitchFeedback1OrKey);
+        Encode4ByteValue(sysex, 486, PitchFeedback2OrScale);
+        EncodeSignedDbValue(sysex, 490, PitchLevel1);
+        if (PitchType == 1 || PitchType == 2)
+        {
+            Encode4ByteValue(sysex, 494, PitchDirection);
+            Encode4ByteValue(sysex, 498, PitchRange);
+        }
+        else
+        {
+            EncodeSignedDbValue(sysex, 494, PitchLevel2);
+        }
+        Encode4ByteValue(sysex, 502, PitchMix);
+        Encode4ByteValue(sysex, 514, PitchEnabled ? 1 : 0);
+
+        // Checksum (sum of bytes 34-517 & 0x7F)
+        int checksum = 0;
+        for (int i = 34; i <= 517; i++)
+            checksum += sysex[i];
+        sysex[518] = (byte)(checksum & 0x7F);
+
+        // SysEx end
+        sysex[519] = 0xF7;
+
+        return Result.Ok(sysex);
     }
 
     /// <summary>
@@ -801,6 +950,29 @@ public class Preset
     }
 
     /// <summary>
+    /// Encodes an integer value into 4 bytes using Nova System's 7-bit encoding.
+    /// Inverse of Decode4ByteValue.
+    /// </summary>
+    private static void Encode4ByteValue(byte[] sysex, int offset, int value)
+    {
+        sysex[offset] = (byte)(value & 0x7F);
+        sysex[offset + 1] = (byte)((value >> 7) & 0x7F);
+        sysex[offset + 2] = (byte)((value >> 14) & 0x7F);
+        sysex[offset + 3] = (byte)((value >> 21) & 0x7F);
+    }
+
+    /// <summary>
+    /// Encodes a signed dB value using the same strategy as DecodeSignedDbValue.
+    /// Negative values use 2^24 offset encoding. Zero and positive values stored directly.
+    /// </summary>
+    private static void EncodeSignedDbValue(byte[] sysex, int offset, int value)
+    {
+        const int LARGE_OFFSET = 16777216; // 2^24
+        int rawValue = value < 0 ? value + LARGE_OFFSET : value;
+        Encode4ByteValue(sysex, offset, rawValue);
+    }
+
+    /// <summary>
     /// Decodes signed dB values that use offset encoding.
     /// Two encoding strategies discovered from hardware investigation:
     /// 1. Large offset (2^24 = 16777216): For symmetric ranges (zero in middle)
@@ -821,12 +993,11 @@ public class Preset
 
         int rawValue = Decode4ByteValue(sysex, offset);
 
-        // Special case: raw value 0 indicates unused/uninitialized parameter
-        // (e.g., feedback for chorus when hardware only uses it for flanger/phaser)
-        // Map to safe default: 0 for symmetric ranges, minimumValue for asymmetric
+        // Special case: raw value 0 indicates unused/uninitialized parameter.
+        // Map to 0 to preserve roundtrips and keep values within valid ranges.
         if (rawValue == 0)
         {
-            return minimumValue + maximumValue == 0 ? 0 : minimumValue;
+            return 0;
         }
 
         // Check if value looks like it uses the large offset encoding (values near ~16.7M)

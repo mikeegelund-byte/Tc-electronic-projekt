@@ -84,4 +84,21 @@ public partial class DriveBlockViewModel : ObservableObject
         BoostEnabled = preset.BoostEnabled;
         IsEnabled = preset.DriveEnabled;
     }
+
+    /// <summary>
+    /// Writes Drive parameters back to a Preset domain model.
+    /// Inverse of LoadFromPreset.
+    /// </summary>
+    public void WriteToPreset(Preset preset)
+    {
+        if (preset == null) return;
+
+        preset.DriveType = TypeId;
+        preset.DriveGain = Gain;
+        preset.DriveTone = Tone;
+        preset.DriveLevel = Level;
+        preset.BoostLevel = BoostLevel;
+        preset.BoostEnabled = BoostEnabled;
+        preset.DriveEnabled = IsEnabled;
+    }
 }
